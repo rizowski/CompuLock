@@ -1,0 +1,21 @@
+Week 1)
+	Record Processies ran by a user
+	Record Programs Ran by a user
+	Record Browser history
+		- Internet explorer
+		- Chrome
+		- Firefox
+	Error handling
+	Unit testing
+		- Processes
+			- Should be unique
+		- Programs
+			- Should be unique
+		- Browser Histroy
+			- Should be unique/ general
+			- ex) Facebook.com/profile/3432442 Should be Facebook.com
+	Resources used: 
+		- Processes - http://stackoverflow.com/questions/5842166/how-to-get-information-about-process-in-c
+
+Week 2) 
+	To be planned...
