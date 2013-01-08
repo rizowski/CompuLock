@@ -1,6 +1,8 @@
 Week 1)
-	Record Processies ran by a user
-	Record Programs Ran by a user
+	Record Processies
+		- By user
+	Record Programs
+		- By user
 	Record Browser history
 		- Internet explorer
 		- Chrome
@@ -14,8 +16,27 @@ Week 1)
 		- Browser Histroy
 			- Should be unique/ general
 			- ex) Facebook.com/profile/3432442 Should be Facebook.com
+	Files Added:
+		- App manifest
+	Updates:
+		- Made the manifest require users to run application as admin.
+		- Made Record be able to pull processes and find user information on them
 	Resources used: 
-		- Processes - http://stackoverflow.com/questions/5842166/how-to-get-information-about-process-in-c
+		- Processes 
+			- http://stackoverflow.com/questions/5842166/how-to-get-information-about-process-in-c
+			- http://msdn.microsoft.com/library/windows/desktop/aa394372.aspx
+			- http://www.codeproject.com/Articles/14828/How-To-Get-Process-Owner-ID-and-Current-User-SID
+			- http://stackoverflow.com/questions/566835/how-to-get-the-user-name-or-owner-of-a-process-in-net
+		- Admin Privileges
+			- http://stackoverflow.com/questions/2818179/how-to-force-my-net-app-to-run-as-administrator-on-windows-7
+	Notes:
+		- Grabbing processes and who owns the current ones is slow, perhaps in future updates the process retrieval could be improved by implementing other method described in the codeproject resource.
+
+
 
 Week 2) 
 	To be planned...
+
+	Other Resources Usefull
+		- Credentials 
+			- http://social.msdn.microsoft.com/forums/en-US/netfxbcl/thread/36e1bcfa-a46a-47a8-8b21-78357efe866b
