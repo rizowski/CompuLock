@@ -60,7 +60,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Recorder.cs" />
+    <Compile Include="History.cs" />
+    <Compile Include="Processes.cs" />
+    <Compile Include="Programs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
