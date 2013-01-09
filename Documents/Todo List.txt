@@ -21,6 +21,7 @@ Week 1)
 	Updates:
 		- Made the manifest require users to run application as admin.
 		- Made Record be able to pull processes and find user information on them
+		- Added frame structure methods to getting browser history
 	Resources used: 
 		- Processes 
 			- http://stackoverflow.com/questions/5842166/how-to-get-information-about-process-in-c
@@ -29,6 +30,16 @@ Week 1)
 			- http://stackoverflow.com/questions/566835/how-to-get-the-user-name-or-owner-of-a-process-in-net
 		- Admin Privileges
 			- http://stackoverflow.com/questions/2818179/how-to-force-my-net-app-to-run-as-administrator-on-windows-7
+		- history
+			- Chrome
+				- http://productforums.google.com/forum/#!topic/chrome/6ndeqflOq0M
+			- Internet explorer
+				- http://social.msdn.microsoft.com/Forums/en-US/csharpgeneral/thread/0086aaa0-ced6-4fdb-b874-dd97ee16f122
+			- Firefox
+				- http://answers.yahoo.com/question/index?qid=20071011162335AAACp1v
+		- DB Access Write
+			- Csharp SQLite
+				- http://code.google.com/p/csharp-sqlite/downloads/detail?name=csharp-sqlite_3_7_7_1_71.zip&can=2&q=
 	Notes:
 		- Grabbing processes and who owns the current ones is slow, perhaps in future updates the process retrieval could be improved by implementing other method described in the codeproject resource.
 

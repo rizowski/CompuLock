@@ -50,6 +50,9 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Community.CsharpSqlite">
+      <HintPath>lib\Community.CsharpSqlite.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
@@ -62,6 +65,7 @@
   <ItemGroup>
     <Compile Include="History.cs" />
     <Compile Include="Processes.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Programs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

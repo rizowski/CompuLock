@@ -10,10 +10,7 @@ namespace Service
 {
     class Processes
     {
-        static void Main(string[] args)
-        {
-            
-        }
+        
 
         public Process[] GetProcesses()
         {
@@ -44,7 +41,7 @@ namespace Service
 
                     if (result == 0)
                     {
-                        Console.WriteLine("{0}\\{1} - {2}",(string)outParameters[1],(string)outParameters[0],(string)process["Name"]);
+                        Console.WriteLine("{0}\\{1} - {2}",outParameters[1], outParameters[0], process["Name"]);
 
                         // Use process data...
                     }
@@ -54,35 +51,6 @@ namespace Service
                     }
                 }
             return null;
-        }
-
-        
-
-        public void RunHistory()
-        {
-            History his = new History();
-            
-        }
-
-        public void RunProcesses()
-        {
-            var record = new Processes();
-            var processes = record.GetProcesses();
-            foreach (var process in processes)
-            {
-                Console.WriteLine(process.ProcessName);
-            }
-            Console.WriteLine();
-            Console.WriteLine("Admin: {0} ", record.IsAdmin());
-            Console.WriteLine();
-            Console.WriteLine(record.GetProcessesByUserv2());
-            Console.Read();
-        }
-
-        public void RunPrograms()
-        {
-            Programs pro = new Programs();
-            pro.GetRunningPrograms();
         }
     }
 }
