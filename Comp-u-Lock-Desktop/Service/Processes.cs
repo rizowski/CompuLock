@@ -8,22 +8,11 @@ using System.Management;
 
 namespace Service
 {
-    class Recorder
+    class Processes
     {
         static void Main(string[] args)
         {
-            var record = new Recorder();
-            var processes = record.GetProcesses();
-            foreach (var process in processes)
-            {
-                Console.WriteLine(process.ProcessName);
-            }
-            Console.WriteLine();
-            Console.WriteLine("Admin: {0} ", record.IsAdmin());
-            Console.WriteLine();
-            Console.WriteLine(record.GetProcessesByUserv2());
-            record.GetRunningPrograms();
-            Console.Read();
+            
         }
 
         public Process[] GetProcesses()
@@ -67,17 +56,33 @@ namespace Service
             return null;
         }
 
-        public void GetRunningPrograms()
-        {
-            Process[] processlist = Process.GetProcesses();
+        
 
-            foreach (Process process in processlist)
+        public void RunHistory()
+        {
+            History his = new History();
+            
+        }
+
+        public void RunProcesses()
+        {
+            var record = new Processes();
+            var processes = record.GetProcesses();
+            foreach (var process in processes)
             {
-                if (!String.IsNullOrEmpty(process.MainWindowTitle))
-                {
-                    Console.WriteLine("Process: {0} ID: {1} Window title: {2}", process.ProcessName, process.Id, process.MainWindowTitle);
-                }
-            } 
+                Console.WriteLine(process.ProcessName);
+            }
+            Console.WriteLine();
+            Console.WriteLine("Admin: {0} ", record.IsAdmin());
+            Console.WriteLine();
+            Console.WriteLine(record.GetProcessesByUserv2());
+            Console.Read();
+        }
+
+        public void RunPrograms()
+        {
+            Programs pro = new Programs();
+            pro.GetRunningPrograms();
         }
     }
 }
