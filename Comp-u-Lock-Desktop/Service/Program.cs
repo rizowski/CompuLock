@@ -9,20 +9,13 @@ namespace Service
     {
         static  void Main(string[] args)
         {
-            /*Console.WriteLine("History:");
-            RunHistory();
-            Console.WriteLine("\nProcesses:");
+            Console.WriteLine("Processes:");
             RunProcesses();
-            Console.WriteLine("\nPrograms:");
+           /* Console.WriteLine("\nPrograms:");
             RunPrograms();*/
-            Console.WriteLine("\nProxy Running...");
-            RunProxy();
+            /*Console.WriteLine("\nProxy Running...");
+            RunProxy();*/
             Console.Read();
-        }
-
-        public static void RunHistory()
-        {
-            History his = new History();
         }
 
         public static void RunProcesses()
@@ -34,9 +27,15 @@ namespace Service
                 Console.WriteLine(process.ProcessName);
             }
             Console.WriteLine();
-            Console.WriteLine("Admin: {0} ", record.IsAdmin());
+            var userprocesses = record.GetProcessesByUser("Rizowski");
             Console.WriteLine();
-            Console.WriteLine(record.GetProcessesByUserv2());
+            Console.WriteLine("Named Processes");
+            foreach (var process in userprocesses)
+            {
+                object[] outParameters = new object[2];
+                process.InvokeMethod("GetOwner", outParameters);
+                Console.WriteLine("{0} - {1}",outParameters[0], process["name"]);
+            }
         }
 
         public static void RunPrograms()

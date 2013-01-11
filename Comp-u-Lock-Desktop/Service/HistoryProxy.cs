@@ -53,7 +53,7 @@ namespace Service
             bool received = true;
             string end = "\r\n";
 
-            string requestPayload = "";
+            string request = "";
             string requestTempLine = "";
             List<string> requestLines = new List<string>();
             byte[] requestBuffer = new byte[1];
@@ -68,7 +68,7 @@ namespace Service
                 {
                     this.client.Receive(requestBuffer);
                     string fromByte = ASCIIEncoding.ASCII.GetString(requestBuffer);
-                    requestPayload += fromByte;
+                    request += fromByte;
                     requestTempLine += fromByte;
 
                     if (requestTempLine.EndsWith(end))
@@ -77,30 +77,30 @@ namespace Service
                         requestTempLine = "";
                     }
 
-                    if (requestPayload.EndsWith(end + end))
+                    if (request.EndsWith(end + end))
                     {
                         received = false;
                     }
                 }
                 Console.WriteLine("Raw Request Received...");
-                Console.WriteLine(requestPayload);
+                Console.WriteLine(request);
 
                 //rebuild header and send back to host
                 string remoteHost = requestLines[0].Split(' ')[1].Replace("http://", "").Split('/')[0];
                 string requestFile = requestLines[0].Replace("http://", "").Replace(remoteHost, "");
                 requestLines[0] = requestFile;
 
-                requestPayload = "";
+                request = "";
                 foreach (string line in requestLines)
                 {
-                    requestPayload += line;
-                    requestPayload += end;
+                    request += line;
+                    request += end;
                 }
 
                 Socket destServerSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 destServerSocket.Connect(remoteHost, 80);
         
-                destServerSocket.Send(ASCIIEncoding.ASCII.GetBytes(requestPayload));
+                destServerSocket.Send(ASCIIEncoding.ASCII.GetBytes(request));
 
                 while (destServerSocket.Receive(responseBuffer) != 0)
                 {

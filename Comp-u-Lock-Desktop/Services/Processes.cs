@@ -6,7 +6,7 @@ using System.Text;
 using System.Diagnostics;
 using System.Management;
 
-namespace Service
+namespace Services
 {
     public class Processes
     {
@@ -16,7 +16,7 @@ namespace Service
 
         public Processes()
         {
-            
+
         }
 
         public Process[] GetProcesses()
@@ -56,27 +56,27 @@ namespace Service
                     {
                         if (user == null) // prints all
                         {
-                            #if (DEBUG)
-                                Console.WriteLine("{0}\\{1} - {2}", outParameters[DOMAIN], outParameters[USERNAME],
-                                              process["Name"]);
-                            #endif
+#if (DEBUG)
+                            Console.WriteLine("{0}\\{1} - {2}", outParameters[DOMAIN], outParameters[USERNAME],
+                                          process["Name"]);
+#endif
                             processies.Add(process);
                         }
                         else if (outParameters[USERNAME].Equals(user)) // prints user processes
                         {
-                            #if (DEBUG)
-                                Console.WriteLine("{0}\\{1} - {2}", outParameters[DOMAIN], outParameters[USERNAME],
-                                              process["Name"]);
-                            #endif
+#if (DEBUG)
+                            Console.WriteLine("{0}\\{1} - {2}", outParameters[DOMAIN], outParameters[USERNAME],
+                                          process["Name"]);
+#endif
                             processies.Add(process);
                         }
                     }
                     else
                     {
                         // TODO doesn't need to print
-                        #if (DEBUG)
-                            Console.WriteLine("There is no owner for {0}", process["Name"]);
-                        #endif
+#if (DEBUG)
+                        Console.WriteLine("There is no owner for {0}", process["Name"]);
+#endif
                     }
                 }
             return processies;

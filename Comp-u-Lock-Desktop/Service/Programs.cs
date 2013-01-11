@@ -26,9 +26,9 @@ namespace Service
             }
         }
 
-        public void GetRunningProgramsPerUser()
+        /*public void GetRunningProgramsPerUser()
         {
             
-        }
+        }*/
     }
 }

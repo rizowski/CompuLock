@@ -66,8 +66,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="History.cs" />
-    <Compile Include="Os.cs" />
     <Compile Include="Processes.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Programs.cs" />

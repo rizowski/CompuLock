@@ -1,14 +1,14 @@
-Week 1)
-	Record Processies
+Week 1:
+	Record Processies:
 		- By user
-	Record Programs
+	Record Programs:
 		- By user
-	Record Browser history
+	Record Browser history:
 		- Internet explorer
 		- Chrome
 		- Firefox
-	Error handling
-	Unit testing
+	Error handling:
+	Unit testing:
 		- Processes
 			- Should be unique
 		- Programs
@@ -16,6 +16,8 @@ Week 1)
 		- Browser Histroy
 			- Should be unique/ general
 			- ex) Facebook.com/profile/3432442 Should be Facebook.com
+		Resources:
+			- http://stackoverflow.com/questions/12301832/a-project-with-an-output-type-of-class-library-cannot-be-started-directly-2
 	Files Added:
 		- App manifest
 	Updates:
@@ -39,20 +41,23 @@ Week 1)
 				- http://answers.yahoo.com/question/index?qid=20071011162335AAACp1v
 			- Proxy Approach
 				- http://www.switchonthecode.com/tutorials/csharp-tutorial-simple-threaded-tcp-server
+				- http://times.imkrisna.com/2011/08/simple-http-proxy-server-c-source-code/
         		- http://stackoverflow.com/questions/197725/programmatically-set-browser-proxy-settings-in-c-sharp
         		- http://stackoverflow.com/questions/12049245/how-do-i-change-lan-setting-proxy-server
 		- DB Access Write
 			- Csharp SQLite
 				- http://code.google.com/p/csharp-sqlite/downloads/detail?name=csharp-sqlite_3_7_7_1_71.zip&can=2&q=
+			- Debugging
+				- http://stackoverflow.com/a/507723/1162192
 	Notes:
 		- Grabbing processes and who owns the current ones is slow, perhaps in future updates the process retrieval could be improved by implementing other method described in the codeproject resource.
 		- Grabbing the current history as it is being made would be easier. This way I can get around trying to find each db file there is for every browser out there. The proxy server can also be applied to 1 account at a time. This is useful because I don't want to track every account that is logged in. I just want to listen to the account that is specified.
 
 
 
-Week 2) 
-	To be planned...
+Week 2: 
+	- To be planned...
 
-	Other Resources Usefull
+	Other Resources Usefull:
 		- Credentials 
 			- http://social.msdn.microsoft.com/forums/en-US/netfxbcl/thread/36e1bcfa-a46a-47a8-8b21-78357efe866b
