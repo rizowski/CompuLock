@@ -6,9 +6,9 @@ namespace Test
     [TestClass]
     public class DataTests
     {
-        [TestMethod]
+        /*[TestMethod]
         public void TestMethod1()
         {
-        }
+        }*/
     }
 }
