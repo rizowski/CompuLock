@@ -5,16 +5,18 @@ using System.Text;
 
 namespace Service
 {
-    class Program
+    public class Program
     {
         static  void Main(string[] args)
         {
-            Console.WriteLine("History:");
+            /*Console.WriteLine("History:");
             RunHistory();
-            /*Console.WriteLine("\nProcesses:");
+            Console.WriteLine("\nProcesses:");
             RunProcesses();
             Console.WriteLine("\nPrograms:");
             RunPrograms();*/
+            Console.WriteLine("\nProxy Running...");
+            RunProxy();
             Console.Read();
         }
 
@@ -41,6 +43,17 @@ namespace Service
         {
             Programs pro = new Programs();
             pro.GetRunningPrograms();
+        }
+
+        public static void RunProxy()
+        {
+            HistoryProxy hp = new HistoryProxy(9095);
+            hp.Start();
+            while (true)
+            {
+                hp.Accept();
+            }
+
         }
     }
 }

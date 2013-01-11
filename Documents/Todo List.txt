@@ -37,11 +37,16 @@ Week 1)
 				- http://social.msdn.microsoft.com/Forums/en-US/csharpgeneral/thread/0086aaa0-ced6-4fdb-b874-dd97ee16f122
 			- Firefox
 				- http://answers.yahoo.com/question/index?qid=20071011162335AAACp1v
+			- Proxy Approach
+				- http://www.switchonthecode.com/tutorials/csharp-tutorial-simple-threaded-tcp-server
+        		- http://stackoverflow.com/questions/197725/programmatically-set-browser-proxy-settings-in-c-sharp
+        		- http://stackoverflow.com/questions/12049245/how-do-i-change-lan-setting-proxy-server
 		- DB Access Write
 			- Csharp SQLite
 				- http://code.google.com/p/csharp-sqlite/downloads/detail?name=csharp-sqlite_3_7_7_1_71.zip&can=2&q=
 	Notes:
 		- Grabbing processes and who owns the current ones is slow, perhaps in future updates the process retrieval could be improved by implementing other method described in the codeproject resource.
+		- Grabbing the current history as it is being made would be easier. This way I can get around trying to find each db file there is for every browser out there. The proxy server can also be applied to 1 account at a time. This is useful because I don't want to track every account that is logged in. I just want to listen to the account that is specified.
 
 
 

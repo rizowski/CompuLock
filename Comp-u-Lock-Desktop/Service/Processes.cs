@@ -8,7 +8,7 @@ using System.Management;
 
 namespace Service
 {
-    class Processes
+    public class Processes
     {
         
 
@@ -47,7 +47,7 @@ namespace Service
                     }
                     else
                     {
-                        Console.WriteLine("There is no owner for {0}", (string)process["Name"]);
+                        Console.WriteLine("There is no owner for {0}", process["Name"]);
                     }
                 }
             return null;

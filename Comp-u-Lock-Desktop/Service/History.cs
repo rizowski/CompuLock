@@ -5,93 +5,53 @@ using System.Text;
 using System.Management;
 namespace Service
 {
-    class History
+    public class History
     {
-        //Enviroment.GetFolderPath(Enviroment.SpecialFolder.ApplicationData)
-        public Version OsVersion { get
-        {
-            // Enviroment.osVerions
-            var version = Environment.OSVersion.Version.ToString().Split('.');
-            //double os = double.Parse(version[0]) + double.Parse(version[1])/10;
-            var major = int.Parse(version[0]);
-            var minor = int.Parse(version[1]);
-            var build = int.Parse(version[2]);
-            var revision = int.Parse(version[3]);
-            return new Version(major,minor,build,revision);
-        } }
-        public PlatformID Platform
-        {
-            get { return Environment.OSVersion.Platform; }
-        }
-
-        public string ChromeHistoryPath { get; set; }
-        public string FirefoxHistoryPath { get; set; }
-        public string IeHistoryPath { get; set; }
+        public Uri ChromeHistoryPath { get; set; }
+        public Uri FirefoxHistoryPath { get; set; }
+        public Uri IeHistoryPath { get; set; }
 
         public History()
         {
-            Console.WriteLine("{0}.{1}", OsVersion.Major, OsVersion.Minor);
+            Console.WriteLine("{0}.{1}", Os.Version.Major, Os.Version.Minor);
+            switch (Os.Name)
+            {
+                case Windows.Xp:
+                    IeHistoryPath = new Uri("");//Xp = 
+                    FirefoxHistoryPath = new Uri("");//Xp = C:\Documents and Settings\Owner\Application Data\Mozilla\Firefox\Profiles\
+                    ChromeHistoryPath = new Uri(@"C:\Documents and Settings\" + Environment.UserName + @"\Local Settings\Application Data\Google\Chrome\User Data\Default\");
+                    break;
+                case Windows.Vista:
+                    IeHistoryPath = new Uri("");//Vista = 
+                    FirefoxHistoryPath = new Uri("");//Vista = C:\Users\Owner\AppData\Roaming\Mozilla\Firefox\Profiles\
+                    ChromeHistoryPath = new Uri(@"C:\users\" + Environment.UserName + @"\Local Settings\Application Data\Google\Chrome\User Data\Default\");
+                    break;
+                case Windows.Seven:
+                    IeHistoryPath = new Uri("");//Windows 7 = 
+                    FirefoxHistoryPath = new Uri("");//Windows 7+ = %APPDATA%\Mozilla\Firefox\Profiles
+                    ChromeHistoryPath = new Uri(@"C:\Users\" + Environment.UserName + @"\AppData\Local\Google\Chrome\User Data\Default");
+                    break;
+                case Windows.Eight:
+                    IeHistoryPath = new Uri("");//Windows 8 = C:\Users\Rizowski\AppData\Local\Microsoft\Windows\History
+                    FirefoxHistoryPath = new Uri("");//Windows 7+ = %APPDATA%\Mozilla\Firefox\Profiles
+                    ChromeHistoryPath = new Uri(@"C:\Users\" + Environment.UserName + @"\AppData\Local\Google\Chrome\User Data\Default");
+                    break;
+                default:
+                    break;
+            }
         }
 
         public void GetChromeHistory()
         {
-            switch (Platform)
-            {
-                    case PlatformID.Win32NT:
-                    {
-                        //Xp = C:\Documents and Settings\<USER>\Local Settings\Application Data\Google\Chrome\User Data\Default\
-                        // Vista = C:\users\<USER>\Local Settings\Application Data\Google\Chrome\User Data\Default\
-                        //windows7 + = C:\Users\[username]\AppData\Local\Google\Chrome\User Data\Default
 
-                        //Check to see what version of windws you are on
-                        if (0==0)
-                        {
-                            
-                        }
-                        break;
-                    }
-                default:
-                    break;
-            }
         }
 
         public void GetFirefoxHistory()
         {
-            switch (Platform)
-            {
-                    case PlatformID.Win32NT:
-                    {
-                        //Xp = C:\Documents and Settings\Owner\Application Data\Mozilla\Firefox\Profiles\
-                        //Vista = C:\Users\Owner\AppData\Roaming\Mozilla\Firefox\Profiles\
-                        //Windows 7+ = %APPDATA%\Mozilla\Firefox\Profiles
-                        // Check what version of Windows you are on.
-                        if (0==0)
-                        {
-                            
-                        }
-                        break;
-                    }
-                default:
-                    break;
-            }
         }
 
         public void GetIeHistory()
         {
-            switch (Platform)
-            {
-                case PlatformID.Win32NT:
-                    {
-                        // Check what version of Windows you are on.
-                        if (0 == 0)
-                        {
-
-                        }
-                        break;
-                    }
-                default:
-                    break;
-            }
         }
     }
 }
