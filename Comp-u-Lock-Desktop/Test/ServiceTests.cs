@@ -46,5 +46,10 @@ namespace Test
             Assert.AreEqual(testcount, list.Count);
             
         }
+
+        public void Proxy_RequestIsMadeAndServerRespondsRecorded()
+        {
+            
+        }
     }
 }

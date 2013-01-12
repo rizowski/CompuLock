@@ -18,6 +18,7 @@ Week 1:
 			- ex) Facebook.com/profile/3432442 Should be Facebook.com
 		Resources:
 			- http://stackoverflow.com/questions/12301832/a-project-with-an-output-type-of-class-library-cannot-be-started-directly-2
+			- http://msdn.microsoft.com/en-us/library/ms379625%28VS.80%29.aspx
 	Files Added:
 		- App manifest
 	Updates:
@@ -35,6 +36,7 @@ Week 1:
 		- history
 			- Chrome
 				- http://productforums.google.com/forum/#!topic/chrome/6ndeqflOq0M
+				- http://stackoverflow.com/questions/8608200/programmatically-acess-google-chrome-history
 			- Internet explorer
 				- http://social.msdn.microsoft.com/Forums/en-US/csharpgeneral/thread/0086aaa0-ced6-4fdb-b874-dd97ee16f122
 			- Firefox
@@ -44,6 +46,8 @@ Week 1:
 				- http://times.imkrisna.com/2011/08/simple-http-proxy-server-c-source-code/
         		- http://stackoverflow.com/questions/197725/programmatically-set-browser-proxy-settings-in-c-sharp
         		- http://stackoverflow.com/questions/12049245/how-do-i-change-lan-setting-proxy-server
+        		- http://trotinet.sourceforge.net/
+        		- http://en.wikipedia.org/wiki/List_of_HTTP_header_fields
 		- DB Access Write
 			- Csharp SQLite
 				- http://code.google.com/p/csharp-sqlite/downloads/detail?name=csharp-sqlite_3_7_7_1_71.zip&can=2&q=
@@ -52,6 +56,7 @@ Week 1:
 	Notes:
 		- Grabbing processes and who owns the current ones is slow, perhaps in future updates the process retrieval could be improved by implementing other method described in the codeproject resource.
 		- Grabbing the current history as it is being made would be easier. This way I can get around trying to find each db file there is for every browser out there. The proxy server can also be applied to 1 account at a time. This is useful because I don't want to track every account that is logged in. I just want to listen to the account that is specified.
+		- The proxy approach is very difficult, currently I am running into issues with other protocols. As  soon as you turn it into a proxy you have to deal with any and all requests. I am having issues with trying to make it so that it handles HTTPS correctly.
 
 
 
