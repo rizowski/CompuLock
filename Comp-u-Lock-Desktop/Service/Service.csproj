@@ -70,8 +70,12 @@
     <Reference Include="TrotiNet">
       <HintPath>..\packages\TrotiNet-0.7.0\TrotiNet.dll</HintPath>
     </Reference>
+    <Reference Include="UrlHistoryLibrary">
+      <HintPath>..\packages\Ponta\UrlHistoryLibrary.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="OS.cs" />
     <Compile Include="Processes.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Programs.cs" />

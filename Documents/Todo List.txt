@@ -34,6 +34,8 @@ Week 1:
 		- Admin Privileges
 			- http://stackoverflow.com/questions/2818179/how-to-force-my-net-app-to-run-as-administrator-on-windows-7
 		- history
+			- Browser Version
+				- http://stackoverflow.com/questions/6197794/how-to-get-ie-version-info-in-winform
 			- Chrome
 				- http://productforums.google.com/forum/#!topic/chrome/6ndeqflOq0M
 				- http://stackoverflow.com/questions/8608200/programmatically-acess-google-chrome-history
@@ -41,13 +43,6 @@ Week 1:
 				- http://social.msdn.microsoft.com/Forums/en-US/csharpgeneral/thread/0086aaa0-ced6-4fdb-b874-dd97ee16f122
 			- Firefox
 				- http://answers.yahoo.com/question/index?qid=20071011162335AAACp1v
-			- Proxy Approach
-				- http://www.switchonthecode.com/tutorials/csharp-tutorial-simple-threaded-tcp-server
-				- http://times.imkrisna.com/2011/08/simple-http-proxy-server-c-source-code/
-        		- http://stackoverflow.com/questions/197725/programmatically-set-browser-proxy-settings-in-c-sharp
-        		- http://stackoverflow.com/questions/12049245/how-do-i-change-lan-setting-proxy-server
-        		- http://trotinet.sourceforge.net/
-        		- http://en.wikipedia.org/wiki/List_of_HTTP_header_fields
 		- DB Access Write
 			- Csharp SQLite
 				- http://code.google.com/p/csharp-sqlite/downloads/detail?name=csharp-sqlite_3_7_7_1_71.zip&can=2&q=
