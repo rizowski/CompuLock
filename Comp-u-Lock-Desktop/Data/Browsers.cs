@@ -1,14 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.SQLite;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using Microsoft.Win32;
-using UrlHistoryLibrary;
 
 namespace Data
 {
@@ -38,12 +30,57 @@ namespace Data
             string sql = "select * from " + PLACES + END;
             SQLiteCommand command = new SQLiteCommand(sql, SqlConnection);
             SQLiteDataReader reader = command.ExecuteReader();
+            List<URL> list = new List<URL>();
             while (reader.Read())
             {
+                string url = (string) reader["url"];
+                string title = (string) reader["title"];
+                int visitcount = (int) reader["visit_count"];
+                int visitDate = (int) reader["last_visit_date"];
+
+                list.Add(new URL(visitDate,url,title,"Firefox",visitcount));
                 Console.WriteLine("{0} - {1} - {2}", reader["last_visit_date"],reader["title"], reader["url"]);
             }
-            return null;
+            return list;
         }
 
+    }
+
+    public class ChromeHistoryReader
+    {
+        public string DbPath;
+        public string FileName;
+        public SQLiteConnection SqlConnection;
+        private const string HISTORY_DB = "urls";
+        private const string END = ";";
+
+        public ChromeHistoryReader(string path, string filename)
+        {
+            DbPath = path;
+            FileName = filename;
+        }
+
+        public void Connect()
+        {
+            // C:\Users\Rizowski\AppData\Local\Google\Chrome\User Data\Default
+            SqlConnection = new SQLiteConnection("Data Source="+DbPath + FileName + END);
+            SqlConnection.Open();
+        }
+
+        public IEnumerable<URL> GetHistory()
+        {
+            string sql = "select * from " + HISTORY_DB + END;
+            SQLiteCommand command = new SQLiteCommand(sql, SqlConnection);
+            SQLiteDataReader reader = command.ExecuteReader();
+            List<URL> list = new List<URL>();
+            while (reader.Read())
+            {
+                int date = (int) reader["last_visit_time"];
+                int visit = (int) reader["visit_count"];
+                list.Add(new URL(date,(string) reader["url"], (string) reader["title"],"Chrome",visit));
+                Console.WriteLine("{0} - {1} - {2}", reader["last_visit_time"], reader["title"], reader["url"]);
+            }
+            return list;
+        }
     }
 }

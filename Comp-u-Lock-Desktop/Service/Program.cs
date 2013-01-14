@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -72,10 +73,20 @@ namespace Service
 
         public static void GetSQLiteHistory()
         {
-            Firefox f = new Firefox();
+            /*Firefox f = new Firefox();
             FirefoxHistoryReader fh = new FirefoxHistoryReader(f.HistoryPath.AbsolutePath + @"\3fcwvrqq.default\","places.sqlite");
             fh.Connect();
-            fh.GetHistory();
+            fh.GetHistory();*/
+
+            Chrome c = new Chrome();
+            string[] files = Directory.GetFiles(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\Google\Chrome\User Data\Default");
+            foreach (var file in files)
+            {
+                Console.WriteLine(file);
+            }
+            ChromeHistoryReader ch = new ChromeHistoryReader(c.HistoryPath, "History");
+            ch.Connect();
+            ch.GetHistory();
         }
 
     }

@@ -13,7 +13,6 @@ C:\Users\Rizowski\Documents\GitHub\CompuLock\Comp-u-Lock-Desktop\Service\bin\Deb
 C:\Users\Rizowski\Documents\GitHub\CompuLock\Comp-u-Lock-Desktop\Service\bin\Debug\Service.exe
 C:\Users\Rizowski\Documents\GitHub\CompuLock\Comp-u-Lock-Desktop\Service\bin\Debug\Service.pdb
 C:\Users\Rizowski\Documents\GitHub\CompuLock\Comp-u-Lock-Desktop\Service\bin\Debug\Data.exe
-C:\Users\Rizowski\Documents\GitHub\CompuLock\Comp-u-Lock-Desktop\Service\bin\Debug\log4net.dll
 C:\Users\Rizowski\Documents\GitHub\CompuLock\Comp-u-Lock-Desktop\Service\bin\Debug\System.Data.SQLite.dll
 C:\Users\Rizowski\Documents\GitHub\CompuLock\Comp-u-Lock-Desktop\Service\bin\Debug\System.Data.SQLite.Linq.dll
 C:\Users\Rizowski\Documents\GitHub\CompuLock\Comp-u-Lock-Desktop\Service\bin\Debug\UrlHistoryLibrary.dll

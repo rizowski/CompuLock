@@ -109,7 +109,7 @@ namespace Service
     public class Chrome : IBrowser
     {
         public Version Version;
-        public Uri HistoryPath;
+        public string HistoryPath;
         public Chrome()
         {
             object path;
@@ -127,16 +127,17 @@ namespace Service
             switch (OS.Name)
             {
                 case Windows.Eight:
-                    HistoryPath = new Uri(@"C:\Users\" + Environment.UserName + @"\AppData\Local\Google\Chrome\User Data\Default\");
+
+                    HistoryPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\Google\Chrome\User Data\Default\";
                     break;
                 case Windows.Seven:
-                    HistoryPath = new Uri(@"C:\Users\" + Environment.UserName + @"\AppData\Local\Google\Chrome\User Data\Default\");
+                    HistoryPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\Google\Chrome\User Data\Default\";
                     break;
                 case Windows.Vista:
-                    HistoryPath = new Uri(@"C:\users\" + Environment.UserName + @"\Local Settings\Application Data\Google\Chrome\User Data\Default\");
+                    HistoryPath = @"C:\users\" + Environment.UserName + @"\LocalSettings\Application Data\Google\Chrome\User Data\Default\";
                     break;
                 case Windows.Xp:
-                    HistoryPath = new Uri(@"C:\Documents and Settings\" + Environment.UserName + @"\Local Settings\Application Data\Google\Chrome\User Data\Default\");
+                    HistoryPath = @"C:\Documents and Settings\" + Environment.UserName + @"\Local Settings\Application Data\Google\Chrome\User Data\Default\";
                     break;
             }
         }
