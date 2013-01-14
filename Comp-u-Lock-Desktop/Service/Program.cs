@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using Data;
 
 namespace Service
 {
@@ -11,8 +12,10 @@ namespace Service
     {
         static  void Main(string[] args)
         {
-            Console.WriteLine("History:");
-            RunHistory();
+            /*Console.WriteLine("History:");
+            RunHistory();*/
+            Console.WriteLine("\nSQLiteHistory");
+            GetSQLiteHistory();
             /*Console.WriteLine("\nProcesses:");
             RunProcesses();*/
            /* Console.WriteLine("\nPrograms:");
@@ -49,10 +52,30 @@ namespace Service
 
         public static void RunHistory()
         {
+            Console.WriteLine("Internet Explorer");
             var ie = new InternetExplorer();
+            Console.WriteLine(ie.Version);
             Console.WriteLine(ie.IsRunning());
             ie.GetHistory();
 
+            Console.WriteLine("Firefox");
+            var fire = new Firefox();
+            Console.WriteLine(fire.Version);
+            Console.WriteLine(fire.IsRunning());
+
+            Console.WriteLine("Chrome");
+            var chrome = new Chrome();
+            Console.WriteLine(chrome.Version);
+            Console.WriteLine(chrome.IsRunning());
+
+        }
+
+        public static void GetSQLiteHistory()
+        {
+            Firefox f = new Firefox();
+            FirefoxHistoryReader fh = new FirefoxHistoryReader(f.HistoryPath.AbsolutePath + @"\3fcwvrqq.default\","places.sqlite");
+            fh.Connect();
+            fh.GetHistory();
         }
 
     }

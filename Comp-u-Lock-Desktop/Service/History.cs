@@ -2,12 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading;
+using Data;
 using Microsoft.Win32;
 using UrlHistoryLibrary;
 
@@ -16,7 +11,7 @@ namespace Service
     public interface IBrowser
     {
         bool IsRunning();
-        void GetHistory();
+        IEnumerable<URL> GetHistory();
     }
 
     public class InternetExplorer : IBrowser
@@ -24,18 +19,9 @@ namespace Service
         public Version Version;
         public InternetExplorer()
         {
-            try
-            {
-                Version = new Version((string)Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Internet Explorer")
-                    .GetValue("Version"));
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("{0}", e.Message);
-                Version = new Version("0");
-            }
-            
-            Console.WriteLine(Version);
+            var key = Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Internet Explorer");
+            if (key != null)
+                Version = new Version((string)key.GetValue("Version"));
         }
 
         public bool IsRunning()
@@ -48,7 +34,7 @@ namespace Service
             return false;
         }
 
-        public void GetHistory()
+        public IEnumerable<URL> GetHistory()
         {
             var urlHisotry = new UrlHistoryWrapperClass();
             var enumerator = urlHisotry.GetEnumerator();
@@ -56,32 +42,50 @@ namespace Service
             enumerator.GetUrlHistory(list);
             foreach (STATURL item in list)
             {
+
                 Console.WriteLine(item.URL);
             }
-
+            return null;
         }
     }
 
     public class Firefox : IBrowser
     {
-        public Version Verson;
+        public Version Version;
         public Uri HistoryPath;
 
         public Firefox()
         {
+            object path;
+            var key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\firefox.exe");
+            if (key != null)
+            {
+                path = key.GetValue("");
+                if (path != null)
+                    Version = new Version(FileVersionInfo.GetVersionInfo(path.ToString()).FileVersion);
+            }
+            else
+            {
+                Version = new Version("0");
+            }
             switch (OS.Name)
             {
                 case Windows.Eight:
                     //Windows 7+ = %APPDATA%\Mozilla\Firefox\Profiles
+                    HistoryPath =
+                        new Uri(@"C:\Users\" + Environment.UserName + @"\AppData\Roaming\Mozilla\Firefox\Profiles");
                     break;
                 case Windows.Seven:
-                    //Windows 7+ = %APPDATA%\Mozilla\Firefox\Profiles
+                    //Windows 7+ = @"C:\Users\"+Environment.UserName+@"\AppData\Roaming\Mozilla\Firefox\Profiles"
+                    HistoryPath = new Uri(@"C:\Users\" + Environment.UserName + @"\AppData\Roaming\Mozilla\Firefox\Profiles");
                     break;
                 case Windows.Vista:
-                    //Vista = C:\Users\Owner\AppData\Roaming\Mozilla\Firefox\Profiles\
+                    //Vista = @"C:\Users\"+Environment.UserName+@"\AppData\Roaming\Mozilla\Firefox\Profiles\
+                    HistoryPath = new Uri(@"C:\Users\" + Environment.UserName + @"\AppData\Roaming\Mozilla\Firefox\Profiles\");
                     break;
                 case Windows.Xp:
                     //Xp = C:\Documents and Settings\Owner\Application Data\Mozilla\Firefox\Profiles\
+                    HistoryPath = new Uri(@"C:\Documents and Settings\" + Environment.UserName + @"\Application Data\Mozilla\Firefox\Profiles\");
                     break;
             }
         }
@@ -96,9 +100,9 @@ namespace Service
             return false;
         }
 
-        public void GetHistory()
+        public IEnumerable<URL> GetHistory()
         {
-            
+            return null;
         }
     }
 
@@ -108,13 +112,25 @@ namespace Service
         public Uri HistoryPath;
         public Chrome()
         {
+            object path;
+            var key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\chrome.exe");
+            if (key != null)
+            {
+                path = key.GetValue("");
+                if (path != null)
+                    Version = new Version(FileVersionInfo.GetVersionInfo(path.ToString()).FileVersion);
+            }
+            else
+            {
+                Version = new Version("0");
+            }
             switch (OS.Name)
             {
                 case Windows.Eight:
-                    HistoryPath = new Uri(@"C:\Users\" + Environment.UserName + @"\AppData\Local\Google\Chrome\User Data\Default");
+                    HistoryPath = new Uri(@"C:\Users\" + Environment.UserName + @"\AppData\Local\Google\Chrome\User Data\Default\");
                     break;
                 case Windows.Seven:
-                    HistoryPath = new Uri(@"C:\Users\" + Environment.UserName + @"\AppData\Local\Google\Chrome\User Data\Default");
+                    HistoryPath = new Uri(@"C:\Users\" + Environment.UserName + @"\AppData\Local\Google\Chrome\User Data\Default\");
                     break;
                 case Windows.Vista:
                     HistoryPath = new Uri(@"C:\users\" + Environment.UserName + @"\Local Settings\Application Data\Google\Chrome\User Data\Default\");
@@ -135,9 +151,9 @@ namespace Service
             return false;
         }
 
-        public void GetHistory()
+        public IEnumerable<URL> GetHistory()
         {
-            
+            return null;
         }
     }
 }

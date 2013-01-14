@@ -44,6 +44,9 @@ Week 1:
 			- Firefox
 				- http://answers.yahoo.com/question/index?qid=20071011162335AAACp1v
 		- DB Access Write
+			- SQLite
+				- http://blog.tigrangasparian.com/2012/02/09/getting-started-with-sqlite-in-c-part-one/
+				- http://www.connectionstrings.com/sqlite
 			- Csharp SQLite
 				- http://code.google.com/p/csharp-sqlite/downloads/detail?name=csharp-sqlite_3_7_7_1_71.zip&can=2&q=
 			- Debugging

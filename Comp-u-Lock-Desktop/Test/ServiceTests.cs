@@ -44,12 +44,30 @@ namespace Test
                 }
             }
             Assert.AreEqual(testcount, list.Count);
-            
         }
 
-        public void Proxy_RequestIsMadeAndServerRespondsRecorded()
+        [TestMethod]
+        public void IE_Browser_IsNotRunningShouldBeTrue()
         {
-            
+            Process[] procs = Process.GetProcessesByName("iexplore");
+            InternetExplorer ie = new InternetExplorer();
+            Assert.AreEqual((procs.Length !=0),ie.IsRunning());
+        }
+
+        [TestMethod]
+        public void Chrome_Browser_IsNotRunningShouldBeTrue()
+        {
+            Process[] procs = Process.GetProcessesByName("firefox");
+            Firefox f = new Firefox();
+            Assert.AreEqual((procs.Length != 0), f.IsRunning());
+        }
+
+        [TestMethod]
+        public void Firefox_Browser_IsNotRunningShouldBeTrue()
+        {
+            Process[] procs = Process.GetProcessesByName("chrome");
+            Chrome c = new Chrome();
+            Assert.AreEqual((procs.Length != 0), c.IsRunning());
         }
     }
 }
