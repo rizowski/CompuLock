@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Service
+namespace Service.Enviroment
 {
     public static class OS
     {
@@ -28,43 +25,34 @@ namespace Service
                 {
                     case PlatformID.Win32NT:
                         {
-                            //Check to see what version of windws you are on
                             switch (Version.Major)
                             {
-                                case 6: // Vista Kernal
+                                case 6:
                                     switch (Version.Minor)
                                     {
-                                        case 2:// Win 8
+                                        case 2:
                                             return Windows.Eight;
-                                            break;
-                                        case 1:// Win 7
+                                        case 1:
                                             return Windows.Seven;
-                                            break;
-                                        case 0:// Vista
+                                        case 0:
                                             return Windows.Vista;
-                                            break;
                                     }
                                     break;
-                                case 5: // XP Kernal
+                                case 5:
                                     switch (Version.Minor)
                                     {
                                         case 1:
                                             return Windows.Xp;
-                                            break;
-                                        case 2:// 64 bit
+                                        case 2:
                                             return Windows.Xp;
-                                            break;
                                         default:
                                             return Windows.Unsupported;
-                                            break;
                                     }
-                                    break;
                             }
                             break;
                         }
                     default:
                         return Windows.Unsupported;
-                        break;
                 }
                 return Windows.Unsupported;
             }

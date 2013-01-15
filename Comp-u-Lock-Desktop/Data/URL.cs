@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Data
 {
@@ -10,23 +7,24 @@ namespace Data
         public string Url;
         public string Title;
         public string Browser;
-        public int LastVisitDate;
+        public DateTime LastVisitDate;
         public int VisitCount;
 
-        public URL(int lastvisitdate, string url, string title, string browser, int visitcount = 0)
+        public URL(long lastvisitdate, string url, string title, string browser, int visitcount = 0)
         {
             Url = url;
             Title = title;
-            Browser = browser;
-            LastVisitDate = lastvisitdate;
+            Browser = browser;           
+            LastVisitDate = new DateTime(lastvisitdate);
             VisitCount = visitcount;
 
         }
 
-        public new string ToString()
+        public override string ToString()
         {
             return Browser + " - " + Title + " - " + Url;
         }
+
 
     }
 }

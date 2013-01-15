@@ -51,6 +51,9 @@ Week 1:
 				- http://code.google.com/p/csharp-sqlite/downloads/detail?name=csharp-sqlite_3_7_7_1_71.zip&can=2&q=
 			- Debugging
 				- http://stackoverflow.com/a/507723/1162192
+			- Parsing
+				- http://msdn.microsoft.com/en-us/library/d4haekc4.aspx
+				- http://stackoverflow.com/questions/1674215/parsing-unix-time-in-c-sharp
 	Notes:
 		- Grabbing processes and who owns the current ones is slow, perhaps in future updates the process retrieval could be improved by implementing other method described in the codeproject resource.
 		- Grabbing the current history as it is being made would be easier. This way I can get around trying to find each db file there is for every browser out there. The proxy server can also be applied to 1 account at a time. This is useful because I don't want to track every account that is logged in. I just want to listen to the account that is specified.

@@ -3,6 +3,8 @@ using System.Diagnostics;
 using System.Management;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Service;
+using Service.Enviroment;
+using Service.Users;
 
 namespace Test
 {
@@ -47,7 +49,7 @@ namespace Test
         }
 
         [TestMethod]
-        public void IE_Browser_IsNotRunningShouldBeTrue()
+        public void IEBrowser_IsNotRunningShouldBeTrue()
         {
             Process[] procs = Process.GetProcessesByName("iexplore");
             InternetExplorer ie = new InternetExplorer();
@@ -55,7 +57,7 @@ namespace Test
         }
 
         [TestMethod]
-        public void Chrome_Browser_IsNotRunningShouldBeTrue()
+        public void ChromeBrowser_IsNotRunningShouldBeTrue()
         {
             Process[] procs = Process.GetProcessesByName("firefox");
             Firefox f = new Firefox();
@@ -63,11 +65,39 @@ namespace Test
         }
 
         [TestMethod]
-        public void Firefox_Browser_IsNotRunningShouldBeTrue()
+        public void FirefoxBrowser_IsNotRunningShouldBeTrue()
         {
             Process[] procs = Process.GetProcessesByName("chrome");
             Chrome c = new Chrome();
             Assert.AreEqual((procs.Length != 0), c.IsRunning());
+        }
+
+        public void IEBrowser_IsInstalled()
+        {
+
+        }
+
+        public void FirefoxBrowser_IsInstalled()
+        {
+            
+        }
+
+        public void ChromeBrowser_IsInstalled()
+        {
+
+        }
+
+        [TestMethod]
+        public void OS_GetsCorrectOSVerion()
+        {
+            Assert.AreEqual(Environment.OSVersion.Version, OS.Version);
+        }
+
+        [TestMethod]
+        public void OS_GetsCorrectOSName()
+        {
+
+            Assert.AreEqual(Windows.Eight, OS.Name);
         }
     }
 }

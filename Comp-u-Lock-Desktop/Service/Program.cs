@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
 using Data;
+using Service.Enviroment;
+using Service.Users;
 
 namespace Service
 {
@@ -15,12 +12,14 @@ namespace Service
         {
             /*Console.WriteLine("History:");
             RunHistory();*/
-            Console.WriteLine("\nSQLiteHistory");
-            GetSQLiteHistory();
+            /*Console.WriteLine("\nSQLiteHistory");
+            GetSQLiteHistory();*/
             /*Console.WriteLine("\nProcesses:");
             RunProcesses();*/
            /* Console.WriteLine("\nPrograms:");
             RunPrograms();*/
+            Console.WriteLine("\nRun Os");
+            RunOS();
             Console.Read();
 
         }
@@ -79,14 +78,16 @@ namespace Service
             fh.GetHistory();*/
 
             Chrome c = new Chrome();
-            string[] files = Directory.GetFiles(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\Google\Chrome\User Data\Default");
-            foreach (var file in files)
-            {
-                Console.WriteLine(file);
-            }
             ChromeHistoryReader ch = new ChromeHistoryReader(c.HistoryPath, "History");
             ch.Connect();
             ch.GetHistory();
+        }
+
+
+        public static void RunOS()
+        {
+            Console.WriteLine(Environment.OSVersion.Version);
+            Console.WriteLine(OS.Version);
         }
 
     }

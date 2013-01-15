@@ -36,11 +36,12 @@ namespace Data
                 string url = (string) reader["url"];
                 string title = (string) reader["title"];
                 int visitcount = (int) reader["visit_count"];
-                int visitDate = (int) reader["last_visit_date"];
+                long visitDate = (long) reader["last_visit_date"];
 
                 list.Add(new URL(visitDate,url,title,"Firefox",visitcount));
                 Console.WriteLine("{0} - {1} - {2}", reader["last_visit_date"],reader["title"], reader["url"]);
             }
+            reader.Close();
             return list;
         }
 
@@ -75,11 +76,12 @@ namespace Data
             List<URL> list = new List<URL>();
             while (reader.Read())
             {
-                int date = (int) reader["last_visit_time"];
-                int visit = (int) reader["visit_count"];
+                long date = (long) reader["last_visit_time"];
+                int visit = Convert.ToInt32(reader["visit_count"]);
                 list.Add(new URL(date,(string) reader["url"], (string) reader["title"],"Chrome",visit));
                 Console.WriteLine("{0} - {1} - {2}", reader["last_visit_time"], reader["title"], reader["url"]);
             }
+            reader.Close();
             return list;
         }
     }

@@ -4,9 +4,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Data;
 using Microsoft.Win32;
+using Service.Enviroment;
 using UrlHistoryLibrary;
 
-namespace Service
+namespace Service.Users
 {
     public interface IBrowser
     {

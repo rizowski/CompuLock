@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Principal;
-using System.Text;
 using System.Diagnostics;
 using System.Management;
 
-namespace Service
+namespace Service.Users
 {
     public class Processes
     {
         private const int DOMAIN = 1;
         private const int USERNAME = 0;
-        private const string GENERAL_KEY = "general";
 
         public Processes()
         {
@@ -26,17 +23,7 @@ namespace Service
             return all;
         }
 
-        //not sure why I had this method.
-        /*public Boolean IsAdmin()
-        {
-            WindowsIdentity user = WindowsIdentity.GetCurrent();
-            WindowsPrincipal princ = new WindowsPrincipal(user);
-            var isadmin = princ.IsInRole(WindowsBuiltInRole.Administrator);
-            return isadmin;
-        }*/
-
-        // http://msdn.microsoft.com/library/windows/desktop/aa394372.aspx
-        public List<ManagementObject> GetProcessesByUser(string user = null)
+        public IEnumerable<ManagementObject> GetProcessesByUser(string user = null)
         {
             string[] propertiesToSelect = new[] { "Handle", "ProcessId", "Name" };
             SelectQuery processQuery = new SelectQuery("Win32_Process", null, propertiesToSelect);
