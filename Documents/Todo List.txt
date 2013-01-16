@@ -62,7 +62,13 @@ Week 1:
 
 
 Week 2: 
-	- To be planned...
+	- Change a selected user’s password
+	- Change a selected users password based on a time limit
+	- Unlock an account with a master password
+	- Error handling for the above
+	- Unit testing for password changes and master password
+	Resources:
+		- 
 
 	Other Resources Usefull:
 		- Credentials 

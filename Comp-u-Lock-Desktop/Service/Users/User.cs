@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.DirectoryServices.AccountManagement;
 using System.Linq;
 using System.Text;
 
@@ -24,6 +25,12 @@ namespace Service.Users
             
         }
 
-        
+        public void IsCorrectPassword(string domain=null, string username=null, string password=null)
+        {
+            PrincipalContext pc = new PrincipalContext(ContextType.Domain);
+                // validate the credentials
+                bool isValid = pc.ValidateCredentials(username, password);
+                Console.WriteLine(isValid);
+        }
     }
 }

@@ -18,8 +18,10 @@ namespace Service
             RunProcesses();*/
            /* Console.WriteLine("\nPrograms:");
             RunPrograms();*/
-            Console.WriteLine("\nRun Os");
-            RunOS();
+            /*Console.WriteLine("\nRun Os");
+            RunOS();*/
+            Console.WriteLine("\nRun User");
+            RunUser();
             Console.Read();
 
         }
@@ -88,6 +90,12 @@ namespace Service
         {
             Console.WriteLine(Environment.OSVersion.Version);
             Console.WriteLine(OS.Version);
+        }
+
+        public static void RunUser()
+        {
+            UserAccount account = new UserAccount(Environment.UserDomainName, Environment.UserName, 5000);
+            account.IsCorrectPassword(account.Domain, account.UserName, "1dPqg!F7");
         }
 
     }
