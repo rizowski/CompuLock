@@ -94,8 +94,9 @@ namespace Service
 
         public static void RunUser()
         {
-            UserAccount account = new UserAccount(Environment.UserDomainName, Environment.UserName, 5000);
-            account.IsCorrectPassword(account.Domain, account.UserName, "1dPqg!F7");
+            UserAccount account = new UserAccount(Environment.UserDomainName, Environment.UserName);
+            account.StartTimer();
+            account.StopTimer();
         }
 
     }

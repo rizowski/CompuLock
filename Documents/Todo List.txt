@@ -63,12 +63,22 @@ Week 1:
 
 Week 2: 
 	- Change a selected user’s password
+		Notes:
+			- Method should be implemented.
 	- Change a selected users password based on a time limit
+		Notes:
 	- Unlock an account with a master password
+		Notes:
+			- With this I don't really need a master password. The new password should be sent via email to the parent or something of this sort. After the password is changed I can send this somehow to the parent.
 	- Error handling for the above
+		Notes:
 	- Unit testing for password changes and master password
+		Notes:
 	Resources:
-		- 
+		Windows OS Authentication:
+			- http://stackoverflow.com/questions/3714679/how-get-current-username-and-password-from-windows-operating-system
+			- C++ OR VB http://support.microsoft.com/kb/841699
+			- 
 
 	Other Resources Usefull:
 		- Credentials 
