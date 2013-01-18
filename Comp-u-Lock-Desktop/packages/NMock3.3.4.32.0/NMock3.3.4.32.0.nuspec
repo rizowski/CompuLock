@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>NMock3</id>
+    <version>3.4.32.0</version>
+    <title>NMock3</title>
+    <authors>Philip Wolfe</authors>
+    <owners>Philip Wolfe</owners>
+    <licenseUrl>http://nmock3.codeplex.com/license</licenseUrl>
+    <projectUrl>http://nmock3.codeplex.com/</projectUrl>
+    <iconUrl>http://download-codeplex.sec.s-msft.com/Download?ProjectName=nmock3&amp;DownloadId=433929</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>NMock3 is a Mocking framework that uses expectations to define interactions between a controller and the mock.</description>
+    <tags>Mock Mocking TDD AAA Stub Framework MVP</tags>
+    <references>
+      <reference file="NMock3.dll" />
+    </references>
+  </metadata>
+</package>

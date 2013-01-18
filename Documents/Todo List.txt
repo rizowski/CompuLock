@@ -78,8 +78,13 @@ Week 2:
 		Windows OS Authentication:
 			- http://stackoverflow.com/questions/3714679/how-get-current-username-and-password-from-windows-operating-system
 			- C++ OR VB http://support.microsoft.com/kb/841699
-			- 
-
+		Timer:
+			- http://stackoverflow.com/questions/7094668/timer-in-windows-service-not-firing-elapsedeventhandler/7094722#7094722
+			- http://msdn.microsoft.com/en-us/library/system.timers.timer.aspx
+			- http://msdn.microsoft.com/en-us/library/system.threading.countdownevent%28VS.100%29.aspx
+			- http://msdn.microsoft.com/en-us/library/system.directoryservices.directoryentry.aspx
+		UserAccounts:
+			- Very good Recource!! http://msdn.microsoft.com/en-us/magazine/cc135979.aspx#S3
 	Other Resources Usefull:
 		- Credentials 
 			- http://social.msdn.microsoft.com/forums/en-US/netfxbcl/thread/36e1bcfa-a46a-47a8-8b21-78357efe866b

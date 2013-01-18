@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Management;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NMock;
 using Service;
 using Service.Enviroment;
 using Service.Users;

@@ -94,7 +94,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enviroment\LoggoffManager.cs" />
     <Compile Include="Enviroment\OS.cs" />
+    <Compile Include="Users\AccountLock.cs" />
+    <Compile Include="Users\AccountManager.cs" />
     <Compile Include="Users\Processes.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Users\Programs.cs" />

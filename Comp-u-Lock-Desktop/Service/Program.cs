@@ -95,8 +95,8 @@ namespace Service
         public static void RunUser()
         {
             UserAccount account = new UserAccount(Environment.UserDomainName, Environment.UserName);
-            account.StartTimer();
-            account.StopTimer();
+            account.LockAccount(Environment.UserName);//.ChangeUserPassword("Parents", "190421", "rizowski");
+            //account.StartTimer();
         }
 
     }
