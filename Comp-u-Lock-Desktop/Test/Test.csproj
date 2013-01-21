@@ -63,9 +63,13 @@
     <Compile Include="DataTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Service\Service.csproj">
+    <ProjectReference Include="..\Data\Data.csproj">
+      <Project>{0f56142f-3923-445a-a4ad-f037aea15fd6}</Project>
+      <Name>Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Service\Controller.csproj">
       <Project>{2a2109ca-0a6f-431f-a9e1-947f78cdfc1a}</Project>
-      <Name>Service</Name>
+      <Name>Controller</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

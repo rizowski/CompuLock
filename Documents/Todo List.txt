@@ -67,6 +67,7 @@ Week 2:
 			- Method should be implemented.
 	- Change a selected users password based on a time limit
 		Notes:
+			- For some reason they gave an option to lock an account programatically but so far they don't have a way to unlock it. A little confused on that.
 	- Unlock an account with a master password
 		Notes:
 			- With this I don't really need a master password. The new password should be sent via email to the parent or something of this sort. After the password is changed I can send this somehow to the parent.
@@ -85,6 +86,8 @@ Week 2:
 			- http://msdn.microsoft.com/en-us/library/system.directoryservices.directoryentry.aspx
 		UserAccounts:
 			- Very good Recource!! http://msdn.microsoft.com/en-us/magazine/cc135979.aspx#S3
+				Locking:
+					- http://bytes.com/topic/c-sharp/answers/662895-enable-disable-local-active-directory-account-code
 	Other Resources Usefull:
 		- Credentials 
 			- http://social.msdn.microsoft.com/forums/en-US/netfxbcl/thread/36e1bcfa-a46a-47a8-8b21-78357efe866b

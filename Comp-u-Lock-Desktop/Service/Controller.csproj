@@ -94,15 +94,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enviroment\LoggoffManager.cs" />
-    <Compile Include="Enviroment\OS.cs" />
     <Compile Include="Users\AccountLock.cs" />
     <Compile Include="Users\AccountManager.cs" />
     <Compile Include="Users\Processes.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Users\Programs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Users\History.cs" />
     <Compile Include="Users\User.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -146,6 +143,17 @@
       <Project>{0f56142f-3923-445a-a4ad-f037aea15fd6}</Project>
       <Name>Data</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="ActiveDs">
+      <Guid>{97D25DB0-0363-11CF-ABC4-02608C9E7553}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

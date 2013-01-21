@@ -20,3 +20,5 @@ C:\Users\Rizowski\Documents\GitHub\CompuLock\Comp-u-Lock-Desktop\Service\bin\Deb
 C:\Users\Rizowski\Documents\GitHub\CompuLock\Comp-u-Lock-Desktop\Service\obj\Debug\Service.csprojResolveAssemblyReference.cache
 C:\Users\Rizowski\Documents\GitHub\CompuLock\Comp-u-Lock-Desktop\Service\obj\Debug\Service.exe
 C:\Users\Rizowski\Documents\GitHub\CompuLock\Comp-u-Lock-Desktop\Service\obj\Debug\Service.pdb
+C:\Users\Rizowski\Documents\GitHub\CompuLock\Comp-u-Lock-Desktop\Service\obj\Debug\Interop.ActiveDs.dll
+C:\Users\Rizowski\Documents\GitHub\CompuLock\Comp-u-Lock-Desktop\Service\obj\Debug\Service.csproj.ResolveComReference.cache

@@ -1,6 +1,11 @@
 ﻿using System;
+using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
+using System.Management;
+using System.Runtime.InteropServices;
 using System.Timers;
+using ActiveDs;
+using Service.Enviroment;
 
 namespace Service.Users
 {
@@ -18,26 +23,25 @@ namespace Service.Users
             Domain = domain;
             UserName = username;
             Timer = new Timer(interval*1000) {AutoReset = true};
-            #if(debug)
+            //#if(debug)
             Timer.Disposed += TimerDisposed;
             Timer.Elapsed += TimerElapsed;
-            #endif
+            //#endif
             Timer.Elapsed += Tick;
             ElapsedTime = TimeSpan.Zero;
+            
         }
 
         private void TimerElapsed(object sender, ElapsedEventArgs e)
         {
-            #if(debug)
-            Console.WriteLine("{0} - {1}", sender, e.SignalTime);
-            #endif
+            throw new NotImplementedException();
         }
 
         private void TimerDisposed(object sender, EventArgs e)
         {
-            Console.WriteLine("Setting password to 190421");
-            ChangeUserPassword(UserName, "", "190421");
+            throw new NotImplementedException();
         }
+
 
         public void ChangeUserPassword(string username, string oldpassword, string newpassword)
         {
@@ -104,19 +108,53 @@ namespace Service.Users
         {
             try
             {
-                var context = new PrincipalContext(ContextType.Machine);
-                UserPrincipal user = UserPrincipal.FindByIdentity(context, IdentityType.Name, username);
+                //var context = new PrincipalContext(ContextType.Machine);
+                //UserPrincipal user = UserPrincipal.FindByIdentity(context, IdentityType.Name, username);
                 
-                var computer = ComputerPrincipal.FindByIdentity(context, IdentityType.UserPrincipalName, user.Name);
-                Console.WriteLine(computer.DisplayName);
-                Console.WriteLine(computer.Enabled);
+                //var computer = ComputerPrincipal.FindByIdentity(context, IdentityType.UserPrincipalName, user.Name);
+                //Console.WriteLine(computer.DisplayName);
+                //Console.WriteLine(computer.Enabled);
                 //computer.Enabled = false;
+
+                //DirectoryEntry user = new DirectoryEntry("WinNT://"+Environment.MachineName+"/"+username);
+                //Console.WriteLine(user.Properties["UserFlags"].Value);
+                //user.Properties["UserFlags"].Value = ADS_USER_FLAG.ADS_UF_ACCOUNTDISABLE;//ADS_USER_FLAG.ADS_UF_ACCOUNTDISABLE;//ADS_USER_FLAG.ADS_UF_LOCKOUT;
+                //Console.WriteLine(user.Properties["UserFlags"].Value);
+                //user.CommitChanges();
+
+                //ExitWindowsEx(4, 0);
+
+                //http://msdn.microsoft.com/en-us/library/system.management.managementobject.aspx
+
+                //http://stackoverflow.com/questions/484278/log-off-user-from-win-xp-programmatically-in-c-sharp/484303#484303
+                //http://social.msdn.microsoft.com/Forums/en-US/csharpgeneral/thread/59dd345d-df85-4128-8641-f01f01583194
+                //http://msdn.microsoft.com/en-us/library/windows/desktop/aa393964(v=vs.85).aspx#obtaining_data_from_WMI
+                //http://msdn.microsoft.com/en-us/library/windows/desktop/aa394572(v=vs.85).aspx
+                ConnectionOptions connOptions = new ConnectionOptions();
+                connOptions.Impersonation = ImpersonationLevel.Impersonate;
+                connOptions.EnablePrivileges = true;
+                ManagementScope manScope = new ManagementScope(String.Format(@"\\{0}\ROOT\CIMV2", Environment.MachineName), connOptions);
+                manScope.Connect();
+                ObjectQuery oQuery = new ObjectQuery("select * from Win32_OperatingSystem");
+                ManagementObjectSearcher oSearcher = new ManagementObjectSearcher(manScope, oQuery);
+                ManagementObjectCollection oReturn = oSearcher.Get();
+                foreach (ManagementObject mo in oReturn)
+                {
+                    ManagementBaseObject inParams = mo.GetMethodParameters("Win32Shutdown");
+                    //inParams["Flags"] = 4;
+                    //mo.InvokeMethod("Name",);
+                    ManagementBaseObject outParams = mo.InvokeMethod("Win32Shutdown", inParams, null);
+                }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
         }
+
+        [DllImport("user32.dll")]
+        public static extern int ExitWindowsEx(int uFlags, int dwReason);
+
         public void UnlockAccount(string domain, string username)
         {
             var context = new PrincipalContext(ContextType.Machine);

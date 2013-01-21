@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompuLockDesktop", "CompuLockDesktop\CompuLockDesktop.csproj", "{7027DC15-051F-4355-B5C3-58FC158220EB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "View", "CompuLockDesktop\View.csproj", "{7027DC15-051F-4355-B5C3-58FC158220EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Service\Service.csproj", "{2A2109CA-0A6F-431F-A9E1-947F78CDFC1A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controller", "Service\Controller.csproj", "{2A2109CA-0A6F-431F-A9E1-947F78CDFC1A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{760A35CD-735E-485D-A134-427628B23132}"
 EndProject

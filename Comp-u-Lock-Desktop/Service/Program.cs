@@ -10,8 +10,8 @@ namespace Service
     {
         static  void Main(string[] args)
         {
-            /*Console.WriteLine("History:");
-            RunHistory();*/
+            Console.WriteLine("History:");
+            RunHistory();
             /*Console.WriteLine("\nSQLiteHistory");
             GetSQLiteHistory();*/
             /*Console.WriteLine("\nProcesses:");
@@ -20,8 +20,8 @@ namespace Service
             RunPrograms();*/
             /*Console.WriteLine("\nRun Os");
             RunOS();*/
-            Console.WriteLine("\nRun User");
-            RunUser();
+            /*Console.WriteLine("\nRun User");
+            RunUser();*/
             Console.Read();
 
         }
@@ -55,36 +55,36 @@ namespace Service
         public static void RunHistory()
         {
             Console.WriteLine("Internet Explorer");
-            var ie = new InternetExplorer();
-            Console.WriteLine(ie.Version);
+            var ie = new InternetExplorerHistoryReader();
             Console.WriteLine(ie.IsRunning());
-            ie.GetHistory();
+            Console.WriteLine(ie.Version);
+            var urls = ie.GetHistory();
+            foreach (var url in urls)
+            {
+                Console.WriteLine(url);
+            }
 
-            Console.WriteLine("Firefox");
-            var fire = new Firefox();
-            Console.WriteLine(fire.Version);
-            Console.WriteLine(fire.IsRunning());
+            Console.WriteLine("\nFirefox");
+            var f = new FirefoxHistoryReader(@"\3fcwvrqq.default");
+            f.Filename = "places.sqlite";
+            Console.WriteLine(f.DbPath);
+            Console.WriteLine(f.Filename);
+            Console.WriteLine(f.IsRunning());
+            if (!f.IsRunning())
+            {
+                f.Connect();
+            }
 
-            Console.WriteLine("Chrome");
-            var chrome = new Chrome();
-            Console.WriteLine(chrome.Version);
-            Console.WriteLine(chrome.IsRunning());
-
+            Console.WriteLine("\nChrome");
+            var c = new ChromeHistoryReader();
+            Console.WriteLine(c.IsRunning());
+            Console.WriteLine(c.Version.ToString());
+            if (!c.IsRunning())
+            {
+                c.Connect();
+                c.GetHistory();
+            }
         }
-
-        public static void GetSQLiteHistory()
-        {
-            /*Firefox f = new Firefox();
-            FirefoxHistoryReader fh = new FirefoxHistoryReader(f.HistoryPath.AbsolutePath + @"\3fcwvrqq.default\","places.sqlite");
-            fh.Connect();
-            fh.GetHistory();*/
-
-            Chrome c = new Chrome();
-            ChromeHistoryReader ch = new ChromeHistoryReader(c.HistoryPath, "History");
-            ch.Connect();
-            ch.GetHistory();
-        }
-
 
         public static void RunOS()
         {
@@ -95,7 +95,7 @@ namespace Service
         public static void RunUser()
         {
             UserAccount account = new UserAccount(Environment.UserDomainName, Environment.UserName);
-            account.LockAccount(Environment.UserName);//.ChangeUserPassword("Parents", "190421", "rizowski");
+            account.LockAccount("Kids");//.ChangeUserPassword("Parents", "190421", "rizowski");
             //account.StartTimer();
         }
 
