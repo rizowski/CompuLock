@@ -106,7 +106,6 @@ namespace Data
             reader.Close();
             return list;
         }
-
     }
 
     public class ChromeHistoryReader : IBrowser
