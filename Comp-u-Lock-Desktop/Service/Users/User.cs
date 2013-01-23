@@ -1,16 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
+using System.IO;
 using System.Management;
 using System.Runtime.InteropServices;
+using System.Security.Principal;
+using System.Threading;
 using System.Timers;
 using ActiveDs;
 using Service.Enviroment;
+using Timer = System.Timers.Timer;
 
 namespace Service.Users
 {
-    internal class UserAccount
+    internal class UserManager
     {
         public string Domain;
         public DateTime StartTime;
@@ -22,7 +28,7 @@ namespace Service.Users
         const int WTS_CURRENT_SESSION = -1;
         static readonly IntPtr WTS_CURRENT_SERVER_HANDLE = IntPtr.Zero;
 
-        public UserAccount(string domain, string username, double interval = 1)
+        public UserManager(string domain, string username, double interval = 1)
         {
             Domain = domain;
             UserName = username;
@@ -108,6 +114,19 @@ namespace Service.Users
             LockTime = new TimeSpan(hours, minutes, seconds);
         }
 
+        public void ActiveUsers()
+        {
+            ManagementScope s = new ManagementScope(ManagementPath.DefaultPath);
+            SelectQuery query = new SelectQuery("Win32_LoggedonUser");//"Win32_LogonSession", "AuthenticationPackage = 'NTLM'");
+            ManagementObjectSearcher searcher = new ManagementObjectSearcher(s, query);
+            ManagementObjectCollection mos = searcher.Get();
+            foreach (var mo in mos)
+            {
+                Console.WriteLine((string)mo.Properties["Antecedent"].Value);
+                Console.WriteLine((string)mo.Properties["Dependent"].Value);
+            }
+        }
+
         public void LockAccount(string username)
         {
             try
@@ -161,10 +180,55 @@ namespace Service.Users
             }
         }
 
+        public List<Principal> GetUsers()
+        {
+            SecurityIdentifier builtinAdminSid = new SecurityIdentifier(WellKnownSidType.BuiltinAdministratorsSid, null);
+
+            PrincipalContext ctx = new PrincipalContext(ContextType.Machine);
+
+            GroupPrincipal group = GroupPrincipal.FindByIdentity(ctx, builtinAdminSid.Value);
+            
+            if (group != null)
+                return new List<Principal>(group.Members);
+            return null;
+        }
+
+        public void GetUserSessionId()
+        {
+            string strOutput;
+            //Starting Information for process like its path, use system shell i.e. control process by system etc.
+            ProcessStartInfo psi = new ProcessStartInfo(@"C:\WINDOWS\system32\cmd.exe");
+            // its states that system shell will not be used to control the process instead program will handle the process
+            psi.UseShellExecute = false;
+            psi.ErrorDialog = false;
+            // Do not show command prompt window separately
+            psi.CreateNoWindow = true;
+            psi.WindowStyle = ProcessWindowStyle.Hidden;
+            //redirect all standard inout to program
+            psi.RedirectStandardError = true;
+            psi.RedirectStandardInput = true;
+            psi.RedirectStandardOutput = true;
+            //create the process with above infor and start it
+            Process plinkProcess = new Process();
+            plinkProcess.StartInfo = psi;
+            plinkProcess.Start();
+            //link the streams to standard inout of process
+            StreamWriter inputWriter = plinkProcess.StandardInput;
+            StreamReader outputReader = plinkProcess.StandardOutput;
+            StreamReader errorReader = plinkProcess.StandardError;
+            //send command to cmd prompt and wait for command to execute with thread sleep
+            inputWriter.WriteLine("query session\r\n");
+            Thread.Sleep(10000);
+            // flush the input stream before sending exit command to end process for any unwanted characters
+            inputWriter.Flush();
+            inputWriter.WriteLine("exit\r\n");
+            // read till end the stream into string
+            strOutput = outputReader.ReadToEnd();
+            Console.WriteLine(strOutput);
+        }
 
         [DllImport("wtsapi32.dll", SetLastError = true)]
         static extern bool WTSDisconnectSession(IntPtr hServer, int sessionId, bool bWait);
-
 
         [DllImport("user32.dll")]
         public static extern int ExitWindowsEx(int uFlags, int dwReason);
@@ -191,6 +255,5 @@ namespace Service.Users
             }
             Console.WriteLine("Elapsed: {0}", ElapsedTime);
         }
-
     }
 }

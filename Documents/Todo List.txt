@@ -101,6 +101,22 @@ Week 2:
 					- http://stackoverflow.com/questions/484278/log-off-user-from-win-xp-programmatically-in-c-sharp
 					- http://msdn.microsoft.com/en-us/library/aa375082%28VS.85%29.aspx
 					- http://msdn.microsoft.com/en-us/library/windows/desktop/aa383459(v=vs.85).aspx
+					Notes:
+						- From what I have been able to tell I might be able to find out session information for a user by doing the following things
+						- I can query into the WMI which I will seem to do quite a bit. I can then use the data it returns to find out user information.
+						- The problem I am running into is actually trying to find the right table to find all the data I need.
+						- once I get it set up I can actually make a data object that will do all the queries for me. Everything below will help with these Notes
+					- http://stackoverflow.com/questions/2005637/how-to-determine-if-user-account-is-enabled-or-disabled
+					- http://msdn.microsoft.com/en-us/library/windows/desktop/aa394189(v=vs.85).aspx
+					- http://msdn.microsoft.com/en-us/library/windows/desktop/aa394424(v=vs.85).aspx
+					- http://www.pcreview.co.uk/forums/reading-users-rdp-session-id-c-t2908007.html
+					- http://msdn.microsoft.com/en-us/library/windows/desktop/aa383838(v=vs.85).aspx
+					- http://www.andreas-kraus.net/blog/how-to-list-all-windows-users/
+					- http://msdn.microsoft.com/en-us/library/windows/desktop/ms684190(v=vs.85).aspx
+					- http://stackoverflow.com/questions/1088091/how-to-get-a-list-of-windows-sessions
+					- http://superuser.com/questions/303927/how-can-i-retrieve-the-session-id-from-command-line
+					- http://social.msdn.microsoft.com/Forums/en-US/windowssecurity/thread/c32e1117-c980-4ec4-8926-5ec6f345f903
+					http://stackoverflow.com/questions/14466373/log-off-a-windows-user-locally-using-c-sharp/14467587#14467587
 				GroupPolicy:
 					- http://stackoverflow.com/questions/981010/how-do-i-configure-group-policy-using-c
 
