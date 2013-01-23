@@ -88,6 +88,22 @@ Week 2:
 			- Very good Recource!! http://msdn.microsoft.com/en-us/magazine/cc135979.aspx#S3
 				Locking:
 					- http://bytes.com/topic/c-sharp/answers/662895-enable-disable-local-active-directory-account-code
+				Loggingout:
+					- JMWXAvdCJL6s/jXRwetsK+HFdrlS1qZ9ertINnHL+JX8PdbzPKYguXVTDY4CQKLFc1A7YiUNvwShxpyyopHm8A==
+					- http://www.pinvoke.net/default.aspx/wtsapi32/wtsdisconnectsession.html
+					- http://stackoverflow.com/questions/2431128/c-sharp-programmatically-log-off-and-log-on-a-user
+					- http://www.codeproject.com/Articles/23630/Windows-XP-Automatic-Login-Using-C-C-Sharp
+					- http://technet.microsoft.com/en-us/library/cc780332%28WS.10%29.aspx
+					- http://msdn.microsoft.com/en-us/library/windows/desktop/aa378292(v=vs.85).aspx
+					- http://technet.microsoft.com/en-us/scriptcenter/powershell.aspx
+					- http://stackoverflow.com/questions/3867532/how-to-remotely-log-off-a-user
+					- http://stackoverflow.com/questions/12112506/how-to-script-log-in-and-log-out-on-windows-xp
+					- http://stackoverflow.com/questions/484278/log-off-user-from-win-xp-programmatically-in-c-sharp
+					- http://msdn.microsoft.com/en-us/library/aa375082%28VS.85%29.aspx
+					- http://msdn.microsoft.com/en-us/library/windows/desktop/aa383459(v=vs.85).aspx
+				GroupPolicy:
+					- http://stackoverflow.com/questions/981010/how-do-i-configure-group-policy-using-c
+
 	Other Resources Usefull:
 		- Credentials 
 			- http://social.msdn.microsoft.com/forums/en-US/netfxbcl/thread/36e1bcfa-a46a-47a8-8b21-78357efe866b

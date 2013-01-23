@@ -10,8 +10,8 @@ namespace Service
     {
         static  void Main(string[] args)
         {
-            Console.WriteLine("History:");
-            RunHistory();
+            /*Console.WriteLine("History:");
+            RunHistory();*/
             /*Console.WriteLine("\nSQLiteHistory");
             GetSQLiteHistory();*/
             /*Console.WriteLine("\nProcesses:");
@@ -20,8 +20,8 @@ namespace Service
             RunPrograms();*/
             /*Console.WriteLine("\nRun Os");
             RunOS();*/
-            /*Console.WriteLine("\nRun User");
-            RunUser();*/
+            Console.WriteLine("\nRun User");
+            RunUser();
             Console.Read();
 
         }

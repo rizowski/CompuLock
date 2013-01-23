@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
 using System.Management;
@@ -17,6 +18,9 @@ namespace Service.Users
         public TimeSpan LockTime;
         public string UserName;
         public Timer Timer;
+
+        const int WTS_CURRENT_SESSION = -1;
+        static readonly IntPtr WTS_CURRENT_SERVER_HANDLE = IntPtr.Zero;
 
         public UserAccount(string domain, string username, double interval = 1)
         {
@@ -130,21 +134,26 @@ namespace Service.Users
                 //http://social.msdn.microsoft.com/Forums/en-US/csharpgeneral/thread/59dd345d-df85-4128-8641-f01f01583194
                 //http://msdn.microsoft.com/en-us/library/windows/desktop/aa393964(v=vs.85).aspx#obtaining_data_from_WMI
                 //http://msdn.microsoft.com/en-us/library/windows/desktop/aa394572(v=vs.85).aspx
-                ConnectionOptions connOptions = new ConnectionOptions();
-                connOptions.Impersonation = ImpersonationLevel.Impersonate;
-                connOptions.EnablePrivileges = true;
-                ManagementScope manScope = new ManagementScope(String.Format(@"\\{0}\ROOT\CIMV2", Environment.MachineName), connOptions);
-                manScope.Connect();
-                ObjectQuery oQuery = new ObjectQuery("select * from Win32_OperatingSystem");
-                ManagementObjectSearcher oSearcher = new ManagementObjectSearcher(manScope, oQuery);
-                ManagementObjectCollection oReturn = oSearcher.Get();
-                foreach (ManagementObject mo in oReturn)
-                {
-                    ManagementBaseObject inParams = mo.GetMethodParameters("Win32Shutdown");
-                    //inParams["Flags"] = 4;
-                    //mo.InvokeMethod("Name",);
-                    ManagementBaseObject outParams = mo.InvokeMethod("Win32Shutdown", inParams, null);
-                }
+                //ConnectionOptions connOptions = new ConnectionOptions();
+                //connOptions.Impersonation = ImpersonationLevel.Impersonate;
+                //connOptions.EnablePrivileges = true;
+                //ManagementScope manScope = new ManagementScope(String.Format(@"\\{0}\ROOT\CIMV2", Environment.MachineName), connOptions);
+                //manScope.Connect();
+                //ObjectQuery oQuery = new ObjectQuery("select * from Win32_OperatingSystem");
+                //ManagementObjectSearcher oSearcher = new ManagementObjectSearcher(manScope, oQuery);
+                //ManagementObjectCollection oReturn = oSearcher.Get();
+                //foreach (ManagementObject mo in oReturn)
+                //{
+                //    ManagementBaseObject inParams = mo.GetMethodParameters("Win32Shutdown");
+                //    //inParams["Flags"] = 4;
+                //    //mo.InvokeMethod("Name",);
+                //    ManagementBaseObject outParams = mo.InvokeMethod("Win32Shutdown", inParams, null);
+                //}
+
+                if (!WTSDisconnectSession(WTS_CURRENT_SERVER_HANDLE,
+                 WTS_CURRENT_SESSION, false))
+                    throw new Win32Exception();
+
             }
             catch (Exception e)
             {
@@ -152,8 +161,16 @@ namespace Service.Users
             }
         }
 
+
+        [DllImport("wtsapi32.dll", SetLastError = true)]
+        static extern bool WTSDisconnectSession(IntPtr hServer, int sessionId, bool bWait);
+
+
         [DllImport("user32.dll")]
         public static extern int ExitWindowsEx(int uFlags, int dwReason);
+
+        [DllImport("Kernal32.dll", EntryPoint = "WTSGetActiveConsoleSessionId")]
+        public static extern int WTSGetActiveConsoleSessionId();
 
         public void UnlockAccount(string domain, string username)
         {
