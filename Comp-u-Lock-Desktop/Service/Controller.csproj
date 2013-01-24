@@ -68,6 +68,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Cassia">
+      <HintPath>..\packages\Cassia\Cassia.dll</HintPath>
+    </Reference>
     <Reference Include="log4net">
       <HintPath>..\packages\TrotiNet-0.7.0\log4net.dll</HintPath>
     </Reference>

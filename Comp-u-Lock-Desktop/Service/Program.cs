@@ -96,7 +96,8 @@ namespace Service
         {
             UserManager account = new UserManager(Environment.UserDomainName, Environment.UserName);
             //account.GetUserSessionId();
-            account.ActiveUsers();
+            Console.WriteLine("Account: Rizowski - id: {0}",account.GetUserSessionId("Rizowski"));
+
             //account.GetUsers();
             //account.LockAccount("Kids");//.ChangeUserPassword("Parents", "190421", "rizowski");
             //account.StartTimer();
