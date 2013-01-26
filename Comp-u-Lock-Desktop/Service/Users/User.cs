@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
 using System.Security.Principal;
+using System.Text;
 using System.Timers;
 using ActiveDs;
 using Cassia;
@@ -73,21 +74,27 @@ namespace Service.Users
         {
             try
             {
+                Console.Write("Locking the account: {0}", username);
                 DirectoryEntry user = new DirectoryEntry("WinNT://" + Environment.MachineName + "/" + username);
-                Console.WriteLine(user.Properties["UserFlags"].Value);
+                Console.Write(".");
+                //Console.WriteLine(user.Properties["UserFlags"].Value);
                 user.Properties["UserFlags"].Value = ADS_USER_FLAG.ADS_UF_ACCOUNTDISABLE;//ADS_USER_FLAG.ADS_UF_ACCOUNTDISABLE;//ADS_USER_FLAG.ADS_UF_LOCKOUT;
-                Console.WriteLine(user.Properties["UserFlags"].Value);
+                //Console.WriteLine(user.Properties["UserFlags"].Value);
+                Console.Write(".");
                 user.CommitChanges();
+                Console.WriteLine(".");
+                user.Close();
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
+            Console.WriteLine("The account has been locked.");
         }
 
         public List<Principal> GetUsers()
         {
-            SecurityIdentifier builtinAdminSid = new SecurityIdentifier(WellKnownSidType.BuiltinAdministratorsSid, null);
+            SecurityIdentifier builtinAdminSid = new SecurityIdentifier(WellKnownSidType.BuiltinUsersSid, null);
 
             PrincipalContext ctx = new PrincipalContext(ContextType.Machine);
 
@@ -164,7 +171,10 @@ namespace Service.Users
                 username = UserName;
             }
                 var session = GetUserSession(username);
+            if (session != null)
                 session.Disconnect(synchronous);
+            else
+                throw new Exception("Session could not be found for user: " + username);
         }
 
         public void DisconnectUser(int sessionId, bool synchronous = false)
@@ -174,7 +184,10 @@ namespace Service.Users
                 throw new ArgumentException("Id must be 0 or above");
             }
             var session = GetUserSession(sessionId);
-            session.Disconnect(synchronous);
+            if (session != null)
+                session.Disconnect(synchronous);
+            else
+                throw new Exception("Session could not be found for SessionId: " + sessionId);
         }
 
         public void UnlockAccount(string username=null)
@@ -183,12 +196,26 @@ namespace Service.Users
             {
                 username = UserName;
             }
-            DirectoryEntry user = new DirectoryEntry("WinNT://" + Environment.MachineName + "/" + username);
-            var old = (ADS_USER_FLAG)user.Properties["UserFlags"].Value;
-            Console.WriteLine(old);
-            user.Properties["UserFlags"].Value = ADS_USER_FLAG.ADS_UF_NORMAL_ACCOUNT;
-            Console.WriteLine(user.Properties["UserFlags"].Value);
-            user.CommitChanges();
+            try
+            {
+                Console.Write("UnLocking the account: {0}", username);
+                DirectoryEntry user = new DirectoryEntry("WinNT://" + Environment.MachineName + "/" + username);
+                Console.Write(".");
+                //Console.WriteLine(user.Properties["UserFlags"].Value);
+                Console.Write(".");
+                //Console.WriteLine(old);
+                user.Properties["UserFlags"].Value = ADS_USER_FLAG.ADS_UF_NORMAL_ACCOUNT;
+                Console.Write(".");
+                //Console.WriteLine(user.Properties["UserFlags"].Value);
+                user.CommitChanges();
+                Console.WriteLine(".");
+                user.Close();
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("There was an error with unlocking the account");
+            }
+            Console.WriteLine("Account has been unlocked.");
         }
         #endregion
 

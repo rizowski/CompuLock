@@ -8,7 +8,7 @@ using Microsoft.Win32;
 using Service.Enviroment;
 using UrlHistoryLibrary;
 
-namespace Data
+namespace Service.Users
 {
 
     public interface IBrowser

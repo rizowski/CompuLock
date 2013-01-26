@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Data
+namespace Service.Users
 {
     public class URL
     {

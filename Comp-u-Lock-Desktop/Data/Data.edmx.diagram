@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="67a2263fa3494ef8ae71f7d04b11987c" Name="Diagram1" >
+        <EntityTypeShape EntityType="Models.Accounts" Width="1.5" PointX="0.5" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.History" Width="1.5" PointX="4" PointY="1.5" />
+        <EntityTypeShape EntityType="Models.Programs" Width="1.5" PointX="7.375" PointY="1.75" />
+        <EntityTypeShape EntityType="Models.Processes" Width="1.5" PointX="4" PointY="4" />
+        <AssociationConnector Association="Models.AccountsHistory" />
+        <AssociationConnector Association="Models.AccountsProcesses" />
+        <AssociationConnector Association="Models.AccountsPrograms" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

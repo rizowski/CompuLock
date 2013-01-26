@@ -95,8 +95,17 @@ namespace Service
         public static void RunUser()
         {
             UserManager account = new UserManager(Environment.UserDomainName, "Kids", new TimeSpan(0,0,0,5));
-            account.UnlockAccount();
+            var users = account.GetUsers();
+            Console.WriteLine("Getting users");
+            foreach (var user in users)
+            {
+                Console.WriteLine(user.Name);
+            }
+            Console.WriteLine();
             account.StartTimer();
+            Console.WriteLine("Hit enter to unlock");
+            Console.ReadLine();
+            account.UnlockAccount();
             
             //account.GetUserSessionId();
             //Console.WriteLine("Account: Rizowski - id: {0}",account.GetUserSessionId("Kids"));
