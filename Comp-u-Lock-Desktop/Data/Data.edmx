@@ -4,112 +4,114 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Models.Store" Alias="Self" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
-        <EntityContainer Name="ModelsStoreContainer" />
+    <Schema Namespace="DatabaseModel.Store" Alias="Self" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="DatabaseModelStoreContainer">
+        </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="Models" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+      <Schema Namespace="DatabaseModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
         <EntityContainer Name="DatabaseEntities" annotation:LazyLoadingEnabled="true" >
-          <EntitySet Name="Accounts" EntityType="Models.Accounts" />
-          <EntitySet Name="Histories" EntityType="Models.History" />
-          <EntitySet Name="Programs" EntityType="Models.Programs" />
-          <EntitySet Name="Processes" EntityType="Models.Processes" />
-          <AssociationSet Name="AccountsHistory" Association="Models.AccountsHistory">
-            <End Role="Accounts" EntitySet="Accounts" />
+          <EntitySet Name="Accounts" EntityType="DatabaseModel.Account" />
+          <EntitySet Name="Histories" EntityType="DatabaseModel.History" />
+          <EntitySet Name="Processes" EntityType="DatabaseModel.Process" />
+          <EntitySet Name="Programs" EntityType="DatabaseModel.Program" />
+          <AssociationSet Name="AccountHistory" Association="DatabaseModel.AccountHistory">
+            <End Role="Account" EntitySet="Accounts" />
             <End Role="History" EntitySet="Histories" />
           </AssociationSet>
-          <AssociationSet Name="AccountsProcesses" Association="Models.AccountsProcesses">
-            <End Role="Accounts" EntitySet="Accounts" />
-            <End Role="Processes" EntitySet="Processes" />
+          <AssociationSet Name="AccountProcess" Association="DatabaseModel.AccountProcess">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Process" EntitySet="Processes" />
           </AssociationSet>
-          <AssociationSet Name="AccountsPrograms" Association="Models.AccountsPrograms">
-            <End Role="Accounts" EntitySet="Accounts" />
-            <End Role="Programs" EntitySet="Programs" />
+          <AssociationSet Name="AccountProgram" Association="DatabaseModel.AccountProgram">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Program" EntitySet="Programs" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Accounts">
+        <EntityType Name="Account">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Histories" Relationship="Models.AccountsHistory" FromRole="Accounts" ToRole="History" />
-          <NavigationProperty Name="Processes" Relationship="Models.AccountsProcesses" FromRole="Accounts" ToRole="Processes" />
-          <NavigationProperty Name="Programs" Relationship="Models.AccountsPrograms" FromRole="Accounts" ToRole="Programs" />
-          <Property Type="String" Name="Domain" Nullable="false" />
-          <Property Type="String" Name="Username" Nullable="false" />
-          <Property Type="DateTime" Name="DateLastLogin" Nullable="false" />
-          <Property Type="Time" Name="AllottedTime" Nullable="false" />
-          <Property Type="Time" Name="UsedTime" Nullable="false" />
+          <Property Type="String" Name="Domain" Nullable="true" />
+          <Property Type="String" Name="UserName" Nullable="false" />
+          <NavigationProperty Name="Histories" Relationship="DatabaseModel.AccountHistory" FromRole="Account" ToRole="History" />
+          <NavigationProperty Name="Processes" Relationship="DatabaseModel.AccountProcess" FromRole="Account" ToRole="Process" />
+          <NavigationProperty Name="Programs" Relationship="DatabaseModel.AccountProgram" FromRole="Account" ToRole="Program" />
+          <Property Type="DateTime" Name="LastLogin" Nullable="false" />
+          <Property Type="Int32" Name="AllottedTime" Nullable="false" />
+          <Property Type="Int32" Name="UsedTime" Nullable="false" />
         </EntityType>
         <EntityType Name="History">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Account" Relationship="Models.AccountsHistory" FromRole="History" ToRole="Accounts" />
-          <Property Type="Int32" Name="AccountsId" Nullable="false" />
+          <NavigationProperty Name="Account" Relationship="DatabaseModel.AccountHistory" FromRole="History" ToRole="Account" />
+          <Property Type="Int32" Name="AccountId" Nullable="false" />
           <Property Type="String" Name="Title" Nullable="false" />
           <Property Type="String" Name="Url" Nullable="false" />
-          <Property Type="DateTime" Name="DateLastVisited" Nullable="false" />
+          <Property Type="String" Name="Domain" Nullable="false" />
+          <Property Type="DateTime" Name="DateVisited" Nullable="false" />
           <Property Type="Int32" Name="VisitCount" Nullable="false" />
         </EntityType>
-        <EntityType Name="Programs">
+        <EntityType Name="Process">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Account" Relationship="Models.AccountsPrograms" FromRole="Programs" ToRole="Accounts" />
-          <Property Type="Int32" Name="AccountsId" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" />
-          <Property Type="Time" Name="TotalRunTime" Nullable="false" />
-          <Property Type="DateTime" Name="LastOpened" Nullable="false" />
-          <Property Type="Int32" Name="OpenCount" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Processes">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Account" Relationship="Models.AccountsProcesses" FromRole="Processes" ToRole="Accounts" />
-          <Property Type="Int32" Name="AccountsId" Nullable="false" />
+          <NavigationProperty Name="Account" Relationship="DatabaseModel.AccountProcess" FromRole="Process" ToRole="Account" />
+          <Property Type="Int32" Name="AccountId" Nullable="false" />
           <Property Type="String" Name="Name" Nullable="false" />
           <Property Type="DateTime" Name="LastRun" Nullable="false" />
-          <Property Type="Time" Name="TotalRunTime" Nullable="false" />
+          <Property Type="Int32" Name="TimeRunning" Nullable="false" />
         </EntityType>
-        <Association Name="AccountsHistory">
-          <End Type="Models.Accounts" Role="Accounts" Multiplicity="1" />
-          <End Type="Models.History" Role="History" Multiplicity="*" />
+        <EntityType Name="Program">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Account" Relationship="DatabaseModel.AccountProgram" FromRole="Program" ToRole="Account" />
+          <Property Type="Int32" Name="AccountId" Nullable="false" />
+          <Property Type="DateTime" Name="LastRun" Nullable="false" />
+          <Property Type="Int32" Name="TimeRunning" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="Int32" Name="OpenCount" Nullable="false" />
+        </EntityType>
+        <Association Name="AccountHistory">
+          <End Type="DatabaseModel.Account" Role="Account" Multiplicity="1" />
+          <End Type="DatabaseModel.History" Role="History" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Accounts">
+            <Principal Role="Account">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="History">
-              <PropertyRef Name="AccountsId" />
+              <PropertyRef Name="AccountId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="AccountsProcesses">
-          <End Type="Models.Accounts" Role="Accounts" Multiplicity="1" />
-          <End Type="Models.Processes" Role="Processes" Multiplicity="*" />
+        <Association Name="AccountProcess">
+          <End Type="DatabaseModel.Account" Role="Account" Multiplicity="1" />
+          <End Type="DatabaseModel.Process" Role="Process" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Accounts">
+            <Principal Role="Account">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Processes">
-              <PropertyRef Name="AccountsId" />
+            <Dependent Role="Process">
+              <PropertyRef Name="AccountId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="AccountsPrograms">
-          <End Type="Models.Accounts" Role="Accounts" Multiplicity="1" />
-          <End Type="Models.Programs" Role="Programs" Multiplicity="*" />
+        <Association Name="AccountProgram">
+          <End Type="DatabaseModel.Account" Role="Account" Multiplicity="1" />
+          <End Type="DatabaseModel.Program" Role="Program" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Accounts">
+            <Principal Role="Account">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Programs">
-              <PropertyRef Name="AccountsId" />
+            <Dependent Role="Program">
+              <PropertyRef Name="AccountId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -117,10 +119,10 @@
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ModelsStoreContainer" CdmEntityContainer="DatabaseEntities" />
-      </Mapping>
-    </edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DatabaseModelStoreContainer" CdmEntityContainer="DatabaseEntities">
+        </EntityContainerMapping>
+</Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">

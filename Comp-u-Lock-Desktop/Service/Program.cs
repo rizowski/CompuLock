@@ -1,8 +1,10 @@
 ﻿using System;
 using System.IO;
 using Data;
-using Service.Enviroment;
+using Data.Enviroment;
 using Service.Users;
+using Processes = Service.Users.Processes;
+using Programs = Service.Users.Programs;
 
 namespace Service
 {
@@ -20,10 +22,28 @@ namespace Service
             RunPrograms();*/
             /*Console.WriteLine("\nRun Os");
             RunOS();*/
-            Console.WriteLine("\nRun User");
-            RunUser();
+            /*Console.WriteLine("\nRun User");
+            RunUser();*/
+            Console.WriteLine("\nRun DbAccounts");
+            RunDbAccounts();
             Console.Read();
 
+        }
+
+        private static void RunDbAccounts()
+        {
+            using (var db = new DatabaseEntities())
+            {
+                var account = db.Accounts.Create();
+                account.UserName = "Rizowski";
+                account.Domain = "";
+                account.LastLogin = DateTime.Now;
+                account.AllottedTime = 30;
+                db.Accounts.Add(account);
+                db.SaveChanges();
+
+                Console.WriteLine(account.Id);
+            }
         }
 
         public static void RunProcesses()

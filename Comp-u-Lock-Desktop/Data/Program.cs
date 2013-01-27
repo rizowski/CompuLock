@@ -12,15 +12,15 @@ namespace Data
     using System;
     using System.Collections.Generic;
     
-    public partial class Programs
+    public partial class Program
     {
         public int Id { get; set; }
-        public int AccountsId { get; set; }
+        public int AccountId { get; set; }
+        public System.DateTime LastRun { get; set; }
+        public int TimeRunning { get; set; }
         public string Name { get; set; }
-        public System.TimeSpan TotalRunTime { get; set; }
-        public System.DateTime LastOpened { get; set; }
         public int OpenCount { get; set; }
     
-        public virtual Accounts Account { get; set; }
+        public virtual Account Account { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Service.Enviroment
+namespace Data.Enviroment
 {
     public static class OS
     {

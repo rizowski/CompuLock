@@ -28,7 +28,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -71,11 +71,13 @@
     <Reference Include="Cassia">
       <HintPath>..\packages\Cassia\Cassia.dll</HintPath>
     </Reference>
-    <Reference Include="log4net">
-      <HintPath>..\packages\TrotiNet-0.7.0\log4net.dll</HintPath>
+    <Reference Include="EntityFramework, Version=4.4.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.SQLite, Version=1.0.84.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\SQLite\System.Data.SQLite.dll</HintPath>
@@ -97,6 +99,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataService\AccountService.cs" />
+    <Compile Include="DataService\HistoryService.cs" />
+    <Compile Include="DataService\ProcessService.cs" />
+    <Compile Include="DataService\ProgramService.cs" />
+    <Compile Include="Service.cs" />
     <Compile Include="Users\Browsers.cs" />
     <Compile Include="Users\Processes.cs" />
     <Compile Include="Program.cs" />
@@ -106,6 +113,7 @@
     <Compile Include="Users\User.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="app.manifest">
       <SubType>Designer</SubType>
     </None>
@@ -142,12 +150,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Data\Data.csproj">
-      <Project>{0f56142f-3923-445a-a4ad-f037aea15fd6}</Project>
-      <Name>Data</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <COMReference Include="ActiveDs">
       <Guid>{97D25DB0-0363-11CF-ABC4-02608C9E7553}</Guid>
       <VersionMajor>1</VersionMajor>
@@ -157,6 +159,12 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Data\Data.csproj">
+      <Project>{dd69a609-8978-4899-9f4f-a90bf5320164}</Project>
+      <Name>Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -12,24 +12,24 @@ namespace Data
     using System;
     using System.Collections.Generic;
     
-    public partial class Accounts
+    public partial class Account
     {
-        public Accounts()
+        public Account()
         {
             this.Histories = new HashSet<History>();
-            this.Processes = new HashSet<Processes>();
-            this.Programs = new HashSet<Programs>();
+            this.Processes = new HashSet<Process>();
+            this.Programs = new HashSet<Program>();
         }
     
         public int Id { get; set; }
         public string Domain { get; set; }
-        public string Username { get; set; }
-        public System.DateTime DateLastLogin { get; set; }
-        public System.TimeSpan AllottedTime { get; set; }
-        public System.TimeSpan UsedTime { get; set; }
+        public string UserName { get; set; }
+        public System.DateTime LastLogin { get; set; }
+        public int AllottedTime { get; set; }
+        public int UsedTime { get; set; }
     
         public virtual ICollection<History> Histories { get; set; }
-        public virtual ICollection<Processes> Processes { get; set; }
-        public virtual ICollection<Programs> Programs { get; set; }
+        public virtual ICollection<Process> Processes { get; set; }
+        public virtual ICollection<Program> Programs { get; set; }
     }
 }

@@ -25,9 +25,9 @@ namespace Data
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<Accounts> Accounts { get; set; }
+        public DbSet<Account> Accounts { get; set; }
         public DbSet<History> Histories { get; set; }
-        public DbSet<Programs> Programs { get; set; }
-        public DbSet<Processes> Processes { get; set; }
+        public DbSet<Process> Processes { get; set; }
+        public DbSet<Program> Programs { get; set; }
     }
 }

@@ -12,14 +12,14 @@ namespace Data
     using System;
     using System.Collections.Generic;
     
-    public partial class Processes
+    public partial class Process
     {
         public int Id { get; set; }
-        public int AccountsId { get; set; }
+        public int AccountId { get; set; }
         public string Name { get; set; }
         public System.DateTime LastRun { get; set; }
-        public System.TimeSpan TotalRunTime { get; set; }
+        public int TimeRunning { get; set; }
     
-        public virtual Accounts Account { get; set; }
+        public virtual Account Account { get; set; }
     }
 }

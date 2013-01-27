@@ -63,7 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Data\Data.csproj">
-      <Project>{0f56142f-3923-445a-a4ad-f037aea15fd6}</Project>
+      <Project>{DD69A609-8978-4899-9F4F-A90BF5320164}</Project>
       <Name>Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Service\Service.csproj">

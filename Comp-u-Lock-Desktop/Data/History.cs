@@ -15,12 +15,13 @@ namespace Data
     public partial class History
     {
         public int Id { get; set; }
-        public int AccountsId { get; set; }
+        public int AccountId { get; set; }
         public string Title { get; set; }
         public string Url { get; set; }
-        public System.DateTime DateLastVisited { get; set; }
+        public string Domain { get; set; }
+        public System.DateTime DateVisited { get; set; }
         public int VisitCount { get; set; }
     
-        public virtual Accounts Account { get; set; }
+        public virtual Account Account { get; set; }
     }
 }
