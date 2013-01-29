@@ -15,10 +15,10 @@ namespace Data
     public partial class Process
     {
         public int Id { get; set; }
-        public int AccountId { get; set; }
         public string Name { get; set; }
-        public System.DateTime LastRun { get; set; }
-        public int TimeRunning { get; set; }
+        public Nullable<System.DateTime> LastRun { get; set; }
+        public int TotalTimeRunning { get; set; }
+        public int AccountId { get; set; }
     
         public virtual Account Account { get; set; }
     }

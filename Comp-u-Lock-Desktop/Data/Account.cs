@@ -23,8 +23,8 @@ namespace Data
     
         public int Id { get; set; }
         public string Domain { get; set; }
-        public string UserName { get; set; }
-        public System.DateTime LastLogin { get; set; }
+        public string Username { get; set; }
+        public Nullable<System.DateTime> LastLogin { get; set; }
         public int AllottedTime { get; set; }
         public int UsedTime { get; set; }
     

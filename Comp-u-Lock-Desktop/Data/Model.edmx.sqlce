@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server Compact Edition
 -- --------------------------------------------------
--- Date Created: 01/26/2013 17:56:59
--- Generated from EDMX file: C:\Users\Rizowski\Documents\GitHub\CompuLock\Comp-u-Lock-Desktop\Data\Data.edmx
+-- Date Created: 01/27/2013 18:04:42
+-- Generated from EDMX file: C:\Users\Rizowski\Documents\GitHub\CompuLock\Comp-u-Lock-Desktop\Data\Model.edmx
 -- --------------------------------------------------
 
 
@@ -18,6 +18,14 @@
 -- NOTE: if the table does not exist, an ignorable error will be reported.
 -- --------------------------------------------------
 
+    DROP TABLE [Account];
+GO
+    DROP TABLE [History];
+GO
+    DROP TABLE [Process];
+GO
+    DROP TABLE [Program];
+GO
 
 -- --------------------------------------------------
 -- Creating all tables
@@ -26,14 +34,23 @@
 -- Creating table 'Accounts'
 CREATE TABLE [Accounts] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [Domain] nvarchar(4000)  NULL,
-    [UserName] nvarchar(4000)  NOT NULL
+    [Domain] nvarchar(100)  NULL,
+    [Username] nvarchar(100)  NOT NULL,
+    [LastLogin] datetime  NULL,
+    [AllottedTime] int  NOT NULL,
+    [UsedTime] int  NOT NULL
 );
 GO
 
 -- Creating table 'Histories'
 CREATE TABLE [Histories] (
     [Id] int IDENTITY(1,1) NOT NULL,
+    [Title] nvarchar(100)  NULL,
+    [WebDomain] nvarchar(100)  NOT NULL,
+    [Url] nvarchar(256)  NULL,
+    [DateFirstVisited] datetime  NOT NULL,
+    [DateLastVisited] datetime  NOT NULL,
+    [VisitCount] int  NOT NULL,
     [AccountId] int  NOT NULL
 );
 GO
@@ -41,6 +58,9 @@ GO
 -- Creating table 'Processes'
 CREATE TABLE [Processes] (
     [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(100)  NOT NULL,
+    [LastRun] datetime  NULL,
+    [TotalTimeRunning] int  NOT NULL,
     [AccountId] int  NOT NULL
 );
 GO
@@ -48,6 +68,10 @@ GO
 -- Creating table 'Programs'
 CREATE TABLE [Programs] (
     [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(100)  NOT NULL,
+    [LastOpen] datetime  NULL,
+    [TimeSpent] int  NOT NULL,
+    [OpenCount] int  NOT NULL,
     [AccountId] int  NOT NULL
 );
 GO

@@ -10,7 +10,7 @@ namespace Service.DataService
     {
         public IQueryable<Account> Search(string query)
         {
-            var searchResults = All().Where(a => a.UserName.Contains(query));
+            var searchResults = All().Where(a => a.Username.Contains(query));
             return searchResults;
         } 
     }

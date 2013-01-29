@@ -15,11 +15,11 @@ namespace Data
     public partial class Program
     {
         public int Id { get; set; }
-        public int AccountId { get; set; }
-        public System.DateTime LastRun { get; set; }
-        public int TimeRunning { get; set; }
         public string Name { get; set; }
+        public Nullable<System.DateTime> LastOpen { get; set; }
+        public int TimeSpent { get; set; }
         public int OpenCount { get; set; }
+        public int AccountId { get; set; }
     
         public virtual Account Account { get; set; }
     }

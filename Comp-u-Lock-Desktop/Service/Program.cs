@@ -35,7 +35,7 @@ namespace Service
             using (var db = new DatabaseEntities())
             {
                 var account = db.Accounts.Create();
-                account.UserName = "Rizowski";
+                account.Username = "Rizowski";
                 account.Domain = "";
                 account.LastLogin = DateTime.Now;
                 account.AllottedTime = 30;
