@@ -11,7 +11,45 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130129000555) do
+ActiveRecord::Schema.define(:version => 20130130013059) do
+
+  create_table "account_histories", :force => true do |t|
+    t.integer  "account_id"
+    t.string   "domain"
+    t.string   "url"
+    t.datetime "last_visited"
+    t.integer  "visit_count"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  create_table "account_processes", :force => true do |t|
+    t.integer  "account_id"
+    t.string   "name"
+    t.datetime "lastrun"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "account_programs", :force => true do |t|
+    t.integer  "acount_id"
+    t.string   "name"
+    t.datetime "lastrun"
+    t.integer  "open_count"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "accounts", :force => true do |t|
+    t.integer  "computer_id"
+    t.string   "domain"
+    t.string   "user_name"
+    t.boolean  "tracking"
+    t.time     "allotted_time"
+    t.time     "used_time"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
 
   create_table "admins", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -31,7 +69,17 @@ ActiveRecord::Schema.define(:version => 20130129000555) do
   add_index "admins", ["email"], :name => "index_admins_on_email", :unique => true
   add_index "admins", ["reset_password_token"], :name => "index_admins_on_reset_password_token", :unique => true
 
+  create_table "computers", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "name"
+    t.string   "ip_address"
+    t.string   "enviroment"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "users", :force => true do |t|
+    t.integer  "computer_id"
     t.string   "email",                  :default => "", :null => false
     t.string   "encrypted_password",     :default => "", :null => false
     t.string   "reset_password_token"
