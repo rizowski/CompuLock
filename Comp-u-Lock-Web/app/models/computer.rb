@@ -1,5 +1,5 @@
 class Computer < ActiveRecord::Base
-  attr_accessible :enviroment, :ip_address, :name
+  attr_accessible :user_id, :enviroment, :ip_address, :name
 
   validates :name, :presence => true
   validates :enviroment, :presence => true

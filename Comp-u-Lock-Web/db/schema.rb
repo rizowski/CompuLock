@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(:version => 20130130013059) do
     t.integer  "account_id"
     t.string   "domain"
     t.string   "url"
+    t.string   "title"
     t.datetime "last_visited"
     t.integer  "visit_count"
     t.datetime "created_at",   :null => false
@@ -32,7 +33,7 @@ ActiveRecord::Schema.define(:version => 20130130013059) do
   end
 
   create_table "account_programs", :force => true do |t|
-    t.integer  "acount_id"
+    t.integer  "account_id"
     t.string   "name"
     t.datetime "lastrun"
     t.integer  "open_count"
@@ -51,24 +52,6 @@ ActiveRecord::Schema.define(:version => 20130130013059) do
     t.datetime "updated_at",    :null => false
   end
 
-  create_table "admins", :force => true do |t|
-    t.string   "email",                  :default => "", :null => false
-    t.string   "encrypted_password",     :default => "", :null => false
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          :default => 0
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
-  end
-
-  add_index "admins", ["email"], :name => "index_admins_on_email", :unique => true
-  add_index "admins", ["reset_password_token"], :name => "index_admins_on_reset_password_token", :unique => true
-
   create_table "computers", :force => true do |t|
     t.integer  "user_id"
     t.string   "name"
@@ -80,6 +63,7 @@ ActiveRecord::Schema.define(:version => 20130130013059) do
 
   create_table "users", :force => true do |t|
     t.integer  "computer_id"
+    t.string   "username"
     t.string   "email",                  :default => "", :null => false
     t.string   "encrypted_password",     :default => "", :null => false
     t.string   "reset_password_token"

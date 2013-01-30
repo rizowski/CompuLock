@@ -5,6 +5,7 @@ class CreateAccountHistories < ActiveRecord::Migration
 
       t.string :domain
       t.string :url
+      t.string :title
       t.datetime :last_visited
       t.integer :visit_count
       

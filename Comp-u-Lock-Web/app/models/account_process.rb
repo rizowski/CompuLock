@@ -1,5 +1,5 @@
 class AccountProcess < ActiveRecord::Base
-  attr_accessible :lastrun, :name
+  attr_accessible :account_id, :lastrun, :name
 
   validates :name, :presence => true
 

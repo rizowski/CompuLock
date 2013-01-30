@@ -1,5 +1,5 @@
 class Account < ActiveRecord::Base
-  attr_accessible :allotted_time, :domain, :tracking, :used_time, :user_name
+  attr_accessible :computer_id, :allotted_time, :domain, :tracking, :used_time, :user_name
 
   validates :user_name, :presence => true
   

@@ -1,7 +1,7 @@
 class CreateAccountPrograms < ActiveRecord::Migration
   def change
     create_table :account_programs do |t|
-      t.references :acount
+      t.references :account
 
       t.string :name
       t.datetime :lastrun
