@@ -1,2 +1,9 @@
-<h1>ComputerAccounts#index</h1>
-<p>Find me in app/views/computer_accounts/index.html.erb</p>
+<h1>Computer Accounts</h1>
+<% @computers.each do |computer| %>
+	<%= computer.name %><br/>
+	<%computer.account.all.each do |account|%>
+		<%=account.domain%>, <%=account.user_name%>, <%=account.tracking%><br/>
+	<% end%>
+	<br/>
+<%end%>
+

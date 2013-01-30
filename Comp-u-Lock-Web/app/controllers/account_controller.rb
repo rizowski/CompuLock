@@ -1,4 +1,5 @@
 class AccountController < ApplicationController
+  before_filter :authenticate_user!#, :except => [:index, :list]
   def index
 
   end
