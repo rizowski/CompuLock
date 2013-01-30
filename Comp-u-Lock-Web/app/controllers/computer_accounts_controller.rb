@@ -9,8 +9,8 @@ class ComputerAccountsController < ApplicationController
   end
 
   def list
-  		user = User.find(current_user.id)
-  		@computers = user.computer.all
+	user = User.find(current_user.id)
+	@computers = user.computer.all
   end
 
   def update

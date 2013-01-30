@@ -24,5 +24,12 @@ class Ability
     #   can :update, Article, :published => true
     #
     # See the wiki for details: https://github.com/ryanb/cancan/wiki/Defining-Abilities
+    user ||= User.new 
+    if user.admin?
+        can :manage, :all
+    else
+        can :manage, Computer, :user_id => user.id
+        can :maange, Account, :computer => { :user_id => user.id}
+    end
   end
 end
