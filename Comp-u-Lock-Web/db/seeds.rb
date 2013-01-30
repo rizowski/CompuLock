@@ -21,13 +21,13 @@ first_user = User.create(:email => "crouska@gmail.com", :password=> "190421", :p
 			AccountProcess.create(:account_id => first_account.id, :name => "explorer", :lastrun => DateTime.now)
 			AccountProgram.create(:account_id => first_account.id, :name => "Chrome", :lastrun => DateTime.now, :open_count => 105)
 			AccountProgram.create(:account_id => first_account.id, :name => "iexplore", :lastrun => DateTime.now, :open_count => 1)
-	third_comp = Computer.create(:user_id=> first_user.id, :name => "Gavins Desktop", :enviroment => "Windows XP")
+	second_comp = Computer.create(:user_id=> first_user.id, :name => "Gavins Desktop", :enviroment => "Windows XP")
+		Account.create(:computer_id => second_comp.id, :domain => "WORKGROUP", :user_name => "Gavin", :tracking => false)
+	third_comp = Computer.create(:user_id=> first_user.id, :name => "Gavins Laptop", :enviroment => "Windows XP")
 		Account.create(:computer_id => third_comp.id, :domain => "WORKGROUP", :user_name => "Gavin", :tracking => false)
-	fourth_comp = Computer.create(:user_id=> first_user.id, :name => "Gavins Laptop", :enviroment => "Windows XP")
-		Account.create(:computer_id => fourth_comp.id, :domain => "WORKGROUP", :user_name => "Gavin", :tracking => false)
 
 second_user = User.create(:email => "cbacon@gmail.com", :password => "190421", :password_confirmation => "190421")
-	second_comp = Computer.create(:user_id=>second_user.id, :name => "My Laptop", :enviroment => "Windows Seven")
-		Account.create(:computer_id => second_comp.id, :domain => "NUSTUDENT", :user_name => "Bacon", :tracking => false)
+	fourth_comp = Computer.create(:user_id=>second_user.id, :name => "My Laptop", :enviroment => "Windows Seven")
+		Account.create(:computer_id => fourth_comp.id, :domain => "NUSTUDENT", :user_name => "Bacon", :tracking => false)
 
 
