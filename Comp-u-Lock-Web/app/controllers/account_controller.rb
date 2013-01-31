@@ -1,18 +1,16 @@
 class AccountController < ApplicationController
   before_filter :authenticate_user!#, :except => [:index, :list]
   def index
+  	list
+  	render("list")
   end
 
   def edit
   end
 
   def list
-  	@accounts = Account.all
-  	if can :read, @accounts
-  		@accounts
-  	else
-  		redirect_to :action => "index"
-  	end
+  	user = User.find(current_user.id)
+	@computers = user.computer.all
   end
 
   def update
