@@ -18,18 +18,25 @@ class AccountController < ApplicationController
   # form
   def edit
     @account = Account.find(params[:id])
-    unless can_edit? @account
-      @account
-    else
-      flash[:error] = "Sorry but this cannot be edited with your level account. If this is an issue contact the Admin."
-      redirect_to(request.referer)
-    end
+    # unless can_edit? @account
+    #   @account
+    # else
+    #   flash[:error] = "Sorry but this cannot be edited with your level account. If this is an issue contact the Admin."
+    #   redirect_to(request.referer)
+    # end
   end
 
   
   # Put
   def update
     @account = Account.find(params[:id])
+    if @account.update_attributes params[:account]
+      flash[:notice] = "Information for your account has been updated."
+      redirect_to action: 'edit', id: @account.id
+    else
+      flash[:notice] = "Something went wrong with saving account information."
+      redirect_to action: 'edit', id: @account.id
+    end
   end
 
   # Put

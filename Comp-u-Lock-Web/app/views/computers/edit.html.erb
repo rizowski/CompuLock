@@ -1,2 +1,15 @@
-<h1>Computers#edit</h1>
-<p>Find me in app/views/computers/edit.html.erb</p>
+<h1>Edit Computer <%= @computer.name%></h1>
+
+<%= form_for @computer, :url=>{action:'update', id: @computer.id} do |f|%>
+	
+	<%=f.label :name%>
+	<%=f.text_field :name%><br/>
+
+	Ip Address: <%=@computer.ip_address%><br/>
+
+	Enviroment: <%=@computer.enviroment%><br/>
+
+	Computer Accounts: <%=@computer.account.count%><br/>
+
+	<%=f.submit "Save"%>
+<%end%>

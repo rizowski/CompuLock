@@ -2,10 +2,16 @@
 
 <%= form_for @account, :url=>{:action =>'update', :id => @account.id} do |f|%>
 	<%=f.label :computer_id, "Associated Computer:"%>
-	<select id="<%=:computer_id%>">
+	
+	<select id="account_computer_id" name="account[computer_id]">
 		<%current_user.computer.each do |computer|%>
-		<option value="<%=computer.id%>"><%=computer.name%></option>
-	<%end%></select>
+			<%if computer.id == @account.computer_id%>
+			<option SELECTED value="<%=computer.id%>"><%=computer.name%></option>
+			<%else%>
+			<option value="<%=computer.id%>"><%=computer.name%></option>
+			<%end%>
+		<%end%>
+	</select>
 	<br/>
 
 	<%=f.label :domain%>
