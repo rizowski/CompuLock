@@ -29,7 +29,11 @@ class Ability
         can :manage, :all
     else
         can :manage, Computer, :user_id => user.id
-        can :maange, Account, :computer => { :user_id => user.id}
+        can :manage, Account, computer_id: user.computer_ids
+        
+        can :read, AccountHistory, account_id: {computer_id: user.computer_ids}
+        can :read, AccountProcess, account_id: {computer_id: user.computer_ids}
+        can :read, AccountProgram, account_id: {computer_id: user.computer_ids}
     end
   end
 end

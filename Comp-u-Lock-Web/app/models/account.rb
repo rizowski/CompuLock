@@ -8,4 +8,5 @@ class Account < ActiveRecord::Base
   has_many :account_history, :dependent => :destroy
   has_many :account_process, :dependent => :destroy
   has_many :account_program, :dependent => :destroy
+
 end
