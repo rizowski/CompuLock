@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe AccountProgram do
-  pending "add some examples to (or delete) #{__FILE__}"
-end
+# describe AccountProgram do
+#   #pending "add some examples to (or delete) #{__FILE__}"
+# end

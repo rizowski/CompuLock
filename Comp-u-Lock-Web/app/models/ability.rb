@@ -31,7 +31,7 @@ class Ability
         can :manage, Computer, :user_id => user.id
         can :manage, Account, computer_id: user.computer_ids
         
-        can :read, User, :user_id => user.id
+        can :manage, User, :id => user.id
         can :read, AccountHistory, account_id: {computer_id: user.computer_ids}
         can :read, AccountProcess, account_id: {computer_id: user.computer_ids}
         can :read, AccountProgram, account_id: {computer_id: user.computer_ids}

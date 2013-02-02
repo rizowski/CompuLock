@@ -1,0 +1,14 @@
+<h1>Account <%=@account.user_name%></h1>
+Computer Account: <%=@account.user_name%><br/>
+<span>Programs</span><br/>
+<%@account.account_program.each do |program|%>
+	Program: <%=program.name%><br/>
+<%end%>
+<br/>
+<span>Processes</span><br/>
+<!--Processes Will not display. Maybe there is a model issue?-->
+<br/>
+<span>History</span><br/>
+<%@account.account_history.each do |history|%>
+	Domain: <%=history.domain%><br/>
+<%end%>

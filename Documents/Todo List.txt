@@ -10,7 +10,9 @@ Week 3:
 			- http://blog.tigrangasparian.com/2012/02/09/getting-started-with-sqlite-in-c-part-one/
 
 Week 4:
-	-
+	- 
+	Notes:
+		- I need to design the database for scheduling lockout times.
 	resources:
 		FactoryGirl:
 			- https://github.com/thoughtbot/factory_girl/blob/master/GETTING_STARTED.md
@@ -26,3 +28,7 @@ Week 4:
 			- https://github.com/ryanb/cancan
 			- https://github.com/ryanb/cancan/wiki/authorizing-controller-actions
 
+Next week:
+	- Unit tests do they work?
+	- What will I do about REST?
+	- send all data

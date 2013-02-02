@@ -1,0 +1,7 @@
+<h1><%=@computer.name%></h1>
+
+Total number of accounts: <%=@computer.account.size%><br/>
+<%@computer.account.each do |account|%>
+	Username: <%=account.user_name%><br/>
+	Tracking: <%=account.tracking%><br/><br/>
+<%end%>

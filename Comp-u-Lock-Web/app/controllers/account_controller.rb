@@ -8,7 +8,7 @@ class AccountController < ApplicationController
   end
   # View
   def show
-
+    @account = Account.find(params[:id])
   end
   # View
   def list
@@ -18,12 +18,6 @@ class AccountController < ApplicationController
   # form
   def edit
     @account = Account.find(params[:id])
-    # unless can_edit? @account
-    #   @account
-    # else
-    #   flash[:error] = "Sorry but this cannot be edited with your level account. If this is an issue contact the Admin."
-    #   redirect_to(request.referer)
-    # end
   end
 
   
@@ -44,11 +38,4 @@ class AccountController < ApplicationController
     @account.(params[:account])
   end
 
-  private
-  def can_edit? item
-    current_user.computer.all.each do |computer|
-      return if item.computer_id == computer.id
-    end
-    return false
-  end
 end

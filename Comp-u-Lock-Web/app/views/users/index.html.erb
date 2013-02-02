@@ -4,5 +4,7 @@ Sign Up Date: <%=current_user.created_at%><br/>
 User Name: <%=current_user.username%><br/>
 
 Registered Computers: <%=current_user.computer.count%><br/>
-
-<p>This is where I would display the computers! :D</p>
+<%=link_to "edit account", edit_user_registration_path(current_user)%><br/>
+<%@computers.each do |computer|%>
+	<%=computer.name%> <%=link_to "stats", controller: 'computers', action: 'show', id: computer.id%> <%=link_to "edit", controller: 'computers', action: 'edit', id: computer.id%><br/>
+<%end%>

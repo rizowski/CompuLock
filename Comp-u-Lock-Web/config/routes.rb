@@ -20,6 +20,7 @@ CompULockWeb::Application.routes.draw do
   end
   match '/users/index', :as => :user_index
   match '/users/list', :as => :user_list
+  match '/users/edit', :as => :user_edit
 
   match ':controller(/:action(/:id))(.:format)'
 end
