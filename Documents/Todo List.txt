@@ -27,6 +27,12 @@ Week 4:
 		Cancan:
 			- https://github.com/ryanb/cancan
 			- https://github.com/ryanb/cancan/wiki/authorizing-controller-actions
+Week 5:
+	-
+	Notes:
+		- Restsharp was added to the project.
+	Resources:
+		- http://restsharp.org/
 
 Next week:
 	- Unit tests do they work?

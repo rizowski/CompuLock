@@ -75,6 +75,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp">
+      <HintPath>..\packages\RestSharp.104.1\lib\net4\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
@@ -103,6 +106,7 @@
     <Compile Include="DataService\HistoryService.cs" />
     <Compile Include="DataService\ProcessService.cs" />
     <Compile Include="DataService\ProgramService.cs" />
+    <Compile Include="REST\RestService.cs" />
     <Compile Include="Service.cs" />
     <Compile Include="Users\Browsers.cs" />
     <Compile Include="Users\Processes.cs" />

@@ -1,7 +1,6 @@
 ﻿using System;
-using System.IO;
-using Data;
 using Data.Enviroment;
+using Service.REST;
 using Service.Users;
 using Processes = Service.Users.Processes;
 using Programs = Service.Users.Programs;
@@ -24,26 +23,28 @@ namespace Service
             RunOS();*/
             /*Console.WriteLine("\nRun User");
             RunUser();*/
-            Console.WriteLine("\nRun DbAccounts");
-            RunDbAccounts();
+            /*Console.WriteLine("\nRun DbAccounts");
+            RunDbAccounts();*/
+            Console.WriteLine("\nRun REST");
+            REST();
             Console.Read();
 
         }
 
         private static void RunDbAccounts()
         {
-            using (var db = new DatabaseEntities())
-            {
-                var account = db.Accounts.Create();
-                account.Username = "Rizowski";
-                account.Domain = "";
-                account.LastLogin = DateTime.Now;
-                account.AllottedTime = 30;
-                db.Accounts.Add(account);
-                db.SaveChanges();
+            //using (var db = new DatabaseEntities())
+            //{
+            //    var account = db.Accounts.Create();
+            //    account.Username = "Rizowski";
+            //    account.Domain = "";
+            //    account.LastLogin = DateTime.Now;
+            //    account.AllottedTime = 30;
+            //    db.Accounts.Add(account);
+            //    db.SaveChanges();
 
-                Console.WriteLine(account.Id);
-            }
+            //    Console.WriteLine(account.Id);
+            //}
         }
 
         public static void RunProcesses()
@@ -138,6 +139,12 @@ namespace Service
             //account.GetUsers();
             //account.LockAccount("Kids");//.ChangeUserPassword("Parents", "190421", "rizowski");
             //account.StartTimer();
+        }
+
+        public static void REST()
+        {
+            RestService rs = new RestService("http://localhost:3000");
+            rs.Login("crouska@gmail.com","190421");
         }
 
     }
