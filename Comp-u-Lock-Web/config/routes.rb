@@ -1,5 +1,14 @@
 CompULockWeb::Application.routes.draw do
   root :to => "home#index"
+  resource :computer
+  resource :user
+  resource :home
+  resource :account do 
+    resource :account_history
+    resource :account_process
+    resource :account_program
+  end
+
   get "computer_accounts/index"
 
   get "computer_accounts/edit"
