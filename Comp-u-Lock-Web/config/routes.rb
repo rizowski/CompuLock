@@ -7,11 +7,12 @@ CompULockWeb::Application.routes.draw do
     resource :account_process
     resource :account_program
   end
+  resource :computer
   
   namespace :api do
     namespace :v1  do
       resources :tokens, :only => [:create, :destroy]
-      resources :computer
+      resources :computers
     end
   end
 
