@@ -28,11 +28,19 @@ Week 4:
 			- https://github.com/ryanb/cancan
 			- https://github.com/ryanb/cancan/wiki/authorizing-controller-actions
 Week 5:
-	-
+	- 
 	Notes:
 		- Restsharp was added to the project.
 	Resources:
 		- http://restsharp.org/
+		RestSharp:
+			- http://restsharp.org/
+			- http://stackoverflow.com/questions/11803485/how-to-parse-json-using-restsharp
+		JSON.net:
+			- http://james.newtonking.com/pages/json-net.aspx
+		Token Authentication:
+			- http://blog.codebykat.com/2012/07/23/remote-api-authentication-with-rails-3-using-activeresource-and-devise/
+			- http://zyphdesignco.com/blog/simple-auth-token-example-with-devise
 
 Next week:
 	- Unit tests do they work?

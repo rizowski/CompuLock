@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Data.Models
 {
-    class Program : IParser
+    public class Program : IParser
     {
         public int Id { get; set; }
         public int AccountId { get; set; }

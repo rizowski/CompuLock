@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace Data.Models
 {
-    class Computer : IParser
+    public class Computer : IParser
     {
         private int id { get; set; }
         public string Domain { get; set; }

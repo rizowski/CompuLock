@@ -102,10 +102,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataService\AccountService.cs" />
-    <Compile Include="DataService\HistoryService.cs" />
-    <Compile Include="DataService\ProcessService.cs" />
-    <Compile Include="DataService\ProgramService.cs" />
     <Compile Include="REST\RestService.cs" />
     <Compile Include="Service.cs" />
     <Compile Include="Users\Browsers.cs" />
@@ -168,7 +164,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Data\Data.csproj">
-      <Project>{dd69a609-8978-4899-9f4f-a90bf5320164}</Project>
+      <Project>{5BE75041-3850-4176-9968-60CF0712472B}</Project>
       <Name>Data</Name>
     </ProjectReference>
   </ItemGroup>

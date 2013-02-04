@@ -1,5 +1,6 @@
 ﻿using System;
 using Data.Enviroment;
+using Data.Models;
 using Service.REST;
 using Service.Users;
 using Processes = Service.Users.Processes;
@@ -33,18 +34,10 @@ namespace Service
 
         private static void RunDbAccounts()
         {
-            //using (var db = new DatabaseEntities())
-            //{
-            //    var account = db.Accounts.Create();
-            //    account.Username = "Rizowski";
-            //    account.Domain = "";
-            //    account.LastLogin = DateTime.Now;
-            //    account.AllottedTime = 30;
-            //    db.Accounts.Add(account);
-            //    db.SaveChanges();
-
-            //    Console.WriteLine(account.Id);
-            //}
+            User u = new User();
+            u.Email = "crouska@gmail.com";
+            u.Password = "190421";
+            Console.WriteLine(u.ToJSON());
         }
 
         public static void RunProcesses()
@@ -144,7 +137,8 @@ namespace Service
         public static void REST()
         {
             RestService rs = new RestService("http://localhost:3000");
-            rs.Login("crouska@gmail.com","190421");
+            //rs.Login("crouska@gmail.com","190421");
+            rs.GetToken("crouska@gmail.com", "190421");
         }
 
     }

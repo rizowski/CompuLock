@@ -3,11 +3,11 @@ using Newtonsoft.Json;
 
 namespace Data.Models
 {
-    class Account :IParser
+    public class Account :IParser
     {
         private int id { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
+        public string Domain { get; set; }
+        public string UserName { get; set; }
         public bool Admin { get; set; }
         public bool Tracking { get; set; }
 
