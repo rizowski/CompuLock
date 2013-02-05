@@ -1,36 +1,23 @@
 CompULockWeb::Application.routes.draw do
   root :to => "home#index"
+  
+  resource :home, :only => [:index]
   resource :user
-  resource :home
-  resource :account do 
-    resource :account_history
-    resource :account_process
-    resource :account_program
-  end
-  resource :computer
+  resources :computer
+  resources :account
+  resources :account_history
+  resources :account_process
+  resources :account_program
   
   namespace :api do
     namespace :v1  do
       resources :tokens, :only => [:create, :destroy]
       resources :computers
-      resources :users, :only => [:show, :edit, :update]
+      resources :users, :only => [:index, :edit, :update]
+      resources :accounts
     end
   end
 
-  get "computer_accounts/index"
-
-  get "computer_accounts/edit"
-
-  get "computers/index"
-
-  get "computers/edit"
-
-  get "account/index"
-
-  get "account/edit"
-
-  get "home/index"
-  
   devise_for :users
   devise_scope :user do 
     match '/users/sign_in' => 'devise/session#create', :as => :new_user_session

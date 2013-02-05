@@ -2,17 +2,15 @@ require 'spec_helper'
 
 describe ComputersController do
 
-  describe "GET 'index'" do
-    it "returns http success" do
-      get 'index'
-      response.should be_success
+  describe "Get 'Index'" do
+    it "routes to #index" do
+      get("/computer").should route_to("computer#index")
     end
   end
 
   describe "GET 'edit'" do
-    it "returns http success" do
-      get 'edit'
-      response.should be_success
+    it "routes to #edit" do
+      get("/computers/edit").should route_to("computer#edit")
     end
   end
 

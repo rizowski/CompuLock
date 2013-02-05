@@ -1,36 +1,26 @@
-Week 3:
-	- 
-	resources:
-		Flags:
-			- http://www.codeproject.com/Articles/18102/Howto-Almost-Everything-In-Active-Directory-via-C#42
-		Windows Events:
-			- http://msdn.microsoft.com/en-us/library/microsoft.win32.systemevents(v=vs.100).aspx
-			- http://stackoverflow.com/questions/1526119/how-to-reliably-capture-windows-logon-logoff-lock-and-unlock-events-from-a-ser
-		SQLite:
-			- http://blog.tigrangasparian.com/2012/02/09/getting-started-with-sqlite-in-c-part-one/
-
-Week 4:
-	- 
-	Notes:
-		- I need to design the database for scheduling lockout times.
-	resources:
-		FactoryGirl:
-			- https://github.com/thoughtbot/factory_girl/blob/master/GETTING_STARTED.md
-		Devise:
-			- https://github.com/plataformatec/devise
-		Rspec:
-			- https://github.com/rspec/rspec-rails
-		Capybara:
-			- https://github.com/jnicklas/capybara
-		Guard:
-			- https://github.com/guard/guard
-		Cancan:
-			- https://github.com/ryanb/cancan
-			- https://github.com/ryanb/cancan/wiki/authorizing-controller-actions
 Week 5:
 	- 
 	Notes:
 		- Restsharp was added to the project.
+		- Time sheet was added to keep track of how much time I am spending on the project to see if I need to make up for any time and if I am making minimum quota.
+			- http://goo.gl/41neE
+	TODOS: 
+		Web:
+			- Authorization on the api needs to be fixed/added
+			- Account Api needs to be completed
+			- Computer APi needs to be completed
+			- User api needs to be completed
+			- 
+		Desktop:
+			- Database for desktop needs to be added/fixed
+			- Parsing JSON responses needs to bee added/fixed
+				- Users
+					- Computers
+						- Accounts
+							- Histories
+							- Programs
+							- Processes
+			- Database design from Week 4 to include scheduling
 	Resources:
 		- http://restsharp.org/
 		RestSharp:
