@@ -1,32 +1,21 @@
 module Api
 	module V1
 		class AccountsController  < ApplicationController
-			respond_to :json
-			load_and_authorize_resource
 			before_filter :authenticate_user!
+			respond_to :json
+
 			def index
 				token = params[:auth_token]
-				id = params[:id]
 				if token.nil?
 					render :status => 400,
-						:json => { :message => "The request must contain an auth token."}
-					return
-				end
-				if id.nil?
-					render :status => 400,
-						:json => { :message => "The request must contain an account id."}
+						:json => { :message => "The request must contain an auth token and id."}
 					return
 				end
 				@user = User.find_by_authentication_token(token)
-				@account = Account.find(id)
-				if can? :read, @account
-					respond_to do |format|
-						format.json { render :json => @account }
-					end
-				else
-					render :status => 400,
-						:json => { :message => "You are not authorized to view this."}
-					return
+				@accounts = Account.where :computer_id => @user.computer_ids
+
+				respond_to do |format|
+					format.json { render :json => @accounts}
 				end
 			end
 
@@ -36,14 +25,14 @@ module Api
 
 			def show
 				token = params[:auth_token]
-				
-				if token.nil?
+				id = params[:id]
+				if token.nil? or id.nil?
 					render :status => 400,
-						:json => { :message => "The request must contain an auth token."}
+						:json => { :message => "The request must contain an auth token and id."}
 					return
 				end
 				@user = User.find_by_authentication_token(token)
-				@account = Account.find(params[:id])
+				@account = Account.find(id)
 
 				respond_to do |format|
 					format.json { render :json => @account }

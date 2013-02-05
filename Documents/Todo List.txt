@@ -5,10 +5,15 @@ Week 5:
 		- Time sheet was added to keep track of how much time I am spending on the project to see if I need to make up for any time and if I am making minimum quota.
 			- http://goo.gl/41neE
 	TODOS: 
-		Web:
+		Web: 
 			- Authorization on the api needs to be fixed/added
 			- Account Api needs to be completed
-			- Computer APi needs to be completed
+				- |Done| Index - Grabs all accounts via the auth token Only that users accounts
+				- Show - Shows only 1 account via the auth token and provided Index
+				- Edit - Edits 1 account via auth token and Id
+				- Update - SAves 1 account via auth token
+				- Destroy - Deletes an account via Auth token
+			- Computer Api needs to be completed
 			- User api needs to be completed
 			- Perhaps redesign the Database models for account history and programs. remove prefix
 		Desktop:
