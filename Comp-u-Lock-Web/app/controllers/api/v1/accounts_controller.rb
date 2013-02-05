@@ -102,20 +102,43 @@ module Api
 				end
 			end
 
-			def new
-
-			end
-
-			def edit
-
-			end
-
 			def update
-
+				respond_with Account.update(params[:id], params[:account])
 			end
 
 			def destroy
+				token = params[:auth_token]
+				id = params[:id]
 
+				if token.nil?
+					render :status => 400,
+						:json => { :message => "The request must contain an auth token."}
+					return
+				end
+				if id.nil?
+					render :status => 400,
+						:json => { :message => "The request must contain an id."}
+					return
+				end
+
+				@user = User.find_by_authentication_token(token)
+				@accounts = Account.where computer_id: @user.computer_ids
+				
+				unless @accounts.pluck(:id).include? id.to_i
+					render :status => 401,
+						:json => { :message => "Access Denied."}
+					return
+				end
+
+				if Account.find(id).delete
+					respond_to do |format|
+						format.json { render :json => {message: "Success"} }
+					end
+				else
+					render :status => 400,
+						:json => { :message => "Something went wrong with deleting the entity."}
+					return
+				end
 			end
 		end
 	end

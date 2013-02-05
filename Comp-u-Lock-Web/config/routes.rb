@@ -11,10 +11,10 @@ CompULockWeb::Application.routes.draw do
   
   namespace :api, defaults:{format:'json'} do
     namespace :v1  do
-      resources :tokens, :only => [:create, :destroy]
+      resources :tokens, only: [:create, :destroy]
       resources :computers
-      resources :users, :only => [:index, :edit, :update]
-      resources :accounts
+      resources :users, only: [:index, :edit, :update]
+      resources :accounts, only: [:index, :create, :update, :show, :destroy]
     end
   end
 
