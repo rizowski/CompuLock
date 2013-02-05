@@ -9,7 +9,7 @@ CompULockWeb::Application.routes.draw do
   resources :account_process
   resources :account_program
   
-  namespace :api do
+  namespace :api, defaults:{format:'json'} do
     namespace :v1  do
       resources :tokens, :only => [:create, :destroy]
       resources :computers

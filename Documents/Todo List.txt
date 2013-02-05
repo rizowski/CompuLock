@@ -10,7 +10,7 @@ Week 5:
 			- Account Api needs to be completed
 			- Computer APi needs to be completed
 			- User api needs to be completed
-			- 
+			- Perhaps redesign the Database models for account history and programs. remove prefix
 		Desktop:
 			- Database for desktop needs to be added/fixed
 			- Parsing JSON responses needs to bee added/fixed
