@@ -8,7 +8,7 @@ module Api
 				token = params[:auth_token]
 				if token.nil?
 					render :status => 400,
-						:json => { :message => "The request must contain an auth token and id."}
+						:json => { :message => "The request must contain an auth token."}
 					return
 				end
 				@user = User.find_by_authentication_token(token)
@@ -37,7 +37,7 @@ module Api
 				@user = User.find_by_authentication_token(token)
 
 				unless @user.computer_ids.include? comp_id.to_i
-					render :status => 400,
+					render :status => 401,
 						:json => { :message => "The request was declined. Check computer Id."}
 					return
 				end
@@ -75,15 +75,28 @@ module Api
 				token = params[:auth_token]
 				id = params[:id]
 
-				if token.nil? or id.nil?
+				if token.nil?
 					render :status => 400,
-						:json => { :message => "The request must contain an auth token and id."}
+						:json => { :message => "The request must contain an auth token."}
+					return
+				end
+
+				if id.nil?
+					render :status => 400,
+						:json => { :message => "The request must contain an id."}
 					return
 				end
 
 				@user = User.find_by_authentication_token(token)
-				@account = Account.find(id)
+				@accounts = Account.where computer_id: @user.computer_ids
 
+				unless @accounts.pluck(:id).include? id.to_i
+					render :status => 401,
+						:json => { :message => "Access Denied."}
+					return
+				end
+
+				@account = Account.find(id)
 				respond_to do |format|
 					format.json { render :json => @account }
 				end

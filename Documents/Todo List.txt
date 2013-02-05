@@ -9,13 +9,15 @@ Week 5:
 			- Authorization on the api needs to be fixed/added
 			- Account Api needs to be completed
 				- |Done| Index - Grabs all accounts via the auth token Only that users accounts
-				- Show - Shows only 1 account via the auth token and provided Index
+				- |Done| Create - Create an account via auth token and variables
+				- |Done| Show - Shows only 1 account via the auth token and provided Index
 				- Edit - Edits 1 account via auth token and Id
 				- Update - SAves 1 account via auth token
 				- Destroy - Deletes an account via Auth token
 			- Computer Api needs to be completed
 			- User api needs to be completed
 			- Perhaps redesign the Database models for account history and programs. remove prefix
+			- processes don't display under a specific account
 		Desktop:
 			- Database for desktop needs to be added/fixed
 			- Parsing JSON responses needs to bee added/fixed
@@ -36,6 +38,7 @@ Week 5:
 		Token Authentication:
 			- http://blog.codebykat.com/2012/07/23/remote-api-authentication-with-rails-3-using-activeresource-and-devise/
 			- http://zyphdesignco.com/blog/simple-auth-token-example-with-devise
+			- http://railscasts.com/episodes/352-securing-an-api?view=asciicast
 
 Next week:
 	- Unit tests do they work?
