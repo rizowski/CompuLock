@@ -7,7 +7,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-first_user = User.create(:email => "crouska@gmail.com", :password=> "190421", :password_confirmation => "190421", :admin => true)
+first_user = User.create(:email => "crouska@gmail.com", :password=> "190421", :password_confirmation => "190421")
 	first_comp = Computer.create(:user_id=> first_user.id, :name => "Moms Desktop", :enviroment => "Windows XP")
 		Account.create(:computer_id => first_comp.id, :domain => "WORKGROUP", :user_name => "Parents", :tracking => false)
 		first_account = Account.create(:computer_id => first_comp.id, :domain => "WORKGROUP", :user_name => "Kids", :tracking => true)

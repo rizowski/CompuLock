@@ -1,4 +1,5 @@
 ﻿using System;
+using Data.Service;
 using Data.Enviroment;
 using Data.Models;
 using Service.REST;
@@ -35,8 +36,18 @@ namespace Service
         private static void RunDbAccounts()
         {
             User u = new User();
+
+            u.CreatedAt = DateTime.Now;
+            u.UpdatedAt = DateTime.Now;
             u.Email = "crouska@gmail.com";
-            u.Password = "190421";
+            u.Username = "Rizowski";
+
+            u.AuthToken = "GAjwnFqLFB37qjxPqRyj";
+            Database db = new Database("settings.db");
+
+            db.Write(u.ToJSON());
+            
+            
             Console.WriteLine(u.ToJSON());
         }
 
@@ -137,8 +148,13 @@ namespace Service
         public static void REST()
         {
             RestService rs = new RestService("http://localhost:3000");
-            //rs.Login("crouska@gmail.com","190421");
-            rs.GetToken("crouska@gmail.com", "190421");
+            string token = "GAjwnFqLFB37qjxPqRyj";
+            //var user = rs.GetUser(token);
+            //Console.WriteLine("Email: {0}", user.Email);
+            //Console.WriteLine("Auth Token: {0}",user.AuthToken);
+            //Console.WriteLine("Username: {0}",user.Username);
+
+            rs.GetComputer(token);
         }
 
     }

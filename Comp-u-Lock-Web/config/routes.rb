@@ -13,6 +13,7 @@ CompULockWeb::Application.routes.draw do
     namespace :v1  do
       resources :tokens, :only => [:create, :destroy]
       resources :computers
+      resources :users, :only => [:show, :edit, :update]
     end
   end
 

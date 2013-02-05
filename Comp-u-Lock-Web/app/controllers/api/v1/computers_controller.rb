@@ -8,7 +8,7 @@ class Api::V1::ComputersController  < ApplicationController
        		return
        	end
 		@user = User.find_by_authentication_token(token)
-		render :status=>200, :json=>{:computers=>@user.computer}
+		render :status=>200, :json=>{:user=>@user, :computers=>@user.computer}
 		return
 	end
 
@@ -20,7 +20,7 @@ class Api::V1::ComputersController  < ApplicationController
 
 		if token.nil?
 			render :status=>400,
-              :json=>{:message=>"The request must contain a token."}
+              :json=>{:message=>"The request must contain an auth token."}
        		return
        	end
 

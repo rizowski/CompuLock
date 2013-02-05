@@ -6,12 +6,15 @@ namespace Data.Models
 {
     public class Computer : IParser
     {
-        private int id { get; set; }
+        public int id { get; private set; }
+        [JsonProperty]
         public string Domain { get; set; }
+        [JsonProperty]
         public string Name { get; set; }
+        [JsonProperty]
         public OperatingSystem OS { get; set; }
 
-        public IEnumerable<Account> Accounts { get; set; }
+        public List<Account> Accounts { get; set; }
 
         public string ToJSON()
         {
