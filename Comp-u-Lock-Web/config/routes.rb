@@ -1,8 +1,8 @@
 CompULockWeb::Application.routes.draw do
   root :to => "home#index"
   
-  resource :home, :only => [:index]
-  resource :user
+  resource :home, only: [:index]
+  resource :user, only: [:index, :list]
   resources :computer#, controller: :computer, path: "/computers"
   resources :account
   # resources :account_history
@@ -22,11 +22,12 @@ CompULockWeb::Application.routes.draw do
   devise_scope :user do 
     match '/users/sign_in' => 'devise/session#create', :as => :new_user_session
     match '/users/sign_out' => 'devise/sessions#destroy', :as => :destroy_user_session
+    match '/users/edit' => 'devise/registrations#edit', :as => :user_edit
   end
 
-  match '/users/index', :as => :user_index
-  match '/users/list', :as => :user_list
-  match '/users/edit', :as => :user_edit
+  # match '/users/index', :as => :user_index
+  # match '/users/list', :as => :user_list
+  
 
   match ':controller(/:action(/:id))(.:format)'
 end

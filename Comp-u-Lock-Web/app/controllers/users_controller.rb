@@ -14,10 +14,4 @@ class UsersController < ApplicationController
 	  		redirect_to :action => "index"
 	  	end
 	end
-
-	def update
-	end
-
-	def save
-	end
 end
