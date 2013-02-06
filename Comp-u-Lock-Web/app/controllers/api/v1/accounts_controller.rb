@@ -102,7 +102,14 @@ module Api
 				end
 			end
 
+			# this needs to be fixed. http://stackoverflow.com/questions/14704542/recieving-the-appropriate-json-model-rails
 			def update
+				token = params[:auth_token]
+				if token.nil?
+					render :status => 400,
+						:json => { :message => "The request must contain an auth token."}
+					return
+				end
 				respond_with Account.update(params[:id], params[:account])
 			end
 
