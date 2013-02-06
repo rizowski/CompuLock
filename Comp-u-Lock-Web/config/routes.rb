@@ -3,7 +3,7 @@ CompULockWeb::Application.routes.draw do
   
   resource :home, :only => [:index]
   resource :user
-  resources :computer
+  resource :computer, controller: :computer
   resources :account
   # resources :account_history
   # resources :account_process
