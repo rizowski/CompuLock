@@ -1,4 +1,4 @@
-class ComputersController < ApplicationController
+class ComputerController < ApplicationController
     before_filter :authenticate_user!#, :except => [:index, :list]
     load_and_authorize_resource
     

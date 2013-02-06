@@ -1,55 +1,55 @@
 require 'spec_helper'
 
-describe ComputersController do
+describe ComputerController do
 
   describe "Routing" do
 
 		#view
 		it "GET does route to #index" do
-			{get: "computers"}.should route_to(
-				controller: "computers", 
+			{get: "computer"}.should route_to(
+				controller: "computer", 
 				action: "index")
 		end
 
 		it "POST routes to #create" do
-			{post: "computers/create"}.should route_to(
-				controller: "computers", 
+			{post: "computer"}.should route_to(
+				controller: "computer", 
 				action: "create")
 		end
 
 		#view
 		it "GET routes to #new" do
-			{get: "computers/new"}.should route_to(
-				controller: "computers", 
+			{get: "computer/new"}.should route_to(
+				controller: "computer", 
 				action: "new")
 		end
 
 		# view
 		it "GET routes to #edit" do
-			{get: "computers/edit/1"}.should route_to(
-				controller: "computers", 
+			{get: "computer/edit/1"}.should route_to(
+				controller: "computer", 
 				id: "1",
 				action: "edit")
 		end
 
 		#view
 		it "GET does route to #show" do
-			{get: "computers/show/1"}.should route_to(
-				controller: "computers", 
+			{get: "computer/1"}.should route_to(
+				controller: "computer", 
 				action: "show", 
 				id: "1")
 		end
 
 		it "PUT does route to #update" do
-			{put: "computers/update/1"}.should route_to(
-				controller: "computers", 
+			{put: "computer/1"}.should route_to(
+				controller: "computer", 
 				action: "update", 
 				id: "1") 
 		end
 
 		it "DELETE routes to #destroy" do
-			{delete: "computers/destroy/1"}.should route_to(
-				controller: "computers", 
+			{delete: "computer/1"}.should route_to(
+				controller: "computer", 
 				action: "destroy",
 				id: "1")
 		end
