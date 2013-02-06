@@ -1,12 +1,11 @@
 require 'spec_helper'
 
-# describe HomeController do
-
-#   describe "GET 'index'" do
-#     it "returns http success" do
-#       get 'index'
-#       response.should be_success
-#     end
-#   end
-
-# end
+describe HomeController do
+  	describe "Routing" do
+	    it "GET does route to #index" do
+			{get: "home"}.should route_to(
+				controller: "home", 
+				action: "index")
+		end
+  	end
+end
