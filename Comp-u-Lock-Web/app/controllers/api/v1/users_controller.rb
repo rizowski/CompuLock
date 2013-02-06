@@ -23,7 +23,8 @@ module Api
 
 			def update
 				token = params[:auth_token]
-				user = params[:user]
+				id = params[:id]
+				user = JSON.parse params[:user]
 				if token.nil?
 					render :status => 400,
 						:json => { :message => "The request must contain an auth token."}
@@ -32,15 +33,20 @@ module Api
 
 				@user = User.find_by_authentication_token(token)
 
-				unless @user.id == user.id
+				unless @user.id == id.to_i
 					render :status => 401,
 						:json => { :message => "Access Denied. Check user Id"}
 					return
 				end
 
-				render :status => 400,
-				:json => { :message => "update not implemented"}
-				return
+				if User.update(id, user)
+					render json: @user
+				else
+					render :status => 400,
+						:json => { :message => "Something went wrong with saving user changes."}
+					return
+				end
+
 			end
 		end
 	end
