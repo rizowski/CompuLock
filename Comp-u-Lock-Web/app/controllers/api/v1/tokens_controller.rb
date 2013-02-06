@@ -37,14 +37,14 @@ module Api
       end
 
       def destroy
-        @user=User.find_by_authentication_token(params[:id])
+        @user=User.find_by_authentication_token(params[:auth_token])
         if @user.nil?
 
           logger.info("Token not Found")
           render :status=>404, :json=> {:message=> "Invalid Token"}
         else
           @user.reset_authentication_token!
-          render :status=>200, :json=>{:token=>params[:id]}
+          render :status=>200, :json=>{:token=>params[:auth_token]}
         end
       end
 

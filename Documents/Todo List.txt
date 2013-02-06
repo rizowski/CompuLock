@@ -12,11 +12,16 @@ Week 5:
 					- |Done| Index - Grabs all accounts via the auth token Only that users accounts
 					- |Done| Create - Create an account via auth token and variables
 					- |Done| Show - Shows only 1 account via the auth token and provided Index
-					- Edit - Edits 1 account via auth token and Id
+					- |Done| Edit - Edits 1 account via auth token and Id
 					- Update - SAves 1 account via auth token
-					- Destroy - Deletes an account via Auth token
+					- |Done| Destroy - Deletes an account via Auth token
 				- Computer Api needs to be completed
+					- Update
+					- Show
+					- 
 				- User api needs to be completed
+					- |Done| Index
+					- |Done| Update
 				- To limit what is sent -http://railscasts.com/episodes/348-the-rails-api-gem?view=asciicast
 			Database:
 				- Perhaps redesign the Database models for account history and programs. remove prefix

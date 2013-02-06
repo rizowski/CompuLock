@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe "computers/edit.html.erb" do
-  pending "add some examples to (or delete) #{__FILE__}"
-end
+# describe "computers/edit.html.erb" do
+#   pending "add some examples to (or delete) #{__FILE__}"
+# end
