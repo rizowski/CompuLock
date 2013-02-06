@@ -15,4 +15,16 @@ class User < ActiveRecord::Base
 
 
   # attr_accessible :title, :body
+
+  def as_json options={}
+    {
+      id: id,
+      username: username,
+      email: email,
+      computers: computer,
+      created_at: created_at,
+      update_at: updated_at
+
+    }
+  end
 end

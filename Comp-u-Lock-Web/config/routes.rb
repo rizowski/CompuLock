@@ -5,9 +5,9 @@ CompULockWeb::Application.routes.draw do
   resource :user
   resources :computer
   resources :account
-  resources :account_history
-  resources :account_process
-  resources :account_program
+  # resources :account_history
+  # resources :account_process
+  # resources :account_program
   
   namespace :api, defaults:{format:'json'} do
     namespace :v1  do

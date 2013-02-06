@@ -9,4 +9,21 @@ class Account < ActiveRecord::Base
   has_many :account_process, :dependent => :destroy
   has_many :account_program, :dependent => :destroy
 
+  def as_json options={}
+    {
+      id: id,
+      computer_id: computer_id,
+      domain: domain,
+      user_name: user_name,
+      tracking: tracking,
+      
+      account_history: account_history,
+      account_program: account_program,
+      # account_process: account_process,
+
+      created_at: created_at,
+      update_at: updated_at
+
+    }
+  end
 end
