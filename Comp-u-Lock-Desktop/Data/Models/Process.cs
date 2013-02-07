@@ -3,11 +3,16 @@ using Newtonsoft.Json;
 
 namespace Data.Models
 {
-    public class Process : IParser
+    [JsonObject]
+    public class AccountProcess : IParser
     {
-        private int Id { get; set; }
+        [JsonProperty]
+        public int Id { get; set; }
+        [JsonProperty]
         public int AccountId { get; set; }
+        [JsonProperty]
         public string Name { get; set; }
+        [JsonProperty]
         public DateTime LastRun { get; set; }
 
         public string ToJSON()

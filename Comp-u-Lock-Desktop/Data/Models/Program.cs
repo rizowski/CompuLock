@@ -3,11 +3,12 @@ using Newtonsoft.Json;
 
 namespace Data.Models
 {
-    public class Program : IParser
+    [JsonObject]
+    public class AccountProgram : IParser
     {
-        [JsonIgnore]
+        [JsonProperty]
         public int Id { get; set; }
-
+        [JsonProperty]
         public int AccountId { get; set; }
         [JsonProperty]
         public string Name { get; set; }

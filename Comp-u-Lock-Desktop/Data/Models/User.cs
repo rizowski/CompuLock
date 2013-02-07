@@ -8,10 +8,10 @@ namespace Data.Models
     [JsonObject]
     public class User : IParser
     {
-        [JsonIgnore]
+        [JsonProperty]
         public int Id { get; private set; }
         [JsonIgnore]
-        private bool Admin { get; set; }
+        public bool Admin { get; set; }
         [JsonIgnore]
         public DateTime CreatedAt { get; set; }
         [JsonIgnore]
@@ -26,18 +26,6 @@ namespace Data.Models
 
         [JsonProperty]
         public List<Computer> Computers { get; set; }
-
-        public User(User user)
-        {
-            this.Id = user.Id;
-            this.Admin = user.Admin;
-            this.CreatedAt = user.CreatedAt;
-            this.UpdatedAt = user.UpdatedAt;
-
-            this.Username = user.Username;
-            this.Email = user.Email;
-            this.AuthToken = user.AuthToken;
-        }
 
         public User()
         {
