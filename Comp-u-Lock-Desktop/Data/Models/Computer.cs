@@ -23,6 +23,16 @@ namespace Data.Models
         [JsonProperty]
         public List<Account> Accounts { get; set; }
 
+        public Computer(int id, int userId, string domain, string name, string enviroment, string ipAddress, List<Account> accounts )
+        {
+            this.Id = id;
+            this.UserId = userId;
+            this.Domain = domain;
+            this.Name = name;
+            this.Enivroment = enviroment;
+            this.IpAddress = ipAddress;
+            this.Accounts = accounts;
+        }
         public string ToJSON()
         {
             return JsonConvert.SerializeObject(this);

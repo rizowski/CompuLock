@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using Data.Models;
+using Newtonsoft.Json.Linq;
 using RestSharp;
+using Newtonsoft.Json;
 using RestSharp.Serializers;
 
 namespace Service.REST
 {
-    class RestService
+    class RestService: IApi
     {
         public RestClient Client;
         private const string AUTH = "auth_token";
@@ -16,39 +19,6 @@ namespace Service.REST
         {
             Client = new RestClient(server);
         }
-
-        public void Post()
-        {
-            
-        }
-
-        public void Get(string controller, int? id=null)
-        {
-            var request = new RestRequest(controller + "/{id}", Method.GET);
-            if (id.HasValue)
-            {
-                request.AddUrlSegment("id", "" + id);
-            }
-            request.RequestFormat = DataFormat.Json;
-            var response = Client.Execute(request);
-            Console.WriteLine(response.Content);
-        }
-
-        //public void Login(string username, string password)
-        //{
-        //    var request = new RestRequest("users/sign_in",Method.GET);
-            
-        //    request.AddParameter("email", username);
-        //    request.AddParameter("password", password);
-        //    RestResponse<User> response = (RestResponse<User>) Client.Execute<User>(request);
-        //    response.Data.Email = username;
-        //    response.Data.Password = password;
-            
-        //    request.Method = Method.POST;
-        //    var sucess = Client.Execute(request);
-
-        //    Console.WriteLine(sucess.Content);
-        //}
 
         public string GetToken(string username, string password)
         {
@@ -61,24 +31,87 @@ namespace Service.REST
 
         public User GetUser(string token)
         {
-            var request = new RestRequest("api/v1/users/edit", Method.GET);
+            var request = new RestRequest("api/v1/users", Method.GET);
             request.AddParameter(AUTH, token);
-            request.OnBeforeDeserialization += Deserialize;
-            //var response = Client.Execute(request);
-            var response = Client.Execute<User>(request);
-
-            var tempUser = response.Data;
-            tempUser.AuthToken = token;
-            return tempUser;
+            var response = Client.Execute(request);
+            if (response.StatusCode != HttpStatusCode.OK)
+                Console.WriteLine("Status Code Error: {0}", response.StatusCode);
+            var userjson = JObject.Parse(response.Content);
+            var user = JsonConvert.DeserializeObject<User>(userjson["user"].ToString());
+            return user;
         }
 
-        public Computer GetComputer(string token)
+        public List<Computer> GetComputers(string token)
         {
             var request = new RestRequest("api/v1/computers", Method.GET);
             request.AddParameter(AUTH, token);
-            var response = Client.Execute<Computer>(request);
-            Console.WriteLine(response.Content);
-            return null;
+            var response = Client.Execute(request);
+            if (response.StatusCode != HttpStatusCode.OK)
+                Console.WriteLine("Status Code Error: {0}", response.StatusCode);
+            var comp = JObject.Parse(response.Content);
+            var comps = JsonConvert.DeserializeObject < List<Computer>>(comp["computers"].ToString());
+            // http://james.newtonking.com/projects/json/help/
+            return comps;
+        }
+
+        public List<Account> GetAccounts(string token, int computerId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<AccountHistory> Histories(string token, int accountId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<AccountProcess> GetProcesses(string token, int accountId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<AccountProgram> GetPrograms(string token, int accountId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateUser(string token, int userId, User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateComputer(string token, int compId, Computer computer)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateAcount(string token, int accountId, Account account)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void WriteComputer(string token, Computer computer)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void WriteAccount(string token, int computerId, Account account)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void WriteHistory(string token, int accountId, AccountHistory history)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void WriteProgram(string token, int accountId, AccountProgram program)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void WriteProcess(string token, int accountId, AccountProcess process)
+        {
+            throw new NotImplementedException();
         }
 
         public void Deserialize(IRestResponse restResponse)
