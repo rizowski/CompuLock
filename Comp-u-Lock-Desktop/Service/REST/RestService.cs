@@ -105,37 +105,36 @@ namespace Service.REST
             throw new NotImplementedException();
         }
 
-        public void WriteComputer(string token, Computer computer)
+        public void CreateComputer(string token, Computer computer)
         {
-            var request = new RestRequest("api/v1/users/", Method.PUT);
+            var request = new RestRequest("api/v1/computers/", Method.POST);
             request.AddParameter(AUTH, token);
             var json = JsonConvert.SerializeObject(computer);
+            request.AddParameter("computer", json);
+            var response = Client.Execute(request);
+            if (response.StatusCode != HttpStatusCode.OK)
+                Console.WriteLine("Status Code Error: {0}", response.StatusCode);
+            Console.WriteLine(response.Content);
         }
 
-        public void WriteAccount(string token, int computerId, Account account)
+        public void CreateAccount(string token, int computerId, Account account)
         {
             throw new NotImplementedException();
         }
 
-        public void WriteHistory(string token, int accountId, AccountHistory history)
+        public void CreateHistory(string token, int accountId, AccountHistory history)
         {
             throw new NotImplementedException();
         }
 
-        public void WriteProgram(string token, int accountId, AccountProgram program)
+        public void CreateProgram(string token, int accountId, AccountProgram program)
         {
             throw new NotImplementedException();
         }
 
-        public void WriteProcess(string token, int accountId, AccountProcess process)
+        public void CreateProcess(string token, int accountId, AccountProcess process)
         {
             throw new NotImplementedException();
-        }
-
-        public void Deserialize(IRestResponse restResponse)
-        {
-            Console.Write("Deserializing");
-            Console.WriteLine(restResponse.Content);
         }
     }
 }

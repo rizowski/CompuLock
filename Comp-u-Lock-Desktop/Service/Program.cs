@@ -162,10 +162,15 @@ namespace Service
             //u.Username = "Rizowski";
             //rs.UpdateUser(token, u);
 
-            Computer c = new Computer();
+            Computer c = new Computer
+                {
+                    Enivroment = "MyEnviroment",
+                    IpAddress = "0.0.0.0",
+                    Name = "MINE",
+                    UserId = 1
+                };
+            rs.CreateComputer(token,c);
 
-            
-            
         }
 
     }

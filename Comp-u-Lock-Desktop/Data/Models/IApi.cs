@@ -27,14 +27,14 @@ namespace Data.Models
 
         void UpdateAcount(string token, Account account);
 
-        void WriteComputer(string token, Computer computer);
+        void CreateComputer(string token, Computer computer);
 
-        void WriteAccount(string token, int computerId, Account account);
+        void CreateAccount(string token, int computerId, Account account);
 
-        void WriteHistory(string token, int accountId, AccountHistory history);
+        void CreateHistory(string token, int accountId, AccountHistory history);
 
-        void WriteProgram(string token, int accountId, AccountProgram program);
+        void CreateProgram(string token, int accountId, AccountProgram program);
 
-        void WriteProcess(string token, int accountId, AccountProcess process);
+        void CreateProcess(string token, int accountId, AccountProcess process);
     }
 }
