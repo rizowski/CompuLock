@@ -21,45 +21,35 @@ module Api
 
 			def create 
 				token = params[:auth_token]
+				account = JSON.parse params[:account]
 				if token.nil?
 					render :status => 400,
 						:json => { :message => "The request must contain an auth token."}
 					return
 				end
 
-				comp_id = params[:computer_id]
+				@user = User.find_by_authentication_token(token)
+
+				comp_id = account["computer_id"]
 				if comp_id.nil?
 					render :status => 400,
-						:json => { :message => "The request must contain a computer id."}
+						:json => { :message => "The request must contain a 'computer_id'."}
 					return
 				end
-
-				@user = User.find_by_authentication_token(token)
 
 				unless @user.computer_ids.include? comp_id.to_i
 					render :status => 401,
 						:json => { :message => "The request was declined. Check computer Id."}
 					return
 				end
-
-				name = params[:user_name]
-				if name.nil?
+				
+				if account["user_name"].nil?
 					render :status => 400,
-						:json => { :message => "Account name cannot be null."}
+						:json => { :message => "'user_name' cannot be null."}
 					return
 				end
 
-				domain = params[:domain]
-				tracking = params[:tracking]
-				allotted = params[:allotted_time]
-				used = params[:used_time]
-
-				@account = Account.new(computer_id: comp_id, 
-							domain: domain, 
-							user_name: name, 
-							tracking: tracking,
-							allotted_time: allotted,
-							used_time: used)
+				@account = Account.new(account)
 				if @account.save
 					respond_to do |format|
 						format.json {render json: @account}
