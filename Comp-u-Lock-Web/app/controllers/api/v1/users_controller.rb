@@ -25,11 +25,12 @@ module Api
 				token = params[:auth_token]
 				id = params[:id]
 				user = JSON.parse params[:user]
+
 				if token.nil?
-					render :status => 400,
-						:json => { :message => "The request must contain an auth token."}
-					return
-				end
+					render :status=>400,
+		              :json=>{:message=>"The request must contain a token."}
+		       		return
+		       	end
 
 				@user = User.find_by_authentication_token(token)
 
@@ -46,7 +47,6 @@ module Api
 						:json => { :message => "Something went wrong with saving user changes."}
 					return
 				end
-
 			end
 		end
 	end

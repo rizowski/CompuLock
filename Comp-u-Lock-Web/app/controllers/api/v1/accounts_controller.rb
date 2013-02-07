@@ -62,7 +62,7 @@ module Api
 							used_time: used)
 				if @account.save
 					respond_to do |format|
-						format.json {render :json => @account}
+						format.json {render json: @account}
 					end
 				else
 					render :status => 400,

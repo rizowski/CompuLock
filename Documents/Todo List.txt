@@ -28,6 +28,9 @@ Week 5:
 			Account:
 				- processes don't display under a specific account
 			Controllers:
+				- |Done| User routing Unit Testing
+				- |Done| Computer routing Unit Testing
+				- |Done| Account routing Unit Testing
 				- Finish up logic for all controllers destroy update edit etc
 		Desktop:
 			- Database for desktop needs to be added/fixed

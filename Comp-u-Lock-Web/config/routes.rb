@@ -3,7 +3,7 @@ CompULockWeb::Application.routes.draw do
   
   resource :home, only: [:index]
   resource :user, only: [:index, :list]
-  resources :computer#, controller: :computer, path: "/computers"
+  resources :computer
   resources :account
   # resources :account_history
   # resources :account_process
@@ -24,10 +24,5 @@ CompULockWeb::Application.routes.draw do
     match '/users/sign_out' => 'devise/sessions#destroy', :as => :destroy_user_session
     match '/users/edit' => 'devise/registrations#edit', :as => :user_edit
   end
-
-  # match '/users/index', :as => :user_index
-  # match '/users/list', :as => :user_list
-  
-
   match ':controller(/:action(/:id))(.:format)'
 end
