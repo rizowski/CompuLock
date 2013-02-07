@@ -3,7 +3,7 @@ class CreateAccountProcesses < ActiveRecord::Migration
     create_table :account_processes do |t|
       t.references :account
 
-      t.string :name
+      t.string :name, :null => false, :default => ""
       t.datetime :lastrun
       
       t.timestamps

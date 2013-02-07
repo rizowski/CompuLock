@@ -3,9 +3,9 @@ class CreateAccounts < ActiveRecord::Migration
     create_table :accounts do |t|
       t.references :computer
       
-      t.string :domain
-      t.string :user_name
-      t.boolean :tracking
+      t.string :domain, :null => false, :default => ""
+      t.string :user_name, :null => false, :default => ""
+      t.boolean :tracking, :null => false, :default => false
       t.time :allotted_time
       t.time :used_time
 

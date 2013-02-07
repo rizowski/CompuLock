@@ -3,9 +3,9 @@ class CreateComputers < ActiveRecord::Migration
     create_table :computers do |t|
       t.references :user
       
-      t.string :name
-      t.string :ip_address
-      t.string :enviroment
+      t.string :name, :null => false, :default => ""
+      t.string :ip_address, :null => false, :default => ""
+      t.string :enviroment, :null => false, :default => ""
 
       t.timestamps
     end

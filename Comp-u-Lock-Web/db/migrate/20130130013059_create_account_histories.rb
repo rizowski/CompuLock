@@ -3,11 +3,11 @@ class CreateAccountHistories < ActiveRecord::Migration
     create_table :account_histories do |t|
       t.references :account
 
-      t.string :domain
-      t.string :url
-      t.string :title
+      t.string :domain, :null => false, :default => ""
+      t.string :url, :null => false, :default => ""
+      t.string :title, :null => false, :default => ""
       t.datetime :last_visited
-      t.integer :visit_count
+      t.integer :visit_count, :null => false, :default => 0
       
       t.timestamps
     end
