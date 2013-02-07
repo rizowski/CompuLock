@@ -22,8 +22,11 @@ namespace Data.Models
         [JsonProperty]
         public int UsedTime { get; set; }
 
+        [JsonProperty]
         public IEnumerable<AccountHistory> Histories { get; set; }
+        [JsonProperty]
         public IEnumerable<AccountProcess> Processes { get; set; }
+        [JsonProperty]
         public IEnumerable<AccountProgram> Programs { get; set; }
 
         public string ToJSON()

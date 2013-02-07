@@ -20,6 +20,7 @@ namespace Service.REST
             Client = new RestClient(server);
         }
 
+        [Obsolete("This method should not be used. User should specify token for method use.", true)]
         public string GetToken(string username, string password)
         {
             var request = new RestRequest("api/v1/tokens", Method.POST);
@@ -56,7 +57,14 @@ namespace Service.REST
 
         public List<Account> GetAccounts(string token, int computerId)
         {
-            throw new NotImplementedException();
+            var request = new RestRequest("api/v1/accounts", Method.GET);
+            request.AddParameter(AUTH, token);
+            var response = Client.Execute(request);
+            if (response.StatusCode != HttpStatusCode.OK)
+                Console.WriteLine("Status Code Error: {0}", response.StatusCode);
+            var account = JObject.Parse(response.Content);
+            var accounts = JsonConvert.DeserializeObject<List<Account>>(account["accounts"].ToString());
+            return accounts;
         }
 
         public List<AccountHistory> Histories(string token, int accountId)

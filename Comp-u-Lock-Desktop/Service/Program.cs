@@ -148,11 +148,12 @@ namespace Service
         public static void REST()
         {
             RestService rs = new RestService("http://localhost:3000");
-            string token = "7qxUfV31HDmwVb2gWEn4";
+            string token = "AiprpscAqN6hnvNDHSwh";
             //var user = rs.GetUser(token);
             //Console.WriteLine("Email: {0}", user.Email);
             //Console.WriteLine("Auth Token: {0}",user.AuthToken);
             //Console.WriteLine("Username: {0}",user.Username);
+            var accounts = rs.GetAccounts(token, 1);
             var user = rs.GetUser(token);
             var computers = rs.GetComputers(token);
             
