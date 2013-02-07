@@ -12,7 +12,6 @@ Week 5:
 					- |Done| Index - Grabs all accounts via the auth token Only that users accounts
 					- |Done| Create - Create an account via auth token and variables
 					- |Done| Show - Shows only 1 account via the auth token and provided Index
-					- |Done| Edit - Edits 1 account via auth token and Id
 					- |Done| Update - SAves 1 account via auth token
 					- |Done| Destroy - Deletes an account via Auth token
 				- Computer Api needs to be completed
@@ -37,13 +36,28 @@ Week 5:
 				- Finish up logic for all controllers destroy update edit etc
 		Desktop:
 			- Database for desktop needs to be added/fixed
-			- Parsing JSON responses needs to bee added/fixed
-				- Users
-					- Computers
-						- Accounts
-							- Histories
-							- Programs
-							- Processes
+			JSON_API:
+				Computer:
+					- |Done| Index
+					- |Done| Create
+					- |Done| Update
+					- Show
+					- Destroy
+				Account:
+					- |Done| Index
+					- Create
+					- Update
+					- Show
+					- Destroy
+					History:
+						- Create
+					Processes:
+						- Create
+					Programs:
+						- Create
+				User:
+					- |Done| Index
+					- |Done| Update
 			- Database design from Week 4 to include scheduling
 	Resources:
 		- http://restsharp.org/
