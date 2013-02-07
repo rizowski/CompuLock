@@ -6,17 +6,17 @@ namespace Data.Models
     [JsonObject]
     public class AccountHistory : IParser
     {
-        [JsonProperty]
+        [JsonProperty(PropertyName = "id")]
         public int Id { get; set; }
-        [JsonProperty]
+        [JsonProperty(PropertyName = "account_id")]
         public int AccountId { get; set; }
-        [JsonProperty]
+        [JsonProperty(PropertyName = "domain")]
         public string Domain { get; set; }
-        [JsonProperty]
+        [JsonProperty(PropertyName = "url")]
         public string Url { get; set; }
-        [JsonProperty]
+        [JsonProperty(PropertyName = "last_visited")]
         public DateTime LastVisited { get; set; }
-        [JsonProperty]
+        [JsonProperty(PropertyName = "visit_count")]
         public int VisitCount { get; set; }
 
         public string ToJSON()

@@ -11,7 +11,7 @@ using RestSharp.Serializers;
 
 namespace Service.REST
 {
-    class RestService: IApi
+    public class RestService: IApi
     {
         public RestClient Client;
         private const string AUTH = "auth_token";
@@ -82,24 +82,34 @@ namespace Service.REST
             throw new NotImplementedException();
         }
 
-        public void UpdateUser(string token, int userId, User user)
+        public void UpdateUser(string token, User user)
+        {
+            var request = new RestRequest("api/v1/users/"+user.Id, Method.PUT);
+            request.AddParameter(AUTH, token);
+            var json = JsonConvert.SerializeObject(user);
+            Console.WriteLine(json);
+            request.AddParameter("user", json);
+            var response = Client.Execute(request);
+            if (response.StatusCode != HttpStatusCode.OK)
+                Console.WriteLine("Status Code Error: {0}", response.StatusCode);
+            Console.WriteLine(response.Content);
+        }
+
+        public void UpdateComputer(string token, Computer computer)
         {
             throw new NotImplementedException();
         }
 
-        public void UpdateComputer(string token, int compId, Computer computer)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateAcount(string token, int accountId, Account account)
+        public void UpdateAcount(string token, Account account)
         {
             throw new NotImplementedException();
         }
 
         public void WriteComputer(string token, Computer computer)
         {
-            throw new NotImplementedException();
+            var request = new RestRequest("api/v1/users/", Method.PUT);
+            request.AddParameter(AUTH, token);
+            var json = JsonConvert.SerializeObject(computer);
         }
 
         public void WriteAccount(string token, int computerId, Account account)

@@ -41,8 +41,6 @@ namespace Service
             u.UpdatedAt = DateTime.Now;
             u.Email = "crouska@gmail.com";
             u.Username = "Rizowski";
-
-            u.AuthToken = "GAjwnFqLFB37qjxPqRyj";
             Database db = new Database("settings.db");
 
             db.Write(u.ToJSON());
@@ -153,9 +151,20 @@ namespace Service
             //Console.WriteLine("Email: {0}", user.Email);
             //Console.WriteLine("Auth Token: {0}",user.AuthToken);
             //Console.WriteLine("Username: {0}",user.Username);
-            var accounts = rs.GetAccounts(token, 1);
-            var user = rs.GetUser(token);
-            var computers = rs.GetComputers(token);
+
+            //var accounts = rs.GetAccounts(token, 1);
+            //var user = rs.GetUser(token);
+            //var computers = rs.GetComputers(token);
+
+            //User u = new User();
+            //u.Id = 1;
+            //u.Email = "Bob@gmail.com";
+            //u.Username = "Rizowski";
+            //rs.UpdateUser(token, u);
+
+            Computer c = new Computer();
+
+            
             
         }
 

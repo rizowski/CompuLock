@@ -6,13 +6,13 @@ namespace Data.Models
     [JsonObject]
     public class AccountProcess : IParser
     {
-        [JsonProperty]
+        [JsonProperty(PropertyName = "id")]
         public int Id { get; set; }
-        [JsonProperty]
+        [JsonProperty(PropertyName = "account_id")]
         public int AccountId { get; set; }
-        [JsonProperty]
+        [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
-        [JsonProperty]
+        [JsonProperty(PropertyName = "last_run")]
         public DateTime LastRun { get; set; }
 
         public string ToJSON()

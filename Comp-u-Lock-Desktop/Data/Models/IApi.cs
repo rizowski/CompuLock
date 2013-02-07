@@ -21,11 +21,11 @@ namespace Data.Models
 
         List<AccountProgram> GetPrograms(string token, int accountId);
 
-        void UpdateUser(string token, int userId, User user);
+        void UpdateUser(string token, User user);
 
-        void UpdateComputer(string token, int compId, Computer computer);
+        void UpdateComputer(string token, Computer computer);
 
-        void UpdateAcount(string token, int accountId, Account account);
+        void UpdateAcount(string token, Account account);
 
         void WriteComputer(string token, Computer computer);
 
