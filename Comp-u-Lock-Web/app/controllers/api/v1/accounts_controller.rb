@@ -43,9 +43,9 @@ module Api
 					return
 				end
 				
-				if account["user_name"].nil?
+				if account["username"].nil?
 					render :status => 400,
-						:json => { :message => "'user_name' cannot be null."}
+						:json => { :message => "'username' cannot be null."}
 					return
 				end
 
@@ -104,9 +104,9 @@ module Api
 				@user = User.find_by_authentication_token(token)
 				account = params[:account]
 
-				if account["user_name"].nil?
+				if account["username"].nil?
 					render :status => 400,
-						:json => { :message => "'user_name' cannot be null."}
+						:json => { :message => "'username' cannot be null."}
 					return
 				end
 				if account["computer_id"].nil?

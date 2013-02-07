@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(:version => 20130204013213) do
   create_table "accounts", :force => true do |t|
     t.integer  "computer_id"
     t.string   "domain",        :default => "",    :null => false
-    t.string   "user_name",     :default => "",    :null => false
+    t.string   "username",                         :null => false
     t.boolean  "tracking",      :default => false, :null => false
     t.time     "allotted_time"
     t.time     "used_time"

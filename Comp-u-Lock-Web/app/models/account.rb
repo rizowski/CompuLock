@@ -1,7 +1,7 @@
 class Account < ActiveRecord::Base
-  attr_accessible :computer_id, :allotted_time, :domain, :tracking, :used_time, :user_name
+  attr_accessible :computer_id, :allotted_time, :domain, :tracking, :used_time, :username
 
-  validates :user_name, :presence => true
+  validates :username, :presence => true
   
   belongs_to :computer
 
@@ -14,7 +14,7 @@ class Account < ActiveRecord::Base
       id: id,
       computer_id: computer_id,
       domain: domain,
-      user_name: user_name,
+      username: username,
       tracking: tracking,
       
       account_history: account_history,
