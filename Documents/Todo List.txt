@@ -25,6 +25,7 @@ Week 5:
 					- |Done| Index
 					- |Done| Update
 				- |Done| To limit what is sent -http://railscasts.com/episodes/348-the-rails-api-gem?view=asciicast
+				- Possibly add Is admin if id isn't within their account ids
 			Database:
 				- No - Perhaps redesign the Database models for account history and programs. remove prefix
 			Account:

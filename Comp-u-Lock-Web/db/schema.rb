@@ -15,50 +15,50 @@ ActiveRecord::Schema.define(:version => 20130204013213) do
 
   create_table "account_histories", :force => true do |t|
     t.integer  "account_id"
-    t.string   "domain"
-    t.string   "url"
-    t.string   "title"
+    t.string   "domain",       :default => "", :null => false
+    t.string   "url",          :default => "", :null => false
+    t.string   "title",        :default => "", :null => false
     t.datetime "last_visited"
-    t.integer  "visit_count"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.integer  "visit_count",  :default => 0,  :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
   end
 
   create_table "account_processes", :force => true do |t|
     t.integer  "account_id"
-    t.string   "name"
+    t.string   "name",       :default => "", :null => false
     t.datetime "lastrun"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
   end
 
   create_table "account_programs", :force => true do |t|
     t.integer  "account_id"
-    t.string   "name"
+    t.string   "name",       :default => "", :null => false
     t.datetime "lastrun"
-    t.integer  "open_count"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "open_count", :default => 0,  :null => false
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
   end
 
   create_table "accounts", :force => true do |t|
     t.integer  "computer_id"
-    t.string   "domain"
-    t.string   "user_name"
-    t.boolean  "tracking"
+    t.string   "domain",        :default => "",    :null => false
+    t.string   "user_name",     :default => "",    :null => false
+    t.boolean  "tracking",      :default => false, :null => false
     t.time     "allotted_time"
     t.time     "used_time"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
   end
 
   create_table "computers", :force => true do |t|
     t.integer  "user_id"
-    t.string   "name"
-    t.string   "ip_address"
-    t.string   "enviroment"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string   "name",       :default => "", :null => false
+    t.string   "ip_address", :default => "", :null => false
+    t.string   "enviroment", :default => "", :null => false
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
   end
 
   create_table "users", :force => true do |t|

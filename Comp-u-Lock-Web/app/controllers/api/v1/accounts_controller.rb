@@ -15,7 +15,7 @@ module Api
 				@accounts = Account.where computer_id: @user.computer_ids
 
 				respond_to do |format|
-					format.json { render :json => @accounts}
+					format.json { render json: {accounts: @accounts}}
 				end
 			end
 
@@ -52,7 +52,7 @@ module Api
 				@account = Account.new(account)
 				if @account.save
 					respond_to do |format|
-						format.json {render json: @account}
+						format.json {render json: {account: @account }}
 					end
 				else
 					render :status => 400,
@@ -87,19 +87,47 @@ module Api
 
 				@account = Account.find(id)
 				respond_to do |format|
-					format.json { render :json => @account }
+					format.json { render :json => {account: @account} }
 				end
 			end
 
 			# this needs to be fixed. http://stackoverflow.com/questions/14704542/recieving-the-appropriate-json-model-rails
 			def update
 				token = params[:auth_token]
+				id = params[:id]
+
 				if token.nil?
 					render :status => 400,
 						:json => { :message => "The request must contain an auth token."}
 					return
 				end
-				respond_with Account.update(params[:id], params[:account])
+				@user = User.find_by_authentication_token(token)
+				account = params[:account]
+
+				if account["user_name"].nil?
+					render :status => 400,
+						:json => { :message => "'user_name' cannot be null."}
+					return
+				end
+				if account["computer_id"].nil?
+					render :status => 400,
+						:json => { :message => "The request must contain a 'computer_id'."}
+					return
+				end
+				@accounts = Account.where computer_id: @user.computer_ids
+				unless @accounts.pluck(:id).include? id.to_i
+					render :status => 401,
+						:json => { :message => "Access Denied, check account Id."}
+					return
+				end
+				@account = Account.find(id)
+				if Account.update id, account 
+					render json: {account: @account}
+				else
+
+					render :json => { :message => "Something went wrong with saving the entity."}
+					return
+				end
 			end
 
 			def destroy
