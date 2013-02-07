@@ -117,11 +117,38 @@ module Api
 				respond_to do |format|
 					format.json {render json: @computer}
 				end
-
 			end
 
 			def destroy
+				token = params[:auth_token]
+				id = params[:id]
 
+				if token.nil?
+					render :status => 400,
+						:json => { :message => "The request must contain an auth token."}
+					return
+				end
+				if id.nil?
+					render :status => 400,
+						:json => { :message => "The request must contain an id."}
+					return
+				end
+				@user = User.find_by_authentication_token(token)
+				unless @user.computer_ids.include? id.to_i
+					render :status => 401,
+						:json => { :message => "The request was declined. Check computer Id."}
+					return
+				end
+
+				if Computer.find(id).delete
+					respond_to do |format|
+						format.json { render :json => {message: "Success"} }
+					end
+				else
+					render :status => 400,
+						:json => { :message => "Something went wrong with deleting the entity."}
+					return
+				end
 			end
 		end
 	end
