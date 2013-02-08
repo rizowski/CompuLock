@@ -41,20 +41,23 @@ Week 5:
 					- |Done| Index
 					- |Done| Create
 					- |Done| Update
-					- Show
+					- |Done| Show
 					- Destroy
 				Account:
 					- |Done| Index
 					- Create
 					- Update
-					- Show
+					- |Done| Show
 					- Destroy
 					History:
 						- Create
+						- |Done| Get all for account
 					Processes:
 						- Create
+						- |Done| Get all for account
 					Programs:
 						- Create
+						- |Done| Get all for account
 				User:
 					- |Done| Index
 					- |Done| Update

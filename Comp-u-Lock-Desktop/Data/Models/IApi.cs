@@ -17,6 +17,8 @@ namespace Data.Models
 
         Account GetAccountById(string token, int accountId);
 
+        Computer GetComputerById(string token, int computerId);
+
         IEnumerable<AccountHistory> GetHistory(string token, int accountId);
 
         IEnumerable<AccountProcess> GetProcesses(string token, int accountId);

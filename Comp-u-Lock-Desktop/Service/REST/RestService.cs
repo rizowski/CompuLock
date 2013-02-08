@@ -73,6 +73,12 @@ namespace Service.REST
             return accounts.FirstOrDefault(a => a.Id == accountId);
         }
 
+        public Computer GetComputerById(string token, int computerId)
+        {
+            var computers = GetComputers(token);
+            return computers.FirstOrDefault(c => c.Id == computerId);
+        }
+
         public IEnumerable<AccountHistory> GetHistory(string token, int accountId)
         {
             var account = GetAccountById(token, accountId);
@@ -87,8 +93,8 @@ namespace Service.REST
 
         public IEnumerable<AccountProgram> GetPrograms(string token, int accountId)
         {
-            //TODO grab the accounts and find the Programs
-            throw new NotImplementedException();
+            var account = GetAccountById(token, accountId);
+            return account.AccountProgram;
         }
 
         public void UpdateUser(string token, User user)
