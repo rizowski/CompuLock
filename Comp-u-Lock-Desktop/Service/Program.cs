@@ -29,13 +29,15 @@ namespace Service
             RunDbAccounts();*/
             Console.WriteLine("\nRun REST");
             REST();
+            /*Console.WriteLine("\nRun REST 2.0");
+            REST2();*/
             Console.Read();
 
         }
 
         private static void RunDbAccounts()
         {
-            User u = new User();
+            Data.Models.User u = new Data.Models.User();
 
             u.CreatedAt = DateTime.Now;
             u.UpdatedAt = DateTime.Now;
@@ -145,31 +147,32 @@ namespace Service
 
         public static void REST()
         {
-            RestService rs = new RestService("http://localhost:3000");
+
+            RestService rs = new RestService("http://localhost:3000", "api/v1/");
             string token = "AiprpscAqN6hnvNDHSwh";
-            //var user = rs.GetUser(token);
-            //Console.WriteLine("Email: {0}", user.Email);
-            //Console.WriteLine("Auth Token: {0}",user.AuthToken);
-            //Console.WriteLine("Username: {0}",user.Username);
 
-            //var accounts = rs.GetAccounts(token);
-            //var user = rs.GetUser(token);
-            //var computers = rs.GetComputers(token);
+            /*var user = rs.GetUser(token);
+            Console.WriteLine("Email: {0}", user.Email);
+            Console.WriteLine("Username: {0}", user.Username);*/
 
-            //User u = new User();
-            //u.Id = 1;
-            //u.Email = "Bob@gmail.com";
-            //u.Username = "Rizowski";
-            //rs.UpdateUser(token, u);
+            var accounts = rs.GetAccounts(token);
+            var user = rs.GetUser(token);
+            var computers = rs.GetComputers(token);
 
-            //Computer c = new Computer
-            //    {
-            //        Enivroment = "MyEnviroment",
-            //        IpAddress = "0.0.0.0",
-            //        Name = "MINE",
-            //        UserId = 1
-            //    };
-            //rs.CreateComputer(token,c);
+            User u = new User();
+            u.Id = 1;
+            u.Email = "Bob@gmail.com";
+            u.Username = "Rizowski";
+            rs.UpdateUser(token, u);
+
+            Computer c = new Computer
+                {
+                    Enivroment = "MyEnviroment",
+                    IpAddress = "0.0.0.0",
+                    Name = "MINE",
+                    UserId = 1
+                };
+            rs.CreateComputer(token, c);
 
             var histories = rs.GetHistory(token, 2);
             foreach (var accountHistory in histories)
@@ -177,6 +180,46 @@ namespace Service
                 Console.WriteLine("Domain: {0}",accountHistory.Domain);
             }
 
+        }
+
+        public static void REST2()
+        {
+            var server = "http://localhost:3000";
+            var api = "api/v1/";
+            string token = "AiprpscAqN6hnvNDHSwh";
+
+            RestUser u = new RestUser(server, api);
+
+            var user = u.Get(token);
+            Console.WriteLine("Id:{0}",user.Id);
+            Console.WriteLine("Username: {0}", user.Username);
+            Console.WriteLine("Email: {0}", user.Email);
+            user.Username = "Rizowski";
+
+            var newuser = new User(user.Id, "Rizowski", user.Email);
+
+            user = u.Update(token, newuser);
+            Console.WriteLine("Id:{0}", user.Id);
+            Console.WriteLine("Username: {0}", user.Username);
+            Console.WriteLine("Email: {0}", user.Email);
+
+            RestComputer c = new RestComputer(server, api);
+
+            Computer comp = new Computer( 1, "Bobs", "Windows Eight", "0.0.0.0");
+
+            var create = c.Create(token, comp);
+            Console.WriteLine(create.Id);
+            Console.WriteLine("Name: {0}", create.Name);
+            Console.WriteLine("Enviroment: {0}", create.Enivroment);
+            Console.WriteLine("Ip: {0}", create.IpAddress);
+
+            var oldnew = new Computer(create.Id, create.UserId, "Not Bobs", "Crap", "1.1.1.1");
+
+            var newcomp = c.Update(token, oldnew);
+            Console.WriteLine(newcomp.Id);
+            Console.WriteLine("Name: {0}", newcomp.Name);
+            Console.WriteLine("Enviroment: {0}", newcomp.Enivroment);
+            Console.WriteLine("Ip: {0}", newcomp.IpAddress);
         }
 
     }

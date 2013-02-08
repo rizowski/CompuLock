@@ -16,20 +16,13 @@ namespace Data.Models
         public string Email { get; set; }
 
         [JsonProperty(PropertyName = "computers", NullValueHandling = NullValueHandling.Ignore)]
-        public List<Computer> Computers { get; set; }
+        public List<Computer> Computers { get; private set; }
 
         [JsonIgnore]
         public DateTime CreatedAt { get; set; }
         [JsonIgnore]
         public DateTime UpdatedAt { get; set; }
 
-        public User(int id, string username, string email, List<Computer> computers)
-        {
-            Id = id;
-            Username = username;
-            Email = email;
-            Computers = computers;
-        }
         public User(int id, string username, string email)
         {
             Id = id;

@@ -81,9 +81,9 @@ module Api
 						:json => { :message => "The request was declined. Check computer Id."}
 					return
 				end
-				@computer = Computer.find(id)
 		       	if Computer.update(id, computer)
-		       		render json: @computer
+		       		@computer = Computer.find(id)
+		       		render json: {computer: @computer}
 		       	else
 		       		render :status => 400,
 						:json => { :message => "Something went wrong with saving the entity."}

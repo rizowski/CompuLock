@@ -106,7 +106,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="REST\RestAccount.cs" />
+    <Compile Include="REST\RestComputer.cs" />
+    <Compile Include="REST\IRest.cs" />
     <Compile Include="REST\RestService.cs" />
+    <Compile Include="REST\RestUser.cs" />
     <Compile Include="Service.cs" />
     <Compile Include="Users\Browsers.cs" />
     <Compile Include="Users\Processes.cs" />

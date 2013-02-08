@@ -41,7 +41,7 @@ module Api
 				end
 
 				if User.update(id, user)
-					render json: @user
+					render json: {user: @user}
 				else
 					render :status => 400,
 						:json => { :message => "Something went wrong with saving user changes."}

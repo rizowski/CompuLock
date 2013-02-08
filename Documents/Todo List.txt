@@ -42,13 +42,13 @@ Week 5:
 					- |Done| Create
 					- |Done| Update
 					- |Done| Show
-					- Destroy
+					- |Done| Destroy
 				Account:
 					- |Done| Index
 					- |Done| Create
 					- |Done| Update
 					- |Done| Show
-					- Destroy
+					- |Done| Destroy
 					History:
 						- Create
 						- |Done| Get all for account
