@@ -45,8 +45,8 @@ Week 5:
 					- Destroy
 				Account:
 					- |Done| Index
-					- Create
-					- Update
+					- |Done| Create
+					- |Done| Update
 					- |Done| Show
 					- Destroy
 					History:

@@ -41,6 +41,10 @@ namespace Data.Models
 
         void CreateProcess(string token, int accountId, AccountProcess process);
 
+        void DeleteComputer(string token, int id);
+
+        void DeleteAccount(string token, int id);
+
         //IEnumberable<Account> GetAllTrackedAccounts(string token);
     }
 }

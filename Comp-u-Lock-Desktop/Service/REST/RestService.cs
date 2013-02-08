@@ -178,5 +178,25 @@ namespace Service.REST
         {
             throw new NotImplementedException();
         }
+
+        public void DeleteComputer(string token, int id)
+        {
+            var request = new RestRequest("api/v1/computers/" + id, Method.DELETE);
+            request.AddParameter(AUTH, token);
+            var response = Client.Execute(request);
+            if (response.StatusCode != HttpStatusCode.OK)
+                Console.WriteLine("Status Code Error: {0}", response.StatusCode);
+            Console.WriteLine(response.Content);
+        }
+
+        public void DeleteAccount(string token, int id)
+        {
+            var request = new RestRequest("api/v1/accounts/" + id, Method.DELETE);
+            request.AddParameter(AUTH, token);
+            var response = Client.Execute(request);
+            if (response.StatusCode != HttpStatusCode.OK)
+                Console.WriteLine("Status Code Error: {0}", response.StatusCode);
+            Console.WriteLine(response.Content);
+        }
     }
 }
