@@ -152,7 +152,7 @@ namespace Service
             //Console.WriteLine("Auth Token: {0}",user.AuthToken);
             //Console.WriteLine("Username: {0}",user.Username);
 
-            //var accounts = rs.GetAccounts(token, 1);
+            //var accounts = rs.GetAccounts(token);
             //var user = rs.GetUser(token);
             //var computers = rs.GetComputers(token);
 

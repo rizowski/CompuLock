@@ -42,7 +42,7 @@ namespace Service.REST
             return user;
         }
 
-        public List<Computer> GetComputers(string token)
+        public IEnumerable<Computer> GetComputers(string token)
         {
             var request = new RestRequest("api/v1/computers", Method.GET);
             request.AddParameter(AUTH, token);
@@ -55,7 +55,7 @@ namespace Service.REST
             return comps;
         }
 
-        public List<Account> GetAccounts(string token, int computerId)
+        public IEnumerable<Account> GetAccounts(string token)
         {
             var request = new RestRequest("api/v1/accounts", Method.GET);
             request.AddParameter(AUTH, token);
@@ -67,18 +67,27 @@ namespace Service.REST
             return accounts;
         }
 
-        public List<AccountHistory> Histories(string token, int accountId)
+        public Account GetAccountById(string token, int accountId)
         {
+            var accounts = GetAccounts(token);
+            return accounts.FirstOrDefault(a => a.Id == accountId);
+        }
+
+        public IEnumerable<AccountHistory> GetHistory(string token, int accountId)
+        {
+            var account = GetAccountById(token, accountId);
+            return account.Histories;
+        }
+
+        public IEnumerable<AccountProcess> GetProcesses(string token, int accountId)
+        {
+            //TODO grab the accounts and find hte Processes
             throw new NotImplementedException();
         }
 
-        public List<AccountProcess> GetProcesses(string token, int accountId)
+        public IEnumerable<AccountProgram> GetPrograms(string token, int accountId)
         {
-            throw new NotImplementedException();
-        }
-
-        public List<AccountProgram> GetPrograms(string token, int accountId)
-        {
+            //TODO grab the accounts and find the Programs
             throw new NotImplementedException();
         }
 

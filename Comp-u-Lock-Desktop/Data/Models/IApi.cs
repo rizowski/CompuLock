@@ -11,15 +11,17 @@ namespace Data.Models
 
         User GetUser(string token);
 
-        List<Computer> GetComputers(string token);
+        IEnumerable<Computer> GetComputers(string token);
 
-        List<Account> GetAccounts(string token, int computerId);
+        IEnumerable<Account> GetAccounts(string token);
 
-        List<AccountHistory> Histories(string token, int accountId);
+        Account GetAccountById(string token, int accountId);
 
-        List<AccountProcess> GetProcesses(string token, int accountId);
+        IEnumerable<AccountHistory> GetHistory(string token, int accountId);
 
-        List<AccountProgram> GetPrograms(string token, int accountId);
+        IEnumerable<AccountProcess> GetProcesses(string token, int accountId);
+
+        IEnumerable<AccountProgram> GetPrograms(string token, int accountId);
 
         void UpdateUser(string token, User user);
 
