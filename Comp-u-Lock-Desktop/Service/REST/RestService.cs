@@ -112,12 +112,28 @@ namespace Service.REST
 
         public void UpdateComputer(string token, Computer computer)
         {
-            throw new NotImplementedException();
+            var request = new RestRequest("api/v1/computers/"+computer.Id, Method.PUT);
+            request.AddParameter(AUTH, token);
+            var json = JsonConvert.SerializeObject(computer);
+            Console.WriteLine(json);
+            request.AddParameter("computer", json);
+            var response = Client.Execute(request);
+            if (response.StatusCode != HttpStatusCode.OK)
+                Console.WriteLine("Status Code Error: {0}", response.StatusCode);
+            Console.WriteLine(response.Content);
         }
 
         public void UpdateAcount(string token, Account account)
         {
-            throw new NotImplementedException();
+            var request = new RestRequest("api/v1/accounts/"+account.Id, Method.PUT);
+            request.AddParameter(AUTH, token);
+            var json = JsonConvert.SerializeObject(account);
+            Console.WriteLine(json);
+            request.AddParameter("account", json);
+            var response = Client.Execute(request);
+            if (response.StatusCode != HttpStatusCode.OK)
+                Console.WriteLine("Status Code Error: {0}", response.StatusCode);
+            Console.WriteLine(response.Content);
         }
 
         public void CreateComputer(string token, Computer computer)
@@ -134,7 +150,7 @@ namespace Service.REST
 
         public void CreateAccount(string token, int computerId, Account account)
         {
-            throw new NotImplementedException();
+            
         }
 
         public void CreateHistory(string token, int accountId, AccountHistory history)
