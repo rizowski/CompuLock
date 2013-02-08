@@ -6,7 +6,7 @@ class CreateAccountHistories < ActiveRecord::Migration
       t.string :domain, :null => false, :default => ""
       t.string :url, :null => false, :default => ""
       t.string :title, :null => false, :default => ""
-      t.datetime :last_visited
+      t.datetime :last_visited, :null => false
       t.integer :visit_count, :null => false, :default => 0
       
       t.timestamps

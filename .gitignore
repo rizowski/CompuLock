@@ -10,6 +10,8 @@
 *.user
 *.sln.docstates
 
+obj/bin/Debug
+
 # Build results
 [Dd]ebug/
 [Rr]elease/

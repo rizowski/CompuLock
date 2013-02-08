@@ -22,12 +22,12 @@ namespace Data.Models
         [JsonProperty(PropertyName = "used_time")]
         public int UsedTime { get; set; }
 
-        [JsonProperty(PropertyName = "history", NullValueHandling = NullValueHandling.Ignore)]
-        public IEnumerable<AccountHistory> Histories { get; set; }
-        [JsonProperty(PropertyName = "process", NullValueHandling = NullValueHandling.Ignore)]
-        public IEnumerable<AccountProcess> Processes { get; set; }
-        [JsonProperty(PropertyName = "programs", NullValueHandling = NullValueHandling.Ignore)]
-        public IEnumerable<AccountProgram> Programs { get; set; }
+        [JsonProperty(PropertyName = "account_history", NullValueHandling = NullValueHandling.Ignore)]
+        public IEnumerable<AccountHistory> AccountHistory { get; set; }
+        [JsonProperty(PropertyName = "account_process", NullValueHandling = NullValueHandling.Ignore)]
+        public IEnumerable<AccountProcess> AccountProcess{ get; set; }
+        [JsonProperty(PropertyName = "account_program", NullValueHandling = NullValueHandling.Ignore)]
+        public IEnumerable<AccountProgram> AccountProgram { get; set; }
 
         public string ToJSON()
         {

@@ -162,14 +162,20 @@ namespace Service
             //u.Username = "Rizowski";
             //rs.UpdateUser(token, u);
 
-            Computer c = new Computer
-                {
-                    Enivroment = "MyEnviroment",
-                    IpAddress = "0.0.0.0",
-                    Name = "MINE",
-                    UserId = 1
-                };
-            rs.CreateComputer(token,c);
+            //Computer c = new Computer
+            //    {
+            //        Enivroment = "MyEnviroment",
+            //        IpAddress = "0.0.0.0",
+            //        Name = "MINE",
+            //        UserId = 1
+            //    };
+            //rs.CreateComputer(token,c);
+
+            var histories = rs.GetHistory(token, 2);
+            foreach (var accountHistory in histories)
+            {
+                Console.WriteLine("Domain: {0}",accountHistory.Domain);
+            }
 
         }
 

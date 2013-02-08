@@ -38,5 +38,7 @@ namespace Data.Models
         void CreateProgram(string token, int accountId, AccountProgram program);
 
         void CreateProcess(string token, int accountId, AccountProcess process);
+
+        //IEnumberable<Account> GetAllTrackedAccounts(string token);
     }
 }

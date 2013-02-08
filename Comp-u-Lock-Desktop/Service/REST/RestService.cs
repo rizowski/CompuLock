@@ -76,13 +76,13 @@ namespace Service.REST
         public IEnumerable<AccountHistory> GetHistory(string token, int accountId)
         {
             var account = GetAccountById(token, accountId);
-            return account.Histories;
+            return account.AccountHistory;
         }
 
         public IEnumerable<AccountProcess> GetProcesses(string token, int accountId)
         {
-            //TODO grab the accounts and find hte Processes
-            throw new NotImplementedException();
+            var account = GetAccountById(token, accountId);
+            return account.AccountProcess;
         }
 
         public IEnumerable<AccountProgram> GetPrograms(string token, int accountId)
