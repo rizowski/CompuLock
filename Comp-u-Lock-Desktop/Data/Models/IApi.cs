@@ -33,7 +33,7 @@ namespace Data.Models
 
         void CreateComputer(string token, Computer computer);
 
-        void CreateAccount(string token, int computerId, Account account);
+        void CreateAccount(string token, Account account);
 
         void CreateHistory(string token, int accountId, AccountHistory history);
 

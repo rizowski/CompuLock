@@ -138,6 +138,8 @@ namespace Service.REST
 
         public void CreateComputer(string token, Computer computer)
         {
+            if(computer.UserId ==0)
+                throw new ArgumentException("Computer must have a user Id");
             var request = new RestRequest("api/v1/computers/", Method.POST);
             request.AddParameter(AUTH, token);
             var json = JsonConvert.SerializeObject(computer);
@@ -148,9 +150,18 @@ namespace Service.REST
             Console.WriteLine(response.Content);
         }
 
-        public void CreateAccount(string token, int computerId, Account account)
+        public void CreateAccount(string token, Account account)
         {
-            
+            if(account.ComputerId==0)
+                throw new ArgumentException("Account must have a computer Id");
+            var request = new RestRequest("api/v1/accounts", Method.POST);
+            request.AddParameter(AUTH, token);
+            var json = JsonConvert.SerializeObject(account);
+            request.AddParameter("account", json);
+            var response = Client.Execute(request);
+            if (response.StatusCode != HttpStatusCode.OK)
+                Console.WriteLine("Status Code Error: {0}", response.StatusCode);
+            Console.WriteLine(response.Content);
         }
 
         public void CreateHistory(string token, int accountId, AccountHistory history)
