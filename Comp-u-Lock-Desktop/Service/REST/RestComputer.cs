@@ -55,7 +55,7 @@ namespace Service.REST
             if (response.StatusCode != HttpStatusCode.OK)
                 Console.WriteLine("Status Code Error: {0}", response.StatusCode);
             var comp = JObject.Parse(response.Content);
-            var comps = JsonConvert.DeserializeObject<List<Data.Models.Computer>>(comp["computers"].ToString());
+            var comps = JsonConvert.DeserializeObject<List<Computer>>(comp["computers"].ToString());
             return comps;
         }
 

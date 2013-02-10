@@ -24,5 +24,7 @@ CompULockWeb::Application.routes.draw do
     match '/users/sign_out' => 'devise/sessions#destroy', :as => :destroy_user_session
     match '/users/edit' => 'devise/registrations#edit', :as => :user_edit
   end
+
+  match '/users/index', as: :user
   match ':controller(/:action(/:id))(.:format)'
 end

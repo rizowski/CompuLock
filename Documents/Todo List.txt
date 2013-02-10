@@ -75,6 +75,59 @@ Week 5:
 			- http://railscasts.com/episodes/352-securing-an-api?view=asciicast
 
 Next week:
-	- Unit tests do they work?
-	- What will I do about REST?
 	- send all data
+
+Week 6:
+	Notes:
+		- 
+	Todo:
+		Web:
+			REST:
+				- Add Processes
+					- Add
+				- Add History
+					- Add
+				- Add Programs
+					- Add
+			Links:
+				- Navigation Links
+					- |Done| Fix Broken
+					- 
+		Desktop:
+			REST 2.0:
+				- RestUser
+					- Show
+					- Update
+				- RestAccount
+					- Index
+					- Update
+					- Show
+					- Add
+					- Destroy
+				- RestComputer
+					- Add
+					- Update
+					- Show
+					- Index
+				- RestProcess
+					- Add
+					- Update
+				- RestPrograms
+					- Add
+					- Update
+				- RestHistory
+					- Add
+					- Update
+			Database:
+				- Saving
+					- Computers
+					- users
+					- accounts
+					- Programs
+					- Processes
+					- History
+				- retrieving
+					- The above
+		Testing:
+			- Test for why Processes isn't working 
+			- Test Data persisting
