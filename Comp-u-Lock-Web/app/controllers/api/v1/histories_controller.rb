@@ -48,7 +48,29 @@ module Api
 		end
 
 		def show
+			token = params[:auth_token]
+			history_id = params[:id]
+			if token.nil?
+				render :status => 400,
+					:json => { :message => "The request must contain an auth token."}
+				return
+			end
+			if history_id.nil? 
+				render :status => 400,
+					:json => { :message => "The request must contain a history id."}
+				return
+			end
+			@user = User.find_by_authentication_token token
+			@history = AccountHistory.find history_id
+			@accounts = Account.where computer_id: @user.computer_ids
 
+			if @accounts.pluck(:id).include? @history.account_id
+				render json: {history: @history}
+			else
+				render :status => 401,
+					:json => { :message => "The request was declined. Check Account Id."}
+				return
+			end
 		end
 
 		def index
