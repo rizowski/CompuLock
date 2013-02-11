@@ -33,4 +33,14 @@ class AccountController < ApplicationController
     end
   end
 
+  def destroy
+    @account = Account.find(params[:id])
+      if can? :destroy, @account
+        @account.delete
+      else
+        flash[:notice] = "You can not delete this account."
+      end
+      redirect_to(:action => 'index')
+  end
+
 end

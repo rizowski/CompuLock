@@ -101,18 +101,18 @@ Week 6:
 					- |Done| Update
 					- |Done| Destroy
 				Users:
-					- Index => Switching to Profile
+					- |Done| Index => Switching to Profile
 						- Profile
 					- List => Admin only
 				Accounts:
-					- Index
-					- List
+					- |Done| Index
+					- |Done| List
 					- Show
-						- Processes
-						- Histories
-						- Programs
-					- Edit
-					- Update
+						- Processes => Error with finding record? shows proces not process
+						- |Done| Histories
+						- |Done| Programs
+					- |Done| Edit
+					- |Done| Update
 		Desktop:
 			REST 2.0:
 				- RestUser

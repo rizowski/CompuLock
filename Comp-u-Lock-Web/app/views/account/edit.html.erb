@@ -1,4 +1,4 @@
-<h1>Edit Computer Account: <%=@account.user_name%></h1>
+<h1>Edit Computer Account: <%=@account.username%></h1>
 
 <%= form_for @account, :url=>{:action =>'update', :id => @account.id} do |f|%>
 	<%=f.label :computer_id, "Associated Computer:"%>
@@ -26,5 +26,5 @@
 	<%=f.label :tracking%>
 	<%=f.check_box :tracking%><br/>
 
-	<%=f.submit "Save"%>
+	<%=f.submit "Save"%> <%= link_to 'Delete', @account, method: :delete%>
 <%end%>
