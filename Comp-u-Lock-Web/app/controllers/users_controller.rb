@@ -5,6 +5,11 @@ class UsersController < ApplicationController
 		@computers = current_user.computer
 	end
 
+	def profile
+		@user = current_user
+		@computers = current_user.computer
+	end
+
 	def list
 		@users = User.all
 	  	if can? :read, @users

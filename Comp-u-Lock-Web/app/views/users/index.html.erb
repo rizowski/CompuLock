@@ -6,5 +6,5 @@ User Name: <%=current_user.username%><br/>
 Registered Computers: <%=current_user.computer.count%><br/>
 <%=link_to "edit account", edit_user_registration_path(current_user)%><br/>
 <%@computers.each do |computer|%>
-	<%=computer.name%> <%=link_to "stats", controller: 'computers', action: 'show', id: computer.id%> <%=link_to "edit", controller: 'computers', action: 'edit', id: computer.id%><br/>
+	<%=computer.name%> <%=link_to "stats", controller: 'computer', action: 'show', id: computer.id%> <%=link_to "edit", controller: 'computer', action: 'edit', id: computer.id%> <%=link_to "delete", computer, method: :delete%><br/>
 <%end%>

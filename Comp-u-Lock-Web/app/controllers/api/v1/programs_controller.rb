@@ -70,7 +70,28 @@ module Api
 		end
 
 		def index
+			token = params[:auth_token]
+			account_id = params[:account_id]
+			if token.nil?
+				render :status => 400,
+					:json => { :message => "The request must contain an auth token."}
+				return
+			end
+			if account_id.nil?
+				render :status => 400,
+					:json => { :message => "The request must contain an account id."}
+				return
+			end
+			@accounts = Account.where computer_id: @user.computer_ids
+			unless @accounts.pluck(:id).include? account_id
+				render :status => 401,
+					:json => { :message => "The request was declined."}
+				return
+			end
+			@account = Account.find account_id
 
+			@programs = @account.account_history.all
+			render json: {programs: @programs}
 		end
   	end
   end

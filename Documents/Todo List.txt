@@ -93,6 +93,26 @@ Week 6:
 				- Navigation Links
 					- |Done| Fix Broken
 					- 
+			Controllers:
+				Computers:
+					- |Done| Index
+					- |Done| Show
+					- |Done| Edit
+					- Update
+					- |Done| Destroy
+				Users:
+					- Index => Switching to Profile
+						- Profile
+					- List => Admin only
+				Accounts:
+					- Index
+					- List
+					- Show
+						- Processes
+						- Histories
+						- Programs
+					- Edit
+					- Update
 		Desktop:
 			REST 2.0:
 				- RestUser

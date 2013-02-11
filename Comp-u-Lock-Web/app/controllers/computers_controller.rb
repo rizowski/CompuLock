@@ -27,8 +27,14 @@ class ComputerController < ApplicationController
       end
     end
 
-    def save
-
+    def destroy
+      @computer = Computer.find(params[:id])
+      if can? :destroy, @computer
+        @computer.delete
+      else
+        flash[:notice] = "You can not delete this computer."
+      end
+      redirect_to(:action => 'index')
     end
 
     def show

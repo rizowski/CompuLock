@@ -1,4 +1,0 @@
-<h1>Computers</h1>
-<% @computers.each do |computer| %>
-	<%=computer.enviroment%>, <%= computer.name %> <%=link_to "stats",action: 'show', id:computer.id%> <%=link_to "edit",action: 'edit', id:computer.id%><br/>
-<%end%>

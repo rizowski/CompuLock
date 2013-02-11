@@ -5,6 +5,7 @@ CompULockWeb::Application.routes.draw do
   resource :user, only: [:index, :list]
   resources :computer
   resources :account
+  
   # resources :account_history
   # resources :account_process
   # resources :account_program

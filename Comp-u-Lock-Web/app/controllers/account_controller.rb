@@ -33,9 +33,4 @@ class AccountController < ApplicationController
     end
   end
 
-  # Put
-  def save
-    @account.(params[:account])
-  end
-
 end
