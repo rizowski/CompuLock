@@ -5,7 +5,7 @@ CompULockWeb::Application.routes.draw do
   resource :user, only: [:index, :list]
   resources :computer
   resources :account
-  
+
   # resources :account_history
   # resources :account_process
   # resources :account_program
@@ -26,6 +26,6 @@ CompULockWeb::Application.routes.draw do
     match '/users/edit' => 'devise/registrations#edit', :as => :user_edit
   end
 
-  match '/users/index', as: :user
+  match 'users/profile', as: :user_profile
   match ':controller(/:action(/:id))(.:format)'
 end

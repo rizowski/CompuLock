@@ -3,7 +3,7 @@
 <%= link_to('Login', new_user_session_path, :style =>"color: green")  %>
 <%= link_to('Register', new_user_registration_path, :style =>"color: green")  %>
 <%else%>
-<%= link_to("My Account", user_path) %>
+<%= link_to("Profile", user_profile_path) %>
 <%= link_to('Computers', computer_index_path) %>
 <%= link_to('Computer Accounts', account_index_path) %>
 <%= link_to('Logout', destroy_user_session_path, :method=>'get', :style => "color: #A80000") %>

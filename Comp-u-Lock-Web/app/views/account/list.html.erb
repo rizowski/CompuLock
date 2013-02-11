@@ -2,7 +2,7 @@
 <% @computers.each do |computer| %>
 	<%= computer.name %><br/>
 	<%computer.account.all.each do |account|%>
-		<%=account.domain%>, <%=account.user_name%>, <%=account.tracking%><br/>
+		<%=account.domain%>, <%=account.username%>, <%=account.tracking%><br/>
 	<% end%>
 	<br/>
 <%end%>

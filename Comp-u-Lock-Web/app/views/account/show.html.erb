@@ -1,5 +1,5 @@
-<h1>Account <%=@account.user_name%></h1>
-Computer Account: <%=@account.user_name%><br/>
+<h1>Account <%=@account.username%></h1>
+Computer Account: <%=@account.username%><br/>
 <span>Programs</span><br/>
 <%@account.account_program.each do |program|%>
 	Program: <%=program.name%><br/>
