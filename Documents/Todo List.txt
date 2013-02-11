@@ -98,7 +98,7 @@ Week 6:
 					- |Done| Index
 					- |Done| Show
 					- |Done| Edit
-					- Update
+					- |Done| Update
 					- |Done| Destroy
 				Users:
 					- Index => Switching to Profile
