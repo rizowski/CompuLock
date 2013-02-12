@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Database.Models
 {
-    class Computer
+    public class Computer
     {
         public int Id { get; set; }
         public string Name { get; set; }

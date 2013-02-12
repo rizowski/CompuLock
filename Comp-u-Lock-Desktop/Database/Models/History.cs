@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Database.Models
 {
-    class History
+    public class History
     {
         public int Id { get; set; }
         public string Title { get; set; }
