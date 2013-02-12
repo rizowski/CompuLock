@@ -6,15 +6,12 @@ using System.Threading.Tasks;
 
 namespace Database.Models
 {
-    class Computer
+    class Program
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Enviroment { get; set; }
-        public string IpAddress { get; set; }
+        public int OpenCount { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }
-
-        public ICollection<Account> Accounts { get; set; }
     }
 }
