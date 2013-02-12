@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using Data.JSON.Models;
 using Data.Service;
 using Data.Enviroment;
