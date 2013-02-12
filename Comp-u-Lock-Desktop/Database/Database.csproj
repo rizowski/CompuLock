@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="DatabaseContext.cs" />
     <Compile Include="Enviroment\OS.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Computer.cs" />
     <Compile Include="Models\History.cs" />
