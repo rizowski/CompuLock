@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using Data.JSON.Models;
 using Data.Models;
 using Newtonsoft.Json.Linq;
 using RestSharp;
@@ -32,7 +33,7 @@ namespace Service.REST
             return response.Content;
         }
 
-        public Data.Models.User GetUser(string token)
+        public User GetUser(string token)
         {
             var request = new RestRequest("api/v1/users", Method.GET);
             request.AddParameter(AUTH, token);
@@ -40,11 +41,11 @@ namespace Service.REST
             if (response.StatusCode != HttpStatusCode.OK)
                 Console.WriteLine("Status Code Error: {0}", response.StatusCode);
             var userjson = JObject.Parse(response.Content);
-            var user = JsonConvert.DeserializeObject<Data.Models.User>(userjson["user"].ToString());
+            var user = JsonConvert.DeserializeObject<User>(userjson["user"].ToString());
             return user;
         }
 
-        public IEnumerable<Data.Models.Computer> GetComputers(string token)
+        public IEnumerable<Computer> GetComputers(string token)
         {
             var request = new RestRequest("api/v1/computers", Method.GET);
             request.AddParameter(AUTH, token);
@@ -52,12 +53,12 @@ namespace Service.REST
             if (response.StatusCode != HttpStatusCode.OK)
                 Console.WriteLine("Status Code Error: {0}", response.StatusCode);
             var comp = JObject.Parse(response.Content);
-            var comps = JsonConvert.DeserializeObject<List<Data.Models.Computer>>(comp["computers"].ToString());
+            var comps = JsonConvert.DeserializeObject<List<Computer>>(comp["computers"].ToString());
             // http://james.newtonking.com/projects/json/help/
             return comps;
         }
 
-        public IEnumerable<Data.Models.Account> GetAccounts(string token)
+        public IEnumerable<Account> GetAccounts(string token)
         {
             var request = new RestRequest("api/v1/accounts", Method.GET);
             request.AddParameter(AUTH, token);
@@ -65,41 +66,41 @@ namespace Service.REST
             if (response.StatusCode != HttpStatusCode.OK)
                 Console.WriteLine("Status Code Error: {0}", response.StatusCode);
             var account = JObject.Parse(response.Content);
-            var accounts = JsonConvert.DeserializeObject<List<Data.Models.Account>>(account["accounts"].ToString());
+            var accounts = JsonConvert.DeserializeObject<List<Account>>(account["accounts"].ToString());
             return accounts;
         }
 
-        public Data.Models.Account GetAccountById(string token, int accountId)
+        public Account GetAccountById(string token, int accountId)
         {
             var accounts = GetAccounts(token);
             return accounts.FirstOrDefault(a => a.Id == accountId);
         }
 
-        public Data.Models.Computer GetComputerById(string token, int computerId)
+        public Computer GetComputerById(string token, int computerId)
         {
             var computers = GetComputers(token);
             return computers.FirstOrDefault(c => c.Id == computerId);
         }
 
-        public IEnumerable<AccountHistory> GetHistory(string token, int accountId)
+        public IEnumerable<History> GetHistory(string token, int accountId)
         {
             var account = GetAccountById(token, accountId);
-            return account.AccountHistory;
+            return account.Histories;
         }
 
-        public IEnumerable<AccountProcess> GetProcesses(string token, int accountId)
+        public IEnumerable<Process> GetProcesses(string token, int accountId)
         {
             var account = GetAccountById(token, accountId);
-            return account.AccountProcess;
+            return account.Processes;
         }
 
-        public IEnumerable<AccountProgram> GetPrograms(string token, int accountId)
+        public IEnumerable<Data.JSON.Models.Program> GetPrograms(string token, int accountId)
         {
             var account = GetAccountById(token, accountId);
-            return account.AccountProgram;
+            return account.Programs;
         }
 
-        public void UpdateUser(string token, Data.Models.User user)
+        public void UpdateUser(string token, User user)
         {
             var request = new RestRequest("api/v1/users/" + user.Id, Method.PUT);
             request.AddParameter(AUTH, token);
@@ -112,7 +113,7 @@ namespace Service.REST
             Console.WriteLine(response.Content);
         }
 
-        public void UpdateComputer(string token, Data.Models.Computer computer)
+        public void UpdateComputer(string token, Computer computer)
         {
             var request = new RestRequest("api/v1/computers/" + computer.Id, Method.PUT);
             request.AddParameter(AUTH, token);
@@ -125,7 +126,7 @@ namespace Service.REST
             Console.WriteLine(response.Content);
         }
 
-        public void UpdateAcount(string token, Data.Models.Account account)
+        public void UpdateAcount(string token, Account account)
         {
             var request = new RestRequest("api/v1/accounts/" + account.Id, Method.PUT);
             request.AddParameter(AUTH, token);
@@ -138,7 +139,7 @@ namespace Service.REST
             Console.WriteLine(response.Content);
         }
 
-        public void CreateComputer(string token, Data.Models.Computer computer)
+        public void CreateComputer(string token, Computer computer)
         {
             if (computer.UserId == 0)
                 throw new ArgumentException("Computer must have a user Id");
@@ -152,7 +153,7 @@ namespace Service.REST
             Console.WriteLine(response.Content);
         }
 
-        public void CreateAccount(string token, Data.Models.Account account)
+        public void CreateAccount(string token, Account account)
         {
             if (account.ComputerId == 0)
                 throw new ArgumentException("Account must have a computer Id");
@@ -166,17 +167,17 @@ namespace Service.REST
             Console.WriteLine(response.Content);
         }
 
-        public void CreateHistory(string token, int accountId, AccountHistory history)
+        public void CreateHistory(string token, int accountId, History history)
         {
             throw new NotImplementedException();
         }
 
-        public void CreateProgram(string token, int accountId, AccountProgram program)
+        public void CreateProgram(string token, int accountId, Program program)
         {
             throw new NotImplementedException();
         }
 
-        public void CreateProcess(string token, int accountId, AccountProcess process)
+        public void CreateProcess(string token, int accountId, Process process)
         {
             throw new NotImplementedException();
         }

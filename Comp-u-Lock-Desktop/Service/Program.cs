@@ -1,4 +1,5 @@
 ﻿using System;
+using Data.JSON.Models;
 using Data.Service;
 using Data.Enviroment;
 using Data.Models;
@@ -44,7 +45,7 @@ namespace Service
             //u.Email = "crouska@gmail.com";
             //u.Username = "Rizowski";
             Database db = new Database("settings.sqlite");
-            var comp = new Data.Database.Computer();
+            var comp = new Computer();
             comp.Enviroment = "Windows 8";
             comp.Name = "Rizos Computer";
             comp.IpAddress = "127.0.0.1";
@@ -158,30 +159,30 @@ namespace Service
             Console.WriteLine("Email: {0}", user.Email);
             Console.WriteLine("Username: {0}", user.Username);*/
 
-            var accounts = rs.GetAccounts(token);
-            var user = rs.GetUser(token);
-            var computers = rs.GetComputers(token);
+            //var accounts = rs.GetAccounts(token);
+            //var user = rs.GetUser(token);
+            //var computers = rs.GetComputers(token);
 
-            User u = new User();
-            u.Id = 1;
-            u.Email = "Bob@gmail.com";
-            u.Username = "Rizowski";
-            rs.UpdateUser(token, u);
+            //User u = new User();
+            //u.Id = 1;
+            //u.Email = "Bob@gmail.com";
+            //u.Username = "Rizowski";
+            //rs.UpdateUser(token, u);
 
-            Computer c = new Computer
-                {
-                    Enivroment = "MyEnviroment",
-                    IpAddress = "0.0.0.0",
-                    Name = "MINE",
-                    UserId = 1
-                };
-            rs.CreateComputer(token, c);
+            //Computer c = new Computer
+            //    {
+            //        Enviroment = "MyEnviroment",
+            //        IpAddress = "0.0.0.0",
+            //        Name = "MINE",
+            //        UserId = 1
+            //    };
+            //rs.CreateComputer(token, c);
 
-            var histories = rs.GetHistory(token, 2);
-            foreach (var accountHistory in histories)
-            {
-                Console.WriteLine("Domain: {0}",accountHistory.Domain);
-            }
+            //var histories = rs.GetHistory(token, 2);
+            //foreach (var accountHistory in histories)
+            //{
+            //    Console.WriteLine("Domain: {0}",accountHistory.Domain);
+            //}
 
         }
 
@@ -213,7 +214,7 @@ namespace Service
             var create = c.Create(token, comp);
             Console.WriteLine(create.Id);
             Console.WriteLine("Name: {0}", create.Name);
-            Console.WriteLine("Enviroment: {0}", create.Enivroment);
+            Console.WriteLine("Enviroment: {0}", create.Enviroment);
             Console.WriteLine("Ip: {0}", create.IpAddress);
 
             var oldnew = new Computer(create.Id, create.UserId, "Not Bobs", "Crap", "1.1.1.1");
@@ -221,7 +222,7 @@ namespace Service
             var newcomp = c.Update(token, oldnew);
             Console.WriteLine(newcomp.Id);
             Console.WriteLine("Name: {0}", newcomp.Name);
-            Console.WriteLine("Enviroment: {0}", newcomp.Enivroment);
+            Console.WriteLine("Enviroment: {0}", newcomp.Enviroment);
             Console.WriteLine("Ip: {0}", newcomp.IpAddress);
         }
 

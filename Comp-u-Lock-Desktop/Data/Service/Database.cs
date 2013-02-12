@@ -4,13 +4,15 @@ using System.Data.Entity;
 using System.Data.SQLite;
 using System.IO;
 using System.Security.AccessControl;
-using Data.Database;
+using Data;
+using Data.JSON.Models;
+using Data.Models;
 
 namespace Data.Service
 {
     public class Database
     {
-        public ModelsContainer context;
+        public ModelsContext context;
         public Database(string file)
         {
             var connection = new SQLiteConnection();
@@ -21,16 +23,15 @@ namespace Data.Service
                     {"FailIfMissing", "false"}
                 }.ConnectionString;
             Console.WriteLine(connection.ConnectionString);
-            context = new ModelsContainer();
+            context = new ModelsContext();
             context.Database.CreateIfNotExists();
 
         }
 
-        public void StoreComputer(Data.Database.Computer comp)
+        public void StoreComputer(Computer comp)
         {
-            var con = new ModelsContainer();
-            con.Computers.Add(comp);
-            con.SaveChanges();
+            context.Computers.Add(comp);
+            context.SaveChanges();
 
         }
 

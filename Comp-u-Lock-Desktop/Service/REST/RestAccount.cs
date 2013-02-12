@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using Data.JSON.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 
 namespace Service.REST
 {
-    class RestAccount : RestService, IRest<Data.Models.Account>
+    class RestAccount : RestService, IRest<Account>
     {
         private const string ACCOUNT = "accounts/";
 
@@ -17,7 +18,7 @@ namespace Service.REST
 
         }
 
-        public Data.Models.Account Create(string token, Data.Models.Account item)
+        public Account Create(string token, Account item)
         {
             if (item.ComputerId == 0)
                 throw new ArgumentException("Account must have a computer Id");
@@ -32,7 +33,7 @@ namespace Service.REST
             throw new NotImplementedException();
         }
 
-        public Data.Models.Account Update(string token, Data.Models.Account item)
+        public Account Update(string token, Account item)
         {
             var request = new RestRequest(ApiPath + ACCOUNT + item.Id, Method.PUT);
             request.AddParameter(AUTH, token);
@@ -46,7 +47,7 @@ namespace Service.REST
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Data.Models.Account> GetAll(string token)
+        public IEnumerable<Account> GetAll(string token)
         {
             var request = new RestRequest(ApiPath + ACCOUNT, Method.GET);
             request.AddParameter(AUTH, token);
@@ -54,11 +55,11 @@ namespace Service.REST
             if (response.StatusCode != HttpStatusCode.OK)
                 Console.WriteLine("Status Code Error: {0}", response.StatusCode);
             var account = JObject.Parse(response.Content);
-            var accounts = JsonConvert.DeserializeObject<List<Data.Models.Account>>(account["accounts"].ToString());
+            var accounts = JsonConvert.DeserializeObject<List<Account>>(account["accounts"].ToString());
             return accounts;
         }
 
-        public Data.Models.Account GetOneById(string token, int id)
+        public Account GetOneById(string token, int id)
         {
             var accounts = GetAll(token);
             return accounts.FirstOrDefault(a => a.Id == id);

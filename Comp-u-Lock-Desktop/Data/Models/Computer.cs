@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Data.Models;
 using Newtonsoft.Json;
 
-namespace Data.Models
+namespace Data.JSON.Models
 {
     [JsonObject]
     public class Computer : IParser
@@ -14,19 +14,19 @@ namespace Data.Models
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
         [JsonProperty(PropertyName = "enviroment")]
-        public string Enivroment { get; set; }
+        public string Enviroment { get; set; }
         [JsonProperty(PropertyName = "ip_address")]
         public string IpAddress { get; set; }
 
         [JsonProperty(PropertyName = "accounts", NullValueHandling = NullValueHandling.Ignore)]
-        public List<Account> Accounts { get; set; }
+        public virtual ICollection<Account> Accounts { get; set; } 
 
         public Computer(int id, int userId, string name, string enviroment, string ipAddress, List<Account> accounts )
         {
             Id = id;
             UserId = userId;
             Name = name;
-            Enivroment = enviroment;
+            Enviroment = enviroment;
             IpAddress = ipAddress;
             Accounts = accounts;
         }
@@ -40,7 +40,7 @@ namespace Data.Models
             Id = id;
             UserId = userId;
             Name = name;
-            Enivroment = enviroment;
+            Enviroment = enviroment;
             IpAddress = ipAddress;
         }
 
@@ -48,7 +48,7 @@ namespace Data.Models
         {
             UserId = userId;
             Name = name;
-            Enivroment = enviroment;
+            Enviroment = enviroment;
             IpAddress = ipAddress;
         }
 

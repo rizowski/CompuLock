@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
+using Data.Models;
 
-namespace Data.Models
+namespace Data.JSON.Models
 {
     public interface IApi
     {
@@ -19,11 +17,11 @@ namespace Data.Models
 
         Computer GetComputerById(string token, int computerId);
 
-        IEnumerable<AccountHistory> GetHistory(string token, int accountId);
+        IEnumerable<History> GetHistory(string token, int accountId);
 
-        IEnumerable<AccountProcess> GetProcesses(string token, int accountId);
+        IEnumerable<Process> GetProcesses(string token, int accountId);
 
-        IEnumerable<AccountProgram> GetPrograms(string token, int accountId);
+        IEnumerable<Program> GetPrograms(string token, int accountId);
 
         void UpdateUser(string token, User user);
 
@@ -35,11 +33,11 @@ namespace Data.Models
 
         void CreateAccount(string token, Account account);
 
-        void CreateHistory(string token, int accountId, AccountHistory history);
+        void CreateHistory(string token, int accountId, History history);
 
-        void CreateProgram(string token, int accountId, AccountProgram program);
+        void CreateProgram(string token, int accountId, Program program);
 
-        void CreateProcess(string token, int accountId, AccountProcess process);
+        void CreateProcess(string token, int accountId, Process process);
 
         void DeleteComputer(string token, int id);
 

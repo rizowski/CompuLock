@@ -1,10 +1,11 @@
 ﻿using System;
+using Data.Models;
 using Newtonsoft.Json;
 
-namespace Data.Models
+namespace Data.JSON.Models
 {
-    [JsonObject]
-    public class AccountProcess : IParser
+    [JsonObject(Title = "AccountProcess")]
+    public class Process : IParser
     {
         [JsonProperty(PropertyName = "id")]
         public int Id { get; set; }

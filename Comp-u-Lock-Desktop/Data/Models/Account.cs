@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+using Data.Models;
 using Newtonsoft.Json;
 
-namespace Data.Models
+namespace Data.JSON.Models
 {
     [JsonObject]
     public class Account :IParser
@@ -23,11 +24,11 @@ namespace Data.Models
         public int UsedTime { get; set; }
 
         [JsonProperty(PropertyName = "account_history", NullValueHandling = NullValueHandling.Ignore)]
-        public IEnumerable<AccountHistory> AccountHistory { get; set; }
+        public virtual ICollection<History> Histories { get; set; }
         [JsonProperty(PropertyName = "account_process", NullValueHandling = NullValueHandling.Ignore)]
-        public IEnumerable<AccountProcess> AccountProcess{ get; set; }
+        public virtual ICollection<Process> Processes { get; set; }
         [JsonProperty(PropertyName = "account_program", NullValueHandling = NullValueHandling.Ignore)]
-        public IEnumerable<AccountProgram> AccountProgram { get; set; }
+        public virtual ICollection<Program> Programs { get; set; } 
 
         public string ToJSON()
         {

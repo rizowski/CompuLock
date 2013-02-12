@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Data.Models;
 using Newtonsoft.Json;
 
-namespace Data.Models
+namespace Data.JSON.Models
 {
     [JsonObject]
     public class User : IParser
@@ -16,7 +17,8 @@ namespace Data.Models
         public string Email { get; set; }
 
         [JsonProperty(PropertyName = "computers", NullValueHandling = NullValueHandling.Ignore)]
-        public List<Computer> Computers { get; private set; }
+        public ICollection<Computer> Computers { get; set; }
+
 
         [JsonIgnore]
         public DateTime CreatedAt { get; set; }
