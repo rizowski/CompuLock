@@ -20,7 +20,6 @@ C:\Users\Rizowski\Documents\GitHub\CompuLock\Comp-u-Lock-Desktop\Service\bin\Deb
 C:\Users\Rizowski\Documents\GitHub\CompuLock\Comp-u-Lock-Desktop\Service\bin\Debug\RestSharp.dll
 C:\Users\Rizowski\Documents\GitHub\CompuLock\Comp-u-Lock-Desktop\Service\bin\Debug\UrlHistoryLibrary.dll
 C:\Users\Rizowski\Documents\GitHub\CompuLock\Comp-u-Lock-Desktop\Service\bin\Debug\Raven.Client.Embedded.dll
-C:\Users\Rizowski\Documents\GitHub\CompuLock\Comp-u-Lock-Desktop\Service\bin\Debug\Raven.Client.Lightweight.dll
 C:\Users\Rizowski\Documents\GitHub\CompuLock\Comp-u-Lock-Desktop\Service\bin\Debug\Raven.Abstractions.dll
 C:\Users\Rizowski\Documents\GitHub\CompuLock\Comp-u-Lock-Desktop\Service\bin\Debug\Raven.Database.dll
 C:\Users\Rizowski\Documents\GitHub\CompuLock\Comp-u-Lock-Desktop\Service\bin\Debug\Lucene.Net.dll

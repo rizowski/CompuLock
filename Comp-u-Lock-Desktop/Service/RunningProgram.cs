@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Database;
 using Database.Enviroment;
 using Database.Models;
 using Service.Users;
@@ -59,6 +61,28 @@ namespace Service
 
             DatabaseServer ds = new DatabaseServer("Data", true);
             ds.StartServer();
+            DatabaseClient dc = new DatabaseClient("http://localhost:8080");
+            var comp = new Computer();
+            comp.Enviroment = "Windows 8";
+            comp.Name = "Rizos Computer";
+            comp.IpAddress = "127.0.0.1";
+            comp.DateCreated = DateTime.Now;
+            comp.DateUpdated = DateTime.Now;
+            comp.Accounts = new List<Account>
+                {
+                    new Account()
+                        {
+                            Domain = "RIZOWSKI",
+                            Username = "Rizowski",
+                            Tracking = true,
+                            DateCreated = DateTime.Now, 
+                            DateUpdated = DateTime.Now
+                        }
+                };
+            Computer computer = dc.Save(comp);
+            Console.WriteLine(computer.Id);
+            var comps = dc.FindComputerById(computer.Id);
+            Console.WriteLine(comps.Name);
         }
 
         public static void RunProcesses()
