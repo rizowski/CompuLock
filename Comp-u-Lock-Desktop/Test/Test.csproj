@@ -65,9 +65,9 @@
     <Compile Include="DataTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Data\Data.csproj">
-      <Project>{5BE75041-3850-4176-9968-60CF0712472B}</Project>
-      <Name>Data</Name>
+    <ProjectReference Include="..\Database\Database.csproj">
+      <Project>{14b4fc88-d38c-4baa-bb30-5df0c9d57f65}</Project>
+      <Name>Database</Name>
     </ProjectReference>
     <ProjectReference Include="..\Service\Service.csproj">
       <Project>{2a2109ca-0a6f-431f-a9e1-947f78cdfc1a}</Project>

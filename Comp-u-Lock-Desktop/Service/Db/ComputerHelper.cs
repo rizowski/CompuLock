@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
+﻿
 using Database;
 using Database.Models;
 
-namespace Service.Database
+namespace Service.Db
 {
     class ComputerHelper
     {

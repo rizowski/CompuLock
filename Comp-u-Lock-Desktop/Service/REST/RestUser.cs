@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 
-namespace Service.REST
+namespace Service.Rest
 {
     class RestUser : RestService
     {

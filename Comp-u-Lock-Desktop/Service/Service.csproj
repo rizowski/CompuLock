@@ -106,18 +106,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="REST\RestAccount.cs" />
-    <Compile Include="REST\RestComputer.cs" />
-    <Compile Include="REST\IRest.cs" />
-    <Compile Include="REST\RestHistory.cs" />
-    <Compile Include="REST\RestProcess.cs" />
-    <Compile Include="REST\RestPrograms.cs" />
-    <Compile Include="REST\RestService.cs" />
-    <Compile Include="REST\RestUser.cs" />
+    <Compile Include="Db\ComputerHelper.cs" />
+    <Compile Include="Rest\RestAccount.cs" />
+    <Compile Include="Rest\RestComputer.cs" />
+    <Compile Include="Rest\IRest.cs" />
+    <Compile Include="Rest\RestHistory.cs" />
+    <Compile Include="Rest\RestProcess.cs" />
+    <Compile Include="Rest\RestPrograms.cs" />
+    <Compile Include="RestService.cs" />
+    <Compile Include="Rest\RestUser.cs" />
     <Compile Include="Service.cs" />
     <Compile Include="Users\Browsers.cs" />
     <Compile Include="Users\Processes.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="RunningProgram.cs" />
     <Compile Include="Users\Programs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Users\URL.cs" />
@@ -174,9 +175,16 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Data\Data.csproj">
-      <Project>{5BE75041-3850-4176-9968-60CF0712472B}</Project>
-      <Name>Data</Name>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Database\Database.csproj">
+      <Project>{14b4fc88-d38c-4baa-bb30-5df0c9d57f65}</Project>
+      <Name>Database</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\REST\REST.csproj">
+      <Project>{f27832ce-ff54-4a3d-ae0e-bf05994fa1ec}</Project>
+      <Name>REST</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
