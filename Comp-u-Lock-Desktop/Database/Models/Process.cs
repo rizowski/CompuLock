@@ -8,11 +8,13 @@ using System.Threading.Tasks;
 
 namespace Database.Models
 {
+    [Table("Processes")]
     public class Process
     {
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
+
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime DateCreated { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]

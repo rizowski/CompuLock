@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Database.Models
 {
+    [Table("Computers")]
     public class Computer
     {
         [Key]

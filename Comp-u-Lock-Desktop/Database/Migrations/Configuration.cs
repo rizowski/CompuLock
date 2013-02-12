@@ -16,8 +16,8 @@ namespace Database.Migrations
 
         protected override void Seed(DatabaseContext context)
         {
-            AddComputers(context);
             AddUser(context);
+            AddComputers(context);
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
@@ -29,7 +29,6 @@ namespace Database.Migrations
             //      new Person { FullName = "Brice Lambson" },
             //      new Person { FullName = "Rowan Miller" }
             //    );
-            //
         }
 
         private void AddComputers(DatabaseContext context)

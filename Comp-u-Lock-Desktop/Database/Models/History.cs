@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Database.Models
 {
+    [Table("Histories")]
     public class History
     {
         [Key]
