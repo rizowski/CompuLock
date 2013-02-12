@@ -1,11 +1,10 @@
 ﻿using System;
-using Data.Models;
 using Newtonsoft.Json;
 
-namespace Data.JSON.Models
+namespace REST.Models
 {
-    [JsonObject(Title = "AccountProgram")]
-    public class Program : IParser
+    [JsonObject(Title = "AccountProcess")]
+    public class Process : IParser
     {
         [JsonProperty(PropertyName = "id")]
         public int Id { get; set; }
@@ -13,10 +12,8 @@ namespace Data.JSON.Models
         public int AccountId { get; set; }
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "last_run")]
         public DateTime LastRun { get; set; }
-        [JsonProperty(PropertyName = "open_count")]
-        public int OpenCount { get; set; }
 
         public string ToJSON()
         {

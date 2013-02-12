@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using Data.Models;
 using Newtonsoft.Json;
 
-namespace Data.JSON.Models
+namespace REST.Models
 {
     [JsonObject]
     public class Computer : IParser
@@ -19,7 +18,7 @@ namespace Data.JSON.Models
         public string IpAddress { get; set; }
 
         [JsonProperty(PropertyName = "accounts", NullValueHandling = NullValueHandling.Ignore)]
-        public virtual ICollection<Account> Accounts { get; set; } 
+        public virtual List<Account> Accounts { get; set; } 
 
         public Computer(int id, int userId, string name, string enviroment, string ipAddress, List<Account> accounts )
         {

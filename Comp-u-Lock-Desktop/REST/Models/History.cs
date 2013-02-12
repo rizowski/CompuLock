@@ -1,8 +1,7 @@
 ﻿using System;
-using Data.Models;
 using Newtonsoft.Json;
 
-namespace Data.JSON.Models
+namespace REST.Models
 {
     [JsonObject(Title = "AccountHistory")]
     public class History : IParser

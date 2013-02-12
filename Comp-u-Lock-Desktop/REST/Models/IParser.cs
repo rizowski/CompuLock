@@ -1,4 +1,4 @@
-﻿namespace Data.Models
+﻿namespace REST.Models
 {
     interface IParser
     {

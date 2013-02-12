@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Data.Models;
 using Newtonsoft.Json;
 
-namespace Data.JSON.Models
+namespace REST.Models
 {
     [JsonObject]
     public class User : IParser
@@ -17,7 +16,7 @@ namespace Data.JSON.Models
         public string Email { get; set; }
 
         [JsonProperty(PropertyName = "computers", NullValueHandling = NullValueHandling.Ignore)]
-        public ICollection<Computer> Computers { get; set; }
+        public List<Computer> Computers { get; set; }
 
 
         [JsonIgnore]
