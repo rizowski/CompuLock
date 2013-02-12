@@ -1,5 +1,6 @@
 ﻿using System;
 using Database.Enviroment;
+using Database.Models;
 using Service.Users;
 using Processes = Service.Users.Processes;
 using Programs = Service.Users.Programs;
@@ -55,6 +56,9 @@ namespace Service
             //ch.Save(comp);
             //ch.Dispose();
             //Console.Read();
+
+            DatabaseServer ds = new DatabaseServer("Data", true);
+            ds.StartServer();
         }
 
         public static void RunProcesses()
