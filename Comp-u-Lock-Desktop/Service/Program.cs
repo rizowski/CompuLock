@@ -25,10 +25,10 @@ namespace Service
             RunOS();*/
             /*Console.WriteLine("\nRun User");
             RunUser();*/
-            /*Console.WriteLine("\nRun DbAccounts");
-            RunDbAccounts();*/
-            Console.WriteLine("\nRun REST");
-            REST();
+            Console.WriteLine("\nRun DbAccounts");
+            RunDbAccounts();
+            //Console.WriteLine("\nRun REST");
+            //REST();
             /*Console.WriteLine("\nRun REST 2.0");
             REST2();*/
             Console.Read();
@@ -37,18 +37,21 @@ namespace Service
 
         private static void RunDbAccounts()
         {
-            Data.Models.User u = new Data.Models.User();
+            //Data.Models.User u = new Data.Models.User();
 
-            u.CreatedAt = DateTime.Now;
-            u.UpdatedAt = DateTime.Now;
-            u.Email = "crouska@gmail.com";
-            u.Username = "Rizowski";
-            Database db = new Database("settings.db");
+            //u.CreatedAt = DateTime.Now;
+            //u.UpdatedAt = DateTime.Now;
+            //u.Email = "crouska@gmail.com";
+            //u.Username = "Rizowski";
+            Database db = new Database("settings.sqlite");
+            var comp = new Data.Database.Computer();
+            comp.Enviroment = "Windows 8";
+            comp.Name = "Rizos Computer";
+            comp.IpAddress = "127.0.0.1";
+            db.StoreComputer(comp);
 
-            db.Write(u.ToJSON());
-            
-            
-            Console.WriteLine(u.ToJSON());
+            Console.Read();
+            Console.WriteLine();
         }
 
         public static void RunProcesses()

@@ -1,34 +1,38 @@
 ﻿using System;
+using System.Data.Common;
+using System.Data.Entity;
+using System.Data.SQLite;
 using System.IO;
-using Newtonsoft.Json;
 using System.Security.AccessControl;
+using Data.Database;
 
 namespace Data.Service
 {
     public class Database
     {
-        public FileStream Db;
-        public Uri FilePath;
-
-
+        public ModelsContainer context;
         public Database(string file)
         {
-            FilePath = new Uri(Environment.CurrentDirectory + file);
-            Db = !File.Exists(FilePath.AbsolutePath) ? File.Create(FilePath.AbsolutePath) : File.Open(FilePath.AbsolutePath, FileMode.Open);
+            var connection = new SQLiteConnection();
+            connection.ConnectionString = new DbConnectionStringBuilder()
+                {
+                    {"Data Source", file},
+                    {"Version", "3"},
+                    {"FailIfMissing", "false"}
+                }.ConnectionString;
+            Console.WriteLine(connection.ConnectionString);
+            context = new ModelsContainer();
+            context.Database.CreateIfNotExists();
+
         }
 
-        public void Write(string json)
+        public void StoreComputer(Data.Database.Computer comp)
         {
-            
-            Console.WriteLine("File written successfully: {0}", FilePath.AbsolutePath);
+            var con = new ModelsContainer();
+            con.Computers.Add(comp);
+            con.SaveChanges();
+
         }
 
-        public void Load()
-        {
-            using (var sr = new StreamReader(Db))
-            {
-                Console.WriteLine(sr.ReadLine());
-            }
-        }
     }
 }

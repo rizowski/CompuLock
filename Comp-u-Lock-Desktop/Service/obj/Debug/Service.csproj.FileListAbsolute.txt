@@ -18,8 +18,6 @@ C:\Users\Rizowski\Documents\GitHub\CompuLock\Comp-u-Lock-Desktop\Service\bin\Deb
 C:\Users\Rizowski\Documents\GitHub\CompuLock\Comp-u-Lock-Desktop\Service\bin\Debug\EntityFramework.dll
 C:\Users\Rizowski\Documents\GitHub\CompuLock\Comp-u-Lock-Desktop\Service\bin\Debug\Newtonsoft.Json.dll
 C:\Users\Rizowski\Documents\GitHub\CompuLock\Comp-u-Lock-Desktop\Service\bin\Debug\RestSharp.dll
-C:\Users\Rizowski\Documents\GitHub\CompuLock\Comp-u-Lock-Desktop\Service\bin\Debug\System.Data.SQLite.dll
-C:\Users\Rizowski\Documents\GitHub\CompuLock\Comp-u-Lock-Desktop\Service\bin\Debug\System.Data.SQLite.Linq.dll
 C:\Users\Rizowski\Documents\GitHub\CompuLock\Comp-u-Lock-Desktop\Service\bin\Debug\UrlHistoryLibrary.dll
 C:\Users\Rizowski\Documents\GitHub\CompuLock\Comp-u-Lock-Desktop\Service\bin\Debug\Data.pdb
 C:\Users\Rizowski\Documents\GitHub\CompuLock\Comp-u-Lock-Desktop\Service\bin\Debug\EntityFramework.xml

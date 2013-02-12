@@ -109,6 +109,9 @@
     <Compile Include="REST\RestAccount.cs" />
     <Compile Include="REST\RestComputer.cs" />
     <Compile Include="REST\IRest.cs" />
+    <Compile Include="REST\RestHistory.cs" />
+    <Compile Include="REST\RestProcess.cs" />
+    <Compile Include="REST\RestPrograms.cs" />
     <Compile Include="REST\RestService.cs" />
     <Compile Include="REST\RestUser.cs" />
     <Compile Include="Service.cs" />
