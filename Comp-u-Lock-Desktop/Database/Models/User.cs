@@ -15,6 +15,6 @@ namespace Database.Models
         public DateTime LastUpdated { get; set; }
         public DateTime DateCreated { get; set; }
 
-        public ICollection<Computer> Computers { get; set; }
+        public virtual ICollection<Computer> Computers { get; set; }
     }
 }

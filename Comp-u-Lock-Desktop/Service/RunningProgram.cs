@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Data.Entity;
-using Data.JSON.Models;
-using Data.Service;
-using Data.Enviroment;
-using Data.Models;
-using Service.REST;
+using Database.Enviroment;
+using Database.Models;
+using Service.Database;
 using Service.Users;
 using Processes = Service.Users.Processes;
 using Programs = Service.Users.Programs;
 
 namespace Service
 {
-    public class Program
+    public class RunningProgram
     {
         static  void Main(string[] args)
         {
@@ -45,15 +42,13 @@ namespace Service
             //u.UpdatedAt = DateTime.Now;
             //u.Email = "crouska@gmail.com";
             //u.Username = "Rizowski";
-            Database db = new Database("settings.sqlite");
+            ComputerHelper ch = new ComputerHelper();
             var comp = new Computer();
             comp.Enviroment = "Windows 8";
             comp.Name = "Rizos Computer";
             comp.IpAddress = "127.0.0.1";
-            db.StoreComputer(comp);
-
+            ch.Save(comp);
             Console.Read();
-            Console.WriteLine();
         }
 
         public static void RunProcesses()
@@ -189,42 +184,42 @@ namespace Service
 
         public static void REST2()
         {
-            var server = "http://localhost:3000";
-            var api = "api/v1/";
-            string token = "AiprpscAqN6hnvNDHSwh";
+            //var server = "http://localhost:3000";
+            //var api = "api/v1/";
+            //string token = "AiprpscAqN6hnvNDHSwh";
 
-            RestUser u = new RestUser(server, api);
+            //RestUser u = new RestUser(server, api);
 
-            var user = u.Get(token);
-            Console.WriteLine("Id:{0}",user.Id);
-            Console.WriteLine("Username: {0}", user.Username);
-            Console.WriteLine("Email: {0}", user.Email);
-            user.Username = "Rizowski";
+            //var user = u.Get(token);
+            //Console.WriteLine("Id:{0}",user.Id);
+            //Console.WriteLine("Username: {0}", user.Username);
+            //Console.WriteLine("Email: {0}", user.Email);
+            //user.Username = "Rizowski";
 
-            var newuser = new User(user.Id, "Rizowski", user.Email);
+            //var newuser = new User(user.Id, "Rizowski", user.Email);
 
-            user = u.Update(token, newuser);
-            Console.WriteLine("Id:{0}", user.Id);
-            Console.WriteLine("Username: {0}", user.Username);
-            Console.WriteLine("Email: {0}", user.Email);
+            //user = u.Update(token, newuser);
+            //Console.WriteLine("Id:{0}", user.Id);
+            //Console.WriteLine("Username: {0}", user.Username);
+            //Console.WriteLine("Email: {0}", user.Email);
 
-            RestComputer c = new RestComputer(server, api);
+            //RestComputer c = new RestComputer(server, api);
 
-            Computer comp = new Computer( 1, "Bobs", "Windows Eight", "0.0.0.0");
+            //Computer comp = new Computer( 1, "Bobs", "Windows Eight", "0.0.0.0");
 
-            var create = c.Create(token, comp);
-            Console.WriteLine(create.Id);
-            Console.WriteLine("Name: {0}", create.Name);
-            Console.WriteLine("Enviroment: {0}", create.Enviroment);
-            Console.WriteLine("Ip: {0}", create.IpAddress);
+            //var create = c.Create(token, comp);
+            //Console.WriteLine(create.Id);
+            //Console.WriteLine("Name: {0}", create.Name);
+            //Console.WriteLine("Enviroment: {0}", create.Enviroment);
+            //Console.WriteLine("Ip: {0}", create.IpAddress);
 
-            var oldnew = new Computer(create.Id, create.UserId, "Not Bobs", "Crap", "1.1.1.1");
+            //var oldnew = new Computer(create.Id, create.UserId, "Not Bobs", "Crap", "1.1.1.1");
 
-            var newcomp = c.Update(token, oldnew);
-            Console.WriteLine(newcomp.Id);
-            Console.WriteLine("Name: {0}", newcomp.Name);
-            Console.WriteLine("Enviroment: {0}", newcomp.Enviroment);
-            Console.WriteLine("Ip: {0}", newcomp.IpAddress);
+            //var newcomp = c.Update(token, oldnew);
+            //Console.WriteLine(newcomp.Id);
+            //Console.WriteLine("Name: {0}", newcomp.Name);
+            //Console.WriteLine("Enviroment: {0}", newcomp.Enviroment);
+            //Console.WriteLine("Ip: {0}", newcomp.IpAddress);
         }
 
     }

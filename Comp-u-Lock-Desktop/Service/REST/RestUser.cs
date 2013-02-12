@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Net;
-using Data.JSON.Models;
-using Data.Models;
+using REST.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;

@@ -17,8 +17,8 @@ namespace Database.Models
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }
 
-        public ICollection<History> Histories { get; set; }
-        public ICollection<Process> Processes { get; set; }
-        public ICollection<Program> Programs { get; set; }
+        public virtual ICollection<History> Histories { get; set; }
+        public virtual ICollection<Process> Processes { get; set; }
+        public virtual ICollection<Program> Programs { get; set; }
     }
 }

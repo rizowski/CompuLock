@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Data.Enviroment
+namespace Database.Enviroment
 {
     public static class OS
     {

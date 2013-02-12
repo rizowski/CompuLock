@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using Data.JSON.Models;
-using Data.Models;
+using REST.Models;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 using Newtonsoft.Json;
 
-namespace Service.REST
+namespace Service
 {
     public class RestService//: IApi
     {
@@ -94,7 +93,7 @@ namespace Service.REST
             return account.Processes;
         }
 
-        public IEnumerable<Data.JSON.Models.Program> GetPrograms(string token, int accountId)
+        public IEnumerable<Program> GetPrograms(string token, int accountId)
         {
             var account = GetAccountById(token, accountId);
             return account.Programs;

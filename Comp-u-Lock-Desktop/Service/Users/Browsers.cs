@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Diagnostics;
 using System.IO;
-using Data.Enviroment;
+using Database.Enviroment;
 using Microsoft.Win32;
 using UrlHistoryLibrary;
 
