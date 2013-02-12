@@ -106,7 +106,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Db\ComputerHelper.cs" />
     <Compile Include="Rest\RestAccount.cs" />
     <Compile Include="Rest\RestComputer.cs" />
     <Compile Include="Rest\IRest.cs" />
@@ -186,6 +185,9 @@
       <Project>{f27832ce-ff54-4a3d-ae0e-bf05994fa1ec}</Project>
       <Name>REST</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Db\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

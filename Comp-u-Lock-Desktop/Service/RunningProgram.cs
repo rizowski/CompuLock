@@ -1,7 +1,5 @@
 ﻿using System;
 using Database.Enviroment;
-using Database.Models;
-using Service.Db;
 using Service.Users;
 using Processes = Service.Users.Processes;
 using Programs = Service.Users.Programs;
