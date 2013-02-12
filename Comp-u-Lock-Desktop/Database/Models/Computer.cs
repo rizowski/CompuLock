@@ -1,17 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Database.Models
 {
-    [Table("Computers")]
     public class Computer
     {
-        [Key]
         public int Id { get; set; }
         public string Name { get; set; }
         public string Enviroment { get; set; }
@@ -20,7 +13,7 @@ namespace Database.Models
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }
 
-        public virtual ICollection<Account> Accounts { get; set; }
+        public virtual IEnumerable<Account> Accounts { get; set; }
 
     }
 }
