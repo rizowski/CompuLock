@@ -20,6 +20,7 @@ namespace Database.Models
         public DateTime LastUpdated { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime DateCreated { get; set; }
+
         public virtual ICollection<Computer> Computers { get; set; }
         
     }

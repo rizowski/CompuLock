@@ -16,9 +16,7 @@ namespace Database.Models
         public string Enviroment { get; set; }
         public string IpAddress { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime DateCreated { get; set; }
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime DateUpdated { get; set; }
 
         public virtual ICollection<Account> Accounts { get; set; }

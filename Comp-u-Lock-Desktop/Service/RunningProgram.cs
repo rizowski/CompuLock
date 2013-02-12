@@ -43,11 +43,16 @@ namespace Service
             //u.Email = "crouska@gmail.com";
             //u.Username = "Rizowski";
             ComputerHelper ch = new ComputerHelper();
+            Console.WriteLine(ch.Context.Database.Exists());
+            Console.WriteLine(ch.Context.Database.Connection.ConnectionString);
             var comp = new Computer();
             comp.Enviroment = "Windows 8";
             comp.Name = "Rizos Computer";
             comp.IpAddress = "127.0.0.1";
+            comp.DateCreated = DateTime.Now;
+            comp.DateUpdated = DateTime.Now;
             ch.Save(comp);
+            ch.Dispose();
             Console.Read();
         }
 

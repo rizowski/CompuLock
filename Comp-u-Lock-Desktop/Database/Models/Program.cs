@@ -14,6 +14,7 @@ namespace Database.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public int OpenCount { get; set; }
+
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime DateCreated { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]

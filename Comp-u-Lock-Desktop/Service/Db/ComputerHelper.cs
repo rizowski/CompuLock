@@ -1,4 +1,5 @@
 ﻿
+using System;
 using Database;
 using Database.Models;
 
@@ -16,6 +17,13 @@ namespace Service.Db
         {
             Context.Computers.Add(computer);
             Context.SaveChanges();
+            Console.WriteLine("Saved");
+
+        }
+
+        public void Dispose()
+        {
+            Context.Dispose();
         }
     }
 }
