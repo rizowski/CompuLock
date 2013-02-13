@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using Database;
 using Database.Enviroment;
 using Database.Models;
+using REST;
+using Service.Db;
 using Service.Users;
 using Processes = Service.Users.Processes;
 using Programs = Service.Users.Programs;
@@ -44,9 +44,9 @@ namespace Service
             var user = new User
                 {
                     AuthToken = "HOLYCRAPITWORKS",
-                    DateCreated = DateTime.Now,
+                    CreatedAt = DateTime.Now,
                     Email = "crouska@gmail.com",
-                    LastUpdated = DateTime.Now,
+                    UpdatedAt = DateTime.Now,
                     Username = "rizowski"
                 };
             
@@ -54,8 +54,8 @@ namespace Service
             comp.Enviroment = "Windows 8";
             comp.Name = "Rizos Computer";
             comp.IpAddress = "127.0.0.1";
-            comp.DateCreated = DateTime.Now;
-            comp.DateUpdated = DateTime.Now;
+            comp.CreatedAt = DateTime.Now;
+            comp.UpdatedAt = DateTime.Now;
             dc.Save(user);
             dc.Save(comp);
             var account = new Account()
@@ -63,8 +63,8 @@ namespace Service
                     Domain = "RIZOWSKI",
                     Username = "Rizowski",
                     Tracking = true,
-                    DateCreated = DateTime.Now,
-                    DateUpdated = DateTime.Now
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now
                 };
             dc.Save(account);
 

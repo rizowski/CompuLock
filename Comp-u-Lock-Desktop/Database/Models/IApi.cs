@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace REST.Models
+namespace Database.Models
 {
     public interface IApi
     {

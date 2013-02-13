@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using REST.Models;
+using Database.Models;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 using Newtonsoft.Json;
 
-namespace Service
+namespace REST
 {
     public class RestService//: IApi
     {

@@ -46,14 +46,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Account.cs" />
-    <Compile Include="Models\Computer.cs" />
-    <Compile Include="Models\History.cs" />
-    <Compile Include="Models\IApi.cs" />
-    <Compile Include="Models\IParser.cs" />
-    <Compile Include="Models\Process.cs" />
-    <Compile Include="Models\Program.cs" />
-    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RestService.cs" />
     <Compile Include="Service\IRest.cs" />
@@ -63,6 +55,12 @@
     <Compile Include="Service\RestProcess.cs" />
     <Compile Include="Service\RestPrograms.cs" />
     <Compile Include="Service\RestUser.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Database\Database.csproj">
+      <Project>{14B4FC88-D38C-4BAA-BB30-5DF0C9D57F65}</Project>
+      <Name>Database</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

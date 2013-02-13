@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using Database.Models;
 using Raven.Client.Document;
-using Raven.Client.Linq;
 
-namespace Database
+namespace Service.Db
 {
     public class DatabaseClient
     {
@@ -54,9 +50,8 @@ namespace Database
             User user = null;
             using (var session = Store.OpenSession())
             {
-                user = session.Query<User>().First(c => c.AuthToken == token);
+                return user = session.Query<User>().First(c => c.AuthToken == token);
             }
-            return user;
         }
     }
 }
