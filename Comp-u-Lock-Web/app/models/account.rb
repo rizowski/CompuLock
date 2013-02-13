@@ -9,6 +9,8 @@ class Account < ActiveRecord::Base
   has_many :account_process, :dependent => :destroy
   has_many :account_program, :dependent => :destroy
 
+  accepts_nested_attributes_for :account_history, :account_process, :account_program
+
   def as_json options={}
     {
       id: id,

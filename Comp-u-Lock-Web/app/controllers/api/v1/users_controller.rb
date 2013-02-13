@@ -25,13 +25,11 @@ module Api
 				token = params[:auth_token]
 				id = params[:id]
 				user = JSON.parse params[:user]
-
 				if token.nil?
 					render :status=>400,
 		              :json=>{:message=>"The request must contain a token."}
 		       		return
 		       	end
-
 				@user = User.find_by_authentication_token(token)
 
 				unless @user.id == id.to_i

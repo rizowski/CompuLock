@@ -10,9 +10,8 @@ class User < ActiveRecord::Base
   attr_protected :admin
   
   has_many :computer, :dependent => :destroy
-
+  accepts_nested_attributes_for :computer
   before_save :ensure_authentication_token
-
 
   # attr_accessible :title, :body
 

@@ -1,11 +1,14 @@
 class Computer < ActiveRecord::Base
   attr_accessible :user_id, :enviroment, :ip_address, :name
 
+  belongs_to :user
+
   validates :name, :presence => true
   validates :enviroment, :presence => true
-  
+
   has_many :account, :dependent => :destroy
 
+  accepts_nested_attributes_for :account
   def as_json options={}
     {
       id: id,
