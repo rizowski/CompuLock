@@ -12,8 +12,6 @@ namespace Database.Models
 
         public DateTime LastUpdated { get; set; }
         public DateTime DateCreated { get; set; }
-
-        public virtual IEnumerable<Computer> Computers { get; set; }
         
     }
 }

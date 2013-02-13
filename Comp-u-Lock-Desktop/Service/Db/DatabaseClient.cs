@@ -23,6 +23,7 @@ namespace Database
             using (var session = Store.OpenSession())
             {
                 session.Store(t);
+                
                 session.SaveChanges();
             }
             return t;
@@ -36,6 +37,26 @@ namespace Database
                 comp = session.Load<Computer>(id);
             }
             return comp;
+        }
+
+        public Account FindAccountById(int id)
+        {
+            Account comp = null;
+            using (var session = Store.OpenSession())
+            {
+                comp = session.Load<Account>(id);
+            }
+            return comp;
+        }
+
+        public User FindUserByAuthToken(string token)
+        {
+            User user = null;
+            using (var session = Store.OpenSession())
+            {
+                user = session.Query<User>().First(c => c.AuthToken == token);
+            }
+            return user;
         }
     }
 }

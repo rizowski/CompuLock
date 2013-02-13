@@ -110,6 +110,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Db\DatabaseClient.cs" />
     <Compile Include="Rest\RestAccount.cs" />
     <Compile Include="Rest\RestComputer.cs" />
     <Compile Include="Rest\IRest.cs" />
@@ -190,9 +191,7 @@
       <Name>REST</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Db\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

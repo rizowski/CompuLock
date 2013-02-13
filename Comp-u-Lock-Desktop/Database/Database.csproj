@@ -55,7 +55,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DatabaseClient.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Computer.cs" />
     <Compile Include="Enviroment\OS.cs" />

@@ -37,52 +37,40 @@ namespace Service
 
         private static void RunDbAccounts()
         {
-            //Data.Models.User u = new Data.Models.User();
-
-            //u.CreatedAt = DateTime.Now;
-            //u.UpdatedAt = DateTime.Now;
-            //u.Email = "crouska@gmail.com";
-            //u.Username = "Rizowski";
-
-            //ComputerHelper ch = new ComputerHelper();
-
-            //Console.WriteLine(ch.Context.Database.Exists());
-            //Console.WriteLine(ch.Context.Database.Connection.ConnectionString);
-
-            //var comp = new Computer();
-            //comp.Enviroment = "Windows 8";
-            //comp.Name = "Rizos Computer";
-            //comp.IpAddress = "127.0.0.1";
-            //comp.DateCreated = DateTime.Now;
-            //comp.DateUpdated = DateTime.Now;
-            //ch.Save(comp);
-            //ch.Dispose();
-            //Console.Read();
 
             DatabaseServer ds = new DatabaseServer("Data", true);
             ds.StartServer();
             DatabaseClient dc = new DatabaseClient("http://localhost:8080");
+            var user = new User
+                {
+                    AuthToken = "HOLYCRAPITWORKS",
+                    DateCreated = DateTime.Now,
+                    Email = "crouska@gmail.com",
+                    LastUpdated = DateTime.Now,
+                    Username = "rizowski"
+                };
+            
             var comp = new Computer();
             comp.Enviroment = "Windows 8";
             comp.Name = "Rizos Computer";
             comp.IpAddress = "127.0.0.1";
             comp.DateCreated = DateTime.Now;
             comp.DateUpdated = DateTime.Now;
-            comp.Accounts = new List<Account>
+            dc.Save(user);
+            dc.Save(comp);
+            var account = new Account()
                 {
-                    new Account()
-                        {
-                            Domain = "RIZOWSKI",
-                            Username = "Rizowski",
-                            Tracking = true,
-                            DateCreated = DateTime.Now, 
-                            DateUpdated = DateTime.Now
-                        }
+                    Domain = "RIZOWSKI",
+                    Username = "Rizowski",
+                    Tracking = true,
+                    DateCreated = DateTime.Now,
+                    DateUpdated = DateTime.Now
                 };
-            Computer computer = dc.Save(comp);
-            Console.WriteLine(computer.Id);
-            var comps = dc.FindComputerById(computer.Id);
-            Console.WriteLine(comps.Name);
+            dc.Save(account);
+
+            //var user = dc.FindUserByAuthToken("HOLYCRAPITWORKS");
+            //TODO Take each item and put it into the database. Having one main USer object?
+            //Console.WriteLine(user.Email);
         }
 
         public static void RunProcesses()

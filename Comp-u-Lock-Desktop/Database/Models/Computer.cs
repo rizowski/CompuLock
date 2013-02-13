@@ -13,7 +13,5 @@ namespace Database.Models
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }
 
-        public virtual IEnumerable<Account> Accounts { get; set; }
-
     }
 }
