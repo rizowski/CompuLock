@@ -111,14 +111,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Db\DatabaseClient.cs" />
-    <Compile Include="Rest\RestAccount.cs" />
-    <Compile Include="Rest\RestComputer.cs" />
-    <Compile Include="Rest\IRest.cs" />
-    <Compile Include="Rest\RestHistory.cs" />
-    <Compile Include="Rest\RestProcess.cs" />
-    <Compile Include="Rest\RestPrograms.cs" />
-    <Compile Include="RestService.cs" />
-    <Compile Include="Rest\RestUser.cs" />
     <Compile Include="Service.cs" />
     <Compile Include="Users\Browsers.cs" />
     <Compile Include="Users\Processes.cs" />
