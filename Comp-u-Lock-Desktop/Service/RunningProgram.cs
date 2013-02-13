@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using Database.Enviroment;
 using Database.Models;
 using REST;
+using REST.Service;
 using Service.Db;
 using Service.Users;
 using Processes = Service.Users.Processes;
@@ -25,12 +27,12 @@ namespace Service
             RunOS();*/
             /*Console.WriteLine("\nRun User");
             RunUser();*/
-            Console.WriteLine("\nRun DbAccounts");
-            RunDbAccounts();
+            /*Console.WriteLine("\nRun DbAccounts");
+            RunDbAccounts();*/
             //Console.WriteLine("\nRun REST");
             //REST();
-            /*Console.WriteLine("\nRun REST 2.0");
-            REST2();*/
+            Console.WriteLine("\nRun REST 2.0");
+            REST2();
             Console.Read();
 
         }
@@ -67,10 +69,6 @@ namespace Service
                     UpdatedAt = DateTime.Now
                 };
             dc.Save(account);
-
-            //var user = dc.FindUserByAuthToken("HOLYCRAPITWORKS");
-            //TODO Take each item and put it into the database. Having one main USer object?
-            //Console.WriteLine(user.Email);
         }
 
         public static void RunProcesses()
@@ -206,11 +204,28 @@ namespace Service
 
         public static void REST2()
         {
-            //var server = "http://localhost:3000";
-            //var api = "api/v1/";
-            //string token = "AiprpscAqN6hnvNDHSwh";
+            var server = "http://localhost:3000";
+            var api = "api/v1/";
+            string token = "AiprpscAqN6hnvNDHSwh";
 
-            //RestUser u = new RestUser(server, api);
+            RestUser u = new RestUser(server, api);
+            User user = new User
+                {
+                    Id = 1,
+                    Username = "Rizowski",
+                    Computers = new List<Computer>
+                        {
+                            new Computer{
+                                Id = 1,
+                                UserId = 1, 
+                                Name = "Desktop", 
+                                Enviroment = "Windows 8", 
+                                IpAddress = "192.168.1.10"}
+                        },
+                    Email = "crouska@gmail.com"
+
+                };
+            u.Update(token, user);
 
             //var user = u.Get(token);
             //Console.WriteLine("Id:{0}",user.Id);
@@ -242,6 +257,8 @@ namespace Service
             //Console.WriteLine("Name: {0}", newcomp.Name);
             //Console.WriteLine("Enviroment: {0}", newcomp.Enviroment);
             //Console.WriteLine("Ip: {0}", newcomp.IpAddress);
+
+
         }
 
     }

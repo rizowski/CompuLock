@@ -15,7 +15,7 @@ namespace Database.Models
         [JsonProperty(PropertyName = "email")]
         public string Email { get; set; }
 
-        [JsonProperty(PropertyName = "computer", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty(PropertyName = "computer_attributes", NullValueHandling = NullValueHandling.Ignore)]
         public List<Computer> Computers { get; set; }
         [JsonIgnore]
         public string AuthToken { get; set; }

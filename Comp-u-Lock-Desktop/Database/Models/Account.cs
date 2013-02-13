@@ -23,11 +23,11 @@ namespace Database.Models
         [JsonProperty(PropertyName = "used_time")]
         public int UsedTime { get; set; }
 
-        [JsonProperty(PropertyName = "account_history", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty(PropertyName = "account_history_attributes", NullValueHandling = NullValueHandling.Ignore)]
         public virtual List<History> Histories { get; set; }
-        [JsonProperty(PropertyName = "account_process", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty(PropertyName = "account_process_attributes", NullValueHandling = NullValueHandling.Ignore)]
         public virtual List<Process> Processes { get; set; }
-        [JsonProperty(PropertyName = "account_program", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty(PropertyName = "account_program_attributes", NullValueHandling = NullValueHandling.Ignore)]
         public virtual List<Program> Programs { get; set; }
 
         [JsonIgnore]

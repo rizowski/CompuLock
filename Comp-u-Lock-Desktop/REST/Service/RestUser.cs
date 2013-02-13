@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Net;
 using Database.Models;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using Raven.Imports.Newtonsoft.Json;
+using Raven.Imports.Newtonsoft.Json.Linq;
 using RestSharp;
 
 namespace REST.Service
 {
-    class RestUser : RestService
+    public class RestUser : RestService
     {
         private const string USER = "users/";
 
@@ -17,8 +17,6 @@ namespace REST.Service
 
         public User Update(string token, User item)
         {
-            if(item.Computers != null)
-                throw new ArgumentException("Computers needs to be null");
             var request = new RestRequest(ApiPath+USER + item.Id, Method.PUT);
             request.AddParameter(AUTH, token);
             var json = JsonConvert.SerializeObject(item);

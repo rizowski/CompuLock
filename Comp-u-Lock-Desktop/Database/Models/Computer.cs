@@ -8,7 +8,7 @@ namespace Database.Models
     public class Computer
     {
         [JsonProperty(PropertyName = "id", NullValueHandling = NullValueHandling.Ignore, Required = Required.AllowNull)]
-        public int Id { get; private set; }
+        public int Id { get; set; }
         [JsonProperty(PropertyName = "user_id")]
         public int UserId { get; set; }
         [JsonProperty(PropertyName = "name")]
@@ -18,7 +18,7 @@ namespace Database.Models
         [JsonProperty(PropertyName = "ip_address")]
         public string IpAddress { get; set; }
 
-        [JsonProperty(PropertyName = "account", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty(PropertyName = "account_attributes", NullValueHandling = NullValueHandling.Ignore)]
         public virtual List<Account> Accounts { get; set; }
 
         [JsonIgnore]
