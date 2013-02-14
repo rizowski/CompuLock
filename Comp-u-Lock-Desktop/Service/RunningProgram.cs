@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Database;
 using Database.Enviroment;
 using Database.Models;
 using REST;
@@ -44,35 +45,34 @@ namespace Service
         private static void RunDbAccounts()
         {
 
-            DatabaseServer ds = new DatabaseServer("Data", true);
-            ds.StartServer();
-            DatabaseClient dc = new DatabaseClient("http://localhost:8080");
-            var user = new User
-                {
-                    AuthToken = "HOLYCRAPITWORKS",
-                    CreatedAt = DateTime.Now,
-                    Email = "crouska@gmail.com",
-                    UpdatedAt = DateTime.Now,
-                    Username = "rizowski"
-                };
             
-            var comp = new Computer();
-            comp.Enviroment = "Windows 8";
-            comp.Name = "Rizos Computer";
-            comp.IpAddress = "127.0.0.1";
-            comp.CreatedAt = DateTime.Now;
-            comp.UpdatedAt = DateTime.Now;
-            dc.Save(user);
-            dc.Save(comp);
-            var account = new Account()
-                {
-                    Domain = "RIZOWSKI",
-                    Username = "Rizowski",
-                    Tracking = true,
-                    CreatedAt = DateTime.Now,
-                    UpdatedAt = DateTime.Now
-                };
-            dc.Save(account);
+            //DatabaseClient dc = new DatabaseClient("http://localhost:8080");
+            //var user = new User
+            //    {
+            //        AuthToken = "HOLYCRAPITWORKS",
+            //        CreatedAt = DateTime.Now,
+            //        Email = "crouska@gmail.com",
+            //        UpdatedAt = DateTime.Now,
+            //        Username = "rizowski"
+            //    };
+            
+            //var comp = new Computer();
+            //comp.Enviroment = "Windows 8";
+            //comp.Name = "Rizos Computer";
+            //comp.IpAddress = "127.0.0.1";
+            //comp.CreatedAt = DateTime.Now;
+            //comp.UpdatedAt = DateTime.Now;
+            //dc.Save(user);
+            //dc.Save(comp);
+            //var account = new Account()
+            //    {
+            //        Domain = "RIZOWSKI",
+            //        Username = "Rizowski",
+            //        Tracking = true,
+            //        CreatedAt = DateTime.Now,
+            //        UpdatedAt = DateTime.Now
+            //    };
+            //dc.Save(account);
         }
 
         public static void RunProcesses()

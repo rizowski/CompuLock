@@ -1,5 +1,5 @@
 ﻿using System;
-using Raven.Imports.Newtonsoft.Json;
+using Newtonsoft.Json;
 
 namespace Database.Models
 {
