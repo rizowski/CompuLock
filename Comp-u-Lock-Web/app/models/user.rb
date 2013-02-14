@@ -13,6 +13,8 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :computer
   before_save :ensure_authentication_token
 
+  validates :username, uniqueness: true
+
   # attr_accessible :title, :body
 
   def as_json options={}

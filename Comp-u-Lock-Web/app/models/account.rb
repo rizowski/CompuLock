@@ -21,7 +21,7 @@ class Account < ActiveRecord::Base
       
       account_history: account_history,
       account_program: account_program,
-      # account_process: account_process,
+      account_process: account_process,
 
       created_at: created_at,
       update_at: updated_at
