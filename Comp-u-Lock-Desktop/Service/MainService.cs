@@ -14,9 +14,9 @@ namespace Service
 
         public MainService()
         {
-            DbServer = new DatabaseServer("Data", true);
-            DbServer.StartServer();
-            DbClient = new DatabaseClient("localhost:8080");
+            //DbServer = new DatabaseServer("Data", true);
+            //DbServer.StartServer();
+            DbClient = new DatabaseClient("http://localhost:8080");
         }
         public void testing()
         {
@@ -25,12 +25,17 @@ namespace Service
             computer = DbClient.Save(computer);
             foreach (var principal in users)
             {
+                Console.WriteLine(principal.DisplayName);
+                Console.WriteLine(principal.Name);
+                Console.WriteLine(principal.DistinguishedName);
+                Console.WriteLine(principal.UserPrincipalName);
                 var account = new Account
                     {
                         AllottedTime = 0, 
+                        Domain = principal.Context.Name,
                         ComputerId = computer.Id, 
                         Tracking = false, 
-                        Username = principal.Name, 
+                        Username = principal.Context.UserName, 
                         CreatedAt = DateTime.Now, 
                         UpdatedAt = DateTime.Now
                     };
