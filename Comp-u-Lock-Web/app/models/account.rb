@@ -2,6 +2,7 @@ class Account < ActiveRecord::Base
   attr_accessible :computer_id, :allotted_time, :domain, :tracking, :used_time, :username
 
   validates :username, :presence => true
+  validates :computer_id, :presence => true
   
   belongs_to :computer
 
