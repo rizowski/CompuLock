@@ -73,19 +73,14 @@
     <Reference Include="Cassia">
       <HintPath>..\packages\Cassia\Cassia.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework, Version=4.4.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="Raven.Client.Lightweight, Version=2.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\Raven.Client.Lightweight.dll</HintPath>
+    <Reference Include="Raven.Client.Lightweight">
+      <HintPath>..\packages\RavenDB.Client.2.0.2261\lib\net40\Raven.Client.Lightweight.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp">
       <HintPath>..\packages\RestSharp.104.1\lib\net4\RestSharp.dll</HintPath>
@@ -118,13 +113,14 @@
   <ItemGroup>
     <Compile Include="Db\DatabaseClient.cs" />
     <Compile Include="MainService.cs" />
-    <Compile Include="Users\Browsers.cs" />
-    <Compile Include="Users\Processes.cs" />
+    <Compile Include="Profile\Browsers.cs" />
+    <Compile Include="Profile\ComputerManager.cs" />
+    <Compile Include="Profile\Processes.cs" />
+    <Compile Include="Profile\Programs.cs" />
+    <Compile Include="Profile\URL.cs" />
+    <Compile Include="Profile\User.cs" />
     <Compile Include="RunningProgram.cs" />
-    <Compile Include="Users\Programs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Users\URL.cs" />
-    <Compile Include="Users\User.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
