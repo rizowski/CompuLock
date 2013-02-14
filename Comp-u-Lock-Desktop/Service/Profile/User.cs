@@ -9,7 +9,7 @@ using Cassia;
 
 namespace Service.Profile
 {
-    internal class UserManager
+    public class UserManager
     {
         public string Domain;
         public DateTime StartTime;
@@ -88,19 +88,6 @@ namespace Service.Profile
                 Console.WriteLine(e);
             }
             Console.WriteLine("The account has been locked.");
-        }
-
-        public List<Principal> GetUsers()
-        {
-            SecurityIdentifier builtinAdminSid = new SecurityIdentifier(WellKnownSidType.BuiltinUsersSid, null);
-
-            PrincipalContext ctx = new PrincipalContext(ContextType.Machine);
-
-            GroupPrincipal group = GroupPrincipal.FindByIdentity(ctx, builtinAdminSid.Value);
-            
-            if (group != null)
-                return new List<Principal>(group.Members);
-            return null;
         }
 
         #region Production Code

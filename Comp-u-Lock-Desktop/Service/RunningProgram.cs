@@ -144,7 +144,7 @@ namespace Service
         public static void RunUser()
         {
             UserManager account = new UserManager(Environment.UserDomainName, "Kids", new TimeSpan(0,0,0,5));
-            var users = account.GetUsers();
+            var users = ComputerManager.GetUsers();
             Console.WriteLine("Getting users");
             foreach (var user in users)
             {
@@ -267,15 +267,14 @@ namespace Service
 
         public static void Cylce()
         {
-            while (true)
-            {
-                
-            }
+            MainService ms = new MainService();
+            ms.testing();
         }
         public static void RunGUIProgram()
         {
             MainService s = new MainService();
         }
+
 
     }
 }

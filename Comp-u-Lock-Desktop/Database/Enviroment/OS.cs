@@ -57,6 +57,46 @@ namespace Database.Enviroment
                 return Windows.Unsupported;
             }
         }
+        public static string StringName
+        {
+            get
+            {
+                switch (Platform)
+                {
+                    case PlatformID.Win32NT:
+                        {
+                            switch (Version.Major)
+                            {
+                                case 6:
+                                    switch (Version.Minor)
+                                    {
+                                        case 2:
+                                            return "Windows 8";
+                                        case 1:
+                                            return "Windows 7";
+                                        case 0:
+                                            return "Windows Vista";
+                                    }
+                                    break;
+                                case 5:
+                                    switch (Version.Minor)
+                                    {
+                                        case 1:
+                                            return "Windows Xp";
+                                        case 2:
+                                            return "Windows XP";
+                                        default:
+                                            return "Unsupported";
+                                    }
+                            }
+                            break;
+                        }
+                    default:
+                        return "Unsupported";
+                }
+                return "Unsupported";
+            }
+        }
     }
 
     public enum Windows

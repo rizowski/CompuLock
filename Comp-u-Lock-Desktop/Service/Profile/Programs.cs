@@ -19,7 +19,7 @@ namespace Service.Profile
             {
                 if (!String.IsNullOrEmpty(process.MainWindowTitle))
                 {
-                    var program = new Database.Models.Program(
+                    var program = new Database.Models.Program
                         {
                             Name = process.ProcessName,
                             LastRun = DateTime.Now
