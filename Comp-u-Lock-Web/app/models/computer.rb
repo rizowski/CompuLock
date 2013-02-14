@@ -3,10 +3,11 @@ class Computer < ActiveRecord::Base
 
   belongs_to :user
 
-  validates :name, :presence => true
-  validates :enviroment, :presence => true
+  validates :name, presence: true
+  validates :enviroment, presence:  true
+  validates :user_id, presence: {scope: :user_id}
 
-  has_many :account, :dependent => :destroy
+  has_many :account, dependent: :destroy
 
   accepts_nested_attributes_for :account
   def as_json options={}
@@ -20,7 +21,6 @@ class Computer < ActiveRecord::Base
       accounts: account,
       created_at: created_at,
       update_at: updated_at
-
     }
   end
 end
