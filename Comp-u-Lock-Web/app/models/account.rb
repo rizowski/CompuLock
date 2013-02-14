@@ -26,7 +26,6 @@ class Account < ActiveRecord::Base
 
       created_at: created_at,
       update_at: updated_at
-
     }
   end
 end

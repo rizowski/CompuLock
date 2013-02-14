@@ -5,7 +5,7 @@ class Computer < ActiveRecord::Base
 
   validates :name, presence: true
   validates :enviroment, presence:  true
-  validates :user_id, presence: {scope: :user_id}
+  validates :user_id, presence: true
 
   has_many :account, dependent: :destroy
 
