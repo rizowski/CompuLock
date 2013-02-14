@@ -12,5 +12,14 @@ describe AccountHistory do
   	end
   	it "is invalid without a last visited date" do
   		FactoryGirl.build(:account_history, last_visited: nil).should_not be_valid
-	end
+	  end
+
+    it "doesn't allow duplicate Domains for the same account" do
+      FactoryGirl.create(:account_history, domain: "facebook.com", account_id: 1)
+      FactoryGirl.build(:account_history, domain: "facebook.com", account_id: 1).should_not be_valid
+    end
+    it "does allow duplicate Domains for different accounts" do
+      FactoryGirl.create(:account_history, domain: "facebook.com", account_id: 1)
+      FactoryGirl.build(:account_history, domain: "facebook.com", account_id: 2).should be_valid
+    end
 end
