@@ -6,9 +6,8 @@ using System.Security.Principal;
 using System.Timers;
 using ActiveDs;
 using Cassia;
-using Timer = System.Timers.Timer;
 
-namespace Service.Users
+namespace Service.Profile
 {
     internal class UserManager
     {

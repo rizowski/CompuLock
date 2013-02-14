@@ -7,6 +7,7 @@ namespace Database.Models
     public class DatabaseServer
     {
         public EmbeddableDocumentStore Store;
+        public bool Started { get; set; }
 
         private Thread serverThread;
         public DatabaseServer(string location, bool server)
@@ -18,12 +19,14 @@ namespace Database.Models
         {
             serverThread = new Thread(() => Store.Initialize());
             serverThread.Start();
+            Started = true;
         }
 
         public void StopServer()
         {
             Store.Dispose();
             serverThread.Abort();
+            Started = false;
         }
 
     }

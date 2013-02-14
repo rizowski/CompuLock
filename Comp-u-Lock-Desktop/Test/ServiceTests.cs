@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using Database.Enviroment;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Service.Users;
+using Service.Profile;
 
 namespace Test
 {

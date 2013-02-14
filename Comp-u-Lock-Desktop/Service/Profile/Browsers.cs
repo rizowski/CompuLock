@@ -8,7 +8,7 @@ using Database.Enviroment;
 using Microsoft.Win32;
 using UrlHistoryLibrary;
 
-namespace Service.Users
+namespace Service.Profile
 {
 
     public interface IBrowser

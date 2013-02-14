@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Service.Users
+namespace Service.Profile
 {
     public class URL
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Diagnostics;
 using System.Management;
 
-namespace Service.Users
+namespace Service.Profile
 {
     public class Processes
     {

@@ -5,9 +5,9 @@ using Database.Models;
 using REST;
 using REST.Service;
 using Service.Db;
-using Service.Users;
-using Processes = Service.Users.Processes;
-using Programs = Service.Users.Programs;
+using Service.Profile;
+using Processes = Service.Profile.Processes;
+using Programs = Service.Profile.Programs;
 
 namespace Service
 {
@@ -31,8 +31,12 @@ namespace Service
             RunDbAccounts();*/
             //Console.WriteLine("\nRun REST");
             //REST();
-            Console.WriteLine("\nRun REST 2.0");
-            REST2();
+            /*Console.WriteLine("\nRun REST 2.0");
+            REST2();*/
+            /*Console.WriteLine("\nRun Program");
+            RunGUIProgram();*/
+            Console.WriteLine("\nCycle");
+            Cylce();
             Console.Read();
 
         }
@@ -259,6 +263,18 @@ namespace Service
             //Console.WriteLine("Ip: {0}", newcomp.IpAddress);
 
 
+        }
+
+        public static void Cylce()
+        {
+            while (true)
+            {
+                
+            }
+        }
+        public static void RunGUIProgram()
+        {
+            MainService s = new MainService();
         }
 
     }
