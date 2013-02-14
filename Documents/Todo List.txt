@@ -73,5 +73,33 @@ Week 6:
 				- retrieving
 					- The above
 		Testing:
+			Web:
+				Models:
+					- Computers
+						- |Done| Valid Factory
+						- |Done| Invalid without name
+						- |Done| Invalid without Enviroment
+						- |Done| Invalid without userId
+						- has an account once added
+					- Users
+						- |Done| Valid Factory
+						- |Done| Invalid without Email
+						- |Done| Invalid without Password
+						- |Done| No Duplicate Usernames
+						- |Done| No Duplicate Emails
+						- |Done| Creates computer and saves
+						- has a computer once added
+					- Accounts
+						- |Done| Valid Factory
+						- |Done| Invalid without ComputerId
+						- |Done| Invalid without Usernames
+						- Has process once added
+						- |Done| Creates account and saves
+					- AccountHistory
+						- |Done| Valid Factory
+					- AccountProcess
+						- |Done| Valid Factory
+					- AccountProgram
+						- |Done| Valid Factory
 			- Test for why Processes isn't working 
 			- Test Data persisting

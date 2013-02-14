@@ -11,6 +11,9 @@ describe Account do
     FactoryGirl.build(:account, computer_id: nil).should_not be_valid
   end
   it "has an account process once it is added"
+  it "has an account history once it is added"
+  it "has an account program once it is added"
+  
   it "creates an Account and saves it to the db" do
   	account = FactoryGirl.build(:account)
   	assert account.save
