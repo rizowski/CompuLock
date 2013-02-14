@@ -23,15 +23,15 @@ namespace Service.Profile
         public string Filename;
         public SQLiteConnection SqlConnection { get; private set; }
         public Version Version { get; private set; }
+         
+        public string Profile { get; set; }
 
-        public string profile { get; set; }
-
-        private const string END = ";";
-        private const string PLACES = "moz_places";
+        private const string End = ";";
+        private const string Places = "moz_places";
 
         public FirefoxHistoryReader(string profile)
         {
-            this.profile = profile;
+            this.Profile = profile;
             object path;
             var key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\firefox.exe");
             if (key != null)
@@ -83,13 +83,13 @@ namespace Service.Profile
 
         public void Connect()
         {
-            SqlConnection = new SQLiteConnection("Data Source=" + DbPath.AbsolutePath + Filename + END);
+            SqlConnection = new SQLiteConnection("Data Source=" + DbPath.AbsolutePath + Filename + End);
             SqlConnection.Open();
         }
 
         public IEnumerable<URL> GetHistory()
         {
-            string sql = "select * from " + PLACES + END;
+            string sql = "select * from " + Places + End;
             SQLiteCommand command = new SQLiteCommand(sql, SqlConnection);
             SQLiteDataReader reader = command.ExecuteReader();
             List<URL> list = new List<URL>();
@@ -115,8 +115,8 @@ namespace Service.Profile
         public Version Version { get; private set; }
         public SQLiteConnection SqlConnection { get; private set; }
 
-        private const string HISTORY_DB = "urls";
-        private const string END = ";";
+        private const string HistoryDb = "urls";
+        private const string End = ";";
 
         public ChromeHistoryReader()
         {
@@ -157,13 +157,13 @@ namespace Service.Profile
         public void Connect()
         {
             // C:\Users\Rizowski\AppData\Local\Google\Chrome\User Data\Default
-            SqlConnection = new SQLiteConnection("Data Source="+DbPath + END);
+            SqlConnection = new SQLiteConnection("Data Source="+DbPath + End);
             SqlConnection.Open();
         }
 
         public IEnumerable<URL> GetHistory()
         {
-            string sql = "select * from " + HISTORY_DB + END;
+            string sql = "select * from " + HistoryDb + End;
             SQLiteCommand command = new SQLiteCommand(sql, SqlConnection);
             SQLiteDataReader reader = command.ExecuteReader();
             List<URL> list = new List<URL>();

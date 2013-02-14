@@ -9,7 +9,7 @@ using Cassia;
 
 namespace Service.Profile
 {
-    internal class UserManager
+    internal class UserManagers
     {
         public string Domain;
         public DateTime StartTime;
@@ -19,7 +19,7 @@ namespace Service.Profile
         public Timer Timer;
         public ITerminalServer Server;
 
-        public UserManager(string domain, string username, TimeSpan lockoutTime, double interval = 1)
+        public UserManagers(string domain, string username, TimeSpan lockoutTime, double interval = 1)
         {
             Domain = domain;
             UserName = username;
