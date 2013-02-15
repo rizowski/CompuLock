@@ -1,42 +1,14 @@
 Next week:
 	- send all data
 
-Week 6:
+NEEDS TO GET SOLVED:
+	- REMOVE LAST RUN FROM PROGRAM & PROCESS. I can use LastUpdated for last run
+	- SQL injection What did I do about it?
+Week 7:
 	Notes:
 		- 
-	Todo:
+	Todo: 
 		Web:
-			REST:
-				- Add Processes
-					- Add
-				- Add History
-					- Add
-				- Add Programs
-					- Add
-			Links:
-				- Navigation Links
-					- |Done| Fix Broken
-					- 
-			Controllers:
-				Computers:
-					- |Done| Index
-					- |Done| Show
-					- |Done| Edit
-					- |Done| Update
-					- |Done| Destroy
-				Users:
-					- |Done| Index => Switching to Profile
-						- Profile
-					- List => Admin only
-				Accounts:
-					- |Done| Index
-					- |Done| List
-					- Show
-						- Processes => Error with finding record? shows proces not process
-						- |Done| Histories
-						- |Done| Programs
-					- |Done| Edit
-					- |Done| Update
 		Desktop:
 			REST 2.0:
 				- RestUser
@@ -72,44 +44,3 @@ Week 6:
 					- History
 				- retrieving
 					- The above
-		Testing:
-			Web:
-				Models:
-					- Computers
-						- |Done| Valid Factory
-						- |Done| Invalid without name
-						- |Done| Invalid without Enviroment
-						- |Done| Invalid without userId
-						- has an account once added
-						- no duplicate computer names
-					- Users
-						- |Done| Valid Factory
-						- |Done| Invalid without Email
-						- |Done| Invalid without Password
-						- |Done| No Duplicate Usernames
-						- |Done| No Duplicate Emails
-						- |Done| Creates computer and saves
-						- has a computer once added
-					- Accounts
-						- |Done| Valid Factory
-						- |Done| Invalid without ComputerId
-						- |Done| Invalid without Usernames
-						- Has process once added
-						- |Done| Creates account and saves
-					- AccountHistory
-						- |Done| Valid Factory
-						- |Done| Invalid without Account Id
-						- |Done| Invalid without Last Visit Date
-						- |Done| Invalid without Domian
-						- |Done| Doesnt allow duplicate Domains per account
-					- AccountProcess
-						- |Done| Valid Factory
-						- Invalid without Account Id
-					- AccountProgram
-						- |Done| Valid Factory
-						- Invalid without Account Id
-			- Test for why Processes isn't working 
-			- Test Data persistin
-
-NEEDS TO GET SOLVED:
-	- REMOVE LAST RUN FROM PROGRAM & PROCESS. I can use LastUpdated for last run
