@@ -14,6 +14,7 @@ namespace Database
         public SQLiteConnection DbConnection { get; set; }
         private string DbPassword;
 
+        #region Constants
         private const string UsersTable = "Users";
         private const string ComputersTable = "Computers";
         private const string AccountsTable = "Accounts";
@@ -26,6 +27,7 @@ namespace Database
         private const string InsertInto = "insert into ";
         private const string Values = " values (";
         private const string End = ");";
+        #endregion
         public DatabaseManager(string path, string pass)
         {
             DbPassword = pass;
@@ -76,6 +78,28 @@ namespace Database
             const string accountProgram = CreateTable + ProgramTable+"(Id integer primary key asc, AccountId integer, Name varchar(100), OpenCount integer, CreatedAt datetime, UpdatedAt datetime)";
             ExecuteQuery(accountProgram);
             Console.WriteLine("Done creating tables");
+        }
+        public void ExecuteQuery(string query)
+        {
+            var command = new SQLiteCommand(query, DbConnection);
+            DbConnection.Open();
+            command.ExecuteNonQuery();
+            DbConnection.Close();
+        }
+
+        public Computer GetComputer()
+        {
+            DbConnection.Open();
+            var comp = DbConnection.Database.OfType<Computer>().First();
+            DbConnection.Close();
+            return comp;
+        }
+        public User GetUser()
+        {
+            DbConnection.Open();
+            var user = DbConnection.Database.OfType<User>().First();
+            DbConnection.Close();
+            return user;
         }
 
         #region Insert
@@ -176,33 +200,9 @@ namespace Database
             ExecuteQuery(sb.ToString());
             Console.WriteLine("Done writing Computer.");
         }
-
-        public void ExecuteQuery(string query)
-        {
-            var command = new SQLiteCommand(query, DbConnection);
-            DbConnection.Open();
-            command.ExecuteNonQuery();
-            DbConnection.Close();
-        }
-
-        /*public void Save<T>(string table, T t)
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("insert into ");
-            sb.Append(table);
-        }*/
         #endregion
 
-        public User GetUserById(int id)
-        {
-            return null;
-        }
-
-        public Computer GetComputerById(int id)
-        {
-            return null;
-        }
-
+        #region SelectById
         public Account GetAccountById(int id)
         {
             return null;
@@ -222,6 +222,12 @@ namespace Database
         {
             return null;
         }
+        #endregion
+
+        #region FindByName
+
+        #endregion
+
 
         public IEnumerable<T> GetAll<T>()
         {
