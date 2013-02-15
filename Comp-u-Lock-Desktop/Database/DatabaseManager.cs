@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SQLite;
 using System.Globalization;
 using System.IO;
@@ -25,12 +26,12 @@ namespace Database
         private const string ProgramTable = "account_program";
 
         private const string CreateTable = "create table ";
-        private const string InsertInto = "insert into or ignore ";
+        private const string InsertInto = "insert or ignore into ";
         private const string Select = "select ";
         private const string SelectAll = "select * from ";
         private const string All = "* from ";
         private const string From = "from ";
-        private const string Where = "where ";
+        private const string Where = " where ";
 
         private const string Values = " values ";
         private const string End = ";";
@@ -79,7 +80,7 @@ namespace Database
             ExecuteQuery(computer);
             const string account = CreateTable + AccountsTable+"(Id integer primary key asc, ComputerId integer, Domain varchar(50), Username varchar(50), Tracking bool, AllottedTime integer, UsedTime integer, CreatedAt datetime, UpdatedAt datetime)";
             ExecuteQuery(account);
-            const string accountHistory = CreateTable + HistoryTable+"(Id integer primary key asc, AccountId integer, Domain varchar(150), Url varchar(300), VisitCount integer, CreatedAt datetime, UpdatedAt datetime)";
+            const string accountHistory = CreateTable + HistoryTable+"(Id integer primary key asc, AccountId integer, Title varchar(150), Domain varchar(150), Url varchar(300), VisitCount integer, CreatedAt datetime, UpdatedAt datetime)";
             ExecuteQuery(accountHistory);
             const string accountProcess = CreateTable + ProcessTable+"(Id integer primary key asc, AccountId integer, Name varchar(100), CreatedAt datetime, UpdatedAt datetime)";
             ExecuteQuery(accountProcess);
@@ -97,11 +98,50 @@ namespace Database
 
         public Computer GetComputer()
         {
-            throw new NotImplementedException();
+            StringBuilder sb = new StringBuilder();
+            sb.Append(SelectAll);
+            sb.Append(ComputersTable);
+            sb.Append(End);
+            DbConnection.Open();
+            var reader = new SQLiteCommand(sb.ToString(), DbConnection).ExecuteReader(CommandBehavior.SingleResult);
+            Computer comp = null;
+            while (reader.Read())
+            {
+                comp = new Computer
+                    {
+                        UserId = Convert.ToInt32(reader["UserId"]),
+                        Enviroment = (string) reader["Enviroment"],
+                        Name = (string) reader["Name"],
+                        IpAddress = (string) reader["IpAddress"],
+                        CreatedAt = Convert.ToDateTime(reader["CreatedAt"]),
+                        UpdatedAt = Convert.ToDateTime(reader["UpdatedAt"])
+                    };
+            }
+            DbConnection.Close();
+            return comp;
         }
         public User GetUser()
         {
-            throw new NotImplementedException();
+            StringBuilder sb = new StringBuilder();
+            sb.Append(SelectAll);
+            sb.Append(UsersTable);
+            sb.Append(End);
+            DbConnection.Open();
+            var reader = new SQLiteCommand(sb.ToString(), DbConnection).ExecuteReader(CommandBehavior.SingleResult);
+            User user = null;
+            while (reader.Read())
+            {
+                user = new User
+                    {
+                        Username = (string) reader["Username"],
+                        Email = (string) reader["Email"],
+                        AuthToken = (string) reader["AuthToken"],
+                        CreatedAt = Convert.ToDateTime(reader["CreatedAt"]),
+                        UpdatedAt = Convert.ToDateTime(reader["UpdatedAt"])
+                    };
+            }
+            DbConnection.Close();
+            return user;
         }
 
         #region Insert
@@ -185,12 +225,13 @@ namespace Database
             Console.WriteLine("Saving a History.");
             sb.Append(InsertInto);
             sb.Append(HistoryTable);
-            sb.Append("(AccountId, Domain, Url, VisitCount, CreatedAt, UpdatedAt)");
+            sb.Append("(AccountId, Title, Domain, Url, VisitCount, CreatedAt, UpdatedAt)");
             sb.Append(Values);
-            sb.Append("(@accountid, @domain, @url, @visitcount, @createdAt, @updatedAt)");
+            sb.Append("(@accountid, @title, @domain, @url, @visitcount, @createdAt, @updatedAt)");
             sb.Append(End);
             var command = new SQLiteCommand(sb.ToString(), DbConnection);
                 command.Parameters.Add(new SQLiteParameter("@accountid", history.AccountId));
+                command.Parameters.Add(new SQLiteParameter("@title", history.Title));
                 command.Parameters.Add(new SQLiteParameter("@domain", history.Domain));
                 command.Parameters.Add(new SQLiteParameter("@url", history.Url));
                 command.Parameters.Add(new SQLiteParameter("@visitcount", history.VisitCount));
@@ -249,7 +290,7 @@ namespace Database
         }
         #endregion
 
-        #region SelectById
+        #region GetAll
         public IEnumerable<Account> GetAccounts()
         {
             List<Account> list = new List<Account>();
@@ -260,9 +301,6 @@ namespace Database
             var reader = new SQLiteCommand(sb.ToString(), DbConnection).ExecuteReader();
             while (reader.Read())
             {
-                
-                Console.WriteLine("{0}, {1}, {2}", reader["Id"].GetType(), reader["Domain"].GetType(),
-                                    reader["Username"].GetType());
                 list.Add(new Account
                     {
                         Id = Convert.ToInt32(reader["Id"]),
@@ -281,10 +319,35 @@ namespace Database
             DbConnection.Close();
             return list;
         }
-
-        public History GetHistoryById(int id)
+        #endregion
+        #region GetById
+        public IEnumerable<History> GetHistoryForAccount(int accountid)
         {
-            throw new NotImplementedException();
+            List<History> list  = new List<History>();
+            StringBuilder sb = new StringBuilder();
+            sb.Append(SelectAll);
+            sb.Append(HistoryTable);
+            sb.Append(Where);
+            sb.Append("AccountId ='" + accountid + "'");
+            sb.Append(End);
+            DbConnection.Open();
+            var reader = new SQLiteCommand(sb.ToString(), DbConnection).ExecuteReader();
+            while (reader.Read())
+            {
+                list.Add(new History
+                    {
+                        Id = Convert.ToInt32(reader["Id"]),
+                        AccountId = Convert.ToInt32(reader["AccountId"]),
+                        Title = (string) reader["Title"],
+                        Domain = (string) reader["Domain"],
+                        Url = (string) reader["Url"],
+                        VisitCount = Convert.ToInt32(reader["VisitCount"]),
+                        CreatedAt = Convert.ToDateTime(reader["CreatedAt"]),
+                        UpdatedAt = Convert.ToDateTime(reader["UpdatedAt"])
+                    });
+            }
+            DbConnection.Close();
+            return list;
         }
 
         public Process GetProcessById(int id)

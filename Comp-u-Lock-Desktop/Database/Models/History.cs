@@ -10,6 +10,8 @@ namespace Database.Models
         public int Id { get; set; }
         [JsonProperty(PropertyName = "account_id")]
         public int AccountId { get; set; }
+        [JsonProperty(PropertyName = "title")]
+        public string Title { get; set; }
         [JsonProperty(PropertyName = "domain")]
         public string Domain { get; set; }
         [JsonProperty(PropertyName = "url")]

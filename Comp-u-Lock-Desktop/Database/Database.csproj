@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{14B4FC88-D38C-4BAA-BB30-5DF0C9D57F65}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Database</RootNamespace>
     <AssemblyName>Database</AssemblyName>
@@ -62,7 +62,6 @@
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Computer.cs" />
     <Compile Include="Enviroment\OS.cs" />
-    <Compile Include="DatabaseServer.cs" />
     <Compile Include="Models\History.cs" />
     <Compile Include="Models\IApi.cs" />
     <Compile Include="Models\Process.cs" />

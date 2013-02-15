@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Database;
 using Database.Enviroment;
 using Database.Models;
@@ -45,35 +46,62 @@ namespace Service
         private static void RunDbAccounts()
         {
 
-            DatabaseManager dm = new DatabaseManager("settings", "myPass");
-            dm.Connect("myPass");
-            //DatabaseClient dc = new DatabaseClient("http://localhost:8080");
-            //var user = new User
-            //    {
-            //        AuthToken = "HOLYCRAPITWORKS",
-            //        CreatedAt = DateTime.Now,
-            //        Email = "crouska@gmail.com",
-            //        UpdatedAt = DateTime.Now,
-            //        Username = "rizowski"
-            //    };
-
-            //var comp = new Computer();
-            //comp.Enviroment = "Windows 8";
-            //comp.Name = "Rizos Computer";
-            //comp.IpAddress = "127.0.0.1";
-            //comp.CreatedAt = DateTime.Now;
-            //comp.UpdatedAt = DateTime.Now;
-            //dc.Save(user);
-            //dc.Save(comp);
-            //var account = new Account()
-            //    {
-            //        Domain = "RIZOWSKI",
-            //        Username = "Rizowski",
-            //        Tracking = true,
-            //        CreatedAt = DateTime.Now,
-            //        UpdatedAt = DateTime.Now
-            //    };
-            //dc.Save(account);
+            DatabaseClient dc = new DatabaseClient("settings", "myPass");
+            dc.SaveUser(new User
+            {
+                AuthToken = "MyAuthToken",
+                Email = "crouska@gmail.com",
+                Username = "Rizowski"
+            });
+            var user = dc.GetUser();
+            Console.WriteLine("{0} - {1}", user.Email, user.AuthToken);
+            Console.WriteLine();
+            dc.SaveComputer(new Computer
+            {
+                UserId = 1,
+                Enviroment = "Windows 8",
+                Name = "Rizowski-Lappy",
+                IpAddress = "192.168.1.1"
+            });
+            var computer = dc.GetComputer();
+            Console.WriteLine("{0} - {1}", computer.Name, computer.Enviroment);
+            Console.WriteLine();
+            dc.SaveAccount(new Account
+            {
+                ComputerId = 1,
+                Domain = "WORKGROUP",
+                Username = "Rizowski",
+                Tracking = true
+            });
+            var accounts = dc.GetAccounts();
+            var account = accounts.First(a => a.Id == 1);
+            Console.WriteLine("{0} - {1}", account.Username, account.Tracking);
+            Console.WriteLine();
+            dc.SaveHistory(new History
+            {
+                AccountId = 1,
+                Title = "Facebook",
+                Domain = "Facebook.com",
+                Url = "/Rizowski",
+                VisitCount = 1
+            });
+            var histories = dc.GetHistoryForAccount(1);
+            foreach (var history in histories)
+            {
+                Console.WriteLine("{0} - {1}", history.Title, history.Domain);
+            }
+            Console.WriteLine();
+            /*dc.SaveProcess(new Process
+                {
+                    AccountId = 1,
+                    Name = "System32.exe"
+                });
+            dc.SaveProgram(new Program
+                {
+                    AccountId = 1,
+                    Name = "Visual Studio 2012",
+                    OpenCount = 1
+                });*/
         }
 
         public static void RunProcesses()
