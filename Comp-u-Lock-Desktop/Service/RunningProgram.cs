@@ -28,16 +28,16 @@ namespace Service
             RunOS();*/
             /*Console.WriteLine("\nRun User");
             RunUser();*/
-            /*Console.WriteLine("\nRun DbAccounts");
-            RunDbAccounts();*/
+            Console.WriteLine("\nRun DbAccounts");
+            RunDbAccounts();
             //Console.WriteLine("\nRun REST");
             //REST();
             /*Console.WriteLine("\nRun REST 2.0");
             REST2();*/
             /*Console.WriteLine("\nRun Program");
             RunGUIProgram();*/
-            Console.WriteLine("\nCycle");
-            Cylce();
+            //Console.WriteLine("\nCycle");
+            //Cylce();
             Console.Read();
 
         }
@@ -45,7 +45,8 @@ namespace Service
         private static void RunDbAccounts()
         {
 
-            
+            DatabaseManager dm = new DatabaseManager("settings", "myPass");
+            dm.Connect("myPass");
             //DatabaseClient dc = new DatabaseClient("http://localhost:8080");
             //var user = new User
             //    {
@@ -55,7 +56,7 @@ namespace Service
             //        UpdatedAt = DateTime.Now,
             //        Username = "rizowski"
             //    };
-            
+
             //var comp = new Computer();
             //comp.Enviroment = "Windows 8";
             //comp.Name = "Rizos Computer";
