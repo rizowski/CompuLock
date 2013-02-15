@@ -55,6 +55,7 @@ namespace Database
             }
             else
             {
+                Console.WriteLine("File Found");
                 DbConnection = new SQLiteConnection("Data Source=" + DbPath + ";Version=3;");//Password="+DbPassword+";");
             }
         }

@@ -29,16 +29,25 @@ namespace Service
             RunOS();*/
             /*Console.WriteLine("\nRun User");
             RunUser();*/
-            Console.WriteLine("\nRun DbAccounts");
-            RunDbAccounts();
             //Console.WriteLine("\nRun REST");
             //REST();
-            /*Console.WriteLine("\nRun REST 2.0");
-            REST2();*/
             /*Console.WriteLine("\nRun Program");
             RunGUIProgram();*/
             //Console.WriteLine("\nCycle");
             //Cylce();
+
+            Console.WriteLine("\nRun DbAccounts");
+            try
+            {
+                RunDbAccounts();
+            }
+            catch (Exception e )
+            {
+                Console.WriteLine(e);
+            }
+            
+            /*Console.WriteLine("\nRun REST 2.0");
+            REST2();*/
             Console.Read();
 
         }
@@ -91,7 +100,7 @@ namespace Service
                 Console.WriteLine("{0} - {1}", history.Title, history.Domain);
             }
             Console.WriteLine();
-            /*dc.SaveProcess(new Process
+            dc.SaveProcess(new Process
                 {
                     AccountId = 1,
                     Name = "System32.exe"
@@ -101,7 +110,7 @@ namespace Service
                     AccountId = 1,
                     Name = "Visual Studio 2012",
                     OpenCount = 1
-                });*/
+                });
         }
 
         public static void RunProcesses()
@@ -246,17 +255,16 @@ namespace Service
                 {
                     Id = 1,
                     Username = "Rizowski",
-                    Computers = new List<Computer>
+                    /*Computers = new List<Computer>
                         {
                             new Computer{
-                                Id = 1,
+                                Id = 2,
                                 UserId = 1, 
                                 Name = "Desktop", 
                                 Enviroment = "Windows 8", 
                                 IpAddress = "192.168.1.10"}
-                        },
+                        },*/
                     Email = "crouska@gmail.com"
-
                 };
             u.Update(token, user);
 

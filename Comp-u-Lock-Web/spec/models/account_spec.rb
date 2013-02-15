@@ -1,5 +1,4 @@
 require 'spec_helper'
-
 describe Account do
 	it "creates a valid factory" do
 		FactoryGirl.create(:account).should be_valid
@@ -10,7 +9,12 @@ describe Account do
   it "is invalid with out a computer Id" do 
     FactoryGirl.build(:account, computer_id: nil).should_not be_valid
   end
-  it "has an account process once it is added"
+  it "has an account process once it is added" do
+    account = FactoryGirl.build(:account, username: "HolyMoly")
+    process = FactoryGirl.build(:account_process)
+    account.process << process
+    assert account.save
+  end
   it "has an account history once it is added"
   it "has an account program once it is added"
   

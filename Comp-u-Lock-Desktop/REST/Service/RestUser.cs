@@ -19,7 +19,7 @@ namespace REST.Service
         {
             var request = new RestRequest(ApiPath+USER + item.Id, Method.PUT);
             request.AddParameter(AUTH, token);
-            var json = JsonConvert.SerializeObject(item);
+            var json = item.ToJSON();
             request.AddParameter("user", json);
             var response = Client.Execute(request);
             if (response.StatusCode != HttpStatusCode.OK)
