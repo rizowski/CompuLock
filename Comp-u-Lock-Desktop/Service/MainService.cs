@@ -21,27 +21,7 @@ namespace Service
         }
         public void testing()
         {
-            var users = ComputerManager.GetUsers();
-            var computer = ComputerManager.GetComputer();
-            computer = DbClient.Save(computer);
-            foreach (var principal in users)
-            {
-                Console.WriteLine(principal.DisplayName);
-                Console.WriteLine(principal.Name);
-                Console.WriteLine(principal.DistinguishedName);
-                Console.WriteLine(principal.UserPrincipalName);
-                var account = new Account
-                    {
-                        AllottedTime = 0, 
-                        Domain = principal.Context.Name,
-                        ComputerId = computer.Id, 
-                        Tracking = false, 
-                        Username = principal.Context.UserName, 
-                        CreatedAt = DateTime.Now, 
-                        UpdatedAt = DateTime.Now
-                    };
-                DbClient.Save(account);
-            }
+            
         }
     }
 }
