@@ -9,6 +9,18 @@ Week 7:
 		- 
 	Todo: 
 		Web:
+			Models:
+				User:
+					- 
+				Computer:
+					- 
+				Account:
+					- 
+				Program:
+					- Last Ran needs to be removed
+				Process:
+					- Model display needs to be Solved
+				History:
 		Desktop:
 			REST 2.0:
 				- RestUser
@@ -35,12 +47,33 @@ Week 7:
 					- Add
 					- Update
 			Database:
-				- |DONE| Saving
-					- Computers
-					- users
-					- accounts
-					- Programs
-					- Processes
-					- History
-				- retrieving
-					- The above
+				Defenses:
+					- SQL injection
+				Saving:
+					- |Done| Computers
+					- |Done| users
+					- |DOne| accounts
+					- |Done| Programs
+					- |Done| Processes
+					- |Done| History
+				Retrieving:
+					User:
+						- |Done| One
+					Computer:
+						- |Done| One
+					Accounts:
+						- |Done| All
+						- By Id
+						- By Comp Id
+					Processes:
+						- All
+						- By Id
+						- By accountId
+					Histories:
+						- All
+						- By ID
+						- |Done| By Account Id
+					Programs:
+						- All
+						- By ID
+						- By Account Id

@@ -75,13 +75,13 @@ namespace Database
         public void CreateTables()
         {
             Console.WriteLine("Creating tables");
-            const string user = CreateTable + UsersTable + "(Username varchar(255), Email varchar(255), AuthToken varchar(255) unique on conflict replace, CreatedAt datetime, UpdatedAt datetime)";
+            const string user = CreateTable + UsersTable + "(Id integer primary key asc, Username varchar(255), Email varchar(255), AuthToken varchar(255) unique on conflict replace, CreatedAt datetime, UpdatedAt datetime)";
             ExecuteQuery(user);
             const string computer = CreateTable + ComputersTable + "(Id integer primary key asc, UserId integer, Enviroment varchar(50), Name varchar(50) unique on conflict replace, IpAddress varchar(16), CreatedAt datetime, UpdatedAt datetime)";
             ExecuteQuery(computer);
             const string account = CreateTable + AccountsTable + "(Id integer primary key asc, ComputerId integer, Domain varchar(50), Username varchar(50), Tracking bool, AllottedTime integer, UsedTime integer, CreatedAt datetime, UpdatedAt datetime, unique(Domain, Username) on conflict replace)";
             ExecuteQuery(account);
-            const string accountHistory = CreateTable + HistoryTable + "(Id integer primary key asc, AccountId integer, Title varchar(150), Domain varchar(150), Url varchar(300), VisitCount integer, CreatedAt datetime, UpdatedAt datetime, unique(AccountId, Domain) on conflict replace)";
+            const string accountHistory = CreateTable + HistoryTable + "(Id integer primary key asc, AccountId integer, Title varchar(150), Domain varchar(150), Url varchar(300), VisitCount integer, CreatedAt datetime, UpdatedAt datetime, unique(AccountId, Domain, Url) on conflict replace)";
             ExecuteQuery(accountHistory);
             const string accountProcess = CreateTable + ProcessTable + "(Id integer primary key asc, AccountId integer, Name varchar(100), CreatedAt datetime, UpdatedAt datetime, unique(AccountId, Name) on conflict replace)";
             ExecuteQuery(accountProcess);
@@ -314,13 +314,81 @@ namespace Database
                         CreatedAt = Convert.ToDateTime(reader["CreatedAt"]),
                         UpdatedAt = Convert.ToDateTime(reader["UpdatedAt"])
                     });
-                
-                
+            }
+            DbConnection.Close();
+            return list;
+        }
+        public IEnumerable<History> GetHistories()
+        {
+            List<History> list = new List<History>();
+            StringBuilder sb = new StringBuilder();
+            sb.Append(SelectAll);
+            sb.Append(HistoryTable);
+            DbConnection.Open();
+            var reader = new SQLiteCommand(sb.ToString(), DbConnection).ExecuteReader();
+            while (reader.Read())
+            {
+                list.Add(new History
+                    {
+                        Id = Convert.ToInt32(reader["Id"]),
+                        AccountId = Convert.ToInt32(reader["AccountId"]),
+                        Title = (string) reader["Title"],
+                        Domain = (string) reader["Domain"],
+                        Url = (string) reader["Url"],
+                        VisitCount = Convert.ToInt32(reader["VisitCount"]),
+                        CreatedAt = Convert.ToDateTime(reader["CreatedAt"]),
+                        UpdatedAt = Convert.ToDateTime(reader["UpdatedAt"])
+                    });
+            }
+            DbConnection.Close();
+            return list;
+        }
+        public IEnumerable<Program> GetPrograms()
+        {
+            List<Program> list = new List<Program>();
+            StringBuilder sb = new StringBuilder();
+            sb.Append(SelectAll);
+            sb.Append(AccountsTable);
+            DbConnection.Open();
+            var reader = new SQLiteCommand(sb.ToString(), DbConnection).ExecuteReader();
+            while (reader.Read())
+            {
+                list.Add(new Program
+                    {
+                        Id = Convert.ToInt32(reader["Id"]),
+                        AccountId = Convert.ToInt32(reader["AccountId"]),
+                        Name = (string) reader["Name"],
+                        CreatedAt = Convert.ToDateTime(reader["CreatedAt"]),
+                        UpdatedAt = Convert.ToDateTime(reader["UpdatedAt"])
+                    });
+            }
+            DbConnection.Close();
+            return list;
+        }
+        public IEnumerable<Process> GetProcesses()
+        {
+            List<Process> list = new List<Process>();
+            StringBuilder sb = new StringBuilder();
+            sb.Append(SelectAll);
+            sb.Append(AccountsTable);
+            DbConnection.Open();
+            var reader = new SQLiteCommand(sb.ToString(), DbConnection).ExecuteReader();
+            while (reader.Read())
+            {
+                list.Add(new Process
+                    {
+                        Id = Convert.ToInt32(reader["Id"]),
+                        AccountId = Convert.ToInt32(reader["AccountId"]),
+                        Name = (string) reader["Name"],
+                        CreatedAt = Convert.ToDateTime(reader["CreatedAt"]),
+                        UpdatedAt = Convert.ToDateTime(reader["UpdatedAt"])
+                    });
             }
             DbConnection.Close();
             return list;
         }
         #endregion
+
         #region GetById
         public IEnumerable<History> GetHistoryForAccount(int accountid)
         {

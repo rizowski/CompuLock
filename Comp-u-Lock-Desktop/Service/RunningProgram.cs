@@ -56,7 +56,7 @@ namespace Service
         {
 
             DatabaseClient dc = new DatabaseClient("settings", "myPass");
-            dc.SaveUser(new User
+            /*dc.SaveUser(new User
             {
                 AuthToken = "MyAuthToken",
                 Email = "crouska@gmail.com",
@@ -110,7 +110,8 @@ namespace Service
                     AccountId = 1,
                     Name = "Visual Studio 2012",
                     OpenCount = 1
-                });
+                });*/
+            
         }
 
         public static void RunProcesses()
