@@ -17,13 +17,25 @@ namespace Database
                     Email = "crouska@gmail.com",
                     Username = "Rizowski"
                 });*/
-            dm.SaveComputer(new Computer
+            /*dm.SaveComputer(new Computer
                 {
                     UserId = 1,
                     Enviroment = "Windows 8",
                     Name = "Rizowski-Lappy",
                     IpAddress = "192.168.1.1"
-                });
+                });*/
+            /*dm.SaveAccount(new Account
+                {
+                    ComputerId = 1,
+                    Domain = "WORKGROUP",
+                    Username = "Rizowski",
+                    Tracking = true
+                });*/
+            var accounts=  dm.GetAccounts();
+            foreach (var account in accounts)
+            {
+                Console.WriteLine(account.Username);
+            }
         }
 
         public static void Main(string[] args)
