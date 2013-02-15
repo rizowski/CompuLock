@@ -4,7 +4,6 @@ class CreateAccountProcesses < ActiveRecord::Migration
       t.references :account
 
       t.string :name, :null => false, :default => ""
-      t.datetime :lastrun
       
       t.timestamps
     end

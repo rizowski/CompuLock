@@ -389,47 +389,6 @@ namespace Database
         }
         #endregion
 
-        #region GetById
-        public IEnumerable<History> GetHistoryForAccount(int accountid)
-        {
-            List<History> list  = new List<History>();
-            StringBuilder sb = new StringBuilder();
-            sb.Append(SelectAll);
-            sb.Append(HistoryTable);
-            sb.Append(Where);
-            sb.Append("AccountId ='" + accountid + "'");
-            sb.Append(End);
-            DbConnection.Open();
-            var reader = new SQLiteCommand(sb.ToString(), DbConnection).ExecuteReader();
-            while (reader.Read())
-            {
-                list.Add(new History
-                    {
-                        Id = Convert.ToInt32(reader["Id"]),
-                        AccountId = Convert.ToInt32(reader["AccountId"]),
-                        Title = (string) reader["Title"],
-                        Domain = (string) reader["Domain"],
-                        Url = (string) reader["Url"],
-                        VisitCount = Convert.ToInt32(reader["VisitCount"]),
-                        CreatedAt = Convert.ToDateTime(reader["CreatedAt"]),
-                        UpdatedAt = Convert.ToDateTime(reader["UpdatedAt"])
-                    });
-            }
-            DbConnection.Close();
-            return list;
-        }
-
-        public Process GetProcessById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Program GetProgramById(int id)
-        {
-            throw new NotImplementedException();
-        }
-        #endregion
-
         #region FindByName
 
         #endregion

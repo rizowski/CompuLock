@@ -16,8 +16,6 @@ namespace Database.Models
         public string Domain { get; set; }
         [JsonProperty(PropertyName = "url")]
         public string Url { get; set; }
-        [JsonProperty(PropertyName = "last_visited")]
-        public DateTime LastVisited { get; set; }
         [JsonProperty(PropertyName = "visit_count")]
         public int VisitCount { get; set; }
 

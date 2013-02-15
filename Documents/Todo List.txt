@@ -2,7 +2,6 @@ Next week:
 	- send all data
 
 NEEDS TO GET SOLVED:
-	- REMOVE LAST RUN FROM PROGRAM & PROCESS. I can use LastUpdated for last run
 	- SQL injection What did I do about it?
 Week 7:
 	Notes:
@@ -17,10 +16,13 @@ Week 7:
 				Account:
 					- 
 				Program:
-					- Last Ran needs to be removed
+					- |Done| Last Ran needs to be removed
 				Process:
 					- Model display needs to be Solved
 				History:
+					- |Done| Last Visited needs to be removed
+			Errors: 
+				- Fix any errors with Removing Last Visited and opened
 		Desktop:
 			REST 2.0:
 				- RestUser
@@ -63,17 +65,16 @@ Week 7:
 						- |Done| One
 					Accounts:
 						- |Done| All
-						- By Id
-						- By Comp Id
+						- |Done| By Id
 					Processes:
-						- All
-						- By Id
-						- By accountId
+						- |Done| All
+						- |Done| By Id
+						- |Done| By accountId
 					Histories:
-						- All
-						- By ID
+						- |Done| All
+						- |Done| By ID
 						- |Done| By Account Id
 					Programs:
-						- All
-						- By ID
-						- By Account Id
+						- |Done| All
+						- |Done| By ID
+						- |Done| By Account Id

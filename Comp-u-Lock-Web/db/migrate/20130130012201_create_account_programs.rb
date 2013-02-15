@@ -4,7 +4,6 @@ class CreateAccountPrograms < ActiveRecord::Migration
       t.references :account
 
       t.string :name, :null => false, :default => ""
-      t.datetime :lastrun
       t.integer :open_count, :null => false, :default => 0
 
       t.timestamps

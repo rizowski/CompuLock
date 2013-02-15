@@ -14,6 +14,7 @@ namespace Service
 
         public MainService()
         {
+            DbClient = new DatabaseClient("settings", "myPass");
         }
         
         public void testing()

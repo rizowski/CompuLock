@@ -208,43 +208,6 @@ namespace Service
             //account.StartTimer();
         }
 
-        public static void REST()
-        {
-
-            RestService rs = new RestService("http://localhost:3000", "api/v1/");
-            string token = "AiprpscAqN6hnvNDHSwh";
-
-            /*var user = rs.GetUser(token);
-            Console.WriteLine("Email: {0}", user.Email);
-            Console.WriteLine("Username: {0}", user.Username);*/
-
-            //var accounts = rs.GetAccounts(token);
-            //var user = rs.GetUser(token);
-            //var computers = rs.GetComputers(token);
-
-            //User u = new User();
-            //u.Id = 1;
-            //u.Email = "Bob@gmail.com";
-            //u.Username = "Rizowski";
-            //rs.UpdateUser(token, u);
-
-            //Computer c = new Computer
-            //    {
-            //        Enviroment = "MyEnviroment",
-            //        IpAddress = "0.0.0.0",
-            //        Name = "MINE",
-            //        UserId = 1
-            //    };
-            //rs.CreateComputer(token, c);
-
-            //var histories = rs.GetHistory(token, 2);
-            //foreach (var accountHistory in histories)
-            //{
-            //    Console.WriteLine("Domain: {0}",accountHistory.Domain);
-            //}
-
-        }
-
         public static void REST2()
         {
             var server = "http://localhost:3000";
