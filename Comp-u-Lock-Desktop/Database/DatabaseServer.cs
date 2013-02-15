@@ -11,11 +11,18 @@ namespace Database
         {
             DatabaseManager dm = new DatabaseManager("settings", "myPass");
            
-            dm.SaveUser(new User
+            /*dm.SaveUser(new User
                 {
                     AuthToken = "MyAuthToken",
                     Email = "crouska@gmail.com",
                     Username = "Rizowski"
+                });*/
+            dm.SaveComputer(new Computer
+                {
+                    UserId = 1,
+                    Enviroment = "Windows 8",
+                    Name = "Rizowski-Lappy",
+                    IpAddress = "192.168.1.1"
                 });
         }
 

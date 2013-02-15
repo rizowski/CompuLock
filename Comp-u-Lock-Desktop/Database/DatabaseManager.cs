@@ -93,5 +93,28 @@ namespace Database
             DbConnection.Close();
             Console.WriteLine("Done writing User.");
         }
+
+        public void SaveComputer(Computer comp)
+        {
+            Console.WriteLine("Saving a computer.");
+            string sql = "insert into Computers (UserId, Name, Enviroment, IpAddress, CreatedAt, UpdatedAt) ";
+            string values = "values (";
+            string end = ");";
+            StringBuilder sb = new StringBuilder();
+            sb.Append(sql);
+            sb.Append(values);
+            var now = DateTime.Now;
+            sb.AppendFormat("'{0}', '{1}', '{2}', '{3}', '{4}', '{5}'", comp.UserId, comp.Name, comp.Enviroment, comp.IpAddress, now,
+                            now);
+            sb.Append(end);
+            Console.WriteLine("Sql line using: {0}", sb);
+            var command = new SQLiteCommand(sb.ToString(), DbConnection);
+            DbConnection.Open();
+            command.ExecuteNonQuery();
+            DbConnection.Close();
+            Console.WriteLine("Done writing Computer.");
+        }
+        
+
     }
 }
