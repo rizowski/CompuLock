@@ -7,10 +7,10 @@ namespace Database.Models
 {
     class Restriction
     {
-        List<Day> Days { get; set; }
+        IEnumerable<Day> Days { get; set; }
         public int AccountId { get; set; }
 
-        public Restriction(List<Day> days)
+        public Restriction(IEnumerable<Day> days)
         {
             Days = days;
         }

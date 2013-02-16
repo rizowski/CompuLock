@@ -15,7 +15,6 @@ namespace Service.Profile
         public TimeManager(IEnumerable<Account> accounts, double interval = 1)
         {
             Interval = interval;
-           
         }
     }
 }

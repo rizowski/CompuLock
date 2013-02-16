@@ -1,25 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using Database.Models;
+using Process = System.Diagnostics.Process;
 
 namespace Service.Profile
 {
-    public class Programs
+    public class ProgramManager
     {
-        public Programs()
+        public ProgramManager()
         {
             
         }
 
-        public List<Database.Models.Program> GetRunningPrograms()
+        public List<Program> GetRunningPrograms()
         {
             Process[] processlist = Process.GetProcesses();
-            List<Database.Models.Program> list = new List<Database.Models.Program>();
+            List<Program> list = new List<Program>();
             foreach (Process process in processlist)
             {
                 if (!String.IsNullOrEmpty(process.MainWindowTitle))
                 {
-                    var program = new Database.Models.Program
+                    var program = new Program
                         {
                             Name = process.ProcessName,
                             LastRun = DateTime.Now

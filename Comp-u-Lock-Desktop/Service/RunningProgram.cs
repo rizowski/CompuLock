@@ -8,8 +8,7 @@ using REST;
 using REST.Service;
 using Service.Db;
 using Service.Profile;
-using Processes = Service.Profile.Processes;
-using Programs = Service.Profile.Programs;
+using Programs = Service.Profile.ProgramManager;
 
 namespace Service
 {
@@ -46,8 +45,11 @@ namespace Service
                 Console.WriteLine(e);
             }*/
 
-            Console.WriteLine("\nRun ComputerManager");
-            RunComputerManager();
+            /*Console.WriteLine("\nRun ComputerManager");
+            RunComputerManager();*/
+
+            Console.WriteLine("\nRun Process manager");
+            RunProcessManager();
             
             /*Console.WriteLine("\nRun REST 2.0");
             REST2();*/
@@ -117,29 +119,10 @@ namespace Service
             
         }
 
-        public static void RunProcesses()
-        {
-            var record = new Processes();
-            var processes = record.GetProcesses();
-            foreach (var process in processes)
-            {
-                Console.WriteLine(process.ProcessName);
-            }
-            Console.WriteLine();
-            var userprocesses = record.GetProcessesByUser("Rizowski");
-            Console.WriteLine();
-            Console.WriteLine("Named Processes");
-            foreach (var process in userprocesses)
-            {
-                object[] outParameters = new object[2];
-                process.InvokeMethod("GetOwner", outParameters);
-                Console.WriteLine("{0} - {1}",outParameters[0], process["name"]);
-            }
-        }
 
         public static void RunPrograms()
         {
-            Programs pro = new Programs();
+            ProgramManager pro = new Programs();
             pro.GetRunningPrograms();
         }
 
@@ -195,9 +178,41 @@ namespace Service
             }
         }
 
+        public static void RunProcessManager()
+        {
+            ProcessManager pm = new ProcessManager();
+            var processes = pm.GetAllProcesses();
+            Console.WriteLine("All processes");
+            foreach (var process in processes)
+            {
+                Console.WriteLine("{0} - {1}", process.AccountId, process.Name);
+            }
+            Console.WriteLine();
+            Console.Read();
+            Console.WriteLine("All Account processes");
+            var account = new Account
+                {
+                    Id = 1,
+                    Username = "Rizowski"
+                };
+            var userProcesses = pm.GetProcessesByUser(account);
+            foreach (var userProcess in userProcesses)
+            {
+                Console.WriteLine("{0} - {1}",userProcess.AccountId, userProcess.Name);
+            }
+            Console.WriteLine();
+            Console.Read();
+            Console.WriteLine("No Owner");
+            var nos = pm.GetAllProcessesWithNoOwner();
+            foreach (var process in nos)
+            {
+                Console.WriteLine("{0} - {1}", process.AccountId, process.Name);
+            }
+        }
+
         public static void RunUser()
         {
-            UserManager account = new UserManager(Environment.UserDomainName, "Kids", new TimeSpan(0,0,0,5));
+            AccountManager account = new AccountManager(Environment.UserDomainName, "Kids", new TimeSpan(0,0,0,5));
             ComputerManager cm = new ComputerManager();
             var users = cm.GetAccounts();
             Console.WriteLine("Getting users");

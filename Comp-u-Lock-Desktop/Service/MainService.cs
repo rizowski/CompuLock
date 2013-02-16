@@ -10,7 +10,7 @@ namespace Service
     public class MainService
     {
         public DatabaseClient DbClient { get; private set; }
-        public UserManager UserManager { get; private set; }
+        public AccountManager AccountManager { get; private set; }
 
         public MainService()
         {

@@ -7,9 +7,9 @@ namespace Database.Models
 {
     public class Day
     {
-        List<Hour> Hours { get; set; }
+        IEnumerable<Hour> Hours { get; set; }
 
-        public Day(List<Hour>  hours)
+        public Day(IEnumerable<Hour>  hours)
         {
             Hours = hours;
         }
