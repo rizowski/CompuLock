@@ -78,3 +78,12 @@ Week 7:
 						- |Done| All
 						- |Done| By ID
 						- |Done| By Account Id
+				Modifications:
+					Account: 
+						- Have some sort of admin field.
+			Data Retrieving:
+				Computer:
+					- Name
+					- Enviroment
+					- IpAddress (Not required)
+

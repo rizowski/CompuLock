@@ -36,7 +36,7 @@ namespace Service
             //Console.WriteLine("\nCycle");
             //Cylce();
 
-            Console.WriteLine("\nRun DbAccounts");
+           /* Console.WriteLine("\nRun DbAccounts");
             try
             {
                 RunDbAccounts();
@@ -44,7 +44,10 @@ namespace Service
             catch (Exception e )
             {
                 Console.WriteLine(e);
-            }
+            }*/
+
+            Console.WriteLine("\nRun ComputerManager");
+            RunComputerManager();
             
             /*Console.WriteLine("\nRun REST 2.0");
             REST2();*/
@@ -180,14 +183,27 @@ namespace Service
             Console.WriteLine(OS.Version);
         }
 
+        public static void RunComputerManager()
+        {
+            ComputerManager cm = new ComputerManager();
+            var accounts = cm.GetAccounts();
+            var computer = cm.GetComputer();
+            Console.WriteLine("{0} - {1} |Address: {2}",computer.Enviroment, computer.Name, computer.IpAddress);
+            foreach (var account in accounts)
+            {
+                Console.WriteLine("{0} - {1}", account.Domain, account.Username);
+            }
+        }
+
         public static void RunUser()
         {
             UserManager account = new UserManager(Environment.UserDomainName, "Kids", new TimeSpan(0,0,0,5));
-            var users = ComputerManager.GetUsers();
+            ComputerManager cm = new ComputerManager();
+            var users = cm.GetAccounts();
             Console.WriteLine("Getting users");
             foreach (var user in users)
             {
-                Console.WriteLine(user.Name);
+                Console.WriteLine(user.Username);
             }
             Console.WriteLine();
             account.StartTimer();
