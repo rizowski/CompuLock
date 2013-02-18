@@ -6,7 +6,6 @@ using Database;
 using Database.Enviroment;
 using Database.Models;
 using REST;
-using REST.Service;
 using RestSharp;
 using Service.Db;
 using Service.Profile;
@@ -224,6 +223,8 @@ namespace Service
         public static void RunInfoGatherer()
         {
             var authToken = "8yVDgBHzFfUqwqpymuVv";
+            var server = "http://rizowski-capstone.herokuapp.com";
+            var api = "api/v1/";
             if(File.Exists("settings.sqlite"))
                 File.Delete("settings.sqlite");
             DatabaseClient dc = new DatabaseClient("settings", "myPass");
@@ -232,9 +233,9 @@ namespace Service
                 {
                     AuthToken = authToken
                 };
-            RestUser rs = new RestUser("http://rizowski-capstone.herokuapp.com", "api/v1/");
+            RestService rs = new RestService(server, api);
 
-            user = rs.Get(user.AuthToken);
+            user = rs.GetUser(user.AuthToken);
             try
             {
                 dc.SaveUser(user);
@@ -283,7 +284,7 @@ namespace Service
                 Console.WriteLine("Username: {0}\nTracking: {1}\n", account.Username, account.Tracking);
             }
             
-
+            
 
         }
 
@@ -314,64 +315,6 @@ namespace Service
             //account.GetUsers();
             //account.LockAccount("Kids");//.ChangeUserPassword("Parents", "190421", "rizowski");
             //account.StartTimer();
-        }
-
-        public static void REST2()
-        {
-            var server = "http://localhost:3000";
-            var api = "api/v1/";
-            string token = "AiprpscAqN6hnvNDHSwh";
-
-            RestUser u = new RestUser(server, api);
-            User user = new User
-                {
-                    Id = 1,
-                    Username = "Rizowski",
-                    /*Computers = new List<Computer>
-                        {
-                            new Computer{
-                                Id = 2,
-                                UserId = 1, 
-                                Name = "Desktop", 
-                                Enviroment = "Windows 8", 
-                                IpAddress = "192.168.1.10"}
-                        },*/
-                    Email = "crouska@gmail.com"
-                };
-            u.Update(token, user);
-
-            //var user = u.Get(token);
-            //Console.WriteLine("Id:{0}",user.Id);
-            //Console.WriteLine("Username: {0}", user.Username);
-            //Console.WriteLine("Email: {0}", user.Email);
-            //user.Username = "Rizowski";
-
-            //var newuser = new User(user.Id, "Rizowski", user.Email);
-
-            //user = u.Update(token, newuser);
-            //Console.WriteLine("Id:{0}", user.Id);
-            //Console.WriteLine("Username: {0}", user.Username);
-            //Console.WriteLine("Email: {0}", user.Email);
-
-            //RestComputer c = new RestComputer(server, api);
-
-            //Computer comp = new Computer( 1, "Bobs", "Windows Eight", "0.0.0.0");
-
-            //var create = c.Create(token, comp);
-            //Console.WriteLine(create.Id);
-            //Console.WriteLine("Name: {0}", create.Name);
-            //Console.WriteLine("Enviroment: {0}", create.Enviroment);
-            //Console.WriteLine("Ip: {0}", create.IpAddress);
-
-            //var oldnew = new Computer(create.Id, create.UserId, "Not Bobs", "Crap", "1.1.1.1");
-
-            //var newcomp = c.Update(token, oldnew);
-            //Console.WriteLine(newcomp.Id);
-            //Console.WriteLine("Name: {0}", newcomp.Name);
-            //Console.WriteLine("Enviroment: {0}", newcomp.Enviroment);
-            //Console.WriteLine("Ip: {0}", newcomp.IpAddress);
-
-
         }
 
         public static void Cylce()
