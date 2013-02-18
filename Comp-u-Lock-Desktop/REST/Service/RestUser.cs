@@ -26,7 +26,15 @@ namespace REST.Service
                 Console.WriteLine("Status Code Error: {0}", response.StatusCode);
             Console.WriteLine(response.Content);
             var userjson = JObject.Parse(response.Content);
-            var user = JsonConvert.DeserializeObject<User>(userjson["user"].ToString());
+            User user = null;
+            try
+            {
+                user = JsonConvert.DeserializeObject<User>(userjson["user"].ToString());
+            }
+            catch (Exception e)
+            {
+               Console.WriteLine(e); 
+            }
             return user;
         }
 
@@ -38,7 +46,16 @@ namespace REST.Service
             if (response.StatusCode != HttpStatusCode.OK)
                 Console.WriteLine("Status Code Error: {0}", response.StatusCode);
             var userjson = JObject.Parse(response.Content);
-            var user = JsonConvert.DeserializeObject<User>(userjson["user"].ToString());
+            User user = null;
+            try
+            {
+                user = JsonConvert.DeserializeObject<User>(userjson["user"].ToString());
+                user.AuthToken = token;
+            }
+            catch (Exception e )
+            {
+                Console.WriteLine(e);
+            }
             return user;
         }
     }

@@ -12,8 +12,6 @@ namespace Database.Models
         public int AccountId { get; set; }
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
-        [JsonIgnore]
-        public DateTime LastRun { get; set; }
         [JsonProperty(PropertyName = "open_count")]
         public int OpenCount { get; set; }
 

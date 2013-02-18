@@ -87,4 +87,6 @@ Week 7:
 					- Name
 					- Enviroment
 					- IpAddress (Not required)
+				Process:
+					- Getting all Processes; needs some way of finding account by name then getting id to set to process
 

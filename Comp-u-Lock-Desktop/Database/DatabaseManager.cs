@@ -75,7 +75,7 @@ namespace Database
         public void CreateTables()
         {
             Console.WriteLine("Creating tables");
-            const string user = CreateTable + UsersTable + "(Id integer primary key asc, Username varchar(255), Email varchar(255), AuthToken varchar(255) unique on conflict replace, CreatedAt datetime, UpdatedAt datetime)";
+            const string user = CreateTable + UsersTable + "(Id integer primary key asc, Username varchar(255), Email varchar(255), AuthToken varchar(255), CreatedAt datetime, UpdatedAt datetime, unique(Email, AuthToken) on conflict replace)";
             ExecuteQuery(user);
             const string computer = CreateTable + ComputersTable + "(Id integer primary key asc, UserId integer, Enviroment varchar(50), Name varchar(50) unique on conflict replace, IpAddress varchar(16), CreatedAt datetime, UpdatedAt datetime)";
             ExecuteQuery(computer);
@@ -110,6 +110,7 @@ namespace Database
             {
                 comp = new Computer
                     {
+                        Id = Convert.ToInt32(reader["Id"]),
                         UserId = Convert.ToInt32(reader["UserId"]),
                         Enviroment = (string) reader["Enviroment"],
                         Name = (string) reader["Name"],
@@ -134,9 +135,9 @@ namespace Database
             {
                 user = new User
                     {
-                        Username = (string) reader["Username"],
-                        Email = (string) reader["Email"],
-                        AuthToken = (string) reader["AuthToken"],
+                        Username = Convert.ToString(reader["Username"]),
+                        Email = Convert.ToString(reader["Email"]),
+                        AuthToken = Convert.ToString(reader["AuthToken"]),
                         CreatedAt = Convert.ToDateTime(reader["CreatedAt"]),
                         UpdatedAt = Convert.ToDateTime(reader["UpdatedAt"])
                     };
@@ -147,8 +148,10 @@ namespace Database
 
         #region Insert
 
-        public void SaveUser(User user)
+        public User SaveUser(User user)
         {
+            if(user == null)
+                throw new NoNullAllowedException("User can't be null");
             StringBuilder sb = new StringBuilder();
             Console.WriteLine("Saving a User.");
             sb.Append(InsertInto);
@@ -168,10 +171,14 @@ namespace Database
             command.ExecuteNonQuery();
             DbConnection.Close();
             Console.WriteLine("Done writing User.");
+            Console.WriteLine("Getting user.");
+            return GetUser();
         }
 
-        public void SaveComputer(Computer comp)
+        public Computer SaveComputer(Computer comp)
         {
+            if (comp == null)
+                throw new NoNullAllowedException("Computer can't be null");
             StringBuilder sb = new StringBuilder();
             Console.WriteLine("Saving a computer.");
             sb.Append(InsertInto);
@@ -192,10 +199,16 @@ namespace Database
             command.ExecuteNonQuery();
             DbConnection.Close();
             Console.WriteLine("Done writing Computer.");
+            Console.WriteLine("Getting Computer");
+            return GetComputer();
         }
 
-        public void SaveAccount(Account account)
+        public Account SaveAccount(Account account)
         {
+            if (account == null)
+                throw new NoNullAllowedException("Account can't be null");
+            if (account.ComputerId <= 0)
+                throw new ArgumentException("Computer Id is required.");
             StringBuilder sb = new StringBuilder();
             Console.WriteLine("Saving an account.");
             sb.Append(InsertInto);
@@ -218,10 +231,15 @@ namespace Database
             command.ExecuteNonQuery();
             DbConnection.Close();
             Console.WriteLine("Done writing Account.");
+            Console.WriteLine("Getting Account.");
+            var savedAccount = GetAccounts().First(a => a.Username == account.Username);
+            return savedAccount;
         }
 
-        public void SaveHistory(History history)
+        public History SaveHistory(History history)
         {
+            if (history == null)
+                throw new NoNullAllowedException("History Object can't be null");
             StringBuilder sb = new StringBuilder();
             Console.WriteLine("Saving a History.");
             sb.Append(InsertInto);
@@ -243,10 +261,14 @@ namespace Database
             command.ExecuteNonQuery();
             DbConnection.Close();
             Console.WriteLine("Done writing History.");
+            var savedHistory = GetHistories().First(h => h.AccountId == history.AccountId && h.Domain == history.Domain);
+            return savedHistory;
         }
 
-        public void SaveProcess(Process process)
+        public Process SaveProcess(Process process)
         {
+            if (process == null)
+                throw new NoNullAllowedException("Process object can't be null");
             StringBuilder sb = new StringBuilder();
             Console.WriteLine("Saving a Process.");
             sb.Append(InsertInto);
@@ -265,10 +287,15 @@ namespace Database
             command.ExecuteNonQuery();
             DbConnection.Close();
             Console.WriteLine("Done writing Process.");
+            Console.WriteLine("Getting Process");
+            var savedProcess = GetProcesses().First(p => p.AccountId == process.AccountId && p.Name == process.Name);
+            return savedProcess;
         }
 
-        public void SaveProgram(Program program)
+        public Program SaveProgram(Program program)
         {
+            if (program == null)
+                throw new NoNullAllowedException("Program object can't be null");
             StringBuilder sb = new StringBuilder();
             Console.WriteLine("Saving a Program.");
             sb.Append(InsertInto);
@@ -288,6 +315,9 @@ namespace Database
             command.ExecuteNonQuery();
             DbConnection.Close();
             Console.WriteLine("Done writing Program.");
+            Console.WriteLine("Getting Program");
+            var savedProgram = GetPrograms().First(p => p.AccountId == program.AccountId && p.Name == program.Name);
+            return savedProgram;
         }
         #endregion
 

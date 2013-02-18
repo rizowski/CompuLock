@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Database;
 using Database.Enviroment;
 using Database.Models;
 using REST;
 using REST.Service;
+using RestSharp;
 using Service.Db;
 using Service.Profile;
 using Programs = Service.Profile.ProgramManager;
@@ -48,9 +50,14 @@ namespace Service
             /*Console.WriteLine("\nRun ComputerManager");
             RunComputerManager();*/
 
-            Console.WriteLine("\nRun Process manager");
-            RunProcessManager();
-            
+            /*Console.WriteLine("\nRun Process manager");
+            RunProcessManager();*/
+
+            /*Console.WriteLine("\nRun ProgramManager");
+            RunProgramManager();*/
+
+            Console.WriteLine("\nRun InfoGatherer");
+            RunInfoGatherer();
             /*Console.WriteLine("\nRun REST 2.0");
             REST2();*/
             Console.Read();
@@ -119,12 +126,6 @@ namespace Service
             
         }
 
-
-        public static void RunPrograms()
-        {
-            ProgramManager pro = new Programs();
-            pro.GetRunningPrograms();
-        }
 
         public static void RunHistory()
         {
@@ -208,6 +209,82 @@ namespace Service
             {
                 Console.WriteLine("{0} - {1}", process.AccountId, process.Name);
             }
+        }
+
+        public static void RunProgramManager()
+        {
+            ProgramManager pm = new ProgramManager();
+            var programs = pm.GetRunningPrograms();
+            foreach (var program in programs)
+            {
+                Console.WriteLine("{0} - {1}", program.OpenCount, program.Name);
+            }
+        }
+
+        public static void RunInfoGatherer()
+        {
+            var authToken = "8yVDgBHzFfUqwqpymuVv";
+            if(File.Exists("settings.sqlite"))
+                File.Delete("settings.sqlite");
+            DatabaseClient dc = new DatabaseClient("settings", "myPass");
+
+            var user = new User
+                {
+                    AuthToken = authToken
+                };
+            RestUser rs = new RestUser("http://rizowski-capstone.herokuapp.com", "api/v1/");
+
+            user = rs.Get(user.AuthToken);
+            try
+            {
+                dc.SaveUser(user);
+                Console.WriteLine("User Saved");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Save User:");
+                Console.WriteLine(e);
+            }
+
+            ComputerManager cm = new ComputerManager();
+            var computer = cm.GetComputer();
+            try
+            {
+                computer = dc.SaveComputer(computer);
+                Console.WriteLine("Computer Saved.");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Save Computer:");
+                Console.WriteLine(e);
+            }
+            
+            var accounts = cm.GetAccounts();
+            foreach (var account in accounts)
+            {
+                account.ComputerId = computer.Id;
+                try
+                {
+                    dc.SaveAccount(account);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Save Account");
+                    Console.WriteLine(e);
+                }
+            }
+            Console.WriteLine("\n\n\n");
+            Console.WriteLine("Information Gathered:");
+            Console.WriteLine("Web Account:\nEmail: {0}\nAuth Token: {1}", user.Email, user.AuthToken);
+            Console.WriteLine("\nComputer:\nName: {0}\n", computer.Name);
+            Console.WriteLine("Accounts({0}):", accounts.Count);
+            foreach (var account in accounts)
+            {
+                Console.WriteLine("Username: {0}\nTracking: {1}\n", account.Username, account.Tracking);
+            }
+            
+
+
         }
 
         public static void RunUser()

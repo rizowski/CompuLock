@@ -12,7 +12,7 @@ namespace Service.Profile
             
         }
 
-        public List<Program> GetRunningPrograms()
+        public IEnumerable<Program> GetRunningPrograms()
         {
             Process[] processlist = Process.GetProcesses();
             List<Program> list = new List<Program>();
@@ -23,10 +23,10 @@ namespace Service.Profile
                     var program = new Program
                         {
                             Name = process.ProcessName,
-                            LastRun = DateTime.Now
+                            CreatedAt = DateTime.Now,
+                            UpdatedAt = DateTime.Now,
                         };
                     list.Add(program);
-                    Console.WriteLine("Process: {0} ID: {1} Window title: {2}", process.ProcessName, process.Id, process.MainWindowTitle);
                 }
             }
             return list;
