@@ -223,7 +223,7 @@ namespace Service
         public static void RunInfoGatherer()
         {
             var authToken = "8yVDgBHzFfUqwqpymuVv";
-            var server = "http://rizowski-capstone.herokuapp.com";
+            var server = "http://rizowski-capstone.herokuapp.com/";
             var api = "api/v1/";
             if(File.Exists("settings.sqlite"))
                 File.Delete("settings.sqlite");
@@ -283,9 +283,15 @@ namespace Service
             {
                 Console.WriteLine("Username: {0}\nTracking: {1}\n", account.Username, account.Tracking);
             }
-            
-            
-
+            Console.WriteLine("Press any key to save computer data to web.");
+            computer.UserId = user.Id;
+            rs.SaveComputer(authToken, computer);
+            Console.WriteLine("Press any key to save Accounts to web.");
+            foreach (var account in accounts)
+            {
+                account.ComputerId = computer.Id;
+                rs.SaveAccount(authToken, account);
+            }
         }
 
         public static void RunUser()

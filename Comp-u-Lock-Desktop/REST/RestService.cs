@@ -11,39 +11,44 @@ namespace REST
 {
     public class RestService//: IApi
     {
+        public string Server { get; set; }
         public string ApiPath { get; set; }
         public RestClient Client { get; set; }
 
         private const string AccountPath = "accounts/";
         private const string UserPath = "users/";
-        protected const string AUTH = "auth_token";
+        protected const string Auth = "auth_token";
 
         public RestService(string server, string apipath)
         {
+            Client = new RestClient(server);
+            Server = server;
             ApiPath = apipath;
         }
 
 #region Accounts
-        public Account CreateAccount(string token, Account item)
+        public Account SaveAccount(string token, Account item)
         {
             if (item.ComputerId == 0)
                 throw new ArgumentException("Account must have a computer Id");
             var request = new RestRequest(ApiPath + AccountPath, Method.POST);
-            request.AddParameter(AUTH, token);
-            var json = JsonConvert.SerializeObject(item);
+            request.AddParameter(Auth, token);
+            var json = item.ToJSON();
             request.AddParameter("account", json);
             var response = Client.Execute(request);
             if (response.StatusCode != HttpStatusCode.OK)
                 Console.WriteLine("Status Code Error: {0}", response.StatusCode);
             Console.WriteLine(response.Content);
-            throw new NotImplementedException();
+            var accountJson = JObject.Parse(response.Content);
+            var account = JsonConvert.DeserializeObject<Account>(accountJson["account"].ToString());
+            return account;
         }
 
         public Account UpdateAccount(string token, Account item)
         {
             var request = new RestRequest(ApiPath + AccountPath + item.Id, Method.PUT);
-            request.AddParameter(AUTH, token);
-            var json = JsonConvert.SerializeObject(item);
+            request.AddParameter(Auth, token);
+            var json = item.ToJSON();
             Console.WriteLine(json);
             request.AddParameter("account", json);
             var response = Client.Execute(request);
@@ -56,7 +61,7 @@ namespace REST
         public IEnumerable<Account> GetAllAccounts(string token)
         {
             var request = new RestRequest(ApiPath + AccountPath, Method.GET);
-            request.AddParameter(AUTH, token);
+            request.AddParameter(Auth, token);
             var response = Client.Execute(request);
             if (response.StatusCode != HttpStatusCode.OK)
                 Console.WriteLine("Status Code Error: {0}", response.StatusCode);
@@ -73,8 +78,8 @@ namespace REST
 
         public void DestroyAccount(string token, int id)
         {
-            var request = new RestRequest(ApiPath + AccountPath + id, Method.DELETE);
-            request.AddParameter(AUTH, token);
+            var request = new RestRequest(AccountPath + id, Method.DELETE);
+            request.AddParameter(Auth, token);
             var response = Client.Execute(request);
             if (response.StatusCode != HttpStatusCode.OK)
                 Console.WriteLine("Status Code Error: {0}", response.StatusCode);
@@ -85,7 +90,7 @@ namespace REST
         public User UpdateUser(string token, User item)
         {
             var request = new RestRequest(ApiPath + UserPath + item.Id, Method.PUT);
-            request.AddParameter(AUTH, token);
+            request.AddParameter(Auth, token);
             var json = item.ToJSON();
             request.AddParameter("user", json);
             var response = Client.Execute(request);
@@ -108,7 +113,7 @@ namespace REST
         public User GetUser(string token)
         {
             var request = new RestRequest(ApiPath + UserPath, Method.GET);
-            request.AddParameter(AUTH, token);
+            request.AddParameter(Auth, token);
             var response = Client.Execute(request);
             if (response.StatusCode != HttpStatusCode.OK)
                 Console.WriteLine("Status Code Error: {0}", response.StatusCode);
@@ -128,13 +133,13 @@ namespace REST
 #endregion
 
 #region Computers
-        public Computer CreateComputer(string token, Computer item)
+        public Computer SaveComputer(string token, Computer item)
         {
             if (item.UserId == 0)
                 throw new ArgumentException("Computer must have a user Id");
-            var request = new RestRequest(ApiPath+"computers/", Method.POST);
-            request.AddParameter(AUTH, token);
-            var json = JsonConvert.SerializeObject(item);
+            var request = new RestRequest(ApiPath + "computers/", Method.POST);
+            request.AddParameter(Auth, token);
+            var json = item.ToJSON();
             request.AddParameter("computer", json);
             var response = Client.Execute(request);
             if (response.StatusCode != HttpStatusCode.OK)
@@ -147,9 +152,9 @@ namespace REST
 
         public Computer UpdateComputer(string token, Computer item)
         {
-            var request = new RestRequest(ApiPath+"computers/" + item.Id, Method.PUT);
-            request.AddParameter(AUTH, token);
-            var json = JsonConvert.SerializeObject(item);
+            var request = new RestRequest(ApiPath + "computers/" + item.Id, Method.PUT);
+            request.AddParameter(Auth, token);
+            var json = item.ToJSON();
             request.AddParameter("computer", json);
             var response = Client.Execute(request);
             if (response.StatusCode != HttpStatusCode.OK)
@@ -162,8 +167,8 @@ namespace REST
 
         public IEnumerable<Computer> GetAllComputers(string token)
         {
-            var request = new RestRequest(ApiPath+"computers", Method.GET);
-            request.AddParameter(AUTH, token);
+            var request = new RestRequest(ApiPath + "computers", Method.GET);
+            request.AddParameter(Auth, token);
             var response = Client.Execute(request);
             if (response.StatusCode != HttpStatusCode.OK)
                 Console.WriteLine("Status Code Error: {0}", response.StatusCode);
@@ -180,8 +185,8 @@ namespace REST
 
         public void DestroyComputer(string token, int id)
         {
-            var request = new RestRequest(ApiPath+"computers/" + id, Method.DELETE);
-            request.AddParameter(AUTH, token);
+            var request = new RestRequest(ApiPath + "computers/" + id, Method.DELETE);
+            request.AddParameter(Auth, token);
             var response = Client.Execute(request);
             if (response.StatusCode != HttpStatusCode.OK)
                 Console.WriteLine("Status Code Error: {0}", response.StatusCode);
@@ -190,7 +195,15 @@ namespace REST
 #endregion
 
 #region Processes
-
+        //TODO Processes
 #endregion
+
+        #region History
+        //TODO Histroy
+        #endregion
+
+        #region Program
+        //TODO Programs
+        #endregion
     }
 }

@@ -7,8 +7,11 @@ namespace Database.Models
     [JsonObject]
     public class Computer
     {
-        [JsonProperty(PropertyName = "id", NullValueHandling = NullValueHandling.Ignore, Required = Required.AllowNull)]
+        [JsonIgnore]
         public int Id { get; set; }
+        [JsonProperty(PropertyName = "id", NullValueHandling = NullValueHandling.Ignore, Required = Required.AllowNull)]
+        public int WebId { get; set; }
+
         [JsonProperty(PropertyName = "user_id")]
         public int UserId { get; set; }
         [JsonProperty(PropertyName = "name")]
