@@ -2,21 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace Database.Models
 {
-    class Restriction
+    public class Restriction
     {
         public int Id { get; set; }
-        public int WebId { get; set; }
+
         public int AccountId { get; set; }
 
         IEnumerable<Day> Days { get; set; }
-
-        public Restriction(IEnumerable<Day> days)
-        {
-            Days = days;
-        }
 
         public Restriction()
         {

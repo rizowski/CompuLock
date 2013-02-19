@@ -20,9 +20,9 @@ class Account < ActiveRecord::Base
       username: username,
       tracking: tracking,
       
-      account_history: account_history,
-      account_program: account_program,
-      #account_process: account_process,
+      histories: account_history,
+      programs: account_program,
+      #processes: account_process,
 
       created_at: created_at,
       update_at: updated_at

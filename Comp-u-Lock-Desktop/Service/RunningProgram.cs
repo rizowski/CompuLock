@@ -17,20 +17,6 @@ namespace Service
     {
         static  void Main(string[] args)
         {
-            /*Console.WriteLine("History:");
-            RunHistory();*/
-            /*Console.WriteLine("\nSQLiteHistory");
-            GetSQLiteHistory();*/
-            /*Console.WriteLine("\nProcesses:");
-            RunProcesses();*/
-           /* Console.WriteLine("\nPrograms:");
-            RunPrograms();*/
-            /*Console.WriteLine("\nRun Os");
-            RunOS();*/
-            /*Console.WriteLine("\nRun User");
-            RunUser();*/
-            //Console.WriteLine("\nRun REST");
-            //REST();
             /*Console.WriteLine("\nRun Program");
             RunGUIProgram();*/
             //Console.WriteLine("\nCycle");
@@ -55,10 +41,11 @@ namespace Service
             /*Console.WriteLine("\nRun ProgramManager");
             RunProgramManager();*/
 
-            Console.WriteLine("\nRun InfoGatherer");
-            RunInfoGatherer();
-            /*Console.WriteLine("\nRun REST 2.0");
-            REST2();*/
+            /*Console.WriteLine("\nRun InfoGatherer");
+            RunInfoGatherer();*/
+
+            Console.WriteLine("\n Run Rest");
+            RunREST();
             Console.Read();
 
         }
@@ -124,7 +111,6 @@ namespace Service
                 });*/
             
         }
-
 
         public static void RunHistory()
         {
@@ -331,6 +317,26 @@ namespace Service
         public static void RunGUIProgram()
         {
             MainService s = new MainService();
+        }
+
+        public static void RunREST()
+        {
+            //Local Token
+            var local = "RuFJ7qEZpdgqrdufmkxz";
+            //Service token
+            var ser = "8yVDgBHzFfUqwqpymuVv";
+            RestService rs = new RestService("http://localhost:3000", "api/v1/");
+
+
+            var account = rs.GetAccountById(local, 2);
+
+            var program = new Program
+                {
+                    AccountId = account.Id,
+                    Name = "Eclipse"
+                };
+            //rs.CreateProgram(local, program);
+            
         }
 
 

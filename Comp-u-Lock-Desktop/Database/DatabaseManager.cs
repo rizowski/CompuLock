@@ -25,6 +25,10 @@ namespace Database
         private const string ProcessTable = "account_process";
         private const string ProgramTable = "account_program";
 
+        private const string RestrictionTable = "Restrictions";
+        private const string DayTable = "Days";
+        private const string HourTable = "Hours";
+
         private const string CreateTable = "create table ";
         private const string InsertInto = "insert or ignore into ";
         private const string Select = "select ";
@@ -77,16 +81,33 @@ namespace Database
             Console.WriteLine("Creating tables");
             const string user = CreateTable + UsersTable + "(Id integer primary key asc, WebId integer, Username varchar(255), Email varchar(255), AuthToken varchar(255), CreatedAt datetime, UpdatedAt datetime, unique(Email, AuthToken) on conflict replace)";
             ExecuteQuery(user);
+            Console.Write("Creating.");
             const string computer = CreateTable + ComputersTable + "(Id integer primary key asc, WebId integer, UserId integer, Enviroment varchar(50), Name varchar(50) unique on conflict replace, IpAddress varchar(16), CreatedAt datetime, UpdatedAt datetime)";
             ExecuteQuery(computer);
+            Console.Write(".");
             const string account = CreateTable + AccountsTable + "(Id integer primary key asc, WebId integer, ComputerId integer, Domain varchar(50), Username varchar(50), Tracking bool, AllottedTime integer, UsedTime integer, CreatedAt datetime, UpdatedAt datetime, unique(Domain, Username) on conflict replace)";
             ExecuteQuery(account);
+            Console.Write(".");
             const string accountHistory = CreateTable + HistoryTable + "(Id integer primary key asc, WebId integer, AccountId integer, Title varchar(150), Domain varchar(150), Url varchar(300), VisitCount integer, CreatedAt datetime, UpdatedAt datetime, unique(AccountId, Domain, Url) on conflict replace)";
             ExecuteQuery(accountHistory);
+            Console.Write(".");
             const string accountProcess = CreateTable + ProcessTable + "(Id integer primary key asc, WebId integer, AccountId integer, Name varchar(100), CreatedAt datetime, UpdatedAt datetime, unique(AccountId, Name) on conflict replace)";
             ExecuteQuery(accountProcess);
+            Console.Write(".");
             const string accountProgram = CreateTable + ProgramTable + "(Id integer primary key asc, WebId integer, AccountId integer, Name varchar(100), OpenCount integer, CreatedAt datetime, UpdatedAt datetime, unique(AccountId, Name) on conflict replace)";
             ExecuteQuery(accountProgram);
+            Console.Write(".");
+
+            const string restriction = CreateTable + RestrictionTable + "(Id integer primary key asc, WebId integer, AccountId integer, unique(Id, AccountId) on conflict replace)";
+            ExecuteQuery(restriction);
+            Console.Write(".");
+            const string day = CreateTable + DayTable + "(Id integer primary key asc, WebId integer, RestrictionId integer, unique(Id, RestrictionId) on conflict replace)";
+            ExecuteQuery(day);
+            Console.Write(".");
+            const string hour = CreateTable + HourTable + "(Id integer primary key asc, WebId integer, DayId integer, unique(Id, DayId) on conflict replace)";
+            ExecuteQuery(hour);
+            Console.Write(".\n");
+
             Console.WriteLine("Done creating tables");
         }
         public void ExecuteQuery(string query)

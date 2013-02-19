@@ -25,32 +25,35 @@ Week 7:
 				- Fix any errors with Removing Last Visited and opened
 		Desktop:
 			REST 2.0:
-				- RestUser
-					- Show
-					- Update
-				- RestAccount
-					- Index
-					- Update
-					- Show
-					- Add
-					- Destroy
-				- RestComputer
-					- Add
-					- Update
-					- Show
-					- Index
-				- RestProcess
-					- Add
-					- Update
-				- RestPrograms
+				User:
+					- |Done| Show
+					- |Done| Update
+				Account:
+					- |Done| List
+					- |Done| Update
+					- |Done| Show
+					- |Done| Create
+						- For this you need a pre saved computer to the db.
+					- |Done| Destroy
+				Computer:
+					- |Done| Create
+					- |Done| Update
+					- |Done| Show
+					- |Done| List
+				Process:
 					- Add
 					- Update
-				- RestHistory
+				Programs:
+					- Add
+					- Update
+				History:
 					- Add
 					- Update
 			Database:
 				Defenses:
-					- SQL injection
+					- |Done| SQL injection
+						- From what I understand sql injection is automatically handled when using paramaterized variables in sqlite.
+						- http://stackoverflow.com/a/139270/1162192
 				Saving:
 					- |Done| Computers
 					- |Done| users
@@ -82,6 +85,10 @@ Week 7:
 					Account: 
 						- Have some sort of admin field.
 						- Need to have some sort of date ranges
+				Additions:
+					Restrictions:
+						- |Done| Create Table
+						- Adding
 			Data Retrieving:
 				Computer:
 					- Name
@@ -89,4 +96,6 @@ Week 7:
 					- IpAddress (Not required)
 				Process:
 					- Getting all Processes; needs some way of finding account by name then getting id to set to process
-
+			Todo:
+				- When an object is parsed from REST and there is an error.
+					- Try to parse it into an error object.

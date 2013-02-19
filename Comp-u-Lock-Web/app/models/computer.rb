@@ -10,6 +10,7 @@ class Computer < ActiveRecord::Base
   has_many :account, dependent: :destroy
 
   accepts_nested_attributes_for :account
+
   def as_json options={}
     {
       id: id,

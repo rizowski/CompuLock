@@ -1,18 +1,22 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace Database.Models
+namespace REST.Models
 {
-    public class History
+    [JsonObject(Title = "AccountProcess")]
+    public class Process
     {
+        [JsonProperty(PropertyName = "id")]
         public int Id { get; set; }
 
+        [JsonProperty(PropertyName = "account_id")]
         public int AccountId { get; set; }
-        public string Domain { get; set; }
-        public string Url { get; set; }
-        public int VisitCount { get; set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
 
+        [JsonIgnore]
         public DateTime CreatedAt { get; set; }
+        [JsonIgnore]
         public DateTime UpdatedAt { get; set; }
 
         public string ToJSON()

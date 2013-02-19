@@ -94,7 +94,7 @@ module Api
 			# this needs to be fixed. http://stackoverflow.com/questions/14704542/recieving-the-appropriate-json-model-rails
 			def update
 				token = params[:auth_token]
-				id = params[:id]
+				id = params[:id].to_i
 
 				if token.nil?
 					render :status => 400,
@@ -102,7 +102,15 @@ module Api
 					return
 				end
 				@user = User.find_by_authentication_token(token)
-				account = params[:account]
+				account = JSON.parse params[:account]
+
+				puts 
+				puts 
+				puts
+				puts "Well I am updating"
+				puts id != 0
+				puts 
+				puts
 
 				if account["username"].nil?
 					render :status => 400,
@@ -115,16 +123,17 @@ module Api
 					return
 				end
 				@accounts = Account.where computer_id: @user.computer_ids
-				unless @accounts.pluck(:id).include? id.to_i
-					render :status => 401,
-						:json => { :message => "Access Denied, check account Id."}
-					return
+				if id != 0
+					unless @accounts.pluck(:id).include? id
+						render :status => 401,
+							:json => { :message => "Access Denied, check account Id."}
+						return
+					end
 				end
 				@account = Account.find(id)
-				if Account.update id, account 
+				if Account.update(id, account)
 					render json: {account: @account}
 				else
-
 					render :json => { :message => "Something went wrong with saving the entity."}
 					return
 				end
