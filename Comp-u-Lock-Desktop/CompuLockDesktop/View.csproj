@@ -120,8 +120,16 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Database\Database.csproj">
-      <Project>{14B4FC88-D38C-4BAA-BB30-5DF0C9D57F65}</Project>
+      <Project>{14b4fc88-d38c-4baa-bb30-5df0c9d57f65}</Project>
       <Name>Database</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\REST\REST.csproj">
+      <Project>{f27832ce-ff54-4a3d-ae0e-bf05994fa1ec}</Project>
+      <Name>REST</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Service\Service.csproj">
+      <Project>{2a2109ca-0a6f-431f-a9e1-947f78cdfc1a}</Project>
+      <Name>Service</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

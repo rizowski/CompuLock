@@ -24,6 +24,7 @@ namespace REST
 
         private const string ComputerKey = "computer";
         private const string ProgramKey = "program";
+        private const string ProcessKey = "process";
 
         protected const string Auth = "auth_token";
 
@@ -55,7 +56,7 @@ namespace REST
 
         public Account UpdateAccount(string token, Account item)
         {
-            var request = new RestRequest(ApiPath + AccountPath + item.Id, Method.PUT);
+            var request = new RestRequest(ApiPath + AccountPath + item.WebId, Method.PUT);
             request.AddParameter(Auth, token);
             var json = item.ToJSON();
             Console.WriteLine(json);
@@ -88,6 +89,12 @@ namespace REST
             return accounts.FirstOrDefault(a => a.WebId == id);
         }
 
+        public IEnumerable<Program> GetAllProgramsByAccount(string token, int id)
+        {
+            var account = GetAccountById(token, id);
+            return account.Programs;
+        }
+
         public void DestroyAccount(string token, int id)
         {
             var request = new RestRequest(AccountPath + id, Method.DELETE);
@@ -101,7 +108,7 @@ namespace REST
 #region User
         public User UpdateUser(string token, User item)
         {
-            var request = new RestRequest(ApiPath + UserPath + item.Id, Method.PUT);
+            var request = new RestRequest(ApiPath + UserPath + item.WebId, Method.PUT);
             request.AddParameter(Auth, token);
             var json = item.ToJSON();
             request.AddParameter("user", json);
@@ -164,7 +171,7 @@ namespace REST
 
         public Computer UpdateComputer(string token, Computer item)
         {
-            var request = new RestRequest(ApiPath + ComputerPath + item.Id, Method.PUT);
+            var request = new RestRequest(ApiPath + ComputerPath + item.WebId, Method.PUT);
             request.AddParameter(Auth, token);
             var json = item.ToJSON();
             request.AddParameter("computer", json);
@@ -192,7 +199,7 @@ namespace REST
         public Computer GetComputerById(string token, int id)
         {
             var computers = GetAllComputers(token);
-            return computers.FirstOrDefault(c => c.Id == id);
+            return computers.FirstOrDefault(c => c.WebId == id);
         }
 
         public void DestroyComputer(string token, int id)
@@ -212,8 +219,17 @@ namespace REST
         {
             if (proc.AccountId <= 0)
                 throw new AggregateException("Account Id needs to be present");
-            var request = new RestRequest();
-            throw new NotImplementedException();
+            var request = new RestRequest(ApiPath + ProcessPath, Method.POST);
+            request.AddParameter(Auth, token);
+            var json = proc.ToJSON();
+            request.AddParameter("process", json);
+            var response = Client.Execute(request);
+            if (response.StatusCode != HttpStatusCode.OK)
+                Console.WriteLine("Status Code Error: {0}", response.StatusCode);
+            Console.WriteLine(response.Content);
+            var processjson = JObject.Parse(response.Content);
+            var process = JsonConvert.DeserializeObject<Process>(processjson[ProcessKey].ToString());
+            return process;
         }
 
         public Process UpdateProcess(string token)
@@ -278,13 +294,17 @@ namespace REST
 
         public Program UpdateProgram(string token, Program prog)
         {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Program> GetAllProgramsByAccount(string token)
-        {
-            //TODO MAY NOT BE AVAILABLE
-            throw new NotImplementedException();
+            var request = new RestRequest(ApiPath + ProgramPath + prog.WebId, Method.PUT);
+            request.AddParameter(Auth, token);
+            var json = prog.ToJSON();
+            request.AddParameter("program", json);
+            var response = Client.Execute(request);
+            if (response.StatusCode != HttpStatusCode.OK)
+                Console.WriteLine("Status Code Error: {0}", response.StatusCode);
+            Console.WriteLine(response.Content);
+            var compjson = JObject.Parse(response.Content);
+            var comp = JsonConvert.DeserializeObject<Program>(compjson[ProgramKey].ToString());
+            return comp;
         }
 
         public Program GetProgramById(string token)

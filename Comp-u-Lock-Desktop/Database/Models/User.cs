@@ -9,7 +9,7 @@ namespace Database.Models
     {
         [JsonIgnore]
         public int Id { get; set; }
-        [JsonProperty(PropertyName = "id")]
+        [JsonProperty(PropertyName = "id", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public int WebId { get; set; }
 
         [JsonProperty(PropertyName = "username")]

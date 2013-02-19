@@ -270,7 +270,7 @@ namespace Service
                 Console.WriteLine("Username: {0}\nTracking: {1}\n", account.Username, account.Tracking);
             }
             Console.WriteLine("Press any key to save computer data to web.");
-            computer.UserId = user.Id;
+            computer.UserId = user.WebId;
             rs.CreateComputer(authToken, computer);
             Console.WriteLine("Press any key to save Accounts to web.");
             foreach (var account in accounts)
@@ -328,15 +328,39 @@ namespace Service
             RestService rs = new RestService("http://localhost:3000", "api/v1/");
 
 
-            var account = rs.GetAccountById(local, 2);
+           /* var account = rs.GetAccountById(local, 2);
 
             var program = new Program
                 {
                     AccountId = account.WebId,
                     Name = "Eclipse"
                 };
-            rs.CreateProgram(local, program);
-            
+            rs.CreateProgram(local, program);*/
+
+            /*var account = rs.GetAccountById(local, 2);
+            account.Processes = new List<Process>();
+            account.Processes.Add(new Process
+                {
+                    AccountId = account.WebId,
+                    Name = "Chrome.exe"
+                });
+            rs.UpdateAccount(local, account);*/
+            /*var programs = rs.GetAllProgramsByAccount(local, 1);
+            foreach (var program in programs)
+            {
+                Console.WriteLine(program.Name);
+            }*/
+
+            var user = rs.GetUser(local);
+            user.Computers.Add(new Computer
+                {
+                    UserId = user.WebId,
+                    Enviroment = "Windows 9",
+                    Name = "HopeThisWor"
+                });
+            rs.UpdateUser(local, user);
+
+            //RunInfoGatherer();
         }
 
 

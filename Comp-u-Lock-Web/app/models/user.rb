@@ -6,7 +6,8 @@ class User < ActiveRecord::Base
        :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :username, :email, :password, :password_confirmation, :remember_me
+  attr_accessible :username, :email, :password, :password_confirmation, :remember_me,
+  :computer_attributes
   attr_protected :admin
   
   has_many :computer, :dependent => :destroy
@@ -24,7 +25,7 @@ class User < ActiveRecord::Base
       id: id,
       username: username,
       email: email,
-      computers: computer,
+      computer_attributes: computer,
       created_at: created_at,
       update_at: updated_at
 

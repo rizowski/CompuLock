@@ -3,12 +3,12 @@ using Newtonsoft.Json;
 
 namespace Database.Models
 {
-    [JsonObject(Title = "AccountProgram")]
+    [JsonObject]
     public class Program
     {
         [JsonIgnore]
         public int Id { get; set; }
-        [JsonProperty(PropertyName = "id")]
+        [JsonProperty(PropertyName = "id", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public int WebId { get; set; }
 
         [JsonProperty(PropertyName = "account_id")]

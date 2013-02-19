@@ -11,10 +11,12 @@ namespace Service
     {
         public DatabaseClient DbClient { get; private set; }
         public AccountManager AccountManager { get; private set; }
+        
 
         public MainService()
         {
             DbClient = new DatabaseClient("settings", "myPass");
+
         }
         
         public void testing()

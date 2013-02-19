@@ -41,13 +41,13 @@ Week 7:
 					- |Done| Show
 					- |Done| List
 				Process:
-					- Add
+					- Create
 					- Update
 				Programs:
-					- Add
+					- Create
 					- Update
 				History:
-					- Add
+					- Create
 					- Update
 			Database:
 				Defenses:

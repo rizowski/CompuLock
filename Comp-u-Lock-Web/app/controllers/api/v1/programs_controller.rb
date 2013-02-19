@@ -71,7 +71,7 @@ module Api
 
 		def index
 			token = params[:auth_token]
-			account_id = params[:account_id]
+			account_id = params[:account_id].to_i
 			if token.nil?
 				render :status => 400,
 					:json => { :message => "The request must contain an auth token."}
@@ -82,6 +82,7 @@ module Api
 					:json => { :message => "The request must contain an account id."}
 				return
 			end
+			@user = User.find_by_authentication_token token
 			@accounts = Account.where computer_id: @user.computer_ids
 			unless @accounts.pluck(:id).include? account_id
 				render :status => 401,
@@ -90,7 +91,7 @@ module Api
 			end
 			@account = Account.find account_id
 
-			@programs = @account.account_history.all
+			@programs = @account.account_program.all
 			render json: {programs: @programs}
 		end
   	end

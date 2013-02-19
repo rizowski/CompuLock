@@ -9,7 +9,7 @@ namespace Database.Models
     {
         [JsonIgnore]
         public int Id { get; set; }
-        [JsonProperty(PropertyName = "id")]
+        [JsonProperty(PropertyName = "id", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public int WebId { get; set; }
 
         [JsonProperty(PropertyName = "user_id")]
@@ -18,7 +18,7 @@ namespace Database.Models
         public string Name { get; set; }
         [JsonProperty(PropertyName = "enviroment")]
         public string Enviroment { get; set; }
-        [JsonProperty(PropertyName = "ip_address")]
+        [JsonProperty(PropertyName = "ip_address", NullValueHandling = NullValueHandling.Ignore)]
         public string IpAddress { get; set; }
 
         [JsonProperty(PropertyName = "account_attributes", NullValueHandling = NullValueHandling.Ignore)]

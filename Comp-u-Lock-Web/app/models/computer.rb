@@ -1,5 +1,5 @@
 class Computer < ActiveRecord::Base
-  attr_accessible :user_id, :enviroment, :ip_address, :name
+  attr_accessible :user_id, :enviroment, :ip_address, :name, :account_attributes
 
   belongs_to :user
 
@@ -19,7 +19,7 @@ class Computer < ActiveRecord::Base
       enviroment: enviroment,
       ip_address: ip_address,
 
-      accounts: account,
+      account_attributes: account,
       created_at: created_at,
       update_at: updated_at
     }

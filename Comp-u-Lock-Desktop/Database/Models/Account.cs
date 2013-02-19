@@ -13,7 +13,7 @@ namespace Database.Models
 
         [JsonIgnore]
         public int Id { get; set; }
-        [JsonProperty(PropertyName = "id")]
+        [JsonProperty(PropertyName = "id", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public int WebId { get; set; }
 
         [JsonProperty(PropertyName = "computer_id")]
@@ -26,15 +26,15 @@ namespace Database.Models
         [JsonProperty(PropertyName = "tracking")]
         public bool Tracking { get; set; }
         [JsonProperty(PropertyName = "allotted_time")]
-        public int AllottedTime { get; set; }
+        public TimeSpan AllottedTime { get; set; }
         [JsonProperty(PropertyName = "used_time")]
-        public int UsedTime { get; set; }
+        public TimeSpan UsedTime { get; set; }
 
         [JsonProperty(PropertyName = "account_history_attributes", NullValueHandling = NullValueHandling.Ignore)]
         public List<History> Histories { get; set; }
         [JsonProperty(PropertyName = "account_process_attributes", NullValueHandling = NullValueHandling.Ignore)]
         public List<Process> Processes { get; set; }
-        [JsonProperty(PropertyName = "program_attributes", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty(PropertyName = "account_program_attributes", NullValueHandling = NullValueHandling.Ignore)]
         public List<Program> Programs { get; set; }
 
         [JsonIgnore]

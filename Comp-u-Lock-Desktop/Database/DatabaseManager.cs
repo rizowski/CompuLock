@@ -360,8 +360,8 @@ namespace Database
                         Domain = (string) reader["Domain"],
                         Username = (string) reader["Username"],
                         Tracking = (Convert.ToInt32(reader["Tracking"]) == 1),
-                        AllottedTime = Convert.ToInt32(reader["AllottedTime"]),
-                        UsedTime = Convert.ToInt32(reader["UsedTime"]),
+                        AllottedTime = TimeSpan.FromSeconds(Convert.ToDouble(reader["AllottedTime"])),
+                        UsedTime = TimeSpan.FromSeconds(Convert.ToDouble(reader["UsedTime"])),
                         CreatedAt = Convert.ToDateTime(reader["CreatedAt"]),
                         UpdatedAt = Convert.ToDateTime(reader["UpdatedAt"])
                     });

@@ -1,5 +1,6 @@
 class Account < ActiveRecord::Base
-  attr_accessible :computer_id, :allotted_time, :domain, :tracking, :used_time, :username
+  attr_accessible :computer_id, :allotted_time, :domain, 
+  :tracking, :used_time, :username, :account_history_attributes, :account_program_attributes, :account_process_attributes
 
   validates :username, :presence => true
   validates :computer_id, :presence => true
@@ -20,9 +21,9 @@ class Account < ActiveRecord::Base
       username: username,
       tracking: tracking,
       
-      histories: account_history,
-      programs: account_program,
-      #processes: account_process,
+      account_history_attributes: account_history,
+      account_program_attributes: account_program,
+      #account_process_attributes: account_process,
 
       created_at: created_at,
       update_at: updated_at

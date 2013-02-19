@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using Service;
 
 namespace CompuLockDesktop
 {
@@ -8,10 +9,11 @@ namespace CompuLockDesktop
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        private MainService mainService;
         public MainWindow()
         {
             InitializeComponent();
+            mainService = new MainService();
         }
 
         private void OnOpen(object sender, EventArgs e)

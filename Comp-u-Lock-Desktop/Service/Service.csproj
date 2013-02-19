@@ -165,10 +165,6 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CompuLockDesktop\View.csproj">
-      <Project>{7027dc15-051f-4355-b5c3-58fc158220eb}</Project>
-      <Name>View</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Database\Database.csproj">
       <Project>{14b4fc88-d38c-4baa-bb30-5df0c9d57f65}</Project>
       <Name>Database</Name>
