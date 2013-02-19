@@ -5,10 +5,6 @@ CompULockWeb::Application.routes.draw do
   resource :user, only: [:index, :list]
   resources :computer
   resources :account
-
-  # resources :account_history
-  # resources :account_process
-  # resources :account_program
   
   namespace :api, defaults:{format:'json'} do
     namespace :v1  do
@@ -16,6 +12,9 @@ CompULockWeb::Application.routes.draw do
       resources :computers, only: [:index, :show, :create, :update, :destroy]
       resources :users, only: [:index, :update] # done
       resources :accounts, only: [:index, :create, :update, :show, :destroy] # Update
+      resources :histories, only: [:create, :show, :index]
+      resources :processes, only: [:create, :show, :index]
+      resources :programs, only: [:create, :show, :index]
     end
   end
 

@@ -63,7 +63,7 @@ namespace Service
             var user = dc.GetUser();
             Console.WriteLine("{0} - {1}", user.Email, user.AuthToken);
             Console.WriteLine();
-            dc.SaveComputer(new Computer
+            dc.CreateComputer(new Computer
             {
                 UserId = 1,
                 Enviroment = "Windows 8",
@@ -271,7 +271,7 @@ namespace Service
             }
             Console.WriteLine("Press any key to save computer data to web.");
             computer.UserId = user.Id;
-            rs.SaveComputer(authToken, computer);
+            rs.CreateComputer(authToken, computer);
             Console.WriteLine("Press any key to save Accounts to web.");
             foreach (var account in accounts)
             {
@@ -332,7 +332,7 @@ namespace Service
 
             var program = new Program
                 {
-                    AccountId = account.Id,
+                    AccountId = account.WebId,
                     Name = "Eclipse"
                 };
             rs.CreateProgram(local, program);

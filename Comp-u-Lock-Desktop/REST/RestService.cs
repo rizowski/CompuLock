@@ -18,8 +18,12 @@ namespace REST
         private const string AccountPath = "accounts/";
         private const string UserPath = "users/";
         private const string ComputerPath = "computers/";
+        private const string ProgramPath = "programs/";
+        private const string ProcessPath = "processes";
+        private const string HistoriesPath = "histories/";
 
         private const string ComputerKey = "computer";
+        private const string ProgramKey = "program";
 
         protected const string Auth = "auth_token";
 
@@ -141,7 +145,7 @@ namespace REST
 #endregion
 
 #region Computers
-        public Computer SaveComputer(string token, Computer item)
+        public Computer CreateComputer(string token, Computer item)
         {
             if (item.UserId == 0)
                 throw new ArgumentException("Computer must have a user Id");
@@ -255,12 +259,24 @@ namespace REST
 
         #region Program
         //TODO Programs
-        public Program CreateProgram(string token)
+        public Program CreateProgram(string token, Program prog)
         {
-            throw new NotImplementedException();
+            if (prog.AccountId == 0)
+                throw new ArgumentException("Program must have an account Id");
+            var request = new RestRequest(ApiPath + ProgramPath, Method.POST);
+            request.AddParameter(Auth, token);
+            var json = prog.ToJSON();
+            request.AddParameter("program", json);
+            var response = Client.Execute(request);
+            if (response.StatusCode != HttpStatusCode.OK)
+                Console.WriteLine("Status Code Error: {0}", response.StatusCode);
+            Console.WriteLine(response.Content);
+            var programjson = JObject.Parse(response.Content);
+            var program = JsonConvert.DeserializeObject<Program>(programjson[ProgramKey].ToString());
+            return program;
         }
 
-        public Program UpdateProgram(string token)
+        public Program UpdateProgram(string token, Program prog)
         {
             throw new NotImplementedException();
         }

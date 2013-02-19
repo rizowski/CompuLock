@@ -9,9 +9,8 @@ class AccountProgram < ActiveRecord::Base
 	def as_json options={}
     {
       id: id,
-      username: username,
-      email: email,
-      computers: computer,
+      name: name,
+      open_count: open_count,
       created_at: created_at,
       update_at: updated_at
 
