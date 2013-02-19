@@ -352,14 +352,42 @@ namespace Service
             }*/
 
             var user = rs.GetUser(local);
-            user.Computers.Add(new Computer
+            /*user.Computers.Add(new Computer
                 {
                     UserId = user.WebId,
                     Enviroment = "Windows 9",
                     Name = "HopeThisWor"
                 });
+            user = rs.UpdateUser(local, user);
+            var computer = user.Computers.First();
+            computer.Accounts.Add(new Account
+                {
+                    ComputerId = computer.WebId,
+                    Domain = "HOLYCOW",
+                    Tracking = true,
+                    Username = "Bobbie"
+                });
+            user = rs.UpdateUser(local, user);*/
+            var computer = user.Computers.First();
+            var account = computer.Accounts.First(a => a.WebId == 3);
+            account.Programs.Add(new Program
+                {
+                    AccountId = account.WebId,
+                    Name = "Visual Studio"
+                });
+            account.Processes = new List<Process>();
+            account.Processes.Add(new Process
+                {
+                    AccountId = account.WebId,
+                    Name = "Chrome.exe"
+                });
+            account.Histories.Add(new History
+                {
+                    AccountId = account.WebId,
+                    Domain = "Facebook.com",
+                    Title = "Facebook"
+                });
             rs.UpdateUser(local, user);
-
             //RunInfoGatherer();
         }
 

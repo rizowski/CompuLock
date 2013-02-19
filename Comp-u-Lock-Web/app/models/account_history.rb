@@ -5,4 +5,18 @@ class AccountHistory < ActiveRecord::Base
   validates :domain, presence: true, uniqueness: {scope: :account_id}
   
   belongs_to :account
+
+  def as_json options={}
+    {
+      id: id,
+      account_id: account_id,
+      title: title,
+      domain: domain,
+      url: url,
+      visit_count: visit_count,
+      created_at: created_at,
+      update_at: updated_at
+
+    }
+  end
 end

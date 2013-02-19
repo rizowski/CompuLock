@@ -6,7 +6,9 @@ Computer Account: <%=@account.username%><br/>
 <%end%>
 <br/>
 <span>Processes</span><br/>
-<!--Processes Will not display. Maybe there is a model issue?-->
+<%@account.account_process.each do |process|%>
+	Name: <%=process.name%><br/>
+<%end%>
 <br/>
 <span>History</span><br/>
 <%@account.account_history.each do |history|%>

@@ -7,9 +7,9 @@ class Account < ActiveRecord::Base
   
   belongs_to :computer
 
-  has_many :account_history, :dependent => :destroy
-  has_many :account_process, :dependent => :destroy
-  has_many :account_program, :dependent => :destroy
+  has_many :account_history, :class_name => "AccountHistory", :dependent => :destroy
+  has_many :account_process, :class_name => "AccountProcess", :dependent => :destroy
+  has_many :account_program, :class_name => "AccountProgram", :dependent => :destroy
 
   accepts_nested_attributes_for :account_history, :account_process, :account_program
 
@@ -23,7 +23,7 @@ class Account < ActiveRecord::Base
       
       account_history_attributes: account_history,
       account_program_attributes: account_program,
-      #account_process_attributes: account_process,
+      account_process_attributes: account_process,
 
       created_at: created_at,
       update_at: updated_at

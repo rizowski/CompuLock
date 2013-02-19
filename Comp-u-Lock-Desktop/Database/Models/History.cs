@@ -17,7 +17,7 @@ namespace Database.Models
         public string Title { get; set; }
         [JsonProperty(PropertyName = "domain")]
         public string Domain { get; set; }
-        [JsonProperty(PropertyName = "url")]
+        [JsonProperty(PropertyName = "url", NullValueHandling = NullValueHandling.Ignore)]
         public string Url { get; set; }
         [JsonProperty(PropertyName = "visit_count")]
         public int VisitCount { get; set; }

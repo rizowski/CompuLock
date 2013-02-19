@@ -40,15 +40,8 @@ Week 7:
 					- |Done| Update
 					- |Done| Show
 					- |Done| List
-				Process:
-					- Create
-					- Update
-				Programs:
-					- Create
-					- Update
-				History:
-					- Create
-					- Update
+				Notes: 
+					- With the new discovery of updating an object with out needing other api calls. Process Programs and history are now taken care of.
 			Database:
 				Defenses:
 					- |Done| SQL injection

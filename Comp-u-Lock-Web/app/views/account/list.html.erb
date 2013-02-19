@@ -2,7 +2,9 @@
 <% @computers.each do |computer| %>
 	<%= computer.name %><br/>
 	<%computer.account.all.each do |account|%>
-		<%=account.domain%>, <%=account.username%>, <%=account.tracking%> <%= link_to 'edit', edit_account_path(account) %><br/>
+		<%=account.domain%>, <%=account.username%>, <%=account.tracking%>
+<%=link_to "show",action: 'show', id:account.id%> <%=link_to "edit", controller: 'account', action: 'edit', id: account.id%> <%=link_to "delete", account, method: :delete%>
+		<br/>
 	<% end%>
 	<br/>
 <%end%>

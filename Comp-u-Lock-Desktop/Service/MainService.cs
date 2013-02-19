@@ -23,5 +23,6 @@ namespace Service
         {
             
         }
+        //Methods that use the db and the rest service to save objects at the same time.
     }
 }
