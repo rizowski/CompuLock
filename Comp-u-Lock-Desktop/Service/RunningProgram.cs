@@ -215,7 +215,7 @@ namespace Service
                 File.Delete("settings.sqlite");
             DatabaseClient dc = new DatabaseClient("settings", "myPass");
 
-            var user = new User
+            REST.Models.User user = new REST.Models.User
                 {
                     AuthToken = authToken
                 };

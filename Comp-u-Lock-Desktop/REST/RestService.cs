@@ -6,12 +6,6 @@ using Database.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
-using Account = REST.Models.Account;
-using Computer = REST.Models.Computer;
-using History = REST.Models.History;
-using Process = REST.Models.Process;
-using Program = REST.Models.Program;
-using User = REST.Models.User;
 
 namespace REST
 {

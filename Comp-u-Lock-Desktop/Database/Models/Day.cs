@@ -1,20 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace Database.Models
 {
     public class Day
     {
+        [JsonProperty(PropertyName = "id")]
         public int Id { get; set; }
-        public int WebId { get; set; }
 
+        [JsonProperty(PropertyName = "restriction_id")]
         public int RestrictionId { get; set; }
 
+        [JsonProperty(PropertyName = "hour_attributes", NullValueHandling = NullValueHandling.Ignore)]
         IEnumerable<Hour> Hours { get; set; }
-
 
         public Day()
         {
@@ -24,12 +22,15 @@ namespace Database.Models
 
     public class Hour
     {
+        [JsonProperty(PropertyName = "id")]
         public int Id { get; set; }
-        public int WebId { get; set; }
 
+        [JsonProperty(PropertyName = "day_id")]
         public int DayId { get; set; }
 
+        [JsonProperty(PropertyName = "start")]
         public int Start { get; set; }
+        [JsonProperty(PropertyName = "end")]
         public int End { get; set; }
 
         public Hour()

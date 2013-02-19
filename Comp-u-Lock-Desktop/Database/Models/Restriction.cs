@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace Database.Models
 {
-    public class Restriction
+    class Restriction
     {
+        [JsonProperty(PropertyName = "id")]
         public int Id { get; set; }
 
+        [JsonProperty(PropertyName = "account_id")]
         public int AccountId { get; set; }
 
+        [JsonProperty(PropertyName = "day_attributes", NullValueHandling = NullValueHandling.Ignore)]
         IEnumerable<Day> Days { get; set; }
 
         public Restriction()
