@@ -215,7 +215,7 @@ namespace Service
                 File.Delete("settings.sqlite");
             DatabaseClient dc = new DatabaseClient("settings", "myPass");
 
-            REST.Models.User user = new REST.Models.User
+            User user = new User
                 {
                     AuthToken = authToken
                 };
@@ -335,7 +335,7 @@ namespace Service
                     AccountId = account.Id,
                     Name = "Eclipse"
                 };
-            //rs.CreateProgram(local, program);
+            rs.CreateProgram(local, program);
             
         }
 

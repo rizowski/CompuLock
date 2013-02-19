@@ -20,7 +20,6 @@ C:\Users\Rizowski\Documents\GitHub\CompuLock\Comp-u-Lock-Desktop\Service\bin\Deb
 C:\Users\Rizowski\Documents\GitHub\CompuLock\Comp-u-Lock-Desktop\Service\bin\Debug\REST.dll
 C:\Users\Rizowski\Documents\GitHub\CompuLock\Comp-u-Lock-Desktop\Service\bin\Debug\RestSharp.dll
 C:\Users\Rizowski\Documents\GitHub\CompuLock\Comp-u-Lock-Desktop\Service\bin\Debug\UrlHistoryLibrary.dll
-C:\Users\Rizowski\Documents\GitHub\CompuLock\Comp-u-Lock-Desktop\Service\bin\Debug\Raven.Abstractions.dll
 C:\Users\Rizowski\Documents\GitHub\CompuLock\Comp-u-Lock-Desktop\Service\bin\Debug\CompuLockDesktop.pdb
 C:\Users\Rizowski\Documents\GitHub\CompuLock\Comp-u-Lock-Desktop\Service\bin\Debug\Database.pdb
 C:\Users\Rizowski\Documents\GitHub\CompuLock\Comp-u-Lock-Desktop\Service\bin\Debug\REST.pdb

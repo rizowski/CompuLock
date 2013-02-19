@@ -7,8 +7,10 @@ namespace Database.Models
     [JsonObject]
     public class User
     {
-        [JsonProperty(PropertyName = "id")]
+        [JsonIgnore]
         public int Id { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public int WebId { get; set; }
 
         [JsonProperty(PropertyName = "username")]
         public string Username { get; set; }

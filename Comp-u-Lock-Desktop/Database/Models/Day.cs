@@ -5,8 +5,10 @@ namespace Database.Models
 {
     public class Day
     {
-        [JsonProperty(PropertyName = "id")]
+        [JsonIgnore]
         public int Id { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public int WebId { get; set; }
 
         [JsonProperty(PropertyName = "restriction_id")]
         public int RestrictionId { get; set; }
@@ -22,8 +24,10 @@ namespace Database.Models
 
     public class Hour
     {
-        [JsonProperty(PropertyName = "id")]
+        [JsonIgnore]
         public int Id { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public int WebId { get; set; }
 
         [JsonProperty(PropertyName = "day_id")]
         public int DayId { get; set; }

@@ -6,8 +6,10 @@ namespace Database.Models
     [JsonObject(Title = "AccountProcess")]
     public class Process
     {
-        [JsonProperty(PropertyName = "id")]
+        [JsonIgnore]
         public int Id { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public int WebId { get; set; }
 
         [JsonProperty(PropertyName = "account_id")]
         public int AccountId { get; set; }

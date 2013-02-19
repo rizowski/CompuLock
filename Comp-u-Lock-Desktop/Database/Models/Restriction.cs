@@ -5,8 +5,10 @@ namespace Database.Models
 {
     class Restriction
     {
-        [JsonProperty(PropertyName = "id")]
+        [JsonIgnore]
         public int Id { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public int WebId { get; set; }
 
         [JsonProperty(PropertyName = "account_id")]
         public int AccountId { get; set; }

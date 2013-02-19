@@ -9,7 +9,7 @@ using RestSharp;
 
 namespace REST
 {
-    public class RestService//: IApi
+    public class RestService
     {
         public string Server { get; set; }
         public string ApiPath { get; set; }
@@ -81,7 +81,7 @@ namespace REST
         public Account GetAccountById(string token, int id)
         {
             var accounts = GetAllAccounts(token);
-            return accounts.FirstOrDefault(a => a.Id == id);
+            return accounts.FirstOrDefault(a => a.WebId == id);
         }
 
         public void DestroyAccount(string token, int id)

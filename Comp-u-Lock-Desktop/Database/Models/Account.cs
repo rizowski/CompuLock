@@ -11,8 +11,10 @@ namespace Database.Models
         {
         }
 
-        [JsonProperty(PropertyName = "id")]
+        [JsonIgnore]
         public int Id { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public int WebId { get; set; }
 
         [JsonProperty(PropertyName = "computer_id")]
         public int ComputerId { get; set; }
