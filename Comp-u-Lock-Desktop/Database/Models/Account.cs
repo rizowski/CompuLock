@@ -37,6 +37,9 @@ namespace Database.Models
         [JsonProperty(PropertyName = "account_program_attributes", NullValueHandling = NullValueHandling.Ignore)]
         public List<Program> Programs { get; set; }
 
+        [JsonProperty(PropertyName = "restriction_attributes", NullValueHandling = NullValueHandling.Ignore)]
+        public List<Restriction> Restrictions { get; set; }
+
         [JsonIgnore]
         public DateTime CreatedAt { get; set; }
         [JsonIgnore]

@@ -11,7 +11,9 @@ class Account < ActiveRecord::Base
   has_many :account_process, :class_name => "AccountProcess", :dependent => :destroy
   has_many :account_program, :class_name => "AccountProgram", :dependent => :destroy
 
-  accepts_nested_attributes_for :account_history, :account_process, :account_program
+  has_many :restrictions, dependent: :destroy
+
+  accepts_nested_attributes_for :account_history, :account_process, :account_program, :restriction
 
   def as_json options={}
     {
@@ -24,6 +26,8 @@ class Account < ActiveRecord::Base
       account_history_attributes: account_history,
       account_program_attributes: account_program,
       account_process_attributes: account_process,
+
+      restriction_attributes: restriction,
 
       created_at: created_at,
       update_at: updated_at
