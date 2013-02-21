@@ -42,7 +42,6 @@ namespace Database.Enviroment
                                     switch (Version.Minor)
                                     {
                                         case 1:
-                                            return Windows.Xp;
                                         case 2:
                                             return Windows.Xp;
                                         default:

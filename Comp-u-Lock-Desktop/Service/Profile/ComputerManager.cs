@@ -14,7 +14,7 @@ using Database.Models;
 
 namespace Service.Profile
 {
-    class ComputerManager
+    public class ComputerManager
     {
         private const string WinNT = "WinNT://";
         private const string UserFlags = "UserFlags";

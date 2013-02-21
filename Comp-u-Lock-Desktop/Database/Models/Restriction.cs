@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Database.Models
 {
-    class Restriction
+    public class Restriction
     {
         [JsonIgnore]
         public int Id { get; set; }

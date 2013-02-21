@@ -23,6 +23,9 @@ namespace Database.Models
         [JsonProperty(PropertyName = "username")]
         public string Username { get; set; }
 
+        [JsonProperty(PropertyName = "admin")]
+        public bool Admin { get; set; }
+
         [JsonProperty(PropertyName = "tracking")]
         public bool Tracking { get; set; }
         [JsonProperty(PropertyName = "allotted_time")]

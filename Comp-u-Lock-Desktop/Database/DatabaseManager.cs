@@ -15,6 +15,7 @@ namespace Database
         public string DbPath { get; set; }
         public SQLiteConnection DbConnection { get; set; }
         private string DbPassword;
+        public bool DbExists { get; set; }
 
         #region Constants
         private const string UsersTable = "Users";
@@ -45,23 +46,23 @@ namespace Database
         {
             DbPassword = pass;
             var DbPath = path + ".sqlite";
-            if (!File.Exists(DbPath))
+            DbExists = File.Exists(DbPath);
+            if (File.Exists(DbPath))
             {
-                Console.WriteLine("File doesn't exist");
-                SQLiteConnection.CreateFile(DbPath);
-                DbConnection = new SQLiteConnection("Data Source=" + DbPath + ";Version=3;");
-                DbConnection.Open();
-                //Console.WriteLine("Setting Password to {0}", DbPassword);
-                //DbConnection.ChangePassword(pass);
-                DbConnection.Close();
-                //DbConnection.SetPassword(pass);
-                CreateTables();
+                DbConnection = new SQLiteConnection("Data Source=" + DbPath + ";Version=3;");//Password="+DbPassword+";");
             }
             else
             {
-                Console.WriteLine("File Found");
-                DbConnection = new SQLiteConnection("Data Source=" + DbPath + ";Version=3;");//Password="+DbPassword+";");
+                CreateDb();
+                DbExists = File.Exists(DbPath);
             }
+        }
+
+        public void CreateDb()
+        {
+            SQLiteConnection.CreateFile(DbPath);
+            DbConnection = new SQLiteConnection("Data Source=" + DbPath + ";Version=3;");
+            CreateTables();
         }
 
         public SQLiteConnection Connect(string pass)
@@ -150,11 +151,15 @@ namespace Database
             sb.Append(UsersTable);
             sb.Append(End);
             DbConnection.Open();
-            var reader = new SQLiteCommand(sb.ToString(), DbConnection).ExecuteReader(CommandBehavior.SingleResult);
+            SQLiteDataReader reader;
             User user = null;
-            while (reader.Read())
+            try
             {
-                user = new User
+                reader = new SQLiteCommand(sb.ToString(), DbConnection).ExecuteReader(CommandBehavior.SingleResult);
+                
+                while (reader.Read())
+                {
+                    user = new User
                     {
                         Username = Convert.ToString(reader["Username"]),
                         Email = Convert.ToString(reader["Email"]),
@@ -162,6 +167,11 @@ namespace Database
                         CreatedAt = Convert.ToDateTime(reader["CreatedAt"]),
                         UpdatedAt = Convert.ToDateTime(reader["UpdatedAt"])
                     };
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
             }
             DbConnection.Close();
             return user;
@@ -442,6 +452,45 @@ namespace Database
 
         #region FindByName
 
+        #endregion
+
+        #region ById
+        public Account GetAccountById(int id)
+        {
+            return GetAccounts().First(a => a.Id == id);
+        }
+
+        public History GetHistoryById(int id)
+        {
+            return GetHistories().First(h => h.Id == id);
+        }
+
+        public Process GetProcessById(int id)
+        {
+            return GetProcesses().First(p => p.Id == id);
+        }
+
+        public Program GetProgramById(int id)
+        {
+            return GetPrograms().First(p => p.Id == id);
+        }
+        #endregion
+
+        #region ByAccountId
+        public IEnumerable<History> GetHistoriesByAccountId(int accountId)
+        {
+            return GetHistories().Where(h => h.AccountId == accountId);
+        }
+
+        public IEnumerable<Program> GetProgramsByAccountId(int accountId)
+        {
+            return GetPrograms().Where(p => p.AccountId == accountId);
+        }
+
+        public IEnumerable<Process> GetProcessesByAccountId(int accountId)
+        {
+            return GetProcesses().Where(p => p.AccountId == accountId);
+        }
         #endregion
 
     }

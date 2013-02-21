@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130204013213) do
+ActiveRecord::Schema.define(:version => 20130220064805) do
 
   create_table "account_histories", :force => true do |t|
     t.integer  "account_id"
@@ -56,6 +56,26 @@ ActiveRecord::Schema.define(:version => 20130204013213) do
     t.string   "enviroment", :default => "", :null => false
     t.datetime "created_at",                 :null => false
     t.datetime "updated_at",                 :null => false
+  end
+
+  create_table "days", :force => true do |t|
+    t.integer  "restriction_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  create_table "hours", :force => true do |t|
+    t.integer  "day_id"
+    t.integer  "start_time"
+    t.integer  "end_time"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "restrictions", :force => true do |t|
+    t.integer  "account_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "users", :force => true do |t|

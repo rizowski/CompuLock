@@ -110,7 +110,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Db\DatabaseClient.cs" />
     <Compile Include="MainService.cs" />
     <Compile Include="Profile\BrowserManager.cs" />
     <Compile Include="Profile\ComputerManager.cs" />

@@ -10,6 +10,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Database.Models;
+using Service;
 
 namespace CompuLockDesktop
 {
@@ -18,14 +20,44 @@ namespace CompuLockDesktop
     /// </summary>
     public partial class Options : Window
     {
+        private MainService service;
         public Options()
         {
             InitializeComponent();
+            service = new MainService();
+        }
+
+        private void OnOpen(object sender, EventArgs e)
+        {
+            User user;
+            try
+            {
+                user = service.GetDbUser();
+                AuthToken.Text = user.AuthToken;
+            }
+            catch (Exception)
+            {
+                
+            }
+            
         }
 
         private void SaveClick(object sender, RoutedEventArgs e)
         {
-
+            if (AuthToken.Text.Length > 0)
+            {
+                try
+                {
+                    var user = service.GetRestUser(AuthToken.Text);
+                    user.AuthToken = AuthToken.Text;
+                    service.SendUser(user);
+                   
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
         }
     }
 }

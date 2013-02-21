@@ -7,7 +7,6 @@ using Database.Enviroment;
 using Database.Models;
 using REST;
 using RestSharp;
-using Service.Db;
 using Service.Profile;
 using Programs = Service.Profile.ProgramManager;
 
@@ -53,8 +52,8 @@ namespace Service
         private static void RunDbAccounts()
         {
 
-            DatabaseClient dc = new DatabaseClient("settings", "myPass");
-            /*dc.SaveUser(new User
+            /*DatabaseClient dc = new DatabaseClient("settings", "myPass");*/
+            /*dc.SendUser(new User
             {
                 AuthToken = "MyAuthToken",
                 Email = "crouska@gmail.com",
@@ -213,7 +212,7 @@ namespace Service
             var api = "api/v1/";
             if(File.Exists("settings.sqlite"))
                 File.Delete("settings.sqlite");
-            DatabaseClient dc = new DatabaseClient("settings", "myPass");
+            DatabaseManager dc = new DatabaseManager("settings", "myPass");
 
             User user = new User
                 {
@@ -309,11 +308,6 @@ namespace Service
             //account.StartTimer();
         }
 
-        public static void Cylce()
-        {
-            MainService ms = new MainService();
-            ms.testing();
-        }
         public static void RunGUIProgram()
         {
             MainService s = new MainService();
@@ -322,7 +316,7 @@ namespace Service
         public static void RunREST()
         {
             //Local Token
-            var local = "RuFJ7qEZpdgqrdufmkxz";
+            var local = "xgkjm1RcG8xpkNNMXpVq";
             //Service token
             var ser = "8yVDgBHzFfUqwqpymuVv";
             RestService rs = new RestService("http://localhost:3000", "api/v1/");
