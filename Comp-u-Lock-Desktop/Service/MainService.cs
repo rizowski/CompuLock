@@ -1,6 +1,10 @@
 ﻿using System;
+using System.DirectoryServices.AccountManagement;
+using System.Linq;
+using System.Security.Principal;
 using Database;
 using Database.Models;
+using Microsoft.Win32;
 using REST;
 using Service.Profile;
 using System.Collections.Generic;
@@ -22,6 +26,68 @@ namespace Service
         {
             DbClient = new DatabaseManager("settings", "myPass");
             RestS = new RestService(RestServer, Api);
+            ComputerManager = new ComputerManager();
+            SystemEvents.SessionSwitch += Switch;
+        }
+
+        public void Switch(object sender, SessionSwitchEventArgs sessionSwitchEventArgs)
+        {
+            sender = (SystemEvents) sender;
+            string username;
+            List<Account> accounts;
+            Account account;
+            switch (sessionSwitchEventArgs.Reason)
+            {
+                case SessionSwitchReason.ConsoleConnect:
+                    break;
+                case SessionSwitchReason.ConsoleDisconnect:
+                    break;
+                case SessionSwitchReason.RemoteConnect:
+                    //
+                    username = WindowsIdentity.GetCurrent().User.Value;
+                    accounts = ComputerManager.GetAccounts();
+                    account = accounts.First(a => a.Username == username);
+                    if(account.Tracking)
+                        Console.WriteLine("I am watching you {0}", username);
+                    break;
+                case SessionSwitchReason.RemoteDisconnect:
+                    break;
+                case SessionSwitchReason.SessionLogon:
+                    //
+                    var useranme = WindowsIdentity.GetCurrent().User;
+                    break;
+                case SessionSwitchReason.SessionLogoff:
+                    break;
+                case SessionSwitchReason.SessionLock:
+                    break;
+                case SessionSwitchReason.SessionUnlock:
+                    //
+                    username = Environment.UserName;
+                    Console.WriteLine("Looking for: {0}", username);
+                    accounts = ComputerManager.GetAccounts();
+                    account = accounts.FirstOrDefault(a => a.Username == username);
+                    if (account != null)
+                    {
+                        if (account.Tracking)
+                        {
+                            Console.WriteLine("I am watching you {0}", username);
+                        }
+                        else
+                        {
+                            Console.WriteLine(account.Tracking);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No account found");
+                    }
+
+                        break;
+                case SessionSwitchReason.SessionRemoteControl:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
         #region Rest
         public User GetRestUser(string token)

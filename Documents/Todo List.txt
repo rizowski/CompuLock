@@ -76,8 +76,8 @@ Week 7:
 						- |Done| By Account Id
 				Modifications:
 					Account: 
-						- Have some sort of admin field.
-						- Need to have some sort of date ranges
+						- |Done| Have some sort of admin field.
+						- |Done| Need to have some sort of date ranges
 				Additions:
 					Restrictions:
 						- |Done| Create Table
@@ -92,3 +92,4 @@ Week 7:
 			Todo:
 				- When an object is parsed from REST and there is an error.
 					- Try to parse it into an error object.
+					- Might not be needed. or possible.

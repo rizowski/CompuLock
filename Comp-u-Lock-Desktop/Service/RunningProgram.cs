@@ -40,11 +40,14 @@ namespace Service
             /*Console.WriteLine("\nRun ProgramManager");
             RunProgramManager();*/
 
-            Console.WriteLine("\nRun InfoGatherer");
-            RunInfoGatherer();
+            /*Console.WriteLine("\nRun InfoGatherer");
+            RunInfoGatherer();*/
 
             /*Console.WriteLine("\n Run Rest");
             RunREST();*/
+
+            Console.WriteLine("Runing Program");
+            MainServicer();
             Console.Read();
 
         }
@@ -385,6 +388,10 @@ namespace Service
             //RunInfoGatherer();
         }
 
-
+        public static void MainServicer()
+        {
+            MainService s = new MainService();
+            
+        }
     }
 }

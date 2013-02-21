@@ -21,10 +21,7 @@ namespace CompuLockDesktop
 
         private void OnOpen(object sender, EventArgs e)
         {
-            //Get User
-            //Get computers
-            //get accounts
-            //
+            
         }
 
         private void SettingsClick(object sender, RoutedEventArgs e)

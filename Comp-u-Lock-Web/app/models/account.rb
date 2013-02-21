@@ -22,6 +22,7 @@ class Account < ActiveRecord::Base
       domain: domain,
       username: username,
       tracking: tracking,
+      admin: admin,
       
       account_history_attributes: account_history,
       account_program_attributes: account_program,
