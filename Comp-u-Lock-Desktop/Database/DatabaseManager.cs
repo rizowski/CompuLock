@@ -45,7 +45,7 @@ namespace Database
         public DatabaseManager(string path, string pass)
         {
             DbPassword = pass;
-            var DbPath = path + ".sqlite";
+            DbPath = path + ".sqlite";
             DbExists = File.Exists(DbPath);
             if (File.Exists(DbPath))
             {

@@ -23,7 +23,7 @@ namespace Database.Models
         [JsonProperty(PropertyName = "username")]
         public string Username { get; set; }
 
-        [JsonProperty(PropertyName = "admin")]
+        [JsonProperty(PropertyName = "admin", NullValueHandling = NullValueHandling.Ignore)]
         public bool Admin { get; set; }
 
         [JsonProperty(PropertyName = "tracking")]

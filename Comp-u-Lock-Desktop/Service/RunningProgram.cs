@@ -40,11 +40,11 @@ namespace Service
             /*Console.WriteLine("\nRun ProgramManager");
             RunProgramManager();*/
 
-            /*Console.WriteLine("\nRun InfoGatherer");
-            RunInfoGatherer();*/
+            Console.WriteLine("\nRun InfoGatherer");
+            RunInfoGatherer();
 
-            Console.WriteLine("\n Run Rest");
-            RunREST();
+            /*Console.WriteLine("\n Run Rest");
+            RunREST();*/
             Console.Read();
 
         }
@@ -207,8 +207,8 @@ namespace Service
 
         public static void RunInfoGatherer()
         {
-            var authToken = "8yVDgBHzFfUqwqpymuVv";
-            var server = "http://rizowski-capstone.herokuapp.com/";
+            var authToken = "xgkjm1RcG8xpkNNMXpVq";
+            var server = "http://localhost:3000";
             var api = "api/v1/";
             if(File.Exists("settings.sqlite"))
                 File.Delete("settings.sqlite");

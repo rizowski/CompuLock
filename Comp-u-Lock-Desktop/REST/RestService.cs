@@ -49,8 +49,16 @@ namespace REST
                 Console.WriteLine("Status Code Error: {0}", response.StatusCode);
             Console.WriteLine(response.Content);
             var accountJson = JObject.Parse(response.Content);
-            //TRY Parse into ERROR
-            var account = JsonConvert.DeserializeObject<Account>(accountJson["account"].ToString());
+            Account account = null;
+            try
+            {
+                account = JsonConvert.DeserializeObject<Account>(accountJson["account"].ToString());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            
             return account;
         }
 
@@ -66,8 +74,16 @@ namespace REST
                 Console.WriteLine("Status Code Error: {0}", response.StatusCode);
             Console.WriteLine(response.Content);
             var accountJson = JObject.Parse(response.Content);
-            //TRY Parse into ERROR
-            var account = JsonConvert.DeserializeObject<Account>(accountJson["account"].ToString());
+            Account account = null;
+            try
+            {
+                account = JsonConvert.DeserializeObject<Account>(accountJson["account"].ToString());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            
             return account;
         }
 
@@ -79,7 +95,16 @@ namespace REST
             if (response.StatusCode != HttpStatusCode.OK)
                 Console.WriteLine("Status Code Error: {0}", response.StatusCode);
             var account = JObject.Parse(response.Content);
-            var accounts = JsonConvert.DeserializeObject<List<Account>>(account["accounts"].ToString());
+            IEnumerable<Account> accounts = null;
+            try
+            {
+                accounts = JsonConvert.DeserializeObject<List<Account>>(account["accounts"].ToString());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            
             return accounts;
         }
 
@@ -165,7 +190,16 @@ namespace REST
                 Console.WriteLine("Status Code Error: {0}", response.StatusCode);
             Console.WriteLine(response.Content);
             var compjson = JObject.Parse(response.Content);
-            var comp = JsonConvert.DeserializeObject<Computer>(compjson[ComputerKey].ToString());
+            Computer comp = null;
+            try
+            {
+                comp = JsonConvert.DeserializeObject<Computer>(compjson[ComputerKey].ToString());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            
             return comp;
         }
 
@@ -180,7 +214,15 @@ namespace REST
                 Console.WriteLine("Status Code Error: {0}", response.StatusCode);
             Console.WriteLine(response.Content);
             var compjson = JObject.Parse(response.Content);
-            var comp = JsonConvert.DeserializeObject<Computer>(compjson[ComputerKey].ToString());
+            Computer comp = null;
+            try
+            {
+                comp = JsonConvert.DeserializeObject<Computer>(compjson[ComputerKey].ToString());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
             return comp;
         }
 
@@ -192,7 +234,15 @@ namespace REST
             if (response.StatusCode != HttpStatusCode.OK)
                 Console.WriteLine("Status Code Error: {0}", response.StatusCode);
             var comp = JObject.Parse(response.Content);
-            var comps = JsonConvert.DeserializeObject<List<Computer>>(comp["computers"].ToString());
+            IEnumerable<Computer> comps = null;
+            try
+            {
+                comps = JsonConvert.DeserializeObject<List<Computer>>(comp["computers"].ToString());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
             return comps;
         }
 
@@ -212,105 +262,5 @@ namespace REST
             Console.WriteLine(response.Content);
         }
 #endregion
-
-    #region Processes
-        //TODO Processes
-        public Process CreateProcess(string token, Process proc)
-        {
-            if (proc.AccountId <= 0)
-                throw new AggregateException("Account Id needs to be present");
-            var request = new RestRequest(ApiPath + ProcessPath, Method.POST);
-            request.AddParameter(Auth, token);
-            var json = proc.ToJSON();
-            request.AddParameter("process", json);
-            var response = Client.Execute(request);
-            if (response.StatusCode != HttpStatusCode.OK)
-                Console.WriteLine("Status Code Error: {0}", response.StatusCode);
-            Console.WriteLine(response.Content);
-            var processjson = JObject.Parse(response.Content);
-            var process = JsonConvert.DeserializeObject<Process>(processjson[ProcessKey].ToString());
-            return process;
-        }
-
-        public Process UpdateProcess(string token)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Process> GetAllProcessesByAccount(string token)
-        {
-            //TODO MAY NOT BE AVAILABLE
-            throw new NotImplementedException();
-        } 
-
-        public Process GetProcessById()
-        {
-            throw new NotImplementedException();
-        }
-    #endregion
-
-        #region History
-        //TODO Histroy
-        public History CreateHistory(string token)
-        {
-            throw new NotImplementedException();
-        }
-
-        public History UpdateHistory(string token)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<History> GetAllHistoriesByAccount(string token)
-        {
-            //TODO MAY NOT BE AVAILABLE
-            throw new NotImplementedException();
-        }
-
-        public History GetHistoryById(string token)
-        {
-            throw new NotImplementedException();
-        }
-        #endregion
-
-        #region Program
-        //TODO Programs
-        public Program CreateProgram(string token, Program prog)
-        {
-            if (prog.AccountId == 0)
-                throw new ArgumentException("Program must have an account Id");
-            var request = new RestRequest(ApiPath + ProgramPath, Method.POST);
-            request.AddParameter(Auth, token);
-            var json = prog.ToJSON();
-            request.AddParameter("program", json);
-            var response = Client.Execute(request);
-            if (response.StatusCode != HttpStatusCode.OK)
-                Console.WriteLine("Status Code Error: {0}", response.StatusCode);
-            Console.WriteLine(response.Content);
-            var programjson = JObject.Parse(response.Content);
-            var program = JsonConvert.DeserializeObject<Program>(programjson[ProgramKey].ToString());
-            return program;
-        }
-
-        public Program UpdateProgram(string token, Program prog)
-        {
-            var request = new RestRequest(ApiPath + ProgramPath + prog.WebId, Method.PUT);
-            request.AddParameter(Auth, token);
-            var json = prog.ToJSON();
-            request.AddParameter("program", json);
-            var response = Client.Execute(request);
-            if (response.StatusCode != HttpStatusCode.OK)
-                Console.WriteLine("Status Code Error: {0}", response.StatusCode);
-            Console.WriteLine(response.Content);
-            var compjson = JObject.Parse(response.Content);
-            var comp = JsonConvert.DeserializeObject<Program>(compjson[ProgramKey].ToString());
-            return comp;
-        }
-
-        public Program GetProgramById(string token)
-        {
-            throw new NotImplementedException();
-        }
-        #endregion
     }
 }
