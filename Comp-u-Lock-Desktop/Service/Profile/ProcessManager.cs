@@ -14,8 +14,27 @@ namespace Service.Profile
 
         public ProcessManager()
         {
-            
+            ManagementEventWatcher startWatch = new ManagementEventWatcher(new WqlEventQuery("SELECT * FROM Win32_ProcessStartTrace"));
+            startWatch.EventArrived += Start;
+            startWatch.Start();
+
+            ManagementEventWatcher stopWatch = new ManagementEventWatcher(
+      new WqlEventQuery("SELECT * FROM Win32_ProcessStopTrace"));
+            stopWatch.EventArrived
+                                += new EventArrivedEventHandler(Stop);
+            stopWatch.Start();
         }
+
+        private void Stop(object sender, EventArrivedEventArgs e)
+        {
+            Console.WriteLine("Process Stopped: {0}", e.NewEvent.Properties["ProcessName"].Value);
+        }
+
+        private void Start(object sender, EventArrivedEventArgs e)
+        {
+            Console.WriteLine("Process Started: {0}",e.NewEvent.Properties["ProcessName"].Value);
+        }
+        
 
         public Process[] GetProcesses()
         {

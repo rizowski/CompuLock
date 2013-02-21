@@ -2,6 +2,7 @@
 using System.DirectoryServices.AccountManagement;
 using System.Linq;
 using System.Security.Principal;
+using System.Windows;
 using Database;
 using Database.Models;
 using Microsoft.Win32;
@@ -17,7 +18,8 @@ namespace Service
         public DatabaseManager DbClient { get; private set; }
         public AccountManager AccountManager { get; private set; }
         public ComputerManager ComputerManager { get; set; }
-        public REST.RestService RestS { get; set; }
+        public ProcessManager ProcessManager { get; set; }
+        public RestService RestS { get; set; }
 
         private const string RestServer = "http://localhost:3000";
         private const string Api = "api/v1/";
@@ -27,8 +29,11 @@ namespace Service
             DbClient = new DatabaseManager("settings", "myPass");
             RestS = new RestService(RestServer, Api);
             ComputerManager = new ComputerManager();
+            ProcessManager = new ProcessManager();
             SystemEvents.SessionSwitch += Switch;
+           
         }
+
 
         public void Switch(object sender, SessionSwitchEventArgs sessionSwitchEventArgs)
         {

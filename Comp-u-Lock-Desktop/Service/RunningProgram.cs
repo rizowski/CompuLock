@@ -210,7 +210,7 @@ namespace Service
 
         public static void RunInfoGatherer()
         {
-            var authToken = "xgkjm1RcG8xpkNNMXpVq";
+            var authToken = "DNs7qtsM4HaNzJbyzH2N";
             var server = "http://localhost:3000";
             var api = "api/v1/";
             if(File.Exists("settings.sqlite"))
@@ -224,6 +224,8 @@ namespace Service
             RestService rs = new RestService(server, api);
 
             user = rs.GetUser(user.AuthToken);
+            if (user == null)
+                Console.WriteLine("Error with User");
             try
             {
                 dc.SaveUser(user);

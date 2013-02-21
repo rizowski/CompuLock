@@ -1,7 +1,7 @@
 class Day < ActiveRecord::Base
 	attr_accessible :restriction_id, :hour_attributes
 
-	has_many :days
+	has_many :hour
 
 	accepts_nested_attributes_for :hour
   	

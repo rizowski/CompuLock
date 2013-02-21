@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(:version => 20130220064805) do
     t.string   "domain",        :default => "",    :null => false
     t.string   "username",                         :null => false
     t.boolean  "tracking",      :default => false, :null => false
+    t.boolean  "admin",         :default => false
     t.time     "allotted_time"
     t.time     "used_time"
     t.datetime "created_at",                       :null => false

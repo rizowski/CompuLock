@@ -1,7 +1,7 @@
 class Restriction < ActiveRecord::Base
 	attr_accessible :account_id, :day_attributes
 
-	has_many :days, :dependent => :destroy
+	has_many :day, :dependent => :destroy
 
 	accepts_nested_attributes_for :day
 	

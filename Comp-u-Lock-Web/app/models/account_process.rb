@@ -9,7 +9,7 @@ class AccountProcess < ActiveRecord::Base
     {
       id: id,
       name: name,
-      open_count: open_count,
+      
       created_at: created_at,
       update_at: updated_at
 
