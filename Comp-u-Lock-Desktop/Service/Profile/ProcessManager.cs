@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Management;
+using Database;
 using Database.Models;
 using Process = System.Diagnostics.Process;
 
@@ -11,6 +12,7 @@ namespace Service.Profile
     {
         private const int DOMAIN = 1;
         private const int USERNAME = 0;
+        private DatabaseManager DbManager;
 
         public ProcessManager()
         {
@@ -18,11 +20,11 @@ namespace Service.Profile
             startWatch.EventArrived += Start;
             startWatch.Start();
 
-            ManagementEventWatcher stopWatch = new ManagementEventWatcher(
-      new WqlEventQuery("SELECT * FROM Win32_ProcessStopTrace"));
-            stopWatch.EventArrived
-                                += new EventArrivedEventHandler(Stop);
+            ManagementEventWatcher stopWatch = new ManagementEventWatcher(new WqlEventQuery("SELECT * FROM Win32_ProcessStopTrace"));
+            stopWatch.EventArrived += Stop;
             stopWatch.Start();
+
+            DbManager = new DatabaseManager("settings", "myPass");
         }
 
         private void Stop(object sender, EventArrivedEventArgs e)
@@ -32,6 +34,13 @@ namespace Service.Profile
 
         private void Start(object sender, EventArrivedEventArgs e)
         {
+            var accounts = DbManager.GetAccounts();
+            var account = accounts.First(a => a.Username == Environment.UserName);
+            DbManager.SaveProcess(new Database.Models.Process
+            {
+                AccountId = account.Id,
+                Name = (string)e.NewEvent.Properties["ProcessName"].Value
+            });
             Console.WriteLine("Process Started: {0}",e.NewEvent.Properties["ProcessName"].Value);
         }
         

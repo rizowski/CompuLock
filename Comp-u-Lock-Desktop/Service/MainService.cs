@@ -31,13 +31,12 @@ namespace Service
             ComputerManager = new ComputerManager();
             ProcessManager = new ProcessManager();
             SystemEvents.SessionSwitch += Switch;
-           
+            
         }
 
 
         public void Switch(object sender, SessionSwitchEventArgs sessionSwitchEventArgs)
         {
-            sender = (SystemEvents) sender;
             string username;
             List<Account> accounts;
             Account account;
@@ -86,8 +85,7 @@ namespace Service
                     {
                         Console.WriteLine("No account found");
                     }
-
-                        break;
+                    break;
                 case SessionSwitchReason.SessionRemoteControl:
                     break;
                 default:

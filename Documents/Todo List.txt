@@ -22,7 +22,7 @@ Week 7:
 				History:
 					- |Done| Last Visited needs to be removed
 			Errors: 
-				- Fix any errors with Removing Last Visited and opened
+				- |Done| Fix any errors with Removing Last Visited and opened
 		Desktop:
 			REST 2.0:
 				User:
@@ -93,3 +93,14 @@ Week 7:
 				- When an object is parsed from REST and there is an error.
 					- Try to parse it into an error object.
 					- Might not be needed. or possible.
+
+Things Accomplished:
+	- Solved Processes Problem
+		- Ruby/Rails Language problem
+		- Class reference Problem
+	- Added Account Admin field	
+	- Added User time Constraint classes
+	- Fixed REST to update a user
+	- Added Process start/end events
+	- Pushed to Heroku
+	- SQLite injection solved with Parameterized variables

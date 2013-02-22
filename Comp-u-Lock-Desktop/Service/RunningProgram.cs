@@ -48,6 +48,10 @@ namespace Service
 
             Console.WriteLine("Runing Program");
             MainServicer();
+
+            //TODO PRESENT
+            /*Console.WriteLine("Test SQLite Injection");
+            TestSqlInjection();*/
             Console.Read();
 
         }
@@ -206,6 +210,20 @@ namespace Service
             {
                 Console.WriteLine("{0} - {1}", program.OpenCount, program.Name);
             }
+        }
+
+        public static void TestSqlInjection()
+        {
+            DatabaseManager dm = new DatabaseManager("settings", "myPass");
+            var account = new Account
+                {
+                    ComputerId = 2,
+                    Admin = true,
+                    Domain = "Blab",
+                    Username = "; DROP TABLE Accounts;"
+
+                };
+            dm.SaveAccount(account);
         }
 
         public static void RunInfoGatherer()

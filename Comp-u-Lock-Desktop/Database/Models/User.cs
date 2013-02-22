@@ -19,8 +19,6 @@ namespace Database.Models
 
         [JsonProperty(PropertyName = "computer_attributes", NullValueHandling = NullValueHandling.Ignore)]
         public List<Computer> Computers { get; set; }
-        [JsonProperty(PropertyName = "restriction_attributes", NullValueHandling = NullValueHandling.Ignore)]
-        public List<Restriction> Restrictions { get; set; }
         [JsonIgnore]
         public string AuthToken { get; set; }
 

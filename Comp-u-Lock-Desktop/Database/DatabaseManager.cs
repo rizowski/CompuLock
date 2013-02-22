@@ -79,10 +79,10 @@ namespace Database
 
         public void CreateTables()
         {
-            Console.WriteLine("Creating tables");
+            Console.Write("Creating tables");
             const string user = CreateTable + UsersTable + "(Id integer primary key asc, WebId integer, Username varchar(255), Email varchar(255), AuthToken varchar(255), CreatedAt datetime, UpdatedAt datetime, unique(Email, AuthToken) on conflict replace)";
             ExecuteQuery(user);
-            Console.Write("Creating.");
+            Console.Write(".");
             const string computer = CreateTable + ComputersTable + "(Id integer primary key asc, WebId integer, UserId integer, Enviroment varchar(50), Name varchar(50) unique on conflict replace, IpAddress varchar(16), CreatedAt datetime, UpdatedAt datetime)";
             ExecuteQuery(computer);
             Console.Write(".");
