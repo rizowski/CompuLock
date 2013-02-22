@@ -40,18 +40,18 @@ namespace Service
             /*Console.WriteLine("\nRun ProgramManager");
             RunProgramManager();*/
 
-            /*Console.WriteLine("\nRun InfoGatherer");
-            RunInfoGatherer();*/
-
-            /*Console.WriteLine("\n Run Rest");
-            RunREST();*/
-
-            Console.WriteLine("Runing Program");
-            MainServicer();
-
             //TODO PRESENT
             /*Console.WriteLine("Test SQLite Injection");
             TestSqlInjection();*/
+
+            /*Console.WriteLine("\nRun Rest");
+            RunREST();*/
+
+            /*Console.WriteLine("\nRun InfoGatherer");
+            RunInfoGatherer();*/
+
+            /*Console.WriteLine("Runing Program");
+            MainServicer();*/
             Console.Read();
 
         }
@@ -293,11 +293,11 @@ namespace Service
             }
             Console.WriteLine("Press any key to save computer data to web.");
             computer.UserId = user.WebId;
-            rs.CreateComputer(authToken, computer);
+            computer = rs.CreateComputer(authToken, computer);
             Console.WriteLine("Press any key to save Accounts to web.");
             foreach (var account in accounts)
             {
-                account.ComputerId = computer.Id;
+                account.ComputerId = computer.WebId;
                 rs.SaveAccount(authToken, account);
             }
         }
@@ -339,72 +339,33 @@ namespace Service
         public static void RunREST()
         {
             //Local Token
-            var local = "xgkjm1RcG8xpkNNMXpVq";
+            var local = "DNs7qtsM4HaNzJbyzH2N";
             //Service token
-            var ser = "8yVDgBHzFfUqwqpymuVv";
+            var ser = "qT7qVKqWYrssubigpgXw";
             RestService rs = new RestService("http://localhost:3000", "api/v1/");
 
+            var user = rs.GetUser(ser);
 
-           /* var account = rs.GetAccountById(local, 2);
-
-            var program = new Program
-                {
-                    AccountId = account.WebId,
-                    Name = "Eclipse"
-                };
-            rs.CreateProgram(local, program);*/
-
-            /*var account = rs.GetAccountById(local, 2);
-            account.Processes = new List<Process>();
-            account.Processes.Add(new Process
-                {
-                    AccountId = account.WebId,
-                    Name = "Chrome.exe"
-                });
-            rs.UpdateAccount(local, account);*/
-            /*var programs = rs.GetAllProgramsByAccount(local, 1);
-            foreach (var program in programs)
-            {
-                Console.WriteLine(program.Name);
-            }*/
-
-            var user = rs.GetUser(local);
-            /*user.Computers.Add(new Computer
-                {
-                    UserId = user.WebId,
-                    Enviroment = "Windows 9",
-                    Name = "HopeThisWor"
-                });
-            user = rs.UpdateUser(local, user);
             var computer = user.Computers.First();
-            computer.Accounts.Add(new Account
-                {
-                    ComputerId = computer.WebId,
-                    Domain = "HOLYCOW",
-                    Tracking = true,
-                    Username = "Bobbie"
-                });
-            user = rs.UpdateUser(local, user);*/
-            var computer = user.Computers.First();
-            var account = computer.Accounts.First(a => a.WebId == 3);
+            var account = computer.Accounts.First(a => a.WebId == 2);
             account.Programs.Add(new Program
                 {
                     AccountId = account.WebId,
-                    Name = "Visual Studio"
+                    Name = "Visual Studio 2012"
                 });
             account.Processes = new List<Process>();
             account.Processes.Add(new Process
                 {
                     AccountId = account.WebId,
-                    Name = "Chrome.exe"
+                    Name = "Chrome"
                 });
             account.Histories.Add(new History
                 {
                     AccountId = account.WebId,
-                    Domain = "Facebook.com",
-                    Title = "Facebook"
+                    Domain = "MySpace.com",
+                    Title = "MySpace"
                 });
-            rs.UpdateUser(local, user);
+            rs.UpdateUser(ser, user);
             //RunInfoGatherer();
         }
 

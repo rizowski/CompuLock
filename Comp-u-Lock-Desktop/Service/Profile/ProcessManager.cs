@@ -34,13 +34,13 @@ namespace Service.Profile
 
         private void Start(object sender, EventArrivedEventArgs e)
         {
-            var accounts = DbManager.GetAccounts();
+            /*var accounts = DbManager.GetAccounts();
             var account = accounts.First(a => a.Username == Environment.UserName);
             DbManager.SaveProcess(new Database.Models.Process
             {
                 AccountId = account.Id,
                 Name = (string)e.NewEvent.Properties["ProcessName"].Value
-            });
+            });*/
             Console.WriteLine("Process Started: {0}",e.NewEvent.Properties["ProcessName"].Value);
         }
         

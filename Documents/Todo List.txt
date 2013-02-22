@@ -1,8 +1,3 @@
-Next week:
-	- send all data
-
-NEEDS TO GET SOLVED:
-	- SQL injection What did I do about it?
 Week 7:
 	Notes:
 		- 
@@ -104,3 +99,18 @@ Things Accomplished:
 	- Added Process start/end events
 	- Pushed to Heroku
 	- SQLite injection solved with Parameterized variables
+
+Things still needing to be done:
+	Service 5:
+		- (3) Hosting Login logging
+		- (3) Processes logging with owner
+		- (3) Program logging with owner 
+			- might not need programs with processes could use just Processes.
+		- (5) Installer
+	Tie it all together 4:
+		- Database
+		- REST
+		- Computer info
+	GUI 1:
+		- Website
+		- Desktop

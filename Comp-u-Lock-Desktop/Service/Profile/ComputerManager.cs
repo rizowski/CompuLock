@@ -38,7 +38,6 @@ namespace Service.Profile
                         Domain = Environment.UserDomainName,
                         Username = member.Name,
                         Tracking = false
-                        //TODO some sort of admin field
                     });
             }
             return list;
