@@ -50,8 +50,8 @@ namespace Service
             /*Console.WriteLine("\nRun InfoGatherer");
             RunInfoGatherer();*/
 
-            /*Console.WriteLine("Runing Program");
-            MainServicer();*/
+            Console.WriteLine("Runing Program");
+            MainServicer();
             Console.Read();
 
         }

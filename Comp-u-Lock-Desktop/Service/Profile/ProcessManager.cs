@@ -20,31 +20,28 @@ namespace Service.Profile
             startWatch.EventArrived += Start;
             startWatch.Start();
 
-            ManagementEventWatcher stopWatch = new ManagementEventWatcher(new WqlEventQuery("SELECT * FROM Win32_ProcessStopTrace"));
-            stopWatch.EventArrived += Stop;
-            stopWatch.Start();
-
             DbManager = new DatabaseManager("settings", "myPass");
-        }
-
-        private void Stop(object sender, EventArrivedEventArgs e)
-        {
-            Console.WriteLine("Process Stopped: {0}", e.NewEvent.Properties["ProcessName"].Value);
         }
 
         private void Start(object sender, EventArrivedEventArgs e)
         {
-            /*var accounts = DbManager.GetAccounts();
-            var account = accounts.First(a => a.Username == Environment.UserName);
-            DbManager.SaveProcess(new Database.Models.Process
+            var userAccount = GetProcessOwner(Convert.ToInt32(e.NewEvent.Properties["ProcessID"].Value));
+            if (userAccount != null)
             {
-                AccountId = account.Id,
-                Name = (string)e.NewEvent.Properties["ProcessName"].Value
-            });*/
-            Console.WriteLine("Process Started: {0}",e.NewEvent.Properties["ProcessName"].Value);
+                if (userAccount.Tracking)
+                {
+                    Logger.Write("User is being tracked " + userAccount.Username);
+                    var name = e.NewEvent.Properties["ProcessName"].Value;
+                    Console.WriteLine("Saving PRocess {0} For {1}", name, userAccount.Username);
+                    DbManager.SaveProcess(new Database.Models.Process
+                        {
+                            AccountId = userAccount.Id,
+                            Name = Convert.ToString(name)
+                        });
+                }
+            }
         }
         
-
         public Process[] GetProcesses()
         {
             Process[] all = Process.GetProcesses();
@@ -162,6 +159,31 @@ namespace Service.Profile
                 }
             }
             return proceses;
+        }
+
+        public Account GetProcessOwner(int processId)
+        {
+            string query = "Select * From Win32_Process Where ProcessID = " + processId;
+            ManagementObjectSearcher searcher = new ManagementObjectSearcher(query);
+            ManagementObjectCollection processList = searcher.Get();
+
+            foreach (ManagementObject obj in processList)
+            {
+                string[] argList = new string[] { string.Empty, string.Empty };
+                try
+                {
+                    int returnVal = Convert.ToInt32(obj.InvokeMethod("GetOwner", argList));
+                    if (returnVal == 0)
+                    {
+                        return DbManager.GetAccountByName(argList[0]);
+                        //return argList[1] + "\\" + argList[0];
+                    }
+                }
+                catch (Exception)
+                {
+                }
+            }
+            return null;
         }
     }
 }

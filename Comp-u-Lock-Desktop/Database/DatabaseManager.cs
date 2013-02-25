@@ -79,37 +79,36 @@ namespace Database
 
         public void CreateTables()
         {
-            Console.Write("Creating tables");
+            Logger.Write("Creating Tables");
+            Logger.Write("Createing UserTable");
             const string user = CreateTable + UsersTable + "(Id integer primary key asc, WebId integer, Username varchar(255), Email varchar(255), AuthToken varchar(255), CreatedAt datetime, UpdatedAt datetime, unique(Email, AuthToken) on conflict replace)";
             ExecuteQuery(user);
-            Console.Write(".");
+            Logger.Write("Createing ComputerTable");
             const string computer = CreateTable + ComputersTable + "(Id integer primary key asc, WebId integer, UserId integer, Enviroment varchar(50), Name varchar(50) unique on conflict replace, IpAddress varchar(16), CreatedAt datetime, UpdatedAt datetime)";
             ExecuteQuery(computer);
-            Console.Write(".");
+            Logger.Write("Createing AcountsTable");
             const string account = CreateTable + AccountsTable + "(Id integer primary key asc, WebId integer, ComputerId integer, Domain varchar(50), Username varchar(50), Tracking bool, AllottedTime integer, UsedTime integer, CreatedAt datetime, UpdatedAt datetime, unique(Domain, Username) on conflict replace)";
             ExecuteQuery(account);
-            Console.Write(".");
+            Logger.Write("Createing HistoryTable");
             const string accountHistory = CreateTable + HistoryTable + "(Id integer primary key asc, WebId integer, AccountId integer, Title varchar(150), Domain varchar(150), Url varchar(300), VisitCount integer, CreatedAt datetime, UpdatedAt datetime, unique(AccountId, Domain, Url) on conflict replace)";
             ExecuteQuery(accountHistory);
-            Console.Write(".");
+            Logger.Write("Createing ProcessTable");
             const string accountProcess = CreateTable + ProcessTable + "(Id integer primary key asc, WebId integer, AccountId integer, Name varchar(100), CreatedAt datetime, UpdatedAt datetime, unique(AccountId, Name) on conflict replace)";
             ExecuteQuery(accountProcess);
-            Console.Write(".");
+            Logger.Write("Createing ProgramTable");
             const string accountProgram = CreateTable + ProgramTable + "(Id integer primary key asc, WebId integer, AccountId integer, Name varchar(100), OpenCount integer, CreatedAt datetime, UpdatedAt datetime, unique(AccountId, Name) on conflict replace)";
             ExecuteQuery(accountProgram);
-            Console.Write(".");
 
+            Logger.Write("Createing RestrictionTable");
             const string restriction = CreateTable + RestrictionTable + "(Id integer primary key asc, WebId integer, AccountId integer, unique(Id, AccountId) on conflict replace)";
             ExecuteQuery(restriction);
-            Console.Write(".");
+            Logger.Write("Createing DayTable");
             const string day = CreateTable + DayTable + "(Id integer primary key asc, WebId integer, RestrictionId integer, unique(Id, RestrictionId) on conflict replace)";
             ExecuteQuery(day);
-            Console.Write(".");
+            Logger.Write("Createing HourTable");
             const string hour = CreateTable + HourTable + "(Id integer primary key asc, WebId integer, DayId integer, unique(Id, DayId) on conflict replace)";
             ExecuteQuery(hour);
-            Console.Write(".\n");
-
-            Console.WriteLine("Done creating tables");
+            Logger.Write("Done Creating Database Tables");
         }
         public void ExecuteQuery(string query)
         {
@@ -184,7 +183,7 @@ namespace Database
             if(user == null)
                 throw new NoNullAllowedException("User can't be null");
             StringBuilder sb = new StringBuilder();
-            Console.WriteLine("Saving a User.");
+            Logger.Write("Saving a User");
             sb.Append(InsertInto);
             sb.Append(UsersTable);
             sb.Append("(Username, Email, AuthToken, CreatedAt, UpdatedAt)");
@@ -198,11 +197,10 @@ namespace Database
                 command.Parameters.Add(new SQLiteParameter("@createdAt", DateTime.Now));
                 command.Parameters.Add(new SQLiteParameter("@updatedAt", DateTime.Now));
             DbConnection.Open();
-            Console.WriteLine("Sql line using: {0}", sb);
+            Logger.Write(sb.ToString());
             command.ExecuteNonQuery();
             DbConnection.Close();
-            Console.WriteLine("Done writing User.");
-            Console.WriteLine("Getting user.");
+            Logger.Write("Done Writing User");
             return GetUser();
         }
 
@@ -211,7 +209,7 @@ namespace Database
             if (comp == null)
                 throw new NoNullAllowedException("Computer can't be null");
             StringBuilder sb = new StringBuilder();
-            Console.WriteLine("Saving a computer.");
+            Logger.Write("Saving a Computer");
             sb.Append(InsertInto);
             sb.Append(ComputersTable);
             sb.Append("(UserId, Name, Enviroment, IpAddress, CreatedAt, UpdatedAt)");
@@ -226,11 +224,10 @@ namespace Database
                 command.Parameters.Add(new SQLiteParameter("@createdAt", DateTime.Now));
                 command.Parameters.Add(new SQLiteParameter("@updatedAt", DateTime.Now));
             DbConnection.Open();
-            Console.WriteLine("Sql line using: {0}", sb);
+            Logger.Write(sb.ToString());
             command.ExecuteNonQuery();
             DbConnection.Close();
-            Console.WriteLine("Done writing Computer.");
-            Console.WriteLine("Getting Computer");
+            Logger.Write("Done Saving a computer");
             return GetComputer();
         }
 
@@ -241,7 +238,7 @@ namespace Database
             if (account.ComputerId <= 0)
                 throw new ArgumentException("Computer Id is required.");
             StringBuilder sb = new StringBuilder();
-            Console.WriteLine("Saving an account.");
+            Logger.Write("Saving an account");
             sb.Append(InsertInto);
             sb.Append(AccountsTable);
             sb.Append("(ComputerId, Domain, Username, Tracking, AllottedTime, UsedTime, CreatedAt, UpdatedAt) ");
@@ -258,11 +255,10 @@ namespace Database
                 command.Parameters.Add(new SQLiteParameter("@createdAt", DateTime.Now));
                 command.Parameters.Add(new SQLiteParameter("@updatedAt", DateTime.Now));
             DbConnection.Open();
-            Console.WriteLine("Sql line using: {0}", sb);
+            Logger.Write(sb.ToString());
             command.ExecuteNonQuery();
             DbConnection.Close();
-            Console.WriteLine("Done writing Account.");
-            Console.WriteLine("Getting Account.");
+            Logger.Write("Done Saving an Account");
             var savedAccount = GetAccounts().First(a => a.Username == account.Username);
             return savedAccount;
         }
@@ -272,7 +268,7 @@ namespace Database
             if (history == null)
                 throw new NoNullAllowedException("History Object can't be null");
             StringBuilder sb = new StringBuilder();
-            Console.WriteLine("Saving a History.");
+            Logger.Write("Saving History");
             sb.Append(InsertInto);
             sb.Append(HistoryTable);
             sb.Append("(AccountId, Title, Domain, Url, VisitCount, CreatedAt, UpdatedAt)");
@@ -288,10 +284,10 @@ namespace Database
                 command.Parameters.Add(new SQLiteParameter("@createdAt", DateTime.Now));
                 command.Parameters.Add(new SQLiteParameter("@updatedAt", DateTime.Now));
             DbConnection.Open();
-            Console.WriteLine("Sql line using: {0}", sb);
+            Logger.Write(sb.ToString());
             command.ExecuteNonQuery();
-            DbConnection.Close();
-            Console.WriteLine("Done writing History.");
+            DbConnection.Close(); 
+            Logger.Write("Done writing history");
             var savedHistory = GetHistories().First(h => h.AccountId == history.AccountId && h.Domain == history.Domain);
             return savedHistory;
         }
@@ -300,8 +296,10 @@ namespace Database
         {
             if (process == null)
                 throw new NoNullAllowedException("Process object can't be null");
+            if (process.AccountId <= 0)
+                throw new ArgumentException("AccountId needs to be specified.");
             StringBuilder sb = new StringBuilder();
-            Console.WriteLine("Saving a Process.");
+            Logger.Write("Saving a Process");
             sb.Append(InsertInto);
             sb.Append(ProcessTable);
             sb.Append("(AccountId, Name, CreatedAt, UpdatedAt)");
@@ -314,11 +312,10 @@ namespace Database
                 command.Parameters.Add(new SQLiteParameter("@createdAt", DateTime.Now));
                 command.Parameters.Add(new SQLiteParameter("@updatedAt", DateTime.Now));
             DbConnection.Open();
-            Console.WriteLine("Sql line using: {0}", sb);
+            Logger.Write(sb.ToString());
             command.ExecuteNonQuery();
             DbConnection.Close();
-            Console.WriteLine("Done writing Process.");
-            Console.WriteLine("Getting Process");
+            Logger.Write("Done writing Process");
             var savedProcess = GetProcesses().First(p => p.AccountId == process.AccountId && p.Name == process.Name);
             return savedProcess;
         }
@@ -328,7 +325,7 @@ namespace Database
             if (program == null)
                 throw new NoNullAllowedException("Program object can't be null");
             StringBuilder sb = new StringBuilder();
-            Console.WriteLine("Saving a Program.");
+            Logger.Write("Saving a Program");
             sb.Append(InsertInto);
             sb.Append(ProgramTable);
             sb.Append("(AccountId, Name, OpenCount, CreatedAt, UpdatedAt)");
@@ -342,11 +339,10 @@ namespace Database
                 command.Parameters.Add(new SQLiteParameter("@createdAt", DateTime.Now));
                 command.Parameters.Add(new SQLiteParameter("@updatedAt", DateTime.Now));
             DbConnection.Open();
-            Console.WriteLine("Sql line using: {0}", sb);
+            Logger.Write(sb.ToString());
             command.ExecuteNonQuery();
             DbConnection.Close();
-            Console.WriteLine("Done writing Program.");
-            Console.WriteLine("Getting Program");
+            Logger.Write("Done Writing a Program");
             var savedProgram = GetPrograms().First(p => p.AccountId == program.AccountId && p.Name == program.Name);
             return savedProgram;
         }
@@ -431,16 +427,16 @@ namespace Database
             List<Process> list = new List<Process>();
             StringBuilder sb = new StringBuilder();
             sb.Append(SelectAll);
-            sb.Append(AccountsTable);
+            sb.Append(ProcessTable);
             DbConnection.Open();
             var reader = new SQLiteCommand(sb.ToString(), DbConnection).ExecuteReader();
             while (reader.Read())
             {
                 list.Add(new Process
                     {
-                        Id = Convert.ToInt32(reader["Id"]),
+                        Id =        Convert.ToInt32(reader["Id"]),
                         AccountId = Convert.ToInt32(reader["AccountId"]),
-                        Name = (string) reader["Name"],
+                        Name =      Convert.ToString(reader["Name"]),
                         CreatedAt = Convert.ToDateTime(reader["CreatedAt"]),
                         UpdatedAt = Convert.ToDateTime(reader["UpdatedAt"])
                     });
@@ -491,6 +487,14 @@ namespace Database
         {
             return GetProcesses().Where(p => p.AccountId == accountId);
         }
+        #endregion
+
+        #region byString
+        public Account GetAccountByName(string name)
+        {
+            return GetAccounts().FirstOrDefault(a => a.Username == name);
+        }
+
         #endregion
 
     }

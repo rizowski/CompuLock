@@ -37,9 +37,6 @@ namespace Service
 
         public void Switch(object sender, SessionSwitchEventArgs sessionSwitchEventArgs)
         {
-            string username;
-            List<Account> accounts;
-            Account account;
             switch (sessionSwitchEventArgs.Reason)
             {
                 case SessionSwitchReason.ConsoleConnect:
@@ -47,49 +44,47 @@ namespace Service
                 case SessionSwitchReason.ConsoleDisconnect:
                     break;
                 case SessionSwitchReason.RemoteConnect:
-                    //
-                    username = WindowsIdentity.GetCurrent().User.Value;
-                    accounts = ComputerManager.GetAccounts();
-                    account = accounts.First(a => a.Username == username);
-                    if(account.Tracking)
-                        Console.WriteLine("I am watching you {0}", username);
+                    Check();
                     break;
                 case SessionSwitchReason.RemoteDisconnect:
                     break;
                 case SessionSwitchReason.SessionLogon:
-                    //
-                    var useranme = WindowsIdentity.GetCurrent().User;
+                    Check();
                     break;
                 case SessionSwitchReason.SessionLogoff:
                     break;
                 case SessionSwitchReason.SessionLock:
                     break;
                 case SessionSwitchReason.SessionUnlock:
-                    //
-                    username = Environment.UserName;
-                    Console.WriteLine("Looking for: {0}", username);
-                    accounts = ComputerManager.GetAccounts();
-                    account = accounts.FirstOrDefault(a => a.Username == username);
-                    if (account != null)
-                    {
-                        if (account.Tracking)
-                        {
-                            Console.WriteLine("I am watching you {0}", username);
-                        }
-                        else
-                        {
-                            Console.WriteLine(account.Tracking);
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("No account found");
-                    }
+                    Check();
                     break;
                 case SessionSwitchReason.SessionRemoteControl:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private void Check()
+        {
+            var username = Environment.UserName;
+            Console.WriteLine("Looking for: {0}", username);
+            var accounts = ComputerManager.GetAccounts();
+            var account = accounts.FirstOrDefault(a => a.Username == username);
+            if (account != null)
+            {
+                if (account.Tracking)
+                {
+                    Logger.Write("I am watching you");
+                }
+                else
+                {
+                    Logger.Write("I am not watching you");
+                }
+            }
+            else
+            {
+                Console.WriteLine("No account found");
             }
         }
         #region Rest
