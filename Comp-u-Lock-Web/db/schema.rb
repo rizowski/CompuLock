@@ -11,29 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130220064805) do
-
-  create_table "account_histories", :force => true do |t|
-    t.integer  "account_id"
-    t.string   "domain",      :default => "", :null => false
-    t.string   "url",         :default => "", :null => false
-    t.string   "title",       :default => "", :null => false
-    t.integer  "visit_count", :default => 0,  :null => false
-    t.datetime "created_at",                  :null => false
-    t.datetime "updated_at",                  :null => false
-  end
+ActiveRecord::Schema.define(:version => 20130225215841) do
 
   create_table "account_processes", :force => true do |t|
     t.integer  "account_id"
     t.string   "name",       :default => "", :null => false
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
-  end
-
-  create_table "account_programs", :force => true do |t|
-    t.integer  "account_id"
-    t.string   "name",       :default => "", :null => false
-    t.integer  "open_count", :default => 0,  :null => false
     t.datetime "created_at",                 :null => false
     t.datetime "updated_at",                 :null => false
   end
@@ -63,6 +45,15 @@ ActiveRecord::Schema.define(:version => 20130220064805) do
     t.integer  "restriction_id"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+  end
+
+  create_table "histories", :force => true do |t|
+    t.integer  "computer_id"
+    t.string   "url"
+    t.string   "title"
+    t.integer  "visit_count"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "hours", :force => true do |t|

@@ -1,16 +1,7 @@
 <h1>Account <%=@account.username%></h1>
 Computer Account: <%=@account.username%><br/>
-<span>Programs</span><br/>
-<%@account.account_program.each do |program|%>
-	Program: <%=program.name%><br/>
-<%end%>
 <br/>
 <span>Processes</span><br/>
 <%@account.account_process.each do |process|%>
 	Name: <%=process.name%><br/>
-<%end%>
-<br/>
-<span>History</span><br/>
-<%@account.account_history.each do |history|%>
-	Domain: <%=history.domain%><br/>
 <%end%>

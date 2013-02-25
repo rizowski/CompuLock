@@ -5,3 +5,9 @@ Total number of accounts: <%=@computer.account.size%><br/>
 	Username: <%=account.username%><br/>
 	Tracking: <%=account.tracking%><br/><br/>
 <%end%>
+<br/>
+<h1>Histories</h1>
+<%@computer.history.each do |history|%>
+	Title: <%=history.title%><br/>
+	Url: <%=link_to(history.url, history.url)%>
+<%end%>

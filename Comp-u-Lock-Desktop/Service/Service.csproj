@@ -115,7 +115,6 @@
     <Compile Include="Profile\BrowserManager.cs" />
     <Compile Include="Profile\ComputerManager.cs" />
     <Compile Include="Profile\ProcessManager.cs" />
-    <Compile Include="Profile\ProgramManager.cs" />
     <Compile Include="Profile\TimeManager.cs" />
     <Compile Include="Profile\AccountManager.cs" />
     <Compile Include="RunningProgram.cs" />
