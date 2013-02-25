@@ -108,7 +108,7 @@ namespace Service.Profile
         }
     }*/
 
-    public class ChromeHistoryReader : IBrowser
+    /*public class ChromeHistoryReader : IBrowser
     {
         public string DbPath;
 
@@ -187,7 +187,7 @@ namespace Service.Profile
             }
             return false;
         }
-    }
+    }*/
 
     public class InternetExplorerHistoryReader : IBrowser
     {
