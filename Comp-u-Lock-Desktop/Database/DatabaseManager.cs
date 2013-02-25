@@ -22,7 +22,7 @@ namespace Database
         private const string ComputersTable = "Computers";
         private const string AccountsTable = "Accounts";
 
-        private const string HistoryTable = "account_history";
+        private const string HistoryTable = "history";
         private const string ProcessTable = "account_process";
         private const string ProgramTable = "account_program";
 
@@ -90,7 +90,7 @@ namespace Database
             const string account = CreateTable + AccountsTable + "(Id integer primary key asc, WebId integer, ComputerId integer, Domain varchar(50), Username varchar(50), Tracking bool, AllottedTime integer, UsedTime integer, CreatedAt datetime, UpdatedAt datetime, unique(Domain, Username) on conflict replace)";
             ExecuteQuery(account);
             Logger.Write("Createing HistoryTable");
-            const string accountHistory = CreateTable + HistoryTable + "(Id integer primary key asc, WebId integer, AccountId integer, Title varchar(150), Domain varchar(150), Url varchar(300), VisitCount integer, CreatedAt datetime, UpdatedAt datetime, unique(AccountId, Domain, Url) on conflict replace)";
+            const string accountHistory = CreateTable + HistoryTable + "(Id integer primary key asc, WebId integer, ComputerId integer, Title varchar(150), Url varchar(300), VisitCount integer, CreatedAt datetime, UpdatedAt datetime, unique(ComputerId, Url) on conflict replace)";
             ExecuteQuery(accountHistory);
             Logger.Write("Createing ProcessTable");
             const string accountProcess = CreateTable + ProcessTable + "(Id integer primary key asc, WebId integer, AccountId integer, Name varchar(100), CreatedAt datetime, UpdatedAt datetime, unique(AccountId, Name) on conflict replace)";
@@ -271,12 +271,12 @@ namespace Database
             Logger.Write("Saving History");
             sb.Append(InsertInto);
             sb.Append(HistoryTable);
-            sb.Append("(AccountId, Title, Domain, Url, VisitCount, CreatedAt, UpdatedAt)");
+            sb.Append("(ComputerId, Title, Url, VisitCount, CreatedAt, UpdatedAt)");
             sb.Append(Values);
-            sb.Append("(@accountid, @title, @url, @visitcount, @createdAt, @updatedAt)");
+            sb.Append("(@computerid, @title, @url, @visitcount, @createdAt, @updatedAt)");
             sb.Append(End);
             var command = new SQLiteCommand(sb.ToString(), DbConnection);
-                command.Parameters.Add(new SQLiteParameter("@accountid", history.ComputerId));
+                command.Parameters.Add(new SQLiteParameter("@computerid", history.ComputerId));
                 command.Parameters.Add(new SQLiteParameter("@title", history.Title));
                 command.Parameters.Add(new SQLiteParameter("@url", history.Url));
                 command.Parameters.Add(new SQLiteParameter("@visitcount", history.VisitCount));
@@ -362,8 +362,8 @@ namespace Database
                     {
                         Id = Convert.ToInt32(reader["Id"]),
                         ComputerId = Convert.ToInt32(reader["ComputerId"]),
-                        Title = (string) reader["Title"],
-                        Url = (string) reader["Url"],
+                        Title = Convert.ToString(reader["Title"]),
+                        Url = Convert.ToString(reader["Url"]),
                         VisitCount = Convert.ToInt32(reader["VisitCount"]),
                         CreatedAt = Convert.ToDateTime(reader["CreatedAt"]),
                         UpdatedAt = Convert.ToDateTime(reader["UpdatedAt"])
@@ -448,6 +448,15 @@ namespace Database
             {
                 account.ComputerId = id;
                 SaveAccount(account);
+            }
+        }
+
+        public void SaveHistories(int computerId, IEnumerable<History> histories )
+        {
+            foreach (var history in histories)
+            {
+                history.ComputerId = computerId;
+                SaveHistory(history);
             }
         }
     }

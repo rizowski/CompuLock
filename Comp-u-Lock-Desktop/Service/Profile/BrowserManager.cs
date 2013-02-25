@@ -46,7 +46,14 @@ namespace Service.Profile
             var enumerator = urlHisotry.GetEnumerator();
             var list = new ArrayList();
             enumerator.GetUrlHistory(list);
-            return (from STATURL item in list select ParseHistory(item)).ToList();
+            List<History> list1 = new List<History>();
+            foreach (STATURL item in list)
+            {
+                var parsedhistory = ParseHistory(item);
+                if (parsedhistory != null)
+                    list1.Add(parsedhistory);
+            }
+            return list1;
         }
 
         #region private
@@ -55,10 +62,17 @@ namespace Service.Profile
             var history = new History();
             history.Title = url.Title;
             var match = Regex.Match(url.URL, @"(http|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?");
-            history.Url = match.Captures[0].ToString();
-            history.CreatedAt = DateTime.Now;
-            history.UpdatedAt = DateTime.Now;
-            return history;
+            if (match.Captures.Count >= 1)
+            {
+                history.Url = match.Captures[0].ToString();
+                history.CreatedAt = DateTime.Now;
+                history.UpdatedAt = DateTime.Now;
+                return history;
+            }
+            else
+            {
+                return null;
+            }
         }
         #endregion
     }

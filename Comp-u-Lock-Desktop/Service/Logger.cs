@@ -28,7 +28,7 @@ namespace Service
             sw.WriteLine(sb.ToString());
             sw.Flush();
             sw.Close();
-            Console.WriteLine("{0} Logged",status.ToString());
+            Console.WriteLine("[Service][{0}] Logged",status.ToString());
         }
     }
 

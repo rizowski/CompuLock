@@ -26,7 +26,7 @@ namespace Database
             sw.WriteLine(sb.ToString());
             sw.Flush();
             sw.Close();
-            Console.WriteLine("{0} Logged",status.ToString());
+            Console.WriteLine("[Database][{0}] Logged",status.ToString());
         }
     }
 
