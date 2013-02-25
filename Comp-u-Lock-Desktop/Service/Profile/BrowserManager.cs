@@ -2,11 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.SQLite;
-using System.Diagnostics;
 using System.IO;
 using Database.Enviroment;
+using Database.Models;
 using Microsoft.Win32;
 using UrlHistoryLibrary;
+using Process = System.Diagnostics.Process;
 
 namespace Service.Profile
 {
@@ -14,7 +15,7 @@ namespace Service.Profile
     public interface IBrowser
     {
         bool IsRunning();
-        IEnumerable<URL> GetHistory();
+        IEnumerable<History> GetHistory();
     }
 
     public class InternetExplorerHistoryReader : IBrowser
@@ -37,18 +38,24 @@ namespace Service.Profile
             return false;
         }
 
-        public IEnumerable<URL> GetHistory()
+        public IEnumerable<History> GetHistory()
         {
             var urlHisotry = new UrlHistoryWrapperClass();
             var enumerator = urlHisotry.GetEnumerator();
             var list = new ArrayList();
+            var historyList = new List<History>();
             enumerator.GetUrlHistory(list);
             foreach (STATURL item in list)
             {
-
-                Console.WriteLine(item.URL);
+                historyList.Add(new Database.Models.History
+                    {
+                        Title = item.Title,
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now,
+                        Domain = item.URL
+                    });
             }
-            return null;
+            return historyList;
         }
     }
     

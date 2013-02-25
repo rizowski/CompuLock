@@ -130,26 +130,6 @@ namespace Service
                 Console.WriteLine(url);
             }
 
-            Console.WriteLine("\nFirefox");
-            var f = new FirefoxHistoryReader(@"\3fcwvrqq.default");
-            f.Filename = "places.sqlite";
-            Console.WriteLine(f.DbPath);
-            Console.WriteLine(f.Filename);
-            Console.WriteLine(f.IsRunning());
-            if (!f.IsRunning())
-            {
-                f.Connect();
-            }
-
-            Console.WriteLine("\nChrome");
-            var c = new ChromeHistoryReader();
-            Console.WriteLine(c.IsRunning());
-            Console.WriteLine(c.Version.ToString());
-            if (!c.IsRunning())
-            {
-                c.Connect();
-                c.GetHistory();
-            }
         }
 
         public static void RunOS()

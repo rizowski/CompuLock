@@ -19,6 +19,7 @@ namespace Service
         public AccountManager AccountManager { get; private set; }
         public ComputerManager ComputerManager { get; set; }
         public ProcessManager ProcessManager { get; set; }
+        public InternetExplorerHistoryReader BrowserManager { get; set; }
         public RestService RestS { get; set; }
 
         private const string RestServer = "http://localhost:3000";
@@ -30,8 +31,9 @@ namespace Service
             RestS = new RestService(RestServer, Api);
             ComputerManager = new ComputerManager();
             ProcessManager = new ProcessManager();
+            BrowserManager = new InternetExplorerHistoryReader();
             SystemEvents.SessionSwitch += Switch;
-            
+
         }
 
 
