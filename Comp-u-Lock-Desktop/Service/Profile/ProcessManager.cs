@@ -30,8 +30,8 @@ namespace Service.Profile
             {
                 if (userAccount.Tracking)
                 {
-                    Logger.Write("User is being tracked " + userAccount.Username);
                     var name = e.NewEvent.Properties["ProcessName"].Value;
+                    Logger.Write("Adding Process " + name + " for " + userAccount.Username);
                     Console.WriteLine("Saving PRocess {0} For {1}", name, userAccount.Username);
                     DbManager.SaveProcess(new Database.Models.Process
                         {

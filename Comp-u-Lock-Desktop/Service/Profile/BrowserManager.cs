@@ -17,7 +17,7 @@ namespace Service.Profile
         IEnumerable<URL> GetHistory();
     }
 
-    public class FirefoxHistoryReader : IBrowser
+    /*public class FirefoxHistoryReader : IBrowser
     {
         public Uri DbPath;
         public string Filename;
@@ -29,7 +29,7 @@ namespace Service.Profile
         private const string END = ";";
         private const string PLACES = "moz_places";
 
-        public FirefoxHistoryReader(string profile)
+        /*public FirefoxHistoryReader(string profile)
         {
             this.profile = profile;
             object path;
@@ -69,7 +69,7 @@ namespace Service.Profile
             {
                 throw new FileNotFoundException("No Firefox Profile Folder Found.");
             }
-        }
+        }#1#
 
         public bool IsRunning()
         {
@@ -106,7 +106,7 @@ namespace Service.Profile
             reader.Close();
             return list;
         }
-    }
+    }*/
 
     public class ChromeHistoryReader : IBrowser
     {

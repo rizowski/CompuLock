@@ -75,11 +75,11 @@ namespace Service
             {
                 if (account.Tracking)
                 {
-                    Logger.Write("I am watching you");
+                    Logger.Write("I am watching you " + username);
                 }
                 else
                 {
-                    Logger.Write("I am not watching you");
+                    Logger.Write("I am not watching you " + username);
                 }
             }
             else

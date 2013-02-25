@@ -20,7 +20,8 @@ namespace Service.Profile
         private const string UserFlags = "UserFlags";
         public ComputerManager()
         {
-            
+            GetComputer();
+            GetAccounts();
         }
 
         public List<Account> GetAccounts()
@@ -35,9 +36,11 @@ namespace Service.Profile
             {
                 list.Add(new Account
                     {
+                        CreatedAt = DateTime.Now,
                         Domain = Environment.UserDomainName,
                         Username = member.Name,
-                        Tracking = false
+                        Tracking = false,
+                        UpdatedAt = DateTime.Now
                     });
             }
             return list;

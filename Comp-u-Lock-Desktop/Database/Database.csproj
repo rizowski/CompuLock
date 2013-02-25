@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DatabaseManager.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Computer.cs" />
     <Compile Include="Enviroment\OS.cs" />
