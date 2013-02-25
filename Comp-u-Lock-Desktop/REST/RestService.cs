@@ -114,12 +114,6 @@ namespace REST
             return accounts.FirstOrDefault(a => a.WebId == id);
         }
 
-        public IEnumerable<Program> GetAllProgramsByAccount(string token, int id)
-        {
-            var account = GetAccountById(token, id);
-            return account.Programs;
-        }
-
         public void DestroyAccount(string token, int id)
         {
             var request = new RestRequest(AccountPath + id, Method.DELETE);

@@ -273,12 +273,11 @@ namespace Database
             sb.Append(HistoryTable);
             sb.Append("(AccountId, Title, Domain, Url, VisitCount, CreatedAt, UpdatedAt)");
             sb.Append(Values);
-            sb.Append("(@accountid, @title, @domain, @url, @visitcount, @createdAt, @updatedAt)");
+            sb.Append("(@accountid, @title, @url, @visitcount, @createdAt, @updatedAt)");
             sb.Append(End);
             var command = new SQLiteCommand(sb.ToString(), DbConnection);
-                command.Parameters.Add(new SQLiteParameter("@accountid", history.AccountId));
+                command.Parameters.Add(new SQLiteParameter("@accountid", history.ComputerId));
                 command.Parameters.Add(new SQLiteParameter("@title", history.Title));
-                command.Parameters.Add(new SQLiteParameter("@domain", history.Domain));
                 command.Parameters.Add(new SQLiteParameter("@url", history.Url));
                 command.Parameters.Add(new SQLiteParameter("@visitcount", history.VisitCount));
                 command.Parameters.Add(new SQLiteParameter("@createdAt", DateTime.Now));
@@ -288,7 +287,7 @@ namespace Database
             command.ExecuteNonQuery();
             DbConnection.Close(); 
             Logger.Write("Done writing history");
-            var savedHistory = GetHistories().First(h => h.AccountId == history.AccountId && h.Domain == history.Domain);
+            var savedHistory = GetHistories().First(h => h.ComputerId == history.ComputerId && h.Url == history.Url);
             return savedHistory;
         }
 
@@ -320,32 +319,6 @@ namespace Database
             return savedProcess;
         }
 
-        public Program SaveProgram(Program program)
-        {
-            if (program == null)
-                throw new NoNullAllowedException("Program object can't be null");
-            StringBuilder sb = new StringBuilder();
-            Logger.Write("Saving a Program");
-            sb.Append(InsertInto);
-            sb.Append(ProgramTable);
-            sb.Append("(AccountId, Name, OpenCount, CreatedAt, UpdatedAt)");
-            sb.Append(Values);
-            sb.Append("(@accountid, @name, @opencount, @createdAt, @updatedAt)");
-            sb.Append(End);
-            var command = new SQLiteCommand(sb.ToString(), DbConnection);
-                command.Parameters.Add(new SQLiteParameter("@accountid", program.AccountId));
-                command.Parameters.Add(new SQLiteParameter("@name", program.Name));
-                command.Parameters.Add(new SQLiteParameter("@opencount", program.OpenCount));
-                command.Parameters.Add(new SQLiteParameter("@createdAt", DateTime.Now));
-                command.Parameters.Add(new SQLiteParameter("@updatedAt", DateTime.Now));
-            DbConnection.Open();
-            Logger.Write(sb.ToString());
-            command.ExecuteNonQuery();
-            DbConnection.Close();
-            Logger.Write("Done Writing a Program");
-            var savedProgram = GetPrograms().First(p => p.AccountId == program.AccountId && p.Name == program.Name);
-            return savedProgram;
-        }
         #endregion
 
         #region GetAll
@@ -388,33 +361,10 @@ namespace Database
                 list.Add(new History
                     {
                         Id = Convert.ToInt32(reader["Id"]),
-                        AccountId = Convert.ToInt32(reader["AccountId"]),
+                        ComputerId = Convert.ToInt32(reader["ComputerId"]),
                         Title = (string) reader["Title"],
-                        Domain = (string) reader["Domain"],
                         Url = (string) reader["Url"],
                         VisitCount = Convert.ToInt32(reader["VisitCount"]),
-                        CreatedAt = Convert.ToDateTime(reader["CreatedAt"]),
-                        UpdatedAt = Convert.ToDateTime(reader["UpdatedAt"])
-                    });
-            }
-            DbConnection.Close();
-            return list;
-        }
-        public IEnumerable<Program> GetPrograms()
-        {
-            List<Program> list = new List<Program>();
-            StringBuilder sb = new StringBuilder();
-            sb.Append(SelectAll);
-            sb.Append(AccountsTable);
-            DbConnection.Open();
-            var reader = new SQLiteCommand(sb.ToString(), DbConnection).ExecuteReader();
-            while (reader.Read())
-            {
-                list.Add(new Program
-                    {
-                        Id = Convert.ToInt32(reader["Id"]),
-                        AccountId = Convert.ToInt32(reader["AccountId"]),
-                        Name = (string) reader["Name"],
                         CreatedAt = Convert.ToDateTime(reader["CreatedAt"]),
                         UpdatedAt = Convert.ToDateTime(reader["UpdatedAt"])
                     });
@@ -465,22 +415,12 @@ namespace Database
         {
             return GetProcesses().First(p => p.Id == id);
         }
-
-        public Program GetProgramById(int id)
-        {
-            return GetPrograms().First(p => p.Id == id);
-        }
         #endregion
 
         #region ByAccountId
-        public IEnumerable<History> GetHistoriesByAccountId(int accountId)
+        public IEnumerable<History> GetHistoriesByAccountId(int computerId)
         {
-            return GetHistories().Where(h => h.AccountId == accountId);
-        }
-
-        public IEnumerable<Program> GetProgramsByAccountId(int accountId)
-        {
-            return GetPrograms().Where(p => p.AccountId == accountId);
+            return GetHistories().Where(h => h.ComputerId == computerId);
         }
 
         public IEnumerable<Process> GetProcessesByAccountId(int accountId)

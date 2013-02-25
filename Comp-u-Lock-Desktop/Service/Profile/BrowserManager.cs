@@ -55,7 +55,7 @@ namespace Service.Profile
             var history = new History();
             history.Title = url.Title;
             var match = Regex.Match(url.URL, @"(http|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?");
-            history.Domain = match.Captures[0].ToString();
+            history.Url = match.Captures[0].ToString();
             history.CreatedAt = DateTime.Now;
             history.UpdatedAt = DateTime.Now;
             return history;

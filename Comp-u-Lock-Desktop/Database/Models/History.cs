@@ -11,13 +11,11 @@ namespace Database.Models
         [JsonProperty(PropertyName = "id", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public int WebId { get; set; }
 
-        [JsonProperty(PropertyName = "account_id")]
-        public int AccountId { get; set; }
+        [JsonProperty(PropertyName = "computer_id")]
+        public int ComputerId { get; set; }
         [JsonProperty(PropertyName = "title")]
         public string Title { get; set; }
-        [JsonProperty(PropertyName = "domain")]
-        public string Domain { get; set; }
-        [JsonProperty(PropertyName = "url", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty(PropertyName = "url")]
         public string Url { get; set; }
         [JsonProperty(PropertyName = "visit_count")]
         public int VisitCount { get; set; }

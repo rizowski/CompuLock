@@ -33,12 +33,8 @@ namespace Database.Models
         [JsonProperty(PropertyName = "used_time")]
         public TimeSpan UsedTime { get; set; }
 
-        [JsonProperty(PropertyName = "account_history_attributes", NullValueHandling = NullValueHandling.Ignore)]
-        public List<History> Histories { get; set; }
         [JsonProperty(PropertyName = "account_process_attributes", NullValueHandling = NullValueHandling.Ignore)]
         public List<Process> Processes { get; set; }
-        [JsonProperty(PropertyName = "account_program_attributes", NullValueHandling = NullValueHandling.Ignore)]
-        public List<Program> Programs { get; set; }
 
         [JsonProperty(PropertyName = "restriction_attributes", NullValueHandling = NullValueHandling.Ignore)]
         public List<Restriction> Restrictions { get; set; }

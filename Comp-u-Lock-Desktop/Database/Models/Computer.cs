@@ -23,6 +23,8 @@ namespace Database.Models
 
         [JsonProperty(PropertyName = "account_attributes", NullValueHandling = NullValueHandling.Ignore)]
         public virtual List<Account> Accounts { get; set; }
+        [JsonProperty(PropertyName = "history_attributes", NullValueHandling = NullValueHandling.Ignore)]
+        public List<History> Histories { get; set; }
 
         [JsonIgnore]
         public DateTime CreatedAt { get; set; }

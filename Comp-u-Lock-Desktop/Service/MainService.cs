@@ -150,12 +150,11 @@ namespace Service
         public void SaveHistory()
         {
             var histories = BrowserManager.GetHistory();
-            var account = DbClient.GetTrackingAccounts();
-            if(account != null)
+            var computer = DbClient.GetComputer();
+            if(computer != null)
                 foreach (var history in histories)
                 {
-                    var id = account.Id;
-                    history.AccountId = id;
+                    history.ComputerId = computer.Id;
                     DbClient.SaveHistory(history);
                 }
         }

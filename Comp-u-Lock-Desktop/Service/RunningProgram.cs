@@ -8,7 +8,6 @@ using Database.Models;
 using REST;
 using RestSharp;
 using Service.Profile;
-using Programs = Service.Profile.ProgramManager;
 
 namespace Service
 {
@@ -182,15 +181,6 @@ namespace Service
             }
         }
 
-        public static void RunProgramManager()
-        {
-            ProgramManager pm = new ProgramManager();
-            var programs = pm.GetRunningPrograms();
-            foreach (var program in programs)
-            {
-                Console.WriteLine("{0} - {1}", program.OpenCount, program.Name);
-            }
-        }
 
         public static void RunInfoGatherer()
         {
@@ -285,7 +275,9 @@ namespace Service
 
             var computer = user.Computers.First();
             var account = computer.Accounts.First(a => a.WebId == 2);
-            account.Programs.Add(new Program
+
+            //TODO Make because broken history now with computer
+            /*account.Programs.Add(new Program
                 {
                     AccountId = account.WebId,
                     Name = "Visual Studio 2012"
@@ -301,7 +293,7 @@ namespace Service
                     AccountId = account.WebId,
                     Domain = "MySpace.com",
                     Title = "MySpace"
-                });
+                });*/
             rs.UpdateUser(ser, user);
             //RunInfoGatherer();
         }
