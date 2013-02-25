@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 using Database.Enviroment;
 using Database.Models;
 using Microsoft.Win32;
@@ -43,20 +45,22 @@ namespace Service.Profile
             var urlHisotry = new UrlHistoryWrapperClass();
             var enumerator = urlHisotry.GetEnumerator();
             var list = new ArrayList();
-            var historyList = new List<History>();
             enumerator.GetUrlHistory(list);
-            foreach (STATURL item in list)
-            {
-                historyList.Add(new Database.Models.History
-                    {
-                        Title = item.Title,
-                        CreatedAt = DateTime.Now,
-                        UpdatedAt = DateTime.Now,
-                        Domain = item.URL
-                    });
-            }
-            return historyList;
+            return (from STATURL item in list select ParseHistory(item)).ToList();
         }
+
+        #region private
+        private History ParseHistory(STATURL url)
+        {
+            var history = new History();
+            history.Title = url.Title;
+            var match = Regex.Match(url.URL, @"(http|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?");
+            history.Domain = match.Captures[0].ToString();
+            history.CreatedAt = DateTime.Now;
+            history.UpdatedAt = DateTime.Now;
+            return history;
+        }
+        #endregion
     }
     
 }

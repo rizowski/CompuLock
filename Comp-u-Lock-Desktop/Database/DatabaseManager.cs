@@ -497,5 +497,18 @@ namespace Database
 
         #endregion
 
+        public Account GetTrackingAccounts()
+        {
+            return GetAccounts().FirstOrDefault(a => a.Tracking);
+        }
+
+        public void SaveAccounts(int id, List<Account> accounts)
+        {
+            foreach (var account in accounts)
+            {
+                account.ComputerId = id;
+                SaveAccount(account);
+            }
+        }
     }
 }

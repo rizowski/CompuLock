@@ -192,20 +192,6 @@ namespace Service
             }
         }
 
-        public static void TestSqlInjection()
-        {
-            DatabaseManager dm = new DatabaseManager("settings", "myPass");
-            var account = new Account
-                {
-                    ComputerId = 2,
-                    Admin = true,
-                    Domain = "Blab",
-                    Username = "; DROP TABLE Accounts;"
-
-                };
-            dm.SaveAccount(account);
-        }
-
         public static void RunInfoGatherer()
         {
             var authToken = "DNs7qtsM4HaNzJbyzH2N";
@@ -282,35 +268,6 @@ namespace Service
             }
         }
 
-        public static void RunUser()
-        {
-            AccountManager account = new AccountManager(Environment.UserDomainName, "Kids", new TimeSpan(0,0,0,5));
-            ComputerManager cm = new ComputerManager();
-            var users = cm.GetAccounts();
-            Console.WriteLine("Getting users");
-            foreach (var user in users)
-            {
-                Console.WriteLine(user.Username);
-            }
-            Console.WriteLine();
-            account.StartTimer();
-            Console.WriteLine("Hit enter to unlock");
-            Console.ReadLine();
-            account.UnlockAccount();
-            
-            //account.GetUserSessionId();
-            //Console.WriteLine("Account: Rizowski - id: {0}",account.GetUserSessionId("Kids"));
-            //var session = account.GetUserSession("Kids");
-            //Console.WriteLine("{0} - {1}", session.UserName, session.SessionId);
-            //account.DisconnectUser("Kids");
-            //account.LockAccount("Kids");
-            //account.UnlockAccount("Kids");
-
-            //account.GetUsers();
-            //account.LockAccount("Kids");//.ChangeUserPassword("Parents", "190421", "rizowski");
-            //account.StartTimer();
-        }
-
         public static void RunGUIProgram()
         {
             MainService s = new MainService();
@@ -352,12 +309,8 @@ namespace Service
         public static void MainServicer()
         {
             MainService s = new MainService();
-            
+            s.SaveHistory();
         }
 
-        public static void RunConnect()
-        {
-            
-        }
     }
 }

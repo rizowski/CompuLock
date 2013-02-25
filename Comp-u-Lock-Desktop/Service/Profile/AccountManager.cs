@@ -19,17 +19,14 @@ namespace Service.Profile
         public Timer Timer;
         public ITerminalServer Server;
 
-        public AccountManager(string domain, string username, TimeSpan lockoutTime, double interval = 1)
+        public AccountManager(double interval = 1)
         {
-            Domain = domain;
-            UserName = username;
             Timer = new Timer(interval*1000) {AutoReset = true};
             Timer.Disposed += TimerDisposed;
             Timer.Elapsed += Tick;
             ElapsedTime = TimeSpan.Zero;
             ITerminalServicesManager manager = new TerminalServicesManager();
             Server = manager.GetLocalServer();
-            LockTime = lockoutTime;
         }
 
         private void TimerDisposed(object sender, EventArgs e)
@@ -75,9 +72,7 @@ namespace Service.Profile
                 Console.Write("Locking the account: {0}", username);
                 DirectoryEntry user = new DirectoryEntry("WinNT://" + Environment.MachineName + "/" + username);
                 Console.Write(".");
-                //Console.WriteLine(user.Properties["UserFlags"].Value);
-                user.Properties["UserFlags"].Value = ADS_USER_FLAG.ADS_UF_ACCOUNTDISABLE;//ADS_USER_FLAG.ADS_UF_ACCOUNTDISABLE;//ADS_USER_FLAG.ADS_UF_LOCKOUT;
-                //Console.WriteLine(user.Properties["UserFlags"].Value);
+                user.Properties["UserFlags"].Value = ADS_USER_FLAG.ADS_UF_ACCOUNTDISABLE;
                 Console.Write(".");
                 user.CommitChanges();
                 Console.WriteLine(".");

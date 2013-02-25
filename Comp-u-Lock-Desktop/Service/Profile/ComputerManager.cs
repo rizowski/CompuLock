@@ -20,8 +20,7 @@ namespace Service.Profile
         private const string UserFlags = "UserFlags";
         public ComputerManager()
         {
-            GetComputer();
-            GetAccounts();
+
         }
 
         public List<Account> GetAccounts()

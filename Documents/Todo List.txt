@@ -145,3 +145,13 @@ Resources:
 		- http://code.msdn.microsoft.com/windowsdesktop/CSWindowsService-9f2f568e
 		- http://msdn.microsoft.com/en-us/library/ms731758.aspx
 		- http://www.c-sharpcorner.com/uploadfile/mirfan00/windows-service-in-C-Sharp/
+
+
+
+Pulls from the server first, then pushes.
+Need to fix history to just have url. I dont need url
+
+
+Notes for Presentation:
+	As for browser history I can use a proxy to get all the information
+	As for account being associated with the history I can get the currently logged in user

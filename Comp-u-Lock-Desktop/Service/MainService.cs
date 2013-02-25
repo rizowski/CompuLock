@@ -30,6 +30,9 @@ namespace Service
             DbClient = new DatabaseManager("settings", "myPass");
             RestS = new RestService(RestServer, Api);
             ComputerManager = new ComputerManager();
+            var computer = DbClient.SaveComputer(ComputerManager.GetComputer());
+            DbClient.SaveAccounts(computer.Id, ComputerManager.GetAccounts());
+            AccountManager = new AccountManager();
             ProcessManager = new ProcessManager();
             BrowserManager = new InternetExplorerHistoryReader();
             SystemEvents.SessionSwitch += Switch;
@@ -141,6 +144,25 @@ namespace Service
                 DbClient.SaveAccount(account);
             }
         }
+        #endregion
+
+        #region Computer
+        public void SaveHistory()
+        {
+            var histories = BrowserManager.GetHistory();
+            var account = DbClient.GetTrackingAccounts();
+            if(account != null)
+                foreach (var history in histories)
+                {
+                    var id = account.Id;
+                    history.AccountId = id;
+                    DbClient.SaveHistory(history);
+                }
+        }
+        #endregion
+
+        #region private
+        
         #endregion
 
 
