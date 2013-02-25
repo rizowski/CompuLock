@@ -374,5 +374,10 @@ namespace Service
             MainService s = new MainService();
             
         }
+
+        public static void RunConnect()
+        {
+            
+        }
     }
 }

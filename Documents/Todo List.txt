@@ -114,3 +114,34 @@ Things still needing to be done:
 	GUI 1:
 		- Website
 		- Desktop
+Microsoft sync
+
+TODO:
+	- Learn more about SQL injection and why simple strings are bad how to identify them.
+Week 8:
+	TODO:
+		- Learn more about SQL injection 
+			- Why not use simple strings
+			- How to id entify if sql injection is possible
+	Plan:
+		Friday:
+			- Get a service to Install
+			- Get the service to run
+		Saturday:
+			- Reasearch how to connect to the service
+			- Implement a way to connect to the service
+		Sunday:
+			- 
+		Monday:
+			- 
+		Tuesday:
+			- 
+		Webnesday:
+			- 
+		Thursday:
+			- 
+Resources:
+	Windows Service:
+		- http://code.msdn.microsoft.com/windowsdesktop/CSWindowsService-9f2f568e
+		- http://msdn.microsoft.com/en-us/library/ms731758.aspx
+		- http://www.c-sharpcorner.com/uploadfile/mirfan00/windows-service-in-C-Sharp/

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
+using System.ServiceModel.Description;
 using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +16,7 @@ namespace CompuWatch
         /// </summary>
         static void Main()
         {
+            
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[] 
             { 
