@@ -301,7 +301,7 @@ namespace Service
         public static void MainServicer()
         {
             MainService s = new MainService();
-            s.SaveHistory();
+            s.SaveHistoryToDb();
         }
 
     }

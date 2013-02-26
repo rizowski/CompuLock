@@ -1,8 +1,9 @@
-﻿<Application x:Class="CompuLockDesktop.App"
+﻿<windows:Application x:Class="CompuLockDesktop.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:windows="clr-namespace:System.Windows;assembly=PresentationFramework"
              StartupUri="MainWindow.xaml">
-    <Application.Resources>
+    <windows:Application.Resources>
          
-    </Application.Resources>
-</Application>
+    </windows:Application.Resources>
+</windows:Application>

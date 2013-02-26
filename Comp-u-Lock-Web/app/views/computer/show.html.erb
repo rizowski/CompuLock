@@ -9,5 +9,5 @@ Total number of accounts: <%=@computer.account.size%><br/>
 <h1>Histories</h1>
 <%@computer.history.each do |history|%>
 	Title: <%=history.title%><br/>
-	Url: <%=link_to(history.url, history.url)%>
+	Url: <%=link_to(history.url, history.url)%><br/><br/>
 <%end%>

@@ -31,6 +31,7 @@ namespace Database
         private const string HourTable = "Hours";
 
         private const string CreateTable = "create table ";
+        private const string IfNotExists = " if not exists ";
         private const string InsertInto = "insert or ignore into ";
         private const string Select = "select ";
         private const string SelectAll = "select * from ";
@@ -47,21 +48,21 @@ namespace Database
             DbPassword = pass;
             DbPath = path + ".sqlite";
             DbExists = File.Exists(DbPath);
-            if (File.Exists(DbPath))
+            if (DbExists)
             {
-                DbConnection = new SQLiteConnection("Data Source=" + DbPath + ";Version=3;");//Password="+DbPassword+";");
+                CreateDb();
             }
             else
             {
                 CreateDb();
-                DbExists = File.Exists(DbPath);
             }
         }
 
         public void CreateDb()
         {
-            SQLiteConnection.CreateFile(DbPath);
-            DbConnection = new SQLiteConnection("Data Source=" + DbPath + ";Version=3;");
+            if(!File.Exists(DbPath))
+                SQLiteConnection.CreateFile(DbPath);
+            DbConnection = new SQLiteConnection("Data Source=" + DbPath + ";Version=3;");//Password="+DbPassword+";");
             CreateTables();
         }
 
@@ -77,36 +78,37 @@ namespace Database
             DbConnection.Dispose();
         }
 
+
         public void CreateTables()
         {
             Logger.Write("Creating Tables");
             Logger.Write("Createing UserTable");
-            const string user = CreateTable + UsersTable + "(Id integer primary key asc, WebId integer, Username varchar(255), Email varchar(255), AuthToken varchar(255), CreatedAt datetime, UpdatedAt datetime, unique(Email, AuthToken) on conflict replace)";
+            const string user = CreateTable + IfNotExists + UsersTable + "(Id integer primary key asc, WebId integer, Username varchar(255), Email varchar(255), AuthToken varchar(255), CreatedAt datetime, UpdatedAt datetime, unique(Email, AuthToken) on conflict replace)";
             ExecuteQuery(user);
             Logger.Write("Createing ComputerTable");
-            const string computer = CreateTable + ComputersTable + "(Id integer primary key asc, WebId integer, UserId integer, Enviroment varchar(50), Name varchar(50) unique on conflict replace, IpAddress varchar(16), CreatedAt datetime, UpdatedAt datetime)";
+            const string computer = CreateTable + IfNotExists + ComputersTable + "(Id integer primary key asc, WebId integer, UserId integer, Enviroment varchar(50), Name varchar(50) unique on conflict replace, IpAddress varchar(16), CreatedAt datetime, UpdatedAt datetime)";
             ExecuteQuery(computer);
             Logger.Write("Createing AcountsTable");
-            const string account = CreateTable + AccountsTable + "(Id integer primary key asc, WebId integer, ComputerId integer, Domain varchar(50), Username varchar(50), Tracking bool, AllottedTime integer, UsedTime integer, CreatedAt datetime, UpdatedAt datetime, unique(Domain, Username) on conflict replace)";
+            const string account = CreateTable + IfNotExists + AccountsTable + "(Id integer primary key asc, WebId integer, ComputerId integer, Domain varchar(50), Username varchar(50), Tracking bool, AllottedTime integer, UsedTime integer, CreatedAt datetime, UpdatedAt datetime, unique(Domain, Username) on conflict replace)";
             ExecuteQuery(account);
             Logger.Write("Createing HistoryTable");
-            const string accountHistory = CreateTable + HistoryTable + "(Id integer primary key asc, WebId integer, ComputerId integer, Title varchar(150), Url varchar(300), VisitCount integer, CreatedAt datetime, UpdatedAt datetime, unique(ComputerId, Url) on conflict replace)";
+            const string accountHistory = CreateTable + IfNotExists + HistoryTable + "(Id integer primary key asc, WebId integer, ComputerId integer, Title varchar(150), Url varchar(300), VisitCount integer, CreatedAt datetime, UpdatedAt datetime, unique(ComputerId, Url) on conflict replace)";
             ExecuteQuery(accountHistory);
             Logger.Write("Createing ProcessTable");
-            const string accountProcess = CreateTable + ProcessTable + "(Id integer primary key asc, WebId integer, AccountId integer, Name varchar(100), CreatedAt datetime, UpdatedAt datetime, unique(AccountId, Name) on conflict replace)";
+            const string accountProcess = CreateTable + IfNotExists + ProcessTable + "(Id integer primary key asc, WebId integer, AccountId integer, Name varchar(100), CreatedAt datetime, UpdatedAt datetime, unique(AccountId, Name) on conflict replace)";
             ExecuteQuery(accountProcess);
             Logger.Write("Createing ProgramTable");
-            const string accountProgram = CreateTable + ProgramTable + "(Id integer primary key asc, WebId integer, AccountId integer, Name varchar(100), OpenCount integer, CreatedAt datetime, UpdatedAt datetime, unique(AccountId, Name) on conflict replace)";
+            const string accountProgram = CreateTable + IfNotExists + ProgramTable + "(Id integer primary key asc, WebId integer, AccountId integer, Name varchar(100), OpenCount integer, CreatedAt datetime, UpdatedAt datetime, unique(AccountId, Name) on conflict replace)";
             ExecuteQuery(accountProgram);
 
             Logger.Write("Createing RestrictionTable");
-            const string restriction = CreateTable + RestrictionTable + "(Id integer primary key asc, WebId integer, AccountId integer, unique(Id, AccountId) on conflict replace)";
+            const string restriction = CreateTable + IfNotExists + RestrictionTable + "(Id integer primary key asc, WebId integer, AccountId integer, unique(Id, AccountId) on conflict replace)";
             ExecuteQuery(restriction);
             Logger.Write("Createing DayTable");
-            const string day = CreateTable + DayTable + "(Id integer primary key asc, WebId integer, RestrictionId integer, unique(Id, RestrictionId) on conflict replace)";
+            const string day = CreateTable + IfNotExists + DayTable + "(Id integer primary key asc, WebId integer, RestrictionId integer, unique(Id, RestrictionId) on conflict replace)";
             ExecuteQuery(day);
             Logger.Write("Createing HourTable");
-            const string hour = CreateTable + HourTable + "(Id integer primary key asc, WebId integer, DayId integer, unique(Id, DayId) on conflict replace)";
+            const string hour = CreateTable + IfNotExists + HourTable + "(Id integer primary key asc, WebId integer, DayId integer, unique(Id, DayId) on conflict replace)";
             ExecuteQuery(hour);
             Logger.Write("Done Creating Database Tables");
         }

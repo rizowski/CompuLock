@@ -21,10 +21,10 @@ namespace CompuLockDesktop
     public partial class Options : Window
     {
         private MainService service;
-        public Options()
+        public Options(MainService service)
         {
+            this.service = service;
             InitializeComponent();
-            service = new MainService();
         }
 
         private void OnOpen(object sender, EventArgs e)
@@ -37,7 +37,6 @@ namespace CompuLockDesktop
             }
             catch (Exception)
             {
-                
             }
             
         }

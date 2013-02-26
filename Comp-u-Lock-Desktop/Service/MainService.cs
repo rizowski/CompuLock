@@ -3,6 +3,7 @@ using System.DirectoryServices.AccountManagement;
 using System.IO;
 using System.Linq;
 using System.Security.Principal;
+using System.Threading;
 using System.Windows;
 using Database;
 using Database.Models;
@@ -28,75 +29,16 @@ namespace Service
 
         public MainService()
         {
-            if(File.Exists("settings.sqlite"))
-                File.Delete("settings.sqlite");
             DbManager = new DatabaseManager("settings", "myPass");
             RestService = new RestService(RestServer, Api);
             ComputerManager = new ComputerManager();
-            var computer = DbManager.SaveComputer(ComputerManager.GetComputer());
-            DbManager.SaveAccounts(computer.Id, ComputerManager.GetAccounts());
-            AccountManager = new AccountManager();
+            AccountManager = new AccountManager(DbManager);
             ProcessManager = new ProcessManager();
             BrowserManager = new InternetExplorerHistoryReader();
-            DbManager.SaveHistories(computer.Id, BrowserManager.GetHistory());
-            SystemEvents.SessionSwitch += Switch;
         }
 
-
-        private void Switch(object sender, SessionSwitchEventArgs sessionSwitchEventArgs)
-        {
-            switch (sessionSwitchEventArgs.Reason)
-            {
-                case SessionSwitchReason.ConsoleConnect:
-                    break;
-                case SessionSwitchReason.ConsoleDisconnect:
-                    break;
-                case SessionSwitchReason.RemoteConnect:
-                    Check();
-                    break;
-                case SessionSwitchReason.RemoteDisconnect:
-                    break;
-                case SessionSwitchReason.SessionLogon:
-                    Check();
-                    break;
-                case SessionSwitchReason.SessionLogoff:
-                    break;
-                case SessionSwitchReason.SessionLock:
-                    break;
-                case SessionSwitchReason.SessionUnlock:
-                    Check();
-                    break;
-                case SessionSwitchReason.SessionRemoteControl:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
-
-        //TODO Check and subscribe to tracking event
-        private void Check()
-        {
-            var username = Environment.UserName;
-            Console.WriteLine("Looking for: {0}", username);
-            var accounts = ComputerManager.GetAccounts();
-            var account = accounts.FirstOrDefault(a => a.Username == username);
-            if (account != null)
-            {
-                if (account.Tracking)
-                {
-                    Logger.Write("I am watching you " + username);
-                }
-                else
-                {
-                    Logger.Write("I am not watching you " + username);
-                }
-            }
-            else
-            {
-                Console.WriteLine("No account found");
-            }
-        }
         #region Rest
+        #region Get
         public User GetRestUser(string token)
         {
             var restUser = RestService.GetUser(token);
@@ -108,14 +50,17 @@ namespace Service
         {
             return RestService.GetAllAccounts(token);
         }
-
+        #endregion
+        #region Save
         public void SendUser(User user)
         {
             RestService.UpdateUser(user.AuthToken, user);
         }
         #endregion
+        #endregion
 
         #region Database
+        #region Get
         public User GetDbUser()
         {
             var user = DbManager.GetUser();
@@ -123,14 +68,6 @@ namespace Service
                 return user;
             throw new NullReferenceException("No Users Stored");
         }
-        public void SaveDbUser(string token)
-        {
-            DbManager.SaveUser(new User
-                {
-                    AuthToken = token
-                });
-        }
-
         public IEnumerable<Account> GetDbAccounts()
         {
             return DbManager.GetAccounts();
@@ -139,28 +76,44 @@ namespace Service
         {
             return DbManager.GetComputer();
         }
-
-        public void SaveDbAccounts()
+        #endregion
+        #region Save
+        public void SaveAccountsToDb(IEnumerable<Account> accounts)
         {
-            var accounts = ComputerManager.GetAccounts();
             foreach (var account in accounts)
             {
                 DbManager.SaveAccount(account);
             }
         }
-        #endregion
-
-        #region Computer
-        public void SaveHistory()
+        public void SaveUserToDb(string token)
+        {
+            DbManager.SaveUser(new User
+            {
+                AuthToken = token
+            });
+        }
+        public void SaveHistoryToDb()
         {
             var histories = BrowserManager.GetHistory();
             var computer = DbManager.GetComputer();
-            if(computer != null)
+            if (computer != null)
                 foreach (var history in histories)
                 {
                     history.ComputerId = computer.Id;
                     DbManager.SaveHistory(history);
                 }
+        }
+        #endregion
+        #endregion
+
+        #region Computer
+        public Computer GetComputer()
+        {
+            return ComputerManager.GetComputer();
+        }
+        public IEnumerable<Account> GetAccounts()
+        {
+            return ComputerManager.GetAccounts();
         }
         #endregion
 
@@ -169,6 +122,5 @@ namespace Service
         #endregion
 
 
-        //Methods that use the db and the rest service to save objects at the same time.
     }
 }

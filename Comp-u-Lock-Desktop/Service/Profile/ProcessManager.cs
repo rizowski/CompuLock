@@ -17,8 +17,16 @@ namespace Service.Profile
         public ProcessManager()
         {
             ManagementEventWatcher startWatch = new ManagementEventWatcher(new WqlEventQuery("SELECT * FROM Win32_ProcessStartTrace"));
-            startWatch.EventArrived += Start;
-            startWatch.Start();
+            try
+            {
+                startWatch.EventArrived += Start;
+                startWatch.Start();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                Logger.Write(e.InnerException + e.Message, Status.Error);
+            }
 
             DbManager = new DatabaseManager("settings", "myPass");
         }

@@ -17,6 +17,8 @@ namespace CompuLockDesktop
         {
             InitializeComponent();
             service = new MainService();
+            LoadAccounts();
+            LoadComputer();
         }
 
         private void OnOpen(object sender, EventArgs e)
@@ -26,12 +28,24 @@ namespace CompuLockDesktop
 
         private void SettingsClick(object sender, RoutedEventArgs e)
         {
-            var dialog = new Options();
+            var dialog = new Options(service);
             dialog.ShowDialog();
-            if (dialog.Activate() == true)
+        }
+
+        private void LoadAccounts()
+        {
+            var dbaccounts = service.GetDbAccounts();
+            foreach (var dbaccount in dbaccounts)
             {
-                
+                Accounts.Items.Add(dbaccount.Username);
             }
+        }
+
+        private void LoadComputer()
+        {
+            var computer = service.GetDbComputer();
+            ComputerName.Content = computer.Name;
+            
         }
 
     }

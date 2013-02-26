@@ -18,13 +18,8 @@ namespace REST
         private const string AccountPath = "accounts/";
         private const string UserPath = "users/";
         private const string ComputerPath = "computers/";
-        private const string ProgramPath = "programs/";
-        private const string ProcessPath = "processes";
-        private const string HistoriesPath = "histories/";
 
         private const string ComputerKey = "computer";
-        private const string ProgramKey = "program";
-        private const string ProcessKey = "process";
 
         protected const string Auth = "auth_token";
 
@@ -169,7 +164,6 @@ namespace REST
             return user;
         }
 #endregion
-
 #region Computers
         public Computer CreateComputer(string token, Computer item)
         {
