@@ -14,6 +14,8 @@ namespace Service.Profile
 {
     public class AccountManager
     {
+        private const string WinNT = "WinNT://";
+        private const string UserFlags = "UserFlags";
         private List<Account> Accounts { get; set; }
         private DatabaseManager DbManager { get; set; }
         public string Domain;
@@ -44,6 +46,8 @@ namespace Service.Profile
 
         private void Switch(object sender, SessionSwitchEventArgs sessionSwitchEventArgs)
         {
+            //var send = (SystemEvents) sender;
+            Console.WriteLine(sender.ToString());
             switch (sessionSwitchEventArgs.Reason)
             {
                 case SessionSwitchReason.ConsoleConnect:
@@ -69,6 +73,29 @@ namespace Service.Profile
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        public void LockAccount(Account account)
+        {
+            LockAccount(account.Domain, account.Username);
+        }
+
+        public void LockAccount(string domain, string username)
+        {
+            Console.WriteLine("Locking the account: {0}/{1}", domain, username);
+            try
+            {
+                using (DirectoryEntry user = new DirectoryEntry(WinNT + Environment.MachineName + "/" + username))
+                {
+                    user.Properties[UserFlags].Value = ADS_USER_FLAG.ADS_UF_ACCOUNTDISABLE;
+                    user.CommitChanges();
+                }
+                Console.WriteLine("Lock Completed.");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
             }
         }
 

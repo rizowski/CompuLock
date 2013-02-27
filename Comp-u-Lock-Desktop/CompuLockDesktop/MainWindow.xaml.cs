@@ -23,7 +23,8 @@ namespace CompuLockDesktop
 
         private void OnOpen(object sender, EventArgs e)
         {
-            try
+            //I don't think this is a good idea any more.
+            /*try
             {
                 service.GetDbUser();
             }
@@ -32,7 +33,7 @@ namespace CompuLockDesktop
                 var dialog = new Options(service);
                 dialog.Show();
                 MessageBox.Show(ex.Message);
-            }
+            }*/
         }
 
         private void SettingsClick(object sender, RoutedEventArgs e)

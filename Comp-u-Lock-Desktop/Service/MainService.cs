@@ -31,7 +31,7 @@ namespace Service
         {
             DbManager = new DatabaseManager("settings", "myPass");
             RestService = new RestService(RestServer, Api);
-            ComputerManager = new ComputerManager();
+            ComputerManager = new ComputerManager(DbManager);
             AccountManager = new AccountManager(DbManager);
             ProcessManager = new ProcessManager(DbManager);
             BrowserManager = new InternetExplorerHistoryReader();
@@ -93,7 +93,9 @@ namespace Service
         {
             DbManager.SaveUser(new User
             {
-                AuthToken = token
+                AuthToken = token,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now
             });
         }
         public void SaveHistoryToDb()

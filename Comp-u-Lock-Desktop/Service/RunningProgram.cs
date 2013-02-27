@@ -139,7 +139,7 @@ namespace Service
 
         public static void RunComputerManager()
         {
-            ComputerManager cm = new ComputerManager();
+            ComputerManager cm = new ComputerManager(new DatabaseManager("settings", "myPass"));
             var accounts = cm.GetAccounts();
             var computer = cm.GetComputer();
             Console.WriteLine("{0} - {1} |Address: {2}",computer.Enviroment, computer.Name, computer.IpAddress);
@@ -211,7 +211,7 @@ namespace Service
                 Console.WriteLine(e);
             }
 
-            ComputerManager cm = new ComputerManager();
+            ComputerManager cm = new ComputerManager(dc);
             var computer = cm.GetComputer();
             try
             {
@@ -298,10 +298,29 @@ namespace Service
             //RunInfoGatherer();
         }
 
+
+        // => Flow for the program
+        // Run program
+        //TODO ===DB===
+        // Checks if db exists
+        // if it doesn't create db and tables
+        // if it does, check if all tables are there create if doesn't exist
+
+
+        //TODO ==Computer Management==
+        // Tries to get the computer from the db, if it doesn't exist pulls the information from Computer and saves it
+        //TODO ==Account Management==
+        // Tries to get the accounts from the Db, if no entries exist, Pulls hte information from computer and saves it
+        //TODO ==History Management==
+        // Tries to get the histories from the db, if no entries exist, pulls from ie and saves it to db.
+        //TODO ==Process Management== 
+        // Tries to get the proceses from the db, if no entries exist, pulls from computer and saves it
         public static void MainServicer()
         {
             MainService s = new MainService();
-            s.SaveHistoryToDb();
+
+            var computer = s.GetComputer();
+            
         }
 
     }
