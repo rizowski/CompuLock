@@ -8,15 +8,16 @@ using Process = System.Diagnostics.Process;
 
 namespace Service.Profile
 {
-    public class ProcessManager
+    public class ProcessManager : IDisposable
     {
         private const int DOMAIN = 1;
         private const int USERNAME = 0;
         private DatabaseManager DbManager;
-
-        public ProcessManager()
+        private ManagementEventWatcher startWatch;
+        
+        public ProcessManager(DatabaseManager dbManager)
         {
-            ManagementEventWatcher startWatch = new ManagementEventWatcher(new WqlEventQuery("SELECT * FROM Win32_ProcessStartTrace"));
+            startWatch = new ManagementEventWatcher(new WqlEventQuery("SELECT * FROM Win32_ProcessStartTrace"));
             try
             {
                 startWatch.EventArrived += Start;
@@ -27,8 +28,12 @@ namespace Service.Profile
                 Console.WriteLine(e);
                 Logger.Write(e.InnerException + e.Message, Status.Error);
             }
+            DbManager = dbManager;
+        }
 
-            DbManager = new DatabaseManager("settings", "myPass");
+        public void Dispose()
+        {
+            startWatch.Dispose();
         }
 
         private void Start(object sender, EventArrivedEventArgs e)
@@ -166,6 +171,7 @@ namespace Service.Profile
                     }
                 }
             }
+            
             return proceses;
         }
 
@@ -191,6 +197,8 @@ namespace Service.Profile
                 {
                 }
             }
+            searcher.Dispose();
+
             return null;
         }
     }

@@ -3,8 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Options" Height="377" Width="540" Activated="OnOpen">
     <Grid>
-        <TextBox x:Name="AuthToken" HorizontalAlignment="Left" Height="23" Margin="89,14,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="206" Text="xgkjm1RcG8xpkNNMXpVq" />
-        <Label Content="Auth Token:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <Button Content="Save" HorizontalAlignment="Left" Margin="447,316,0,0" VerticalAlignment="Top" Width="75" Click="SaveClick" RenderTransformOrigin="0.507,0.45"/>
+        <TextBox x:Name="AuthToken" HorizontalAlignment="Left" Height="23" Margin="88,14,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="206" Text="Enter a Auth Token" MouseDoubleClick="OnClick" />
+        <Label Content="Auth Token:" HorizontalAlignment="Left" Margin="12,12,0,0" VerticalAlignment="Top"/>
+        <Button Content="Save" HorizontalAlignment="Left" Margin="431,305,0,0" VerticalAlignment="Top" Width="75" Click="SaveClick" RenderTransformOrigin="0.507,0.45"/>
     </Grid>
 </Window>

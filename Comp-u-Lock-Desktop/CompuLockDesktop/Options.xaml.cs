@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Database.Models;
+using REST;
 using Service;
 
 namespace CompuLockDesktop
@@ -49,14 +50,22 @@ namespace CompuLockDesktop
                 {
                     var user = service.GetRestUser(AuthToken.Text);
                     user.AuthToken = AuthToken.Text;
-                    service.SendUser(user);
-                   
+                }
+                catch (ServerOfflineException ex)
+                {
+                    MessageBox.Show(ex.Message);
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
+                this.Close();
             }
+        }
+
+        private void OnClick(object sender, MouseButtonEventArgs e)
+        {
+            AuthToken.Text = "";
         }
     }
 }

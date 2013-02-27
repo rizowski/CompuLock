@@ -149,7 +149,11 @@ namespace REST
             request.AddParameter(Auth, token);
             var response = Client.Execute(request);
             if (response.StatusCode != HttpStatusCode.OK)
+            {
+                if(response.StatusCode == 0)
+                    throw new ServerOfflineException("Server Unreachable.");
                 Console.WriteLine("Status Code Error: {0}", response.StatusCode);
+            }
             var userjson = JObject.Parse(response.Content);
             User user = null;
             try
@@ -250,5 +254,13 @@ namespace REST
             Console.WriteLine(response.Content);
         }
 #endregion
+    }
+
+    public class ServerOfflineException : Exception
+    {
+        public ServerOfflineException(string message):base(message)
+        {
+            
+        }
     }
 }

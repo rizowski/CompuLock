@@ -126,6 +126,7 @@
     <ProjectReference Include="..\Database\Database.csproj">
       <Project>{14b4fc88-d38c-4baa-bb30-5df0c9d57f65}</Project>
       <Name>Database</Name>
+      <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\REST\REST.csproj">
       <Project>{f27832ce-ff54-4a3d-ae0e-bf05994fa1ec}</Project>

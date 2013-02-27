@@ -24,7 +24,7 @@ namespace Service
         public InternetExplorerHistoryReader BrowserManager { get; set; }
         public RestService RestService { get; set; }
 
-        private const string RestServer = "http://localhost:3000";
+        private const string RestServer = "http://192.168.144.1:3000";
         private const string Api = "api/v1/";
 
         public MainService()
@@ -33,7 +33,7 @@ namespace Service
             RestService = new RestService(RestServer, Api);
             ComputerManager = new ComputerManager();
             AccountManager = new AccountManager(DbManager);
-            ProcessManager = new ProcessManager();
+            ProcessManager = new ProcessManager(DbManager);
             BrowserManager = new InternetExplorerHistoryReader();
         }
 
@@ -43,7 +43,10 @@ namespace Service
         {
             var restUser = RestService.GetUser(token);
             if (restUser == null)
+            {
+                Logger.Write("User not found", Status.Warning);
                 throw new NullReferenceException("User not found");
+            }
             return DbManager.SaveUser(restUser);
         }
         public IEnumerable<Account> GetRestAccounts(string token)
@@ -66,7 +69,8 @@ namespace Service
             var user = DbManager.GetUser();
             if (user != null)
                 return user;
-            throw new NullReferenceException("No Users Stored");
+            Logger.Write("No user Stored", Status.Warning);
+            throw new NullReferenceException("No User Stored");
         }
         public IEnumerable<Account> GetDbAccounts()
         {
@@ -121,6 +125,9 @@ namespace Service
         
         #endregion
 
-
+        public IEnumerable<History> GetHistory()
+        {
+            return DbManager.GetHistories();
+        }
     }
 }

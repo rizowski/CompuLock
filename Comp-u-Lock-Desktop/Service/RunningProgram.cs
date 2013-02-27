@@ -151,7 +151,7 @@ namespace Service
 
         public static void RunProcessManager()
         {
-            ProcessManager pm = new ProcessManager();
+            ProcessManager pm = new ProcessManager(new DatabaseManager("settings", "myPass"));
             var processes = pm.GetAllProcesses();
             Console.WriteLine("All processes");
             foreach (var process in processes)
