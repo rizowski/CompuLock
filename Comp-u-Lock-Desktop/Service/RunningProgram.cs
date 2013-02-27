@@ -120,7 +120,7 @@ namespace Service
         public static void RunHistory()
         {
             Console.WriteLine("Internet Explorer");
-            var ie = new InternetExplorerHistoryReader();
+            var ie = new InternetExplorerHistoryReader(new DatabaseManager("settings", "myPass"));
             Console.WriteLine(ie.IsRunning());
             Console.WriteLine(ie.Version);
             var urls = ie.GetHistory();
@@ -242,7 +242,6 @@ namespace Service
             Console.WriteLine("Information Gathered:");
             Console.WriteLine("Web Account:\nEmail: {0}\nAuth Token: {1}", user.Email, user.AuthToken);
             Console.WriteLine("\nComputer:\nName: {0}\n", computer.Name);
-            Console.WriteLine("Accounts({0}):", accounts.Count);
             foreach (var account in accounts)
             {
                 Console.WriteLine("Username: {0}\nTracking: {1}\n", account.Username, account.Tracking);

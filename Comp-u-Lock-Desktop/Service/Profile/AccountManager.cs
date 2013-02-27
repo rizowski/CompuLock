@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
+using System.Linq;
 using System.Security.Principal;
 using System.Timers;
 using ActiveDs;
@@ -16,8 +17,9 @@ namespace Service.Profile
     {
         private const string WinNT = "WinNT://";
         private const string UserFlags = "UserFlags";
-        private List<Account> Accounts { get; set; }
+
         private DatabaseManager DbManager { get; set; }
+
         public string Domain;
         public DateTime StartTime;
         public TimeSpan ElapsedTime;
@@ -29,7 +31,6 @@ namespace Service.Profile
         public AccountManager(DatabaseManager dbmanager, double interval = 1)
         {
             DbManager = dbmanager;
-            Accounts = new List<Account>();
             SetupTimer(interval);
             ITerminalServicesManager manager = new TerminalServicesManager();
             Server = manager.GetLocalServer();
@@ -47,7 +48,6 @@ namespace Service.Profile
         private void Switch(object sender, SessionSwitchEventArgs sessionSwitchEventArgs)
         {
             //var send = (SystemEvents) sender;
-            Console.WriteLine(sender.ToString());
             switch (sessionSwitchEventArgs.Reason)
             {
                 case SessionSwitchReason.ConsoleConnect:
@@ -109,13 +109,12 @@ namespace Service.Profile
             {
                 if (account.Tracking)
                 {
-                    Logger.Write("Begin Watching " + username);
-                    Add(account);
-
+                    if(account.AllottedTime == TimeSpan.FromSeconds(0))
+                        LockAccount(account.Username);
                 }
                 else
                 {
-                    Logger.Write("Not Watching " + username);
+                    Console.WriteLine("Not Watching " + username);
                 }
             }
             else
@@ -306,19 +305,42 @@ namespace Service.Profile
         }
         #endregion
 
-        
-
-        public void Add(Account account)
+        public IEnumerable<Account> GetAccounts()
         {
-            if (account.Tracking) return;
-            Accounts.Add(account);
-            account.Tracking = true;
+            var accounts = DbManager.GetAccounts();
+            if (accounts.Count() == 0)
+            {
+                SecurityIdentifier builtinAdminSid = new SecurityIdentifier(WellKnownSidType.BuiltinAdministratorsSid,
+                                                                            null);
+                PrincipalContext ctx = new PrincipalContext(ContextType.Machine);
+                GroupPrincipal group = GroupPrincipal.FindByIdentity(ctx, builtinAdminSid.Value);
+                List<Account> list = new List<Account>();
+                foreach (var member in group.Members)
+                {
+                    list.Add(new Account
+                        {
+                            CreatedAt = DateTime.Now,
+                            Domain = Environment.UserDomainName,
+                            Username = member.Name,
+                            Tracking = false,
+                            UpdatedAt = DateTime.Now
+                        });
+                    return list;
+                }
+            }
+            return accounts;
         }
 
-        public void Remove(Account account)
+        public void StartTracking(Account account)
         {
-            if (Accounts.Contains(account))
-                Accounts.Remove(account);
+            account.Tracking = true;
+            DbManager.SaveAccount(account);
+        }
+
+        public void StopTracking(Account account)
+        {
+            account.Tracking = false;
+            DbManager.SaveAccount(account);
         }
     }
 }

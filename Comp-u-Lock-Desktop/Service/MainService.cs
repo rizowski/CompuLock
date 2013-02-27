@@ -34,7 +34,7 @@ namespace Service
             ComputerManager = new ComputerManager(DbManager);
             AccountManager = new AccountManager(DbManager);
             ProcessManager = new ProcessManager(DbManager);
-            BrowserManager = new InternetExplorerHistoryReader();
+            BrowserManager = new InternetExplorerHistoryReader(DbManager);
         }
 
         #region Rest
@@ -44,7 +44,7 @@ namespace Service
             var restUser = RestService.GetUser(token);
             if (restUser == null)
             {
-                Logger.Write("User not found", Status.Warning);
+                Console.WriteLine("User not found");
                 throw new NullReferenceException("User not found");
             }
             return DbManager.SaveUser(restUser);
@@ -69,7 +69,7 @@ namespace Service
             var user = DbManager.GetUser();
             if (user != null)
                 return user;
-            Logger.Write("No user Stored", Status.Warning);
+            Console.WriteLine("No user Stored");
             throw new NullReferenceException("No User Stored");
         }
         public IEnumerable<Account> GetDbAccounts()

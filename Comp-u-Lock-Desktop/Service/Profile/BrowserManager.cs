@@ -5,15 +5,17 @@ using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
+using Database;
 using Database.Enviroment;
 using Database.Models;
 using Microsoft.Win32;
 using UrlHistoryLibrary;
 using Process = System.Diagnostics.Process;
+using Timer = System.Timers.Timer;
 
 namespace Service.Profile
 {
-
     public interface IBrowser
     {
         bool IsRunning();
@@ -22,12 +24,34 @@ namespace Service.Profile
 
     public class InternetExplorerHistoryReader : IBrowser
     {
+        private Timer UpdateTimer;
+        private DatabaseManager DbManager;
         public Version Version;
-        public InternetExplorerHistoryReader()
+
+        public InternetExplorerHistoryReader(DatabaseManager dbManager)
         {
+            DbManager = dbManager;
             var key = Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Internet Explorer");
             if (key != null)
                 Version = new Version((string)key.GetValue("Version"));
+            SetupUpdateTimer(300);
+        }
+
+        private void SetupUpdateTimer(double interval)
+        {
+            Console.WriteLine("Setting up Browser Manager Update Timer");
+            UpdateTimer = new Timer(interval * 1000) { AutoReset = true };
+            UpdateTimer.Elapsed += ForceUpdate;
+            UpdateTimer.Start();
+        }
+
+        private void ForceUpdate(object sender, EventArgs eventArgs)
+        {
+            var histories = GetHistory();
+            foreach (var history in histories)
+            {
+                DbManager.SaveHistory(history);
+            }
         }
 
         public bool IsRunning()

@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "View", "CompuLockDesktop\View.csproj", "{7027DC15-051F-4355-B5C3-58FC158220EB}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Installer", "Installer\Installer.vdproj", "{BB6CB4BD-5462-4ACC-9389-707A746C7E19}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		CD_ROM|Any CPU = CD_ROM|Any CPU
@@ -166,6 +168,21 @@ Global
 		{7027DC15-051F-4355-B5C3-58FC158220EB}.SingleImage|x64.ActiveCfg = Release|x64
 		{7027DC15-051F-4355-B5C3-58FC158220EB}.SingleImage|x64.Build.0 = Release|x64
 		{7027DC15-051F-4355-B5C3-58FC158220EB}.SingleImage|x86.ActiveCfg = Release|x64
+		{BB6CB4BD-5462-4ACC-9389-707A746C7E19}.CD_ROM|Any CPU.ActiveCfg = Release
+		{BB6CB4BD-5462-4ACC-9389-707A746C7E19}.CD_ROM|x64.ActiveCfg = Release
+		{BB6CB4BD-5462-4ACC-9389-707A746C7E19}.CD_ROM|x86.ActiveCfg = Release
+		{BB6CB4BD-5462-4ACC-9389-707A746C7E19}.Debug|Any CPU.ActiveCfg = Debug
+		{BB6CB4BD-5462-4ACC-9389-707A746C7E19}.Debug|x64.ActiveCfg = Debug
+		{BB6CB4BD-5462-4ACC-9389-707A746C7E19}.Debug|x86.ActiveCfg = Debug
+		{BB6CB4BD-5462-4ACC-9389-707A746C7E19}.DVD-5|Any CPU.ActiveCfg = Debug
+		{BB6CB4BD-5462-4ACC-9389-707A746C7E19}.DVD-5|x64.ActiveCfg = Debug
+		{BB6CB4BD-5462-4ACC-9389-707A746C7E19}.DVD-5|x86.ActiveCfg = Debug
+		{BB6CB4BD-5462-4ACC-9389-707A746C7E19}.Release|Any CPU.ActiveCfg = Release
+		{BB6CB4BD-5462-4ACC-9389-707A746C7E19}.Release|x64.ActiveCfg = Release
+		{BB6CB4BD-5462-4ACC-9389-707A746C7E19}.Release|x86.ActiveCfg = Release
+		{BB6CB4BD-5462-4ACC-9389-707A746C7E19}.SingleImage|Any CPU.ActiveCfg = Release
+		{BB6CB4BD-5462-4ACC-9389-707A746C7E19}.SingleImage|x64.ActiveCfg = Release
+		{BB6CB4BD-5462-4ACC-9389-707A746C7E19}.SingleImage|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

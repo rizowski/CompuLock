@@ -18,7 +18,6 @@ namespace Service.Profile
 {
     public class ComputerManager
     {
-        
         private DatabaseManager DbManager { get; set; }
 
         private Timer UpdateTimer;
@@ -31,8 +30,10 @@ namespace Service.Profile
 
         private void SetupUpdateTimer(double interval)
         {
+            Console.WriteLine("Setting up Computer Manager Update Timer");
             UpdateTimer = new Timer(interval * 1000){AutoReset = true};
             UpdateTimer.Elapsed += ForceUpdate;
+            UpdateTimer.Start();
         }
 
         private void ForceUpdate(object sender, EventArgs eventArgs)
@@ -51,7 +52,7 @@ namespace Service.Profile
             }
         }
 
-        public void ForceUpdate()
+        public Computer ForceUpdate()
         {
             IPAddress[] localIPs = Dns.GetHostAddresses(Dns.GetHostName());
             String MyIp = localIPs[0].ToString();
@@ -62,7 +63,7 @@ namespace Service.Profile
                 IpAddress = MyIp,
                 UpdatedAt = DateTime.Now
             };
-            DbManager.SaveComputer(computer);
+            return DbManager.SaveComputer(computer);
         }
 
         #region View
@@ -71,38 +72,35 @@ namespace Service.Profile
             var computer = DbManager.GetComputer();
             if (computer == null)
             {
-                IPAddress[] localIPs = Dns.GetHostAddresses(Dns.GetHostName());
-                String MyIp = localIPs[0].ToString();
-                return new Computer
-                    {
-                        CreatedAt = DateTime.Now,
-                        Name = Environment.MachineName,
-                        Enviroment = OS.StringName,
-                        IpAddress = MyIp,
-                        UpdatedAt = DateTime.Now
-                    };
+                return ForceUpdate();
             }
             return computer;
         }
 
-        public List<Account> GetAccounts()
+        public IEnumerable<Account> GetAccounts()
         {
-            SecurityIdentifier builtinAdminSid = new SecurityIdentifier(WellKnownSidType.BuiltinAdministratorsSid, null);
-            PrincipalContext ctx = new PrincipalContext(ContextType.Machine);
-            GroupPrincipal group = GroupPrincipal.FindByIdentity(ctx, builtinAdminSid.Value);
-            List<Account> list = new List<Account>();
-            foreach (var member in group.Members)
+            var accounts = DbManager.GetAccounts();
+            if (accounts.Count() == 0)
             {
-                list.Add(new Account
+                SecurityIdentifier builtinAdminSid = new SecurityIdentifier(WellKnownSidType.BuiltinAdministratorsSid,
+                                                                            null);
+                PrincipalContext ctx = new PrincipalContext(ContextType.Machine);
+                GroupPrincipal group = GroupPrincipal.FindByIdentity(ctx, builtinAdminSid.Value);
+                List<Account> list = new List<Account>();
+                foreach (var member in group.Members)
                 {
-                    CreatedAt = DateTime.Now,
-                    Domain = Environment.UserDomainName,
-                    Username = member.Name,
-                    Tracking = false,
-                    UpdatedAt = DateTime.Now
-                });
+                    list.Add(new Account
+                    {
+                        CreatedAt = DateTime.Now,
+                        Domain = Environment.UserDomainName,
+                        Username = member.Name,
+                        Tracking = false,
+                        UpdatedAt = DateTime.Now
+                    });
+                    return list;
+                }
             }
-            return list;
+            return accounts;
         }
         #endregion
 

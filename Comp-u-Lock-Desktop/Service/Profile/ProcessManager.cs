@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Management;
+using System.Timers;
 using Database;
 using Database.Models;
 using Process = System.Diagnostics.Process;
@@ -14,19 +15,18 @@ namespace Service.Profile
         private const int USERNAME = 0;
         private DatabaseManager DbManager;
         private ManagementEventWatcher startWatch;
-        
+
         public ProcessManager(DatabaseManager dbManager)
         {
             startWatch = new ManagementEventWatcher(new WqlEventQuery("SELECT * FROM Win32_ProcessStartTrace"));
             try
             {
-                startWatch.EventArrived += Start;
+                startWatch.EventArrived += Update;
                 startWatch.Start();
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                Logger.Write(e.InnerException + e.Message, Status.Error);
             }
             DbManager = dbManager;
         }
@@ -36,7 +36,7 @@ namespace Service.Profile
             startWatch.Dispose();
         }
 
-        private void Start(object sender, EventArrivedEventArgs e)
+        private void Update(object sender, EventArrivedEventArgs e)
         {
             var userAccount = GetProcessOwner(Convert.ToInt32(e.NewEvent.Properties["ProcessID"].Value));
             if (userAccount != null)
@@ -44,8 +44,7 @@ namespace Service.Profile
                 if (userAccount.Tracking)
                 {
                     var name = e.NewEvent.Properties["ProcessName"].Value;
-                    Logger.Write("Adding Process " + name + " for " + userAccount.Username);
-                    Console.WriteLine("Saving PRocess {0} For {1}", name, userAccount.Username);
+                    Console.WriteLine("Adding Process {0} for {1}", name, userAccount.Username);
                     DbManager.SaveProcess(new Database.Models.Process
                         {
                             AccountId = userAccount.Id,
