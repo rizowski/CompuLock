@@ -318,8 +318,7 @@ namespace Service
         {
             MainService s = new MainService();
 
-            var computer = s.GetComputer();
-            
+            s.AccountManager.GetLoggedOnSessions();
         }
 
     }

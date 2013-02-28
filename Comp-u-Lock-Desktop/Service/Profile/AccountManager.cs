@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
 using System.Linq;
+using System.Management;
 using System.Security.Principal;
 using System.Timers;
 using ActiveDs;
@@ -20,6 +21,8 @@ namespace Service.Profile
 
         private DatabaseManager DbManager { get; set; }
 
+        private List<Account> LoggedInAccounts { get; set; }
+
         public string Domain;
         public DateTime StartTime;
         public TimeSpan ElapsedTime;
@@ -28,13 +31,104 @@ namespace Service.Profile
         public Timer Timer;
         public ITerminalServer Server;
 
-        public AccountManager(DatabaseManager dbmanager, double interval = 1)
+        private Timer UpdateTimer;
+        private Timer LockoutTimer;
+
+        public AccountManager(DatabaseManager dbmanager, double interval = 1, double updateInterval = 3600)
         {
             DbManager = dbmanager;
             SetupTimer(interval);
+            SetupUpdateTimer(updateInterval);
+            SetupLockoutTimer(interval);
             ITerminalServicesManager manager = new TerminalServicesManager();
             Server = manager.GetLocalServer();
-            SystemEvents.SessionSwitch += Switch;
+            Load();
+        }
+
+        private void SetupLockoutTimer(double interval)
+        {
+            Console.WriteLine("Setting up Account Manager Lockout Timer");
+            LockoutTimer = new Timer(interval*1000){AutoReset = true};
+            LockoutTimer.Elapsed += Update;
+            LockoutTimer.Start();
+        }
+
+        // checks to see what user is logged in
+        // Checks to see if the logged in user is being tracked
+        // checks to see if the tracked user has run out of time.
+        private void Update(object sender, ElapsedEventArgs e)
+        {
+            Console.WriteLine("Checking for Lockout");
+            Console.WriteLine("{0} accounts logged in", LoggedInAccounts.Count);
+            foreach (var account in LoggedInAccounts)
+            {
+                if (account.Tracking)
+                {
+                    Console.WriteLine("{0} is being tracked", account.Username);
+                    if (account.AllottedTime.TotalSeconds <= 0)
+                    {
+                        Console.WriteLine("Locking...");
+                        LockAccount(account);
+                    }
+                    if (account.AllottedTime.TotalSeconds > 0)
+                    {
+                        UnlockAccount(account.Username);
+                    }
+                }
+            }
+        }
+
+        // Loads the account information from the computer
+        // Checks to see if each account has been saved to the db.
+        // If the account is in the db, updates the allotted time for the listed account
+        private void Load()
+        {
+            LoggedInAccounts = new List<Account>();
+            var accounts = GetLoggedInAccounts();
+            var dbAccounts = GetDbAccounts();
+            foreach (var account in accounts)
+            {
+                var foundAccount = dbAccounts.FirstOrDefault(a => a.Username == account.Username);
+                if (foundAccount == null)
+                    foundAccount = DbManager.SaveAccount(account);
+                LoggedInAccounts.Add(foundAccount);
+            }
+        }
+
+        private void SetupUpdateTimer(double interval)
+        {
+            Console.WriteLine("Setting up Account Manager Update Timer");
+            UpdateTimer = new Timer(interval * 1000){AutoReset = true};
+            UpdateTimer.Elapsed += ForceUpdate;
+            UpdateTimer.Start();
+        }
+
+        private void ForceUpdate(object sender, ElapsedEventArgs e)
+        {
+            Console.WriteLine("Tick");
+            var computer = DbManager.GetComputer();
+            DbManager.SaveAccounts(computer.Id, (List<Account>) GetLoggedInAccounts());
+        }
+
+        public List<Account> GetLoggedOnSessions()
+        {
+            var sessions = Server.GetSessions();
+            List<Account> accounts = new List<Account>();
+            foreach (var session in sessions)
+            {
+                var account = DbManager.GetAccounts().FirstOrDefault(a => a.Username == session.UserName);
+                if(account != null)
+                    accounts.Add(account);
+            }
+            return accounts;
+        }
+
+        public int GetSessionId(string username)
+        {
+            var session = Server.GetSessions().First(a => a.UserName == username);
+            if (session != null)
+                return session.SessionId;
+            return -1;
         }
 
         private void SetupTimer(double interval)
@@ -43,37 +137,6 @@ namespace Service.Profile
             Timer.Disposed += TimerDisposed;
             Timer.Elapsed += Tick;
             ElapsedTime = TimeSpan.Zero;
-        }
-
-        private void Switch(object sender, SessionSwitchEventArgs sessionSwitchEventArgs)
-        {
-            //var send = (SystemEvents) sender;
-            switch (sessionSwitchEventArgs.Reason)
-            {
-                case SessionSwitchReason.ConsoleConnect:
-                    break;
-                case SessionSwitchReason.ConsoleDisconnect:
-                    break;
-                case SessionSwitchReason.RemoteConnect:
-                    Check();
-                    break;
-                case SessionSwitchReason.RemoteDisconnect:
-                    break;
-                case SessionSwitchReason.SessionLogon:
-                    Check();
-                    break;
-                case SessionSwitchReason.SessionLogoff:
-                    break;
-                case SessionSwitchReason.SessionLock:
-                    break;
-                case SessionSwitchReason.SessionUnlock:
-                    Check();
-                    break;
-                case SessionSwitchReason.SessionRemoteControl:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
         }
 
         public void LockAccount(Account account)
@@ -99,29 +162,6 @@ namespace Service.Profile
             }
         }
 
-        //TODO Check and subscribe to tracking event
-        private void Check()
-        {
-            var username = Environment.UserName;
-            Console.WriteLine("Looking for: {0}", username);
-            var account = DbManager.GetAccountByName(username);
-            if (account != null)
-            {
-                if (account.Tracking)
-                {
-                    if(account.AllottedTime == TimeSpan.FromSeconds(0))
-                        LockAccount(account.Username);
-                }
-                else
-                {
-                    Console.WriteLine("Not Watching " + username);
-                }
-            }
-            else
-            {
-                Console.WriteLine("No account found");
-            }
-        }
         #region Timer
         private void TimerDisposed(object sender, EventArgs e)
         {
@@ -305,31 +345,30 @@ namespace Service.Profile
         }
         #endregion
 
-        public IEnumerable<Account> GetAccounts()
+        public IEnumerable<Account> GetLoggedInAccounts()
         {
-            var accounts = DbManager.GetAccounts();
-            if (accounts.Count() == 0)
+            List<Account> list = new List<Account>();
+
+            var sessions = Server.GetSessions();
+            foreach (var session in sessions)
             {
-                SecurityIdentifier builtinAdminSid = new SecurityIdentifier(WellKnownSidType.BuiltinAdministratorsSid,
-                                                                            null);
-                PrincipalContext ctx = new PrincipalContext(ContextType.Machine);
-                GroupPrincipal group = GroupPrincipal.FindByIdentity(ctx, builtinAdminSid.Value);
-                List<Account> list = new List<Account>();
-                foreach (var member in group.Members)
-                {
-                    list.Add(new Account
-                        {
-                            CreatedAt = DateTime.Now,
-                            Domain = Environment.UserDomainName,
-                            Username = member.Name,
-                            Tracking = false,
-                            UpdatedAt = DateTime.Now
-                        });
-                    return list;
-                }
+                var account = new Account
+                    {
+                        CreatedAt = DateTime.Now,
+                        Domain = session.DomainName,
+                        Username = session.UserName,
+                        UpdatedAt = DateTime.Now
+                    };
+
+                list.Add(account);
             }
-            return accounts;
+            return list;
         }
+
+        public IEnumerable<Account> GetDbAccounts()
+        {
+            return DbManager.GetAccounts();
+        } 
 
         public void StartTracking(Account account)
         {

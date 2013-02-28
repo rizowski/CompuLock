@@ -20,6 +20,8 @@ namespace Service.Profile
     {
         private DatabaseManager DbManager { get; set; }
 
+        public bool Watching { get; set; }
+
         private Timer UpdateTimer;
 
         public ComputerManager(DatabaseManager dbManager)
@@ -34,6 +36,7 @@ namespace Service.Profile
             UpdateTimer = new Timer(interval * 1000){AutoReset = true};
             UpdateTimer.Elapsed += ForceUpdate;
             UpdateTimer.Start();
+            Watching = true;
         }
 
         private void ForceUpdate(object sender, EventArgs eventArgs)
@@ -50,6 +53,11 @@ namespace Service.Profile
                 if(count >= 7)
                     ForceUpdate();
             }
+        }
+        public void StopUpdating()
+        {
+            UpdateTimer.Dispose();
+            Watching = false;
         }
 
         public Computer ForceUpdate()

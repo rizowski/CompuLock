@@ -56,7 +56,7 @@ namespace Database
             if(!DbExists)
                 SQLiteConnection.CreateFile(DbPath);
             DbConnection = new SQLiteConnection("Data Source=" + DbPath + ";Version=3;");//Password="+DbPassword+";");
-            
+            //TODO check to see if sqlite is busy before inserting
             CreateTables();
         }
 
@@ -80,7 +80,7 @@ namespace Database
             ExecuteQuery(user);
             const string computer = CreateTable + IfNotExists + ComputersTable + "(Id integer primary key asc, WebId integer, UserId integer, Enviroment varchar(50), Name varchar(50) unique on conflict replace, IpAddress varchar(16), CreatedAt datetime, UpdatedAt datetime)";
             ExecuteQuery(computer);
-            const string account = CreateTable + IfNotExists + AccountsTable + "(Id integer primary key asc, WebId integer, ComputerId integer, Domain varchar(50), Username varchar(50), Tracking bool, AllottedTime integer, UsedTime integer, CreatedAt datetime, UpdatedAt datetime, unique(Domain, Username) on conflict replace)";
+            const string account = CreateTable + IfNotExists + AccountsTable + "(Id integer primary key asc, WebId integer, Domain varchar(50), Username varchar(50), Tracking bool, Locked bool, AllottedTime integer, UsedTime integer, CreatedAt datetime, UpdatedAt datetime, unique(Domain, Username) on conflict replace)";
             ExecuteQuery(account);
             const string accountHistory = CreateTable + IfNotExists + HistoryTable + "(Id integer primary key asc, WebId integer, ComputerId integer, Title varchar(150), Url varchar(300), VisitCount integer, CreatedAt datetime, UpdatedAt datetime, unique(ComputerId, Url) on conflict replace)";
             ExecuteQuery(accountHistory);
@@ -222,23 +222,21 @@ namespace Database
         {
             if (account == null)
                 throw new NoNullAllowedException("Account can't be null");
-            if (account.ComputerId <= 0)
-                throw new ArgumentException("Computer Id is required.");
             StringBuilder sb = new StringBuilder();
             Console.WriteLine("Saving an account");
             sb.Append(InsertInto);
             sb.Append(AccountsTable);
-            sb.Append("(ComputerId, Domain, Username, Tracking, AllottedTime, UsedTime, CreatedAt, UpdatedAt) ");
+            sb.Append("(Domain, Username, Tracking, AllottedTime, UsedTime, Locked, CreatedAt, UpdatedAt) ");
             sb.Append(Values);
-            sb.Append("(@computerId, @domain, @username, @tracking, @allottedTime, @usedTime, @createdAt, @updatedAt)");
+            sb.Append("(@domain, @username, @tracking, @allottedTime, @usedTime, @locked, @createdAt, @updatedAt)");
             sb.Append(End);
             var command = new SQLiteCommand(sb.ToString(), DbConnection);
-                command.Parameters.Add(new SQLiteParameter("@computerId", account.ComputerId));
                 command.Parameters.Add(new SQLiteParameter("@domain", account.Domain));
                 command.Parameters.Add(new SQLiteParameter("@username", account.Username));
                 command.Parameters.Add(new SQLiteParameter("@tracking", account.Tracking));
                 command.Parameters.Add(new SQLiteParameter("@allottedTime", account.AllottedTime));
                 command.Parameters.Add(new SQLiteParameter("@usedTime", account.UsedTime));
+                command.Parameters.Add(new SQLiteParameter("@locked", account.Locked));
                 command.Parameters.Add(new SQLiteParameter("@createdAt", DateTime.Now));
                 command.Parameters.Add(new SQLiteParameter("@updatedAt", DateTime.Now));
             DbConnection.Open();
@@ -322,11 +320,11 @@ namespace Database
                 list.Add(new Account
                     {
                         Id = Convert.ToInt32(reader["Id"]),
-                        ComputerId = Convert.ToInt32(reader["ComputerId"]),
                         Domain = (string) reader["Domain"],
                         Username = (string) reader["Username"],
                         Tracking = (Convert.ToInt32(reader["Tracking"]) == 1),
                         AllottedTime = TimeSpan.FromSeconds(Convert.ToDouble(reader["AllottedTime"])),
+                        Locked = Convert.ToBoolean(reader["Locked"]),
                         UsedTime = TimeSpan.FromSeconds(Convert.ToDouble(reader["UsedTime"])),
                         CreatedAt = Convert.ToDateTime(reader["CreatedAt"]),
                         UpdatedAt = Convert.ToDateTime(reader["UpdatedAt"])
@@ -431,6 +429,7 @@ namespace Database
 
         public void SaveAccounts(int id, List<Account> accounts)
         {
+            Console.WriteLine("Saving accounts");
             foreach (var account in accounts)
             {
                 account.ComputerId = id;

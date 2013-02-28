@@ -123,23 +123,6 @@ Week 8:
 		- Learn more about SQL injection 
 			- Why not use simple strings
 			- How to id entify if sql injection is possible
-	Plan:
-		Friday:
-			- Get a service to Install
-			- Get the service to run
-		Saturday:
-			- Reasearch how to connect to the service
-			- Implement a way to connect to the service
-		Sunday:
-			- 
-		Monday:
-			- 
-		Tuesday:
-			- 
-		Webnesday:
-			- 
-		Thursday:
-			- 
 Resources:
 	Windows Service:
 		- http://code.msdn.microsoft.com/windowsdesktop/CSWindowsService-9f2f568e
@@ -150,8 +133,9 @@ Resources:
 
 Pulls from the server first, then pushes.
 Need to fix history to just have url. I dont need url
-
+Check if sqlite is busy before inserting....
 
 Notes for Presentation:
 	As for browser history I can use a proxy to get all the information
 	As for account being associated with the history I can get the currently logged in user
+	Learned unmanaged dll calls

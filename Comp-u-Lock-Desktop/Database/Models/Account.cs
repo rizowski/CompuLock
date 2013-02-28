@@ -26,6 +26,9 @@ namespace Database.Models
         [JsonProperty(PropertyName = "admin", NullValueHandling = NullValueHandling.Ignore)]
         public bool Admin { get; set; }
 
+        [JsonIgnore]
+        public bool Locked { get; set; }
+
         [JsonProperty(PropertyName = "tracking")]
         public bool Tracking { get; set; }
         [JsonProperty(PropertyName = "allotted_time")]
