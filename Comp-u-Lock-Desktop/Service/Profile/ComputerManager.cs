@@ -28,6 +28,7 @@ namespace Service.Profile
         {
             DbManager = dbManager;
             SetupUpdateTimer(10800);
+            ForceUpdate();
         }
 
         private void SetupUpdateTimer(double interval)

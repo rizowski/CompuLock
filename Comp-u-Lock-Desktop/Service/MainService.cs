@@ -24,17 +24,29 @@ namespace Service
         public InternetExplorerHistoryReader BrowserManager { get; set; }
         public RestService RestService { get; set; }
 
+        private Thread RestThread { get; set; }
+        private Thread ComputerThread { get; set; }
+        private Thread AccountThread { get; set; }
+        private Thread ProcessThread { get; set; }
+        private Thread BrowserThread { get; set; }
+
         private const string RestServer = "http://192.168.144.1:3000";
         private const string Api = "api/v1/";
 
         public MainService()
         {
             DbManager = new DatabaseManager("settings", "myPass");
-            RestService = new RestService(RestServer, Api);
-            ComputerManager = new ComputerManager(DbManager);
-            AccountManager = new AccountManager(DbManager);
-            ProcessManager = new ProcessManager(DbManager);
-            BrowserManager = new InternetExplorerHistoryReader(DbManager);
+            RestThread = new Thread(() => RestService = new RestService(RestServer, Api));
+            ComputerThread = new Thread(() => ComputerManager = new ComputerManager(DbManager));
+            AccountThread = new Thread(() => AccountManager = new AccountManager(DbManager));
+            ProcessThread = new Thread(() => ProcessManager = new ProcessManager(DbManager));
+            BrowserThread = new Thread(() => BrowserManager = new InternetExplorerHistoryReader(DbManager));
+            
+            RestThread.Start();
+            ComputerThread.Start();
+            AccountThread.Start();
+            ProcessThread.Start();
+            BrowserThread.Start();
         }
 
         #region Rest

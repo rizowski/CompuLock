@@ -32,7 +32,7 @@ namespace Database
 
         private const string CreateTable = "create table ";
         private const string IfNotExists = " if not exists ";
-        private const string InsertInto = "insert or ignore into ";
+        private const string InsertInto = "insert into ";
         private const string Select = "select ";
         private const string SelectAll = "select * from ";
         private const string All = "* from ";

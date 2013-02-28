@@ -316,9 +316,12 @@ namespace Service
         // Tries to get the proceses from the db, if no entries exist, pulls from computer and saves it
         public static void MainServicer()
         {
+            /*if (File.Exists("settings.sqlite"))
+            {
+                File.Delete("settings.sqlite");
+            }*/
             MainService s = new MainService();
 
-            s.AccountManager.GetLoggedOnSessions();
         }
 
     }
