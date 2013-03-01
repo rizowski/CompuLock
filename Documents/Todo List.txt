@@ -129,11 +129,40 @@ Resources:
 		- http://msdn.microsoft.com/en-us/library/ms731758.aspx
 		- http://www.c-sharpcorner.com/uploadfile/mirfan00/windows-service-in-C-Sharp/
 
-
-
 Pulls from the server first, then pushes.
 Need to fix history to just have url. I dont need url
 Check if sqlite is busy before inserting....
+
+Done:
+	- Removed chrome and firefox methods
+	- Switched over to visual studio 2010 onto XP
+	- Got a partial gui going started to develop custom service
+	- Added timers for computer account and History
+	- found and implemented a custom login checker function
+	
+
+Week 9:
+	Todo:
+		RestManager:
+			- Timer for pushing data from the desktop Db to the webservice on a regular basis
+		ProcessManager:
+			- Find out why the stupid thing put me into yellow for week 8 and fix its defect.
+			- possibly rewrite the get processes method to get processes with users easier
+		HistoryManager:
+			- Only works for general use. Find if there is a difference between accounts and fix.
+		MainService: 
+			- Needs to function as if there is no web until a user object has an auth token.
+		Gui:
+			Desktop:
+				- Gui needs to function as an independant application not requiring the web until an auth token is provided
+
+			Web:
+				- A simple layout needs to be established to show the information in a readable manor. Doesn't need to be fantastic
+Check Up Goals:
+	- who do I want to become and how will i get there.
+Side Things to accomplish:
+	- Add Day and hour of day Restrictions
+	- Need to write update statements - Id for conflicting items is going up
 
 Notes for Presentation:
 	As for browser history I can use a proxy to get all the information
