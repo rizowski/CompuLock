@@ -115,6 +115,7 @@
     <Compile Include="Profile\ComputerManager.cs" />
     <Compile Include="Profile\ProcessManager.cs" />
     <Compile Include="Profile\AccountManager.cs" />
+    <Compile Include="Profile\RestManager.cs" />
     <Compile Include="RunningProgram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

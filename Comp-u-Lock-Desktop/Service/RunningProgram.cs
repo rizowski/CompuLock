@@ -335,8 +335,10 @@ namespace Service
                         s.DbManager.SaveAccount(account);
                     }
                 }
-
             }
+
+            //var user = s.DbManager.GetFullUser();
+            //var email = user.Email;
         }
 
     }

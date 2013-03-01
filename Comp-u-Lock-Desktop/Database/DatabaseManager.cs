@@ -443,5 +443,39 @@ namespace Database
                 SaveHistory(history);
             }
         }
+
+        public User GetFullUser()
+        {
+            var user = GetUser();
+            if(user == null)
+                user = new User();
+            var computer = GetComputer();
+            user.Computers = new List<Computer>();
+            computer.Accounts = new List<Account>();
+            computer.Histories = new List<History>();
+            user.Computers.Add(computer);
+            var accounts = GetAccounts();
+            foreach (var account in accounts)
+            {
+                computer.Accounts.Add(account);
+            }
+            var histories = GetHistories();
+            foreach (var history in histories)
+            {
+                computer.Histories.Add(history);
+            }
+            for (int i = 0; i < accounts.Count(); i++)
+            {
+                var account = accounts.ToArray()[i];
+                account.Processes = new List<Process>();
+                var processes = GetProcessesByAccountId(account.Id);
+
+                foreach (var process in processes)
+                {
+                    account.Processes.Add(process);
+                }
+            }
+            return user;
+        }
     }
 }

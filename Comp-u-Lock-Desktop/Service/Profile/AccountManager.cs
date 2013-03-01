@@ -56,8 +56,10 @@ namespace Service.Profile
                     }
                     if (account.AllottedTime.TotalSeconds > 0)
                     {
-                        if(account.Locked)
-                            UnlockAccount(account.Username);
+                        if (account.Locked)
+                        {
+                            UnlockAccount(account);
+                        }
                     }
                 }
             }
@@ -291,6 +293,11 @@ namespace Service.Profile
             else
                 throw new Exception("Session could not be found for SessionId: " + sessionId);
         }
+        public void UnlockAccount(Account account)
+        {
+            UnlockAccount(account.Username);
+            account.Locked = false;
+        }
         public void UnlockAccount(string username = null)
         {
             if (username == null)
@@ -301,15 +308,8 @@ namespace Service.Profile
             {
                 Console.Write("UnLocking the account: {0}", username);
                 DirectoryEntry user = new DirectoryEntry("WinNT://" + Environment.MachineName + "/" + username);
-                Console.Write(".");
-                //Console.WriteLine(user.Properties["UserFlags"].Value);
-                Console.Write(".");
-                //Console.WriteLine(old);
                 user.Properties["UserFlags"].Value = ADS_USER_FLAG.ADS_UF_NORMAL_ACCOUNT;
-                Console.Write(".");
-                //Console.WriteLine(user.Properties["UserFlags"].Value);
                 user.CommitChanges();
-                Console.WriteLine(".");
                 user.Close();
             }
             catch (Exception)
