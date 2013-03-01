@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
-using System.DirectoryServices.ActiveDirectory;
 using System.Linq;
 using System.Net;
-using System.Net.Sockets;
 using System.Security.Principal;
-using System.Text;
 using System.Timers;
-using ActiveDs;
 using Database;
 using Database.Enviroment;
 using Database.Models;
@@ -18,10 +13,8 @@ namespace Service.Profile
 {
     public class ComputerManager
     {
-        private DatabaseManager DbManager { get; set; }
-
         public bool Watching { get; set; }
-
+        private DatabaseManager DbManager { get; set; }
         private Timer UpdateTimer;
 
         public ComputerManager(DatabaseManager dbManager)

@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.DirectoryServices;
-using System.DirectoryServices.AccountManagement;
 using System.Linq;
-using System.Management;
-using System.Security.Principal;
 using System.Timers;
 using ActiveDs;
 using Cassia;
 using Database;
 using Database.Models;
-using Microsoft.Win32;
 
 namespace Service.Profile
 {

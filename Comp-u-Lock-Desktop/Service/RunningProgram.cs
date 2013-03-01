@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using Database;
 using Database.Enviroment;
 using Database.Models;
@@ -321,7 +322,10 @@ namespace Service
                 File.Delete("settings.sqlite");
             }*/
             MainService s = new MainService();
-
+            foreach (var account in s.GetAccounts())
+            {
+                Console.WriteLine(account.Username);
+            }
         }
 
     }
