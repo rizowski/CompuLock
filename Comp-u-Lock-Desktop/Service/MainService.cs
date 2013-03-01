@@ -36,17 +36,11 @@ namespace Service
         public MainService()
         {
             DbManager = new DatabaseManager("settings", "myPass");
-            RestThread = new Thread(() => RestService = new RestService(RestServer, Api));
-            ComputerThread = new Thread(() => ComputerManager = new ComputerManager(DbManager));
-            AccountThread = new Thread(() => AccountManager = new AccountManager(DbManager));
-            ProcessThread = new Thread(() => ProcessManager = new ProcessManager(DbManager));
-            BrowserThread = new Thread(() => BrowserManager = new InternetExplorerHistoryReader(DbManager));
-            
-            RestThread.Start();
-            ComputerThread.Start();
-            AccountThread.Start();
-            ProcessThread.Start();
-            BrowserThread.Start();
+            RestService = new RestService(RestServer, Api);
+            ComputerManager = new ComputerManager(DbManager);
+            AccountManager = new AccountManager(DbManager);
+            ProcessManager = new ProcessManager(DbManager);
+            BrowserManager = new InternetExplorerHistoryReader(DbManager);
         }
 
         #region Rest

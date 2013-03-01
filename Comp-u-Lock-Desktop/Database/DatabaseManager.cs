@@ -86,8 +86,6 @@ namespace Database
             ExecuteQuery(accountHistory);
             const string accountProcess = CreateTable + IfNotExists + ProcessTable + "(Id integer primary key asc, WebId integer, AccountId integer, Name varchar(100), CreatedAt datetime, UpdatedAt datetime, unique(AccountId, Name) on conflict replace)";
             ExecuteQuery(accountProcess);
-            const string accountProgram = CreateTable + IfNotExists + ProgramTable + "(Id integer primary key asc, WebId integer, AccountId integer, Name varchar(100), OpenCount integer, CreatedAt datetime, UpdatedAt datetime, unique(AccountId, Name) on conflict replace)";
-            ExecuteQuery(accountProgram);
 
             const string restriction = CreateTable + IfNotExists + RestrictionTable + "(Id integer primary key asc, WebId integer, AccountId integer, unique(Id, AccountId) on conflict replace)";
             ExecuteQuery(restriction);
@@ -234,8 +232,8 @@ namespace Database
                 command.Parameters.Add(new SQLiteParameter("@domain", account.Domain));
                 command.Parameters.Add(new SQLiteParameter("@username", account.Username));
                 command.Parameters.Add(new SQLiteParameter("@tracking", account.Tracking));
-                command.Parameters.Add(new SQLiteParameter("@allottedTime", account.AllottedTime));
-                command.Parameters.Add(new SQLiteParameter("@usedTime", account.UsedTime));
+                command.Parameters.Add(new SQLiteParameter("@allottedTime", account.AllottedTime.TotalSeconds));
+                command.Parameters.Add(new SQLiteParameter("@usedTime", account.UsedTime.TotalSeconds));
                 command.Parameters.Add(new SQLiteParameter("@locked", account.Locked));
                 command.Parameters.Add(new SQLiteParameter("@createdAt", DateTime.Now));
                 command.Parameters.Add(new SQLiteParameter("@updatedAt", DateTime.Now));
@@ -323,7 +321,7 @@ namespace Database
                         Domain = (string) reader["Domain"],
                         Username = (string) reader["Username"],
                         Tracking = (Convert.ToInt32(reader["Tracking"]) == 1),
-                        AllottedTime = TimeSpan.FromSeconds(Convert.ToDouble(reader["AllottedTime"])),
+                        AllottedTime = TimeSpan.FromSeconds(Convert.ToInt32(reader["AllottedTime"])),
                         Locked = Convert.ToBoolean(reader["Locked"]),
                         UsedTime = TimeSpan.FromSeconds(Convert.ToDouble(reader["UsedTime"])),
                         CreatedAt = Convert.ToDateTime(reader["CreatedAt"]),
