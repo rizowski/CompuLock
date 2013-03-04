@@ -378,6 +378,30 @@ namespace Database
             DbConnection.Close();
             return GetAccountById(account.Id);
         }
+        public History UpdateHistory(History history)
+        {
+            if(history == null)
+                throw new NoNullAllowedException("History cannot be null");
+            StringBuilder sb = new StringBuilder();
+            sb.Append(Update);
+            sb.Append(HistoryTable);
+            sb.Append(Set);
+            sb.Append("Title=@title, Url=@url, VisitCount=@visitcount, UpdatedAt=@updatedAt");
+            sb.Append(Where);
+            sb.Append("Id= " + history.Id);
+            sb.Append(End);
+            var command = new SQLiteCommand(sb.ToString(), DbConnection);
+                //command.Parameters.Add(new SQLiteParameter("@computerId", history.ComputerId));
+                command.Parameters.Add(new SQLiteParameter("@title", history.Title));
+                command.Parameters.Add(new SQLiteParameter("@url", history.Url));
+                command.Parameters.Add(new SQLiteParameter("@visitcount", history.VisitCount));
+                command.Parameters.Add(new SQLiteParameter("@updatedAt", history.UpdatedAt));
+            DbConnection.Open();
+            Console.WriteLine(sb.ToString());
+            command.ExecuteNonQuery();
+            DbConnection.Close();
+            return GetHistoryById(history.Id);
+        }
         #endregion
 
         #region GetAll
@@ -387,8 +411,10 @@ namespace Database
             StringBuilder sb = new StringBuilder();
             sb.Append(SelectAll);
             sb.Append(AccountsTable);
-            DbConnection.Open();
-            var reader = new SQLiteCommand(sb.ToString(), DbConnection).ExecuteReader();
+            var command = new SQLiteCommand(sb.ToString(), DbConnection);
+            if (DbConnection.State != ConnectionState.Open)
+                DbConnection.Open();
+            var reader = command.ExecuteReader();
             while (reader.Read())
             {
                 list.Add(new Account
@@ -399,7 +425,7 @@ namespace Database
                         Tracking = (Convert.ToInt32(reader["Tracking"]) == 1),
                         AllottedTime = TimeSpan.FromSeconds(Convert.ToInt32(reader["AllottedTime"])),
                         Locked = Convert.ToBoolean(reader["Locked"]),
-                        UsedTime = TimeSpan.FromSeconds(Convert.ToDouble(reader["UsedTime"])),
+                        UsedTime = TimeSpan.FromSeconds(Convert.ToInt32(reader["UsedTime"])),
                         CreatedAt = Convert.ToDateTime(reader["CreatedAt"]),
                         UpdatedAt = Convert.ToDateTime(reader["UpdatedAt"])
                     });
@@ -414,7 +440,8 @@ namespace Database
             sb.Append(SelectAll);
             sb.Append(HistoryTable);
             DbConnection.Open();
-            var reader = new SQLiteCommand(sb.ToString(), DbConnection).ExecuteReader();
+            var command= new SQLiteCommand(sb.ToString(), DbConnection);
+            var reader = command.ExecuteReader();
             while (reader.Read())
             {
                 list.Add(new History
@@ -438,7 +465,8 @@ namespace Database
             sb.Append(SelectAll);
             sb.Append(ProcessTable);
             DbConnection.Open();
-            var reader = new SQLiteCommand(sb.ToString(), DbConnection).ExecuteReader();
+            var command = new SQLiteCommand(sb.ToString(), DbConnection);
+            var reader = command.ExecuteReader();
             while (reader.Read())
             {
                 list.Add(new Process

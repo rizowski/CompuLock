@@ -10,10 +10,10 @@
                 <MenuItem Header="Settings" HorizontalAlignment="Left" Width="137"/>
             </MenuItem>
         </Menu>
-        <TabControl Height="387" HorizontalAlignment="Left" Margin="10,29,0,0" Name="tabControl1" VerticalAlignment="Top" Width="704">
-            <TabItem Header="Computer Info" Name="ComputerTab">
+        <TabControl Height="387" HorizontalAlignment="Left" Margin="10,29,0,0" VerticalAlignment="Top" Width="704">
+            <TabItem Header="Computer Info">
                 <Grid>
-                    <ListView x:Name="Accounts" HorizontalAlignment="Left" Height="242" Margin="6,35,0,0" VerticalAlignment="Top" Width="185" >
+                    <ListView x:Name="Accounts" HorizontalAlignment="Left" Height="315" Margin="6,35,0,0" VerticalAlignment="Top" Width="185" >
                         
                     </ListView>
                     <Label Content="Accounts:" HorizontalAlignment="Left" Margin="6,6,0,0" VerticalAlignment="Top" />
@@ -25,15 +25,9 @@
                     
                 </Grid>
             </TabItem>
-            <TabItem Header="History" ContextMenuOpening="OnHistoryTabClick">
+            <TabItem Header="History" MouseDown="LoadHistory">
                 <Grid>
-                    <ListView Height="284" HorizontalAlignment="Left" Name="Histories" VerticalAlignment="Top" Width="693" ItemsSource="{Binding SourceCollection}">
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="Title" DisplayMemberBinding="{Binding Title}" Width="150"></GridViewColumn>
-                                <GridViewColumn Header="Url" DisplayMemberBinding="{Binding Url}" Width="500"></GridViewColumn>
-                            </GridView>
-                        </ListView.View>
+                    <ListView Height="284" HorizontalAlignment="Left" Name="Histories" VerticalAlignment="Top" Width="693">
                     </ListView>
                 </Grid>
             </TabItem>

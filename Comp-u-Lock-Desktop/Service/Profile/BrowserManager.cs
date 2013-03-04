@@ -48,9 +48,18 @@ namespace Service.Profile
         private void ForceUpdate(object sender, EventArgs eventArgs)
         {
             var histories = GetHistory();
+            var dbhistories = DbManager.GetHistories();
             foreach (var history in histories)
             {
-                DbManager.SaveHistory(history);
+                var dbhistory = dbhistories.FirstOrDefault(h => h.Title == history.Title && h.Url == history.Url);
+                if (dbhistory != null)
+                {
+                    DbManager.UpdateHistory(dbhistory);
+                }
+                else
+                {
+                    DbManager.SaveHistory(history);
+                }
             }
         }
 

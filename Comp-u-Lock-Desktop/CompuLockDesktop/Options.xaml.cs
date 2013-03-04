@@ -50,6 +50,7 @@ namespace CompuLockDesktop
                 {
                     var user = service.GetRestUser(AuthToken.Text);
                     user.AuthToken = AuthToken.Text;
+                    service.SaveUserToDb(AuthToken.Text);
                 }
                 catch (ServerOfflineException ex)
                 {

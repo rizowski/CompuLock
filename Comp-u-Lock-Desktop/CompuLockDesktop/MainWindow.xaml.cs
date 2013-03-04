@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
-using Database.Models;
 using Service;
 
 namespace CompuLockDesktop
@@ -45,36 +42,36 @@ namespace CompuLockDesktop
         private void LoadAccounts()
         {
             var dbaccounts = service.GetDbAccounts();
+            if(dbaccounts!= null)
             foreach (var dbaccount in dbaccounts)
             {
                 Accounts.Items.Add(dbaccount.Username);
             }
         }
 
-        private void LoadHistory()
+        private void LoadHistory(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             var histories = service.GetHistory();
+            if (histories != null)
             foreach (var history in histories)
             {
-                Histories.Items.Add(history);
+                Histories.Items.Add(history.Title);
             }
         }
 
         private void LoadComputer()
         {
             var computer = service.GetDbComputer();
-            ComputerName.Content = computer.Name;
-            Enviroment.Content = computer.Enviroment;
+            if (computer != null)
+            {
+                ComputerName.Content = computer.Name;
+                Enviroment.Content = computer.Enviroment;
+            }
         }
 
         private void OnClose(object sender, System.ComponentModel.CancelEventArgs e)
         {
             service.ProcessManager.Dispose();
-        }
-
-        private void OnHistoryTabClick(object sender, System.Windows.Controls.ContextMenuEventArgs e)
-        {
-            LoadHistory();
         }
 
     }

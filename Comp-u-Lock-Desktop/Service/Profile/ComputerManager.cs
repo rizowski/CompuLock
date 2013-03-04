@@ -30,6 +30,7 @@ namespace Service.Profile
             UpdateTimer.Elapsed += ForceUpdate;
             UpdateTimer.Start();
             Watching = true;
+            ForceUpdate();
         }
 
         private void ForceUpdate(object sender, EventArgs eventArgs)
@@ -55,6 +56,8 @@ namespace Service.Profile
 
         public Computer ForceUpdate()
         {
+            var dbcomputer = DbManager.GetComputer();
+            
             IPAddress[] localIPs = Dns.GetHostAddresses(Dns.GetHostName());
             String MyIp = localIPs[0].ToString();
             var computer = new Computer
@@ -64,7 +67,13 @@ namespace Service.Profile
                 IpAddress = MyIp,
                 UpdatedAt = DateTime.Now
             };
-            return DbManager.SaveComputer(computer);
+            if (dbcomputer != null)
+            {
+                computer.Id = dbcomputer.Id;
+                return DbManager.UpdateComputer(computer);
+            }
+            else
+                return DbManager.SaveComputer(computer);
         }
 
         #region View

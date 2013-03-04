@@ -322,20 +322,6 @@ namespace Service
                 File.Delete("settings.sqlite");
             }*/
             MainService s = new MainService();
-            /*foreach (var account in s.GetDbAccounts())
-            {
-                Console.WriteLine("{0} Locked: {1}, Tracking: {2}",account.Username, account.Locked, account.Tracking);
-                if (account.Tracking)
-                {
-                    if (account.AllottedTime.TotalSeconds > 0)
-                    {
-                        Console.WriteLine("Unlocking");
-                        s.AccountManager.UnlockAccount(account.Username);
-                        account.Locked = false;
-                        s.DbManager.SaveAccount(account);
-                    }
-                }
-            }*/
 
             //var user = s.DbManager.GetFullUser();
             //var email = user.Email;

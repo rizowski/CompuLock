@@ -16,18 +16,29 @@ namespace Service.Profile
         public RestManager(string server, string apipath, DatabaseManager dbmanager) : base(server, apipath)
         {
             DbManager = dbmanager;
+            SetupUpdateTimer(300);
+            Update();
         }
 
         private void SetupUpdateTimer(double interval)
         {
-            UpdateTimer = new Timer(interval){AutoReset = true};
+            UpdateTimer = new Timer(interval * 1000){AutoReset = true};
             UpdateTimer.Elapsed += Update;
             UpdateTimer.Start();
         }
 
-        private void Update(object sender, ElapsedEventArgs e)
+        // either push to the server and ignore or something like that idk
+        private void Update(object sender, ElapsedEventArgs elapsedEventArgs)
         {
-            
+            var user = DbManager.GetFullUser();
+            if (user.AuthToken != null)
+            {
+                UpdateUser(user.AuthToken, user);
+            }
+        }
+        public void Update()
+        {
+            Update(null, null);
         }
     }
 }

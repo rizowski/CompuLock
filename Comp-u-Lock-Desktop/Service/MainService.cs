@@ -24,12 +24,6 @@ namespace Service
         public InternetExplorerHistoryReader BrowserManager { get; set; }
         public RestService RestService { get; set; }
 
-        private Thread RestThread { get; set; }
-        private Thread ComputerThread { get; set; }
-        private Thread AccountThread { get; set; }
-        private Thread ProcessThread { get; set; }
-        private Thread BrowserThread { get; set; }
-
         private const string RestServer = "http://192.168.144.1:3000";
         private const string Api = "api/v1/";
 

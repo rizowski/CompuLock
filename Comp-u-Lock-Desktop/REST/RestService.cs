@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Timers;
+using Database;
 using Database.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -28,9 +30,13 @@ namespace REST
             Client = new RestClient(server);
             Server = server;
             ApiPath = apipath;
+
+
         }
 
-#region Accounts
+        
+
+        #region Accounts
         public Account SaveAccount(string token, Account item)
         {
             if (item.ComputerId == 0)
@@ -56,7 +62,6 @@ namespace REST
             
             return account;
         }
-
         public Account UpdateAccount(string token, Account item)
         {
             var request = new RestRequest(ApiPath + AccountPath + item.WebId, Method.PUT);
@@ -81,7 +86,6 @@ namespace REST
             
             return account;
         }
-
         public IEnumerable<Account> GetAllAccounts(string token)
         {
             var request = new RestRequest(ApiPath + AccountPath, Method.GET);
@@ -102,13 +106,11 @@ namespace REST
             
             return accounts;
         }
-
         public Account GetAccountById(string token, int id)
         {
             var accounts = GetAllAccounts(token);
             return accounts.FirstOrDefault(a => a.WebId == id);
         }
-
         public void DestroyAccount(string token, int id)
         {
             var request = new RestRequest(AccountPath + id, Method.DELETE);
@@ -119,7 +121,7 @@ namespace REST
             Console.WriteLine(response.Content);
         }
 #endregion
-#region User
+        #region User
         public User UpdateUser(string token, User item)
         {
             var request = new RestRequest(ApiPath + UserPath + item.WebId, Method.PUT);
@@ -142,7 +144,6 @@ namespace REST
             }
             return user;
         }
-
         public User GetUser(string token)
         {
             var request = new RestRequest(ApiPath + UserPath, Method.GET);
@@ -168,7 +169,7 @@ namespace REST
             return user;
         }
 #endregion
-#region Computers
+        #region Computers
         public Computer CreateComputer(string token, Computer item)
         {
             if (item.UserId == 0)
@@ -194,7 +195,6 @@ namespace REST
             
             return comp;
         }
-
         public Computer UpdateComputer(string token, Computer item)
         {
             var request = new RestRequest(ApiPath + ComputerPath + item.WebId, Method.PUT);
@@ -217,7 +217,6 @@ namespace REST
             }
             return comp;
         }
-
         public IEnumerable<Computer> GetAllComputers(string token)
         {
             var request = new RestRequest(ApiPath + ComputerPath, Method.GET);
@@ -237,13 +236,11 @@ namespace REST
             }
             return comps;
         }
-
         public Computer GetComputerById(string token, int id)
         {
             var computers = GetAllComputers(token);
             return computers.FirstOrDefault(c => c.WebId == id);
         }
-
         public void DestroyComputer(string token, int id)
         {
             var request = new RestRequest(ApiPath + ComputerPath + id, Method.DELETE);
