@@ -74,15 +74,14 @@ namespace Database
             DbConnection.Dispose();
         }
 
-
         public void CreateTables()
         {
             Console.WriteLine("Checking if Tables exist.");
-            const string user = CreateTable + IfNotExists + UsersTable + "(Id integer primary key asc, WebId integer, Username varchar(255), Email varchar(255), AuthToken varchar(255), CreatedAt datetime, UpdatedAt datetime, unique(Email, AuthToken) on conflict replace)";
+            const string user = CreateTable + IfNotExists + UsersTable + "(Id integer primary key asc, WebId integer, Username varchar(255), Email varchar(255), AuthToken varchar(255), CreatedAt datetime, UpdatedAt datetime, unique(Email, AuthToken))";
             ExecuteQuery(user);
-            const string computer = CreateTable + IfNotExists + ComputersTable + "(Id integer primary key asc, WebId integer, UserId integer, Enviroment varchar(50), Name varchar(50) unique on conflict replace, IpAddress varchar(16), CreatedAt datetime, UpdatedAt datetime)";
+            const string computer = CreateTable + IfNotExists + ComputersTable + "(Id integer primary key asc, WebId integer, UserId integer, Enviroment varchar(50), Name varchar(50) unique, IpAddress varchar(16), CreatedAt datetime, UpdatedAt datetime)";
             ExecuteQuery(computer);
-            const string account = CreateTable + IfNotExists + AccountsTable + "(Id integer primary key asc, WebId integer, Domain varchar(50), Username varchar(50), Tracking bool, Locked bool, AllottedTime integer, UsedTime integer, CreatedAt datetime, UpdatedAt datetime, unique(Domain, Username) on conflict replace)";
+            const string account = CreateTable + IfNotExists + AccountsTable + "(Id integer primary key asc, WebId integer, Domain varchar(50), Username varchar(50), Tracking bool, Locked bool, AllottedTime integer, UsedTime integer, CreatedAt datetime, UpdatedAt datetime, unique(Domain, Username))";
             ExecuteQuery(account);
             const string accountHistory = CreateTable + IfNotExists + HistoryTable + "(Id integer primary key asc, WebId integer, ComputerId integer, Title varchar(150), Url varchar(300), VisitCount integer, CreatedAt datetime, UpdatedAt datetime, unique(ComputerId, Url) on conflict replace)";
             ExecuteQuery(accountHistory);
@@ -379,7 +378,6 @@ namespace Database
             DbConnection.Close();
             return GetAccountById(account.Id);
         }
-
         #endregion
 
         #region GetAll
