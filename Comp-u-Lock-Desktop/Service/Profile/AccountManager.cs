@@ -17,8 +17,6 @@ namespace Service.Profile
 
         private DatabaseManager DbManager { get; set; }
 
-        private List<Account> LoggedInAccounts { get; set; }
-
         public string UserName;
         public ITerminalServer Server;
 
@@ -33,7 +31,7 @@ namespace Service.Profile
             SetupLockoutTimer(interval);
             ITerminalServicesManager manager = new TerminalServicesManager();
             Server = manager.GetLocalServer();
-            Load();
+            //Load();
         }
 
         // checks to see what user is logged in
@@ -41,25 +39,34 @@ namespace Service.Profile
         // checks to see if the tracked user has run out of time.
         private void Update(object sender, ElapsedEventArgs e)
         {
-            var newList = (List<Account>) GetLoggedInAccounts();
-            Console.WriteLine("{0} accounts logged in", LoggedInAccounts.Count);
-            foreach (var account in LoggedInAccounts)
+            var accounts = GetLoggedInAccounts();
+            Console.WriteLine("{0} accounts logged in", accounts.Count());
+            foreach (var account in accounts)
             {// find out if the count is different and update the list
-                if (account.Tracking)
+                var dbaccount = GetDbAccounts().FirstOrDefault(a => a.Username == account.Username);
+
+                if (dbaccount == null)
                 {
-                    if (account.AllottedTime.TotalSeconds <= 0)
+                    DbManager.SaveAccount(account);
+                }
+                else
+                {
+                    if (dbaccount.Tracking)
                     {
-                        if (!account.Locked)
+                        if (dbaccount.AllottedTime.TotalSeconds <= 0)
                         {
-                            Console.WriteLine("Locking...");
-                            LockAccount(account);
+                            if (!dbaccount.Locked)
+                            {
+                                Console.WriteLine("Locking...");
+                                LockAccount(dbaccount);
+                            }
                         }
-                    }
-                    if (account.AllottedTime.TotalSeconds > 0)
-                    {
-                        if (account.Locked)
+                        if (dbaccount.AllottedTime.TotalSeconds > 0)
                         {
-                            UnlockAccount(account);
+                            if (dbaccount.Locked)
+                            {
+                                UnlockAccount(dbaccount);
+                            }
                         }
                     }
                 }
@@ -69,7 +76,7 @@ namespace Service.Profile
         // Loads the account information from the computer
         // Checks to see if each account has been saved to the db.
         // If the account is in the db, updates the allotted time for the listed account
-        private void Load()
+        /*private void Load()
         {
             LoggedInAccounts = new List<Account>();
             var accounts = GetLoggedInAccounts();
@@ -81,7 +88,7 @@ namespace Service.Profile
                     foundAccount = DbManager.SaveAccount(account);
                 LoggedInAccounts.Add(foundAccount);
             }
-        }
+        }*/
 
         private void ForceUpdate(object sender, ElapsedEventArgs e)
         {
@@ -200,6 +207,7 @@ namespace Service.Profile
         {
             LockAccount(account.Domain, account.Username);
             account.Locked = true;
+            DbManager.UpdateAccount(account);
         }
         public void LockAccount(string domain, string username)
         {
@@ -298,6 +306,7 @@ namespace Service.Profile
         {
             UnlockAccount(account.Username);
             account.Locked = false;
+            DbManager.UpdateAccount(account);
         }
         public void UnlockAccount(string username = null)
         {

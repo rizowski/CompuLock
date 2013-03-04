@@ -36,7 +36,7 @@ namespace Database
         private const string SelectAll = "SELECT * FROM ";
         private const string Update = "UPDATE ";
 
-        private const string Set = "SET ";
+        private const string Set = " SET ";
         private const string All = "* FROM ";
         private const string From = "FROM ";
         private const string Where = " WHERE ";
@@ -373,7 +373,7 @@ namespace Database
                 command.Parameters.Add(new SQLiteParameter("@locked", account.Locked));
                 command.Parameters.Add(new SQLiteParameter("@updatedAt", DateTime.Now));
             DbConnection.Open();
-            Console.WriteLine(DbConnection.ToString());
+            Console.WriteLine(sb.ToString());
             command.ExecuteNonQuery();
             DbConnection.Close();
             return GetAccountById(account.Id);
