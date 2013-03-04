@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows;
+using Database.Models;
 using Service;
 
 namespace CompuLockDesktop
@@ -14,8 +16,9 @@ namespace CompuLockDesktop
         {
             InitializeComponent();
             service = new MainService();
-            //LoadAccounts();
-            //LoadComputer();
+            LoadAccounts();
+            LoadComputer();
+            LoadHistory();
         }
 
         private void OnOpen(object sender, EventArgs e)
@@ -49,11 +52,13 @@ namespace CompuLockDesktop
             }
         }
 
-        private void LoadHistory(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void LoadHistory()
         {
-            /*var histories = service.GetHistory();
+            var histories = service.GetHistory();
             if (histories != null)
-            foreach (var history in histories)
+                Histories.DataContext = histories;
+            
+            /*foreach (var history in histories)
             {
                 Histories.Items.Add(history.Title);
             }*/

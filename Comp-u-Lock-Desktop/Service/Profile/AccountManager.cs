@@ -24,9 +24,9 @@ namespace Service.Profile
         private Timer LockoutTimer;
 
         //                                                                                          60 min
-        public AccountManager(DatabaseManager dbmanager, double interval = 5, double updateInterval = 3600)
+        public AccountManager( double interval = 5, double updateInterval = 3600)
         {
-            DbManager = dbmanager;
+            DbManager = new DatabaseManager("settings","");
             SetupUpdateTimer(updateInterval);
             SetupLockoutTimer(interval);
             ITerminalServicesManager manager = new TerminalServicesManager();

@@ -13,9 +13,9 @@ namespace Service.Profile
         private Timer UpdateTimer { get; set; }
         private DatabaseManager DbManager { get; set; }
 
-        public RestManager(string server, string apipath, DatabaseManager dbmanager) : base(server, apipath)
+        public RestManager(string server, string apipath) : base(server, apipath)
         {
-            DbManager = dbmanager;
+            DbManager = new DatabaseManager("settings","");
             SetupUpdateTimer(300);
             Update();
         }

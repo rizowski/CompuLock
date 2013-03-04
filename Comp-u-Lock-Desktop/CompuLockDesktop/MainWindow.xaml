@@ -25,9 +25,19 @@
                     
                 </Grid>
             </TabItem>
-            <TabItem Header="History" MouseDown="LoadHistory">
+            <TabItem Header="History" >
                 <Grid>
-                    <ListView Height="284" HorizontalAlignment="Left" Name="Histories" VerticalAlignment="Top" Width="693">
+                    <ListView Height="284" HorizontalAlignment="Left" Name="Histories" VerticalAlignment="Top" Width="693" ItemsSource="{Binding Histories}">
+                        <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Title" DisplayMemberBinding="{Binding Title}">
+                                
+                            </GridViewColumn>
+                            <GridViewColumn Header="Url" DisplayMemberBinding="{Binding Url}">
+                                
+                            </GridViewColumn>
+                        </GridView>
+                        </ListView.View>
                     </ListView>
                 </Grid>
             </TabItem>

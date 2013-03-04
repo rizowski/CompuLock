@@ -30,11 +30,11 @@ namespace Service
         public MainService()
         {
             DbManager = new DatabaseManager("settings", "myPass");
-            RestService = new RestManager(RestServer, Api, DbManager);
-            ComputerManager = new ComputerManager(DbManager);
-            AccountManager = new AccountManager(DbManager);
-            ProcessManager = new ProcessManager(DbManager);
-            BrowserManager = new InternetExplorerHistoryReader(DbManager);
+            RestService = new RestManager(RestServer, Api);
+            ComputerManager = new ComputerManager();
+            AccountManager = new AccountManager();
+            ProcessManager = new ProcessManager();
+            BrowserManager = new InternetExplorerHistoryReader();
         }
 
         #region Rest

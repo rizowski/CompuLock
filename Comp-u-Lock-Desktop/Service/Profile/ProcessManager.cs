@@ -16,7 +16,7 @@ namespace Service.Profile
         private DatabaseManager DbManager;
         private ManagementEventWatcher startWatch;
 
-        public ProcessManager(DatabaseManager dbManager)
+        public ProcessManager()
         {
             startWatch = new ManagementEventWatcher(new WqlEventQuery("SELECT * FROM Win32_ProcessStartTrace"));
             try
@@ -28,7 +28,7 @@ namespace Service.Profile
             {
                 Console.WriteLine(e);
             }
-            DbManager = dbManager;
+            DbManager = new DatabaseManager("settings", "");
         }
 
         public void Dispose()

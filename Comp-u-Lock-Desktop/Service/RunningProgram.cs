@@ -120,7 +120,7 @@ namespace Service
 
         public static void RunHistory()
         {
-            Console.WriteLine("Internet Explorer");
+            /*Console.WriteLine("Internet Explorer");
             var ie = new InternetExplorerHistoryReader(new DatabaseManager("settings", "myPass"));
             Console.WriteLine(ie.IsRunning());
             Console.WriteLine(ie.Version);
@@ -128,7 +128,7 @@ namespace Service
             foreach (var url in urls)
             {
                 Console.WriteLine(url);
-            }
+            }*/
 
         }
 
@@ -140,19 +140,19 @@ namespace Service
 
         public static void RunComputerManager()
         {
-            ComputerManager cm = new ComputerManager(new DatabaseManager("settings", "myPass"));
+            /*ComputerManager cm = new ComputerManager(new DatabaseManager("settings", "myPass"));
             var accounts = cm.GetAccounts();
             var computer = cm.GetComputer();
             Console.WriteLine("{0} - {1} |Address: {2}",computer.Enviroment, computer.Name, computer.IpAddress);
             foreach (var account in accounts)
             {
                 Console.WriteLine("{0} - {1}", account.Domain, account.Username);
-            }
+            }*/
         }
 
         public static void RunProcessManager()
         {
-            ProcessManager pm = new ProcessManager(new DatabaseManager("settings", "myPass"));
+            /*ProcessManager pm = new ProcessManager(new DatabaseManager("settings", "myPass"));
             var processes = pm.GetAllProcesses();
             Console.WriteLine("All processes");
             foreach (var process in processes)
@@ -179,13 +179,13 @@ namespace Service
             foreach (var process in nos)
             {
                 Console.WriteLine("{0} - {1}", process.AccountId, process.Name);
-            }
+            }*/
         }
 
 
         public static void RunInfoGatherer()
         {
-            var authToken = "DNs7qtsM4HaNzJbyzH2N";
+            /*var authToken = "DNs7qtsM4HaNzJbyzH2N";
             var server = "http://localhost:3000";
             var api = "api/v1/";
             if(File.Exists("settings.sqlite"))
@@ -255,7 +255,7 @@ namespace Service
             {
                 account.ComputerId = computer.WebId;
                 rs.SaveAccount(authToken, account);
-            }
+            }*/
         }
 
         public static void RunGUIProgram()

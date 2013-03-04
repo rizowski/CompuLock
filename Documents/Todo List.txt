@@ -166,6 +166,8 @@ Week 9:
 				- most sources out dated.
 			- is being called out of sequence when introduced with a gui
 			- is now being called out of sequnce with out gui but is less frequent
+			Settings:
+				- Updating a user authtoken after there is one already there. unique constraint error
 Check Up Goals:
 	- who do I want to become and how will i get there.
 Side Things to accomplish:

@@ -24,13 +24,13 @@ namespace Service.Profile
         private DatabaseManager DbManager;
         public Version Version;
 
-        public InternetExplorerHistoryReader(DatabaseManager dbManager)
+        public InternetExplorerHistoryReader()//DatabaseManager dbManager)
         {
-            DbManager = dbManager;
+            DbManager = new DatabaseManager("settings", "");
             var key = Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Internet Explorer");
             if (key != null)
                 Version = new Version((string)key.GetValue("Version"));
-            SetupUpdateTimer(300);
+            SetupUpdateTimer(15);
         }
 
         private void SetupUpdateTimer(double interval)

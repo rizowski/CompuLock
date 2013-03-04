@@ -17,9 +17,9 @@ namespace Service.Profile
         private DatabaseManager DbManager { get; set; }
         private Timer UpdateTimer;
 
-        public ComputerManager(DatabaseManager dbManager)
+        public ComputerManager()//DatabaseManager dbManager)
         {
-            DbManager = dbManager;
+            DbManager = new DatabaseManager("settings","");
             SetupUpdateTimer(10800);
         }
 
