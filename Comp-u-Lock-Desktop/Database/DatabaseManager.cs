@@ -314,6 +314,7 @@ namespace Database
             sb.Append("Name=@name, Enviroment=@enviroment, IpAddress=@ipAddress, UpdatedAt=@updatedAt");
             sb.Append(Where);
             sb.Append("Id = " + computer.Id);
+            sb.Append(End);
             var command = new SQLiteCommand(sb.ToString(), DbConnection);
                 command.Parameters.Add(new SQLiteParameter("@name", computer.Name));
                 command.Parameters.Add(new SQLiteParameter("@enviroment", computer.Enviroment));
@@ -332,7 +333,24 @@ namespace Database
                 throw new NullReferenceException("User cant be null");
             if (user.Id <= 0)
                 throw new ArgumentException("Userid cant be less than or equal to 0");
-            return null;
+            StringBuilder sb = new StringBuilder();
+            sb.Append(Update);
+            sb.Append(UsersTable);
+            sb.Append(Set);
+            sb.Append("Username=@username, Email=@email, AuthToken=@authtoken, UpdatedAt=@updatedAt");
+            sb.Append(Where);
+            sb.Append("Id = " + user.Id);
+            sb.Append(End);
+            var command = new SQLiteCommand(sb.ToString(), DbConnection);
+                command.Parameters.Add(new SQLiteParameter("@username", user.Username));
+                command.Parameters.Add(new SQLiteParameter("@email", user.Email));
+                command.Parameters.Add(new SQLiteParameter("@authtoken", user.AuthToken));
+                command.Parameters.Add(new SQLiteParameter("@updatedAt", DateTime.Now));
+            DbConnection.Open();
+            Console.WriteLine(sb.ToString());
+            command.ExecuteNonQuery();
+            DbConnection.Close();
+            return GetUser();
         }
         public Account UpdateAccount(Account account)
         {
@@ -345,6 +363,8 @@ namespace Database
             sb.Append(AccountsTable);
             sb.Append(Set);
             sb.Append("Domain=@domain, Username=@username, Tracking=@tracking, AllottedTime=@allottedTime, UsedTime=@usedTime, Locked=@locked, UpdatedAt=@updatedAt");
+            sb.Append(Where);
+            sb.Append("Id = " + account.Id);
             var command = new SQLiteCommand(sb.ToString(), DbConnection);
                 command.Parameters.Add(new SQLiteParameter("@domain", account.Domain));
                 command.Parameters.Add(new SQLiteParameter("@username", account.Username));
