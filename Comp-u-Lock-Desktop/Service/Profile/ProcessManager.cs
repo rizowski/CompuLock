@@ -52,6 +52,10 @@ namespace Service.Profile
                         });
                 }
             }
+            else
+            {
+                Console.WriteLine("Null Process owner");
+            }
         }
         
         public Process[] GetProcesses()
@@ -189,11 +193,11 @@ namespace Service.Profile
                     if (returnVal == 0)
                     {
                         return DbManager.GetAccountByName(argList[0]);
-                        //return argList[1] + "\\" + argList[0];
                     }
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    Console.WriteLine(e);
                 }
             }
             searcher.Dispose();

@@ -41,9 +41,10 @@ namespace Service.Profile
         // checks to see if the tracked user has run out of time.
         private void Update(object sender, ElapsedEventArgs e)
         {
+            var newList = (List<Account>) GetLoggedInAccounts();
             Console.WriteLine("{0} accounts logged in", LoggedInAccounts.Count);
             foreach (var account in LoggedInAccounts)
-            {
+            {// find out if the count is different and update the list
                 if (account.Tracking)
                 {
                     if (account.AllottedTime.TotalSeconds <= 0)
@@ -318,10 +319,12 @@ namespace Service.Profile
             }
             Console.WriteLine("Account has been unlocked.");
         }
+
+        // gets all the logged in accounts with their current state
         public IEnumerable<Account> GetLoggedInAccounts()
         {
             List<Account> list = new List<Account>();
-
+            
             var sessions = Server.GetSessions();
             foreach (var session in sessions)
             {
@@ -338,6 +341,7 @@ namespace Service.Profile
             }
             return list;
         }
+        // gets all the logged db users with their current state
         public IEnumerable<Account> GetDbAccounts()
         {
             return DbManager.GetAccounts();

@@ -24,22 +24,24 @@ namespace Database
 
         private const string HistoryTable = "history";
         private const string ProcessTable = "account_process";
-        private const string ProgramTable = "account_program";
 
         private const string RestrictionTable = "Restrictions";
         private const string DayTable = "Days";
         private const string HourTable = "Hours";
 
-        private const string CreateTable = "create table ";
-        private const string IfNotExists = " if not exists ";
-        private const string InsertInto = "insert into ";
-        private const string Select = "select ";
-        private const string SelectAll = "select * from ";
-        private const string All = "* from ";
-        private const string From = "from ";
-        private const string Where = " where ";
+        private const string CreateTable = "CREATE TABLE ";
+        private const string IfNotExists = " IF NOT EXISTS ";
+        private const string InsertInto = "INSERT INTO ";
+        private const string Select = "SELECT ";
+        private const string SelectAll = "SELECT * FROM ";
+        private const string Update = "UPDATE ";
 
-        private const string Values = " values ";
+        private const string Set = "SET ";
+        private const string All = "* FROM ";
+        private const string From = "FROM ";
+        private const string Where = " WHERE ";
+
+        private const string Values = " VALUES ";
         private const string End = ";";
         #endregion
 
@@ -162,7 +164,6 @@ namespace Database
         }
 
         #region Insert
-
         public User SaveUser(User user)
         {
             if(user == null)
@@ -188,7 +189,6 @@ namespace Database
             Console.WriteLine("Done Writing User");
             return GetUser();
         }
-
         public Computer SaveComputer(Computer comp)
         {
             if (comp == null)
@@ -215,7 +215,6 @@ namespace Database
             Console.WriteLine("Done Saving a computer");
             return GetComputer();
         }
-
         public Account SaveAccount(Account account)
         {
             if (account == null)
@@ -245,7 +244,6 @@ namespace Database
             var savedAccount = GetAccounts().First(a => a.Username == account.Username);
             return savedAccount;
         }
-
         public History SaveHistory(History history)
         {
             if (history == null)
@@ -273,7 +271,6 @@ namespace Database
             var savedHistory = GetHistories().First(h => h.ComputerId == history.ComputerId && h.Url == history.Url);
             return savedHistory;
         }
-
         public Process SaveProcess(Process process)
         {
             if (process == null)
@@ -300,6 +297,52 @@ namespace Database
             Console.WriteLine("Done writing Process");
             var savedProcess = GetProcesses().First(p => p.AccountId == process.AccountId && p.Name == process.Name);
             return savedProcess;
+        }
+        #endregion
+
+        #region Update
+        public Computer UpdateComputer(Computer computer)
+        {
+            if (computer == null)
+                throw new NullReferenceException("Computer cant be null");
+            if(computer.Id <= 0)
+                throw new ArgumentException("Computer id cant be less than or equal to 0");
+            StringBuilder sb = new StringBuilder();
+            sb.Append(Update);
+            sb.Append(ComputersTable);
+            sb.Append(Set);
+            sb.Append("Name=@name, Enviroment=@enviroment, IpAddress=@ipAddress, CreatedAt=@createdAt, UpdatedAt=@updatedAt");
+            sb.Append(Where);
+            sb.Append("Id = " + computer.Id);
+            var command = new SQLiteCommand(sb.ToString(), DbConnection);
+                command.Parameters.Add(new SQLiteParameter("@name", computer.Name));
+                command.Parameters.Add(new SQLiteParameter("@enviroment", computer.Enviroment));
+                command.Parameters.Add(new SQLiteParameter("@ipAddress", computer.IpAddress));
+                command.Parameters.Add(new SQLiteParameter("@createdAt", computer.CreatedAt));
+                command.Parameters.Add(new SQLiteParameter("@updatedAt", computer.UpdatedAt));
+            DbConnection.Open();
+            Console.WriteLine(sb.ToString());
+            command.ExecuteNonQuery();
+            DbConnection.Close();
+            return GetComputer();
+        }
+
+        public User UpdateUser(User user)
+        {
+            //TODO NEEDS TO BE DONE
+            if (user == null)
+                throw new NullReferenceException("User cant be null");
+            if (user.Id <= 0)
+                throw new ArgumentException("Userid cant be less than or equal to 0");
+            return null;
+        }
+
+        public Account UpdateAccount(Account account)
+        {
+            if (account == null)
+                throw new NullReferenceException("Account cant be null");
+            if (account.Id <= 0)
+                throw new ArgumentException("Account id cant be less than or equal to 0");
         }
 
         #endregion
