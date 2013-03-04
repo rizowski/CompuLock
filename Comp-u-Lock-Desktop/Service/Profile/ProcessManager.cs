@@ -189,7 +189,8 @@ namespace Service.Profile
                 string[] argList = new string[] { string.Empty, string.Empty };
                 try
                 {
-                    int returnVal = Convert.ToInt32(obj.InvokeMethod("GetOwner", argList));
+                    var owner = obj.InvokeMethod("GetOwner", argList);
+                    int returnVal = Convert.ToInt32(owner);
                     if (returnVal == 0)
                     {
                         return DbManager.GetAccountByName(argList[0]);

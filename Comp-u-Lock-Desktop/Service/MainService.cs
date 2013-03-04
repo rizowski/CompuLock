@@ -30,7 +30,7 @@ namespace Service
         public MainService()
         {
             DbManager = new DatabaseManager("settings", "myPass");
-            RestService = new RestService(RestServer, Api);
+            RestService = new RestManager(RestServer, Api, DbManager);
             ComputerManager = new ComputerManager(DbManager);
             AccountManager = new AccountManager(DbManager);
             ProcessManager = new ProcessManager(DbManager);

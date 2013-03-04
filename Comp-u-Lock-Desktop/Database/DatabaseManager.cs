@@ -395,7 +395,7 @@ namespace Database
                 command.Parameters.Add(new SQLiteParameter("@title", history.Title));
                 command.Parameters.Add(new SQLiteParameter("@url", history.Url));
                 command.Parameters.Add(new SQLiteParameter("@visitcount", history.VisitCount));
-                command.Parameters.Add(new SQLiteParameter("@updatedAt", history.UpdatedAt));
+                command.Parameters.Add(new SQLiteParameter("@updatedAt", DateTime.Now));
             DbConnection.Open();
             Console.WriteLine(sb.ToString());
             command.ExecuteNonQuery();
@@ -414,21 +414,23 @@ namespace Database
             var command = new SQLiteCommand(sb.ToString(), DbConnection);
             if (DbConnection.State != ConnectionState.Open)
                 DbConnection.Open();
-            var reader = command.ExecuteReader();
-            while (reader.Read())
+            using (var reader = command.ExecuteReader())
             {
-                list.Add(new Account
-                    {
-                        Id = Convert.ToInt32(reader["Id"]),
-                        Domain = (string) reader["Domain"],
-                        Username = (string) reader["Username"],
-                        Tracking = (Convert.ToInt32(reader["Tracking"]) == 1),
-                        AllottedTime = TimeSpan.FromSeconds(Convert.ToInt32(reader["AllottedTime"])),
-                        Locked = Convert.ToBoolean(reader["Locked"]),
-                        UsedTime = TimeSpan.FromSeconds(Convert.ToInt32(reader["UsedTime"])),
-                        CreatedAt = Convert.ToDateTime(reader["CreatedAt"]),
-                        UpdatedAt = Convert.ToDateTime(reader["UpdatedAt"])
-                    });
+                while (reader.Read())
+                {
+                    list.Add(new Account
+                        {
+                            Id = Convert.ToInt32(reader["Id"]),
+                            Domain = (string) reader["Domain"],
+                            Username = (string) reader["Username"],
+                            Tracking = (Convert.ToInt32(reader["Tracking"]) == 1),
+                            AllottedTime = TimeSpan.FromSeconds(Convert.ToInt32(reader["AllottedTime"])),
+                            Locked = Convert.ToBoolean(reader["Locked"]),
+                            UsedTime = TimeSpan.FromSeconds(Convert.ToInt32(reader["UsedTime"])),
+                            CreatedAt = Convert.ToDateTime(reader["CreatedAt"]),
+                            UpdatedAt = Convert.ToDateTime(reader["UpdatedAt"])
+                        });
+                }
             }
             DbConnection.Close();
             return list;

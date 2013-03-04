@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Data.SQLite;
-using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading;
 using Database;
-using Database.Enviroment;
 using Database.Models;
 using Microsoft.Win32;
 using UrlHistoryLibrary;
@@ -51,7 +47,7 @@ namespace Service.Profile
             var dbhistories = DbManager.GetHistories();
             foreach (var history in histories)
             {
-                var dbhistory = dbhistories.FirstOrDefault(h => h.Title == history.Title && h.Url == history.Url);
+                var dbhistory = dbhistories.FirstOrDefault(h => h.Url == history.Url);
                 if (dbhistory != null)
                 {
                     DbManager.UpdateHistory(dbhistory);

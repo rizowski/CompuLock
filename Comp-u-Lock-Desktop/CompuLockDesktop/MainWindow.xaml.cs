@@ -14,8 +14,8 @@ namespace CompuLockDesktop
         {
             InitializeComponent();
             service = new MainService();
-            LoadAccounts();
-            LoadComputer();
+            //LoadAccounts();
+            //LoadComputer();
         }
 
         private void OnOpen(object sender, EventArgs e)
@@ -51,12 +51,12 @@ namespace CompuLockDesktop
 
         private void LoadHistory(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            var histories = service.GetHistory();
+            /*var histories = service.GetHistory();
             if (histories != null)
             foreach (var history in histories)
             {
                 Histories.Items.Add(history.Title);
-            }
+            }*/
         }
 
         private void LoadComputer()

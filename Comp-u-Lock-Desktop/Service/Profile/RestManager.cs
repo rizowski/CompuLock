@@ -8,7 +8,7 @@ using REST;
 
 namespace Service.Profile
 {
-    class RestManager : RestService
+    public class RestManager : RestService
     {
         private Timer UpdateTimer { get; set; }
         private DatabaseManager DbManager { get; set; }
@@ -22,6 +22,7 @@ namespace Service.Profile
 
         private void SetupUpdateTimer(double interval)
         {
+            Console.WriteLine("Setting up Rest Manager Update Timer");
             UpdateTimer = new Timer(interval * 1000){AutoReset = true};
             UpdateTimer.Elapsed += Update;
             UpdateTimer.Start();
