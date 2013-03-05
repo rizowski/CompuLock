@@ -58,7 +58,6 @@ namespace Database
             if (!DbExists)
                 SQLiteConnection.CreateFile(DbPath);
             DbConnection = new SQLiteConnection("Data Source=" + DbPath + ";Version=3;");//Password="+DbPassword+";");
-            //TODO check to see if sqlite is busy before inserting
             CreateTables();
         }
 
@@ -181,10 +180,12 @@ namespace Database
             command.Parameters.Add(new SQLiteParameter("@authtoken", user.AuthToken));
             command.Parameters.Add(new SQLiteParameter("@createdAt", DateTime.Now));
             command.Parameters.Add(new SQLiteParameter("@updatedAt", DateTime.Now));
-            DbConnection.Open();
+            if (DbConnection.State != ConnectionState.Open)
+                DbConnection.Open();
             Console.WriteLine(sb.ToString());
             command.ExecuteNonQuery();
-            DbConnection.Close();
+            if (DbConnection.State != ConnectionState.Closed)
+                DbConnection.Close();
             Console.WriteLine("Done Writing User");
             return GetUser();
         }
@@ -207,10 +208,12 @@ namespace Database
             command.Parameters.Add(new SQLiteParameter("@ipaddress", comp.IpAddress));
             command.Parameters.Add(new SQLiteParameter("@createdAt", DateTime.Now));
             command.Parameters.Add(new SQLiteParameter("@updatedAt", DateTime.Now));
-            DbConnection.Open();
+            if (DbConnection.State != ConnectionState.Open)
+                DbConnection.Open();
             Console.WriteLine(sb.ToString());
             command.ExecuteNonQuery();
-            DbConnection.Close();
+            if (DbConnection.State != ConnectionState.Closed)
+                DbConnection.Close();
             Console.WriteLine("Done Saving a computer");
             return GetComputer();
         }
@@ -227,18 +230,20 @@ namespace Database
             sb.Append(Values);
             sb.Append("(@domain, @username, @tracking, @allottedTime, @usedTime, @locked, @createdAt, @updatedAt)");
             sb.Append(End);
-                var command = new SQLiteCommand(sb.ToString(), DbConnection);
-                    command.Parameters.Add(new SQLiteParameter("@domain", account.Domain));
-                    command.Parameters.Add(new SQLiteParameter("@username", account.Username));
-                    command.Parameters.Add(new SQLiteParameter("@tracking", account.Tracking));
-                    command.Parameters.Add(new SQLiteParameter("@allottedTime", account.AllottedTime.TotalSeconds));
-                    command.Parameters.Add(new SQLiteParameter("@usedTime", account.UsedTime.TotalSeconds));
-                    command.Parameters.Add(new SQLiteParameter("@locked", account.Locked));
-                    command.Parameters.Add(new SQLiteParameter("@createdAt", DateTime.Now));
-                    command.Parameters.Add(new SQLiteParameter("@updatedAt", DateTime.Now));
+            var command = new SQLiteCommand(sb.ToString(), DbConnection);
+                command.Parameters.Add(new SQLiteParameter("@domain", account.Domain));
+                command.Parameters.Add(new SQLiteParameter("@username", account.Username));
+                command.Parameters.Add(new SQLiteParameter("@tracking", account.Tracking));
+                command.Parameters.Add(new SQLiteParameter("@allottedTime", account.AllottedTime.TotalSeconds));
+                command.Parameters.Add(new SQLiteParameter("@usedTime", account.UsedTime.TotalSeconds));
+                command.Parameters.Add(new SQLiteParameter("@locked", account.Locked));
+                command.Parameters.Add(new SQLiteParameter("@createdAt", DateTime.Now));
+                command.Parameters.Add(new SQLiteParameter("@updatedAt", DateTime.Now));
+            if (DbConnection.State != ConnectionState.Open)
                 DbConnection.Open();
-                Console.WriteLine(sb.ToString());
-                command.ExecuteNonQuery();
+            Console.WriteLine(sb.ToString());
+            command.ExecuteNonQuery();
+            if (DbConnection.State != ConnectionState.Closed)
                 DbConnection.Close();
             
             Console.WriteLine("Done Saving an Account");
@@ -264,10 +269,12 @@ namespace Database
             command.Parameters.Add(new SQLiteParameter("@visitcount", history.VisitCount));
             command.Parameters.Add(new SQLiteParameter("@createdAt", DateTime.Now));
             command.Parameters.Add(new SQLiteParameter("@updatedAt", DateTime.Now));
-            DbConnection.Open();
+            if (DbConnection.State != ConnectionState.Open)
+                DbConnection.Open();
             Console.WriteLine(sb.ToString());
             command.ExecuteNonQuery();
-            DbConnection.Close();
+            if (DbConnection.State != ConnectionState.Closed)
+                DbConnection.Close();
             Console.WriteLine("Done writing history");
             var savedHistory = GetHistories().First(h => h.ComputerId == history.ComputerId && h.Url == history.Url);
             return savedHistory;
@@ -321,10 +328,12 @@ namespace Database
             command.Parameters.Add(new SQLiteParameter("@enviroment", computer.Enviroment));
             command.Parameters.Add(new SQLiteParameter("@ipAddress", computer.IpAddress));
             command.Parameters.Add(new SQLiteParameter("@updatedAt", DateTime.Now));
-            DbConnection.Open();
+            if (DbConnection.State != ConnectionState.Open)
+                DbConnection.Open();
             Console.WriteLine(sb.ToString());
             command.ExecuteNonQuery();
-            DbConnection.Close();
+            if (DbConnection.State != ConnectionState.Closed)
+                DbConnection.Close();
             return GetComputer();
         }
         public User UpdateUser(User user)
@@ -346,10 +355,12 @@ namespace Database
             command.Parameters.Add(new SQLiteParameter("@email", user.Email));
             command.Parameters.Add(new SQLiteParameter("@authtoken", user.AuthToken));
             command.Parameters.Add(new SQLiteParameter("@updatedAt", DateTime.Now));
-            DbConnection.Open();
+            if (DbConnection.State != ConnectionState.Open)
+                DbConnection.Open();
             Console.WriteLine(sb.ToString());
             command.ExecuteNonQuery();
-            DbConnection.Close();
+            if (DbConnection.State != ConnectionState.Closed)
+                DbConnection.Close();
             return GetUser();
         }
         public Account UpdateAccount(Account account)
@@ -394,15 +405,16 @@ namespace Database
             sb.Append("Id= " + history.Id);
             sb.Append(End);
             var command = new SQLiteCommand(sb.ToString(), DbConnection);
-            //command.Parameters.Add(new SQLiteParameter("@computerId", history.ComputerId));
             command.Parameters.Add(new SQLiteParameter("@title", history.Title));
             command.Parameters.Add(new SQLiteParameter("@url", history.Url));
             command.Parameters.Add(new SQLiteParameter("@visitcount", history.VisitCount));
             command.Parameters.Add(new SQLiteParameter("@updatedAt", DateTime.Now));
-            DbConnection.Open();
+            if (DbConnection.State != ConnectionState.Open)
+                DbConnection.Open();
             Console.WriteLine(sb.ToString());
             command.ExecuteNonQuery();
-            DbConnection.Close();
+            if (DbConnection.State != ConnectionState.Closed)
+                DbConnection.Close();
             return GetHistoryById(history.Id);
         }
         #endregion
@@ -440,11 +452,12 @@ namespace Database
             }
             catch (Exception e)
             {
-                Console.WriteLine("Get All Users DBManager: \n{0}",e);
+                Console.WriteLine(e);
             }
             finally
             {
-                DbConnection.Close();
+                if(DbConnection.State != ConnectionState.Closed)
+                    DbConnection.Close();
             }
             return list;
         }
@@ -456,10 +469,12 @@ namespace Database
             sb.Append(HistoryTable);
             DbConnection.Open();
             var command = new SQLiteCommand(sb.ToString(), DbConnection);
-            var reader = command.ExecuteReader();
-            while (reader.Read())
+            try
             {
-                list.Add(new History
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    list.Add(new History
                     {
                         Id = Convert.ToInt32(reader["Id"]),
                         ComputerId = Convert.ToInt32(reader["ComputerId"]),
@@ -469,8 +484,17 @@ namespace Database
                         CreatedAt = Convert.ToDateTime(reader["CreatedAt"]),
                         UpdatedAt = Convert.ToDateTime(reader["UpdatedAt"])
                     });
+                }
             }
-            DbConnection.Close();
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            finally
+            {
+                if (DbConnection.State != ConnectionState.Closed) 
+                    DbConnection.Close();
+            }
             return list;
         }
         public IEnumerable<Process> GetProcesses()
