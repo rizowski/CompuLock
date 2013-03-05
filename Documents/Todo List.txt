@@ -159,6 +159,9 @@ Week 9:
 				- Gui needs to function as an independant application not requiring the web until an auth token is provided
 			Web:
 				- A simple layout needs to be established to show the information in a readable manor. Doesn't need to be fantastic
+		Todo:
+			SQLite:
+				- Trigger for updating count History
 		Issues:
 			SQLite:
 			- is closing the connection FOR SOMEREASON prematurely on actions to the db.

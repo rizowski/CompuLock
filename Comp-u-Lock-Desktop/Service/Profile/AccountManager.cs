@@ -47,28 +47,13 @@ namespace Service.Profile
 
                 if (dbaccount == null)
                 {
+                    var computer = DbManager.GetComputer();
+                    account.ComputerId = computer.Id;
                     DbManager.SaveAccount(account);
                 }
                 else
                 {
-                    if (dbaccount.Tracking)
-                    {
-                        if (dbaccount.AllottedTime.TotalSeconds <= 0)
-                        {
-                            if (!dbaccount.Locked)
-                            {
-                                Console.WriteLine("Locking...");
-                                LockAccount(dbaccount);
-                            }
-                        }
-                        if (dbaccount.AllottedTime.TotalSeconds > 0)
-                        {
-                            if (dbaccount.Locked)
-                            {
-                                UnlockAccount(dbaccount);
-                            }
-                        }
-                    }
+                    DbManager.UpdateAccount(account);
                 }
             }
         }
@@ -90,11 +75,28 @@ namespace Service.Profile
             }
         }*/
 
-        private void ForceUpdate(object sender, ElapsedEventArgs e)
+        private void LockUpdate(object sender, ElapsedEventArgs e)
         {
-            Console.WriteLine("Tick");
-            var computer = DbManager.GetComputer();
-            DbManager.SaveAccounts(computer.Id, (List<Account>) GetLoggedInAccounts());
+            Console.WriteLine("Lock Tick");
+            var accounts = GetLoggedInAccounts();
+            foreach (var account in accounts)
+            {
+                var dbaccount = GetDbAccounts().FirstOrDefault(a => a.Username == account.Username);
+
+                if (dbaccount == null) continue;
+                if (!dbaccount.Tracking) continue;
+
+                if (dbaccount.AllottedTime > TimeSpan.FromSeconds(0))
+                {
+                    if(!dbaccount.Locked)
+                        LockAccount(dbaccount);
+                }
+                else
+                {
+                    if(dbaccount.Locked)
+                        UnlockAccount(dbaccount);
+                }
+            }
         }
 
         #region Timer
@@ -130,14 +132,14 @@ namespace Service.Profile
         {
             Console.WriteLine("Setting up Account Manager Lockout Timer");
             LockoutTimer = new Timer(interval * 1000) { AutoReset = true };
-            LockoutTimer.Elapsed += Update;
+            LockoutTimer.Elapsed += LockUpdate;
             LockoutTimer.Start();
         }
         private void SetupUpdateTimer(double interval)
         {
             Console.WriteLine("Setting up Account Manager Update Timer");
             UpdateTimer = new Timer(interval * 1000) { AutoReset = true };
-            UpdateTimer.Elapsed += ForceUpdate;
+            UpdateTimer.Elapsed += Update;
             UpdateTimer.Start();
         }
         #endregion
@@ -205,12 +207,14 @@ namespace Service.Profile
         #region Management
         public void LockAccount(Account account)
         {
+            
             LockAccount(account.Domain, account.Username);
             account.Locked = true;
             DbManager.UpdateAccount(account);
         }
         public void LockAccount(string domain, string username)
         {
+            DisconnectUser(username);
             Console.WriteLine("Locking the account: {0}\\{1}", domain, username);
             try
             {
@@ -339,7 +343,6 @@ namespace Service.Profile
             {
                 var account = new Account
                 {
-                    CreatedAt = DateTime.Now,
                     Domain = session.DomainName,
                     Username = session.UserName,
                     Locked = IsLocked(session.UserName),

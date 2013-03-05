@@ -30,7 +30,7 @@ namespace Service.Profile
             var key = Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Internet Explorer");
             if (key != null)
                 Version = new Version((string)key.GetValue("Version"));
-            SetupUpdateTimer(15);
+            SetupUpdateTimer(1800);
         }
 
         private void SetupUpdateTimer(double interval)

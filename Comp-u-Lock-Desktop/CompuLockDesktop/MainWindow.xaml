@@ -27,16 +27,28 @@
             </TabItem>
             <TabItem Header="History" >
                 <Grid>
-                    <ListView Height="284" HorizontalAlignment="Left" Name="Histories" VerticalAlignment="Top" Width="693" ItemsSource="{Binding Histories}">
+                    <ListView Height="284" HorizontalAlignment="Left" Name="Histories" VerticalAlignment="Top" Width="693" DataContext="{Binding Source=History}">
                         <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Title" DisplayMemberBinding="{Binding Title}">
+                            <GridViewColumn Header="Title" DisplayMemberBinding="{Binding Path=Title}" Width="150">
                                 
                             </GridViewColumn>
-                            <GridViewColumn Header="Url" DisplayMemberBinding="{Binding Url}">
+                            <GridViewColumn Header="Visit Count" DisplayMemberBinding="{Binding Path=VisitCount}" Width="75"></GridViewColumn>
+                            <GridViewColumn Header="Url" DisplayMemberBinding="{Binding Path=Url}" Width="450">
                                 
                             </GridViewColumn>
                         </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Processes">
+                <Grid>
+                    <ListView Height="344" HorizontalAlignment="Left" Margin="6,6,0,0" Name="Processes" VerticalAlignment="Top" Width="681" DataContext="{Binding Source=Process}">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name}" Width="150"></GridViewColumn>
+                            </GridView>
                         </ListView.View>
                     </ListView>
                 </Grid>

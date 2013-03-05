@@ -19,6 +19,7 @@ namespace CompuLockDesktop
             LoadAccounts();
             LoadComputer();
             LoadHistory();
+            LoadProcesses();
         }
 
         private void OnOpen(object sender, EventArgs e)
@@ -56,12 +57,7 @@ namespace CompuLockDesktop
         {
             var histories = service.GetHistory();
             if (histories != null)
-                Histories.DataContext = histories;
-            
-            /*foreach (var history in histories)
-            {
-                Histories.Items.Add(history.Title);
-            }*/
+                Histories.ItemsSource = histories;
         }
 
         private void LoadComputer()
@@ -72,6 +68,13 @@ namespace CompuLockDesktop
                 ComputerName.Content = computer.Name;
                 Enviroment.Content = computer.Enviroment;
             }
+        }
+
+        private void LoadProcesses()
+        {
+            var processes = service.GetProcesses();
+            if (processes != null)
+                Processes.ItemsSource = processes;
         }
 
         private void OnClose(object sender, System.ComponentModel.CancelEventArgs e)

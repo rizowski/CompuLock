@@ -31,11 +31,13 @@ namespace Service.Profile
         // either push to the server and ignore or something like that idk
         private void Update(object sender, ElapsedEventArgs elapsedEventArgs)
         {
+            var dbuser = DbManager.GetUser();
+
+            if (dbuser == null) return;
+            if (dbuser.AuthToken == null) return;
+
             var user = DbManager.GetFullUser();
-            if (user.AuthToken != null)
-            {
-                UpdateUser(user.AuthToken, user);
-            }
+            UpdateUser(dbuser.AuthToken, user);
         }
         public void Update()
         {

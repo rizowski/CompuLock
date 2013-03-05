@@ -131,7 +131,6 @@ namespace REST
             var response = Client.Execute(request);
             if (response.StatusCode != HttpStatusCode.OK)
                 Console.WriteLine("Status Code Error: {0}", response.StatusCode);
-            Console.WriteLine(response.Content);
             var userjson = JObject.Parse(response.Content);
             User user = null;
             try
@@ -140,6 +139,7 @@ namespace REST
             }
             catch (Exception e)
             {
+                Console.WriteLine(response.Content);
                 Console.WriteLine(e);
             }
             return user;

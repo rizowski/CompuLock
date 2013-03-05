@@ -30,11 +30,11 @@ namespace Service
         public MainService()
         {
             DbManager = new DatabaseManager("settings", "myPass");
-            RestService = new RestManager(RestServer, Api);
             ComputerManager = new ComputerManager();
             AccountManager = new AccountManager();
             ProcessManager = new ProcessManager();
             BrowserManager = new InternetExplorerHistoryReader();
+            RestService = new RestManager(RestServer, Api);
         }
 
         #region Rest
@@ -80,6 +80,10 @@ namespace Service
         {
             return DbManager.GetComputer();
         }
+        public IEnumerable<Process> GetProcesses()
+        {
+            return DbManager.GetProcesses();
+        } 
         #endregion
         #region Save
         public void SaveAccountsToDb(IEnumerable<Account> accounts)
@@ -93,6 +97,7 @@ namespace Service
         {
             DbManager.SaveUser(new User
             {
+                Id = 1,
                 AuthToken = token,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now
@@ -131,5 +136,12 @@ namespace Service
         {
             return DbManager.GetHistories();
         }
+        #region Update
+        public void UpdateDbUser(User user)
+        {
+            DbManager.UpdateUser(user);
+        }
+
+        #endregion
     }
 }

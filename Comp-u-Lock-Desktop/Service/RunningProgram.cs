@@ -323,6 +323,8 @@ namespace Service
             }*/
             MainService s = new MainService();
 
+            
+
             //var user = s.DbManager.GetFullUser();
             //var email = user.Email;
         }

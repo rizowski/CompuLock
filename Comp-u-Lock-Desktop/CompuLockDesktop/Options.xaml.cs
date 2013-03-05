@@ -19,7 +19,7 @@ namespace CompuLockDesktop
     /// <summary>
     /// Interaction logic for Options.xaml
     /// </summary>
-    public partial class Options : Window
+    public partial class Options
     {
         private MainService service;
         public Options(MainService service)
@@ -30,38 +30,37 @@ namespace CompuLockDesktop
 
         private void OnOpen(object sender, EventArgs e)
         {
-            User user;
-            try
-            {
-                user = service.GetDbUser();
+            var user = service.GetDbUser();
+            if (user != null)
                 AuthToken.Text = user.AuthToken;
-            }
-            catch (Exception)
-            {
-            }
-            
         }
 
         private void SaveClick(object sender, RoutedEventArgs e)
         {
-            if (AuthToken.Text.Length > 0)
+            if (AuthToken.Text.Length <= 0) return;
+            try
             {
-                try
+                var dbuser = service.GetDbUser();
+                if(dbuser == null)
                 {
-                    var user = service.GetRestUser(AuthToken.Text);
-                    user.AuthToken = AuthToken.Text;
                     service.SaveUserToDb(AuthToken.Text);
                 }
-                catch (ServerOfflineException ex)
+                else
                 {
-                    MessageBox.Show(ex.Message);
+                    dbuser.AuthToken = AuthToken.Text;
+                    service.UpdateDbUser(dbuser);
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-                this.Close();
+
             }
+            catch (ServerOfflineException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            Close();
         }
 
         private void OnClick(object sender, MouseButtonEventArgs e)

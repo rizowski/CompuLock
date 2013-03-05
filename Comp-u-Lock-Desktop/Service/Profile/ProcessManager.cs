@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Management;
 using System.Timers;
+using Cassia;
 using Database;
 using Database.Models;
 using Process = System.Diagnostics.Process;
@@ -16,18 +17,18 @@ namespace Service.Profile
         private DatabaseManager DbManager;
         private ManagementEventWatcher startWatch;
 
+        private ITerminalServer Server;
+
         public ProcessManager()
         {
             startWatch = new ManagementEventWatcher(new WqlEventQuery("SELECT * FROM Win32_ProcessStartTrace"));
-            try
-            {
-                startWatch.EventArrived += Update;
-                startWatch.Start();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
+            
+            startWatch.EventArrived += Update;
+            startWatch.Start();
+
+            ITerminalServicesManager manager = new TerminalServicesManager();
+            Server = manager.GetLocalServer();
+
             DbManager = new DatabaseManager("settings", "");
         }
 
@@ -180,6 +181,7 @@ namespace Service.Profile
 
         public Account GetProcessOwner(int processId)
         {
+
             string query = "Select * From Win32_Process Where ProcessID = " + processId;
             ManagementObjectSearcher searcher = new ManagementObjectSearcher(query);
             ManagementObjectCollection processList = searcher.Get();
