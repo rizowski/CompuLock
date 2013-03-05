@@ -33,9 +33,6 @@ namespace REST
 
 
         }
-
-        
-
         #region Accounts
         public Account SaveAccount(string token, Account item)
         {
@@ -120,7 +117,7 @@ namespace REST
                 Console.WriteLine("Status Code Error: {0}", response.StatusCode);
             Console.WriteLine(response.Content);
         }
-#endregion
+        #endregion
         #region User
         public User UpdateUser(string token, User item)
         {
@@ -168,7 +165,7 @@ namespace REST
             }
             return user;
         }
-#endregion
+        #endregion
         #region Computers
         public Computer CreateComputer(string token, Computer item)
         {
@@ -250,7 +247,7 @@ namespace REST
                 Console.WriteLine("Status Code Error: {0}", response.StatusCode);
             Console.WriteLine(response.Content);
         }
-#endregion
+#       endregion
     }
 
     public class ServerOfflineException : Exception

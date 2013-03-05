@@ -66,11 +66,7 @@ namespace Service
         #region Get
         public User GetDbUser()
         {
-            var user = DbManager.GetUser();
-            if (user != null)
-                return user;
-            Console.WriteLine("No user Stored");
-            throw new NullReferenceException("No User Stored");
+            return DbManager.GetUser();
         }
         public IEnumerable<Account> GetDbAccounts()
         {

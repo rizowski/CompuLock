@@ -23,7 +23,7 @@ namespace Service.Profile
         private Timer UpdateTimer;
         private Timer LockoutTimer;
 
-        //                                                                                          60 min
+        //                                                                  60 min
         public AccountManager( double interval = 5, double updateInterval = 3600)
         {
             DbManager = new DatabaseManager("settings","");
@@ -31,7 +31,7 @@ namespace Service.Profile
             SetupLockoutTimer(interval);
             ITerminalServicesManager manager = new TerminalServicesManager();
             Server = manager.GetLocalServer();
-            //Load();
+            ForceUpdate();
         }
 
         // checks to see what user is logged in
@@ -58,23 +58,6 @@ namespace Service.Profile
             }
         }
 
-        // Loads the account information from the computer
-        // Checks to see if each account has been saved to the db.
-        // If the account is in the db, updates the allotted time for the listed account
-        /*private void Load()
-        {
-            LoggedInAccounts = new List<Account>();
-            var accounts = GetLoggedInAccounts();
-            var dbAccounts = GetDbAccounts();
-            foreach (var account in accounts)
-            {
-                var foundAccount = dbAccounts.FirstOrDefault(a => a.Username == account.Username);
-                if (foundAccount == null)
-                    foundAccount = DbManager.SaveAccount(account);
-                LoggedInAccounts.Add(foundAccount);
-            }
-        }*/
-
         private void LockUpdate(object sender, ElapsedEventArgs e)
         {
             Console.WriteLine("Lock Tick");
@@ -98,6 +81,26 @@ namespace Service.Profile
                 }
             }
         }
+
+        public IEnumerable<Account> ForceUpdate()
+        {
+            var accounts = GetDbAccounts();
+            if (!accounts.Any())
+            {
+                var loggedins = GetLoggedInAccounts();
+                foreach (var loggedin in loggedins)
+                {
+                    var found = accounts.FirstOrDefault(a => a.Username == loggedin.Username);
+                    if (found == null)
+                        DbManager.SaveAccount(loggedin);
+                    else
+                    {
+                        DbManager.UpdateAccount(loggedin);
+                    }
+                }
+            }
+            return GetDbAccounts();
+        } 
 
         #region Timer
         private void TimerDisposed(object sender, EventArgs e)

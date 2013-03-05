@@ -17,7 +17,7 @@ namespace Service.Profile
         {
             DbManager = new DatabaseManager("settings","");
             SetupUpdateTimer(300);
-            Update();
+            Update(null, null);
         }
 
         private void SetupUpdateTimer(double interval)
@@ -36,12 +36,20 @@ namespace Service.Profile
             if (dbuser == null) return;
             if (dbuser.AuthToken == null) return;
 
-            var user = DbManager.GetFullUser();
-            UpdateUser(dbuser.AuthToken, user);
-        }
-        public void Update()
-        {
-            Update(null, null);
+            if (dbuser.Email == null)
+            {
+                var restUser = GetUser(dbuser.AuthToken);
+                DbManager.UpdateUser(restUser);
+            }
+            try
+            {
+                var full = DbManager.GetFullUser();
+                UpdateUser(full.AuthToken, full);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
     }
 }
