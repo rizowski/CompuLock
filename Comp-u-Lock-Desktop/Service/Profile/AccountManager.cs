@@ -69,7 +69,7 @@ namespace Service.Profile
                 if (dbaccount == null) continue;
                 if (!dbaccount.Tracking) continue;
 
-                if (dbaccount.AllottedTime > TimeSpan.FromSeconds(0))
+                if (dbaccount.AllottedTime <= TimeSpan.FromSeconds(0))
                 {
                     if(!dbaccount.Locked)
                         LockAccount(dbaccount);
@@ -85,7 +85,7 @@ namespace Service.Profile
         public IEnumerable<Account> ForceUpdate()
         {
             var accounts = GetDbAccounts();
-            if (!accounts.Any())
+            if (accounts.Any())
             {
                 var loggedins = GetLoggedInAccounts();
                 foreach (var loggedin in loggedins)
@@ -93,10 +93,6 @@ namespace Service.Profile
                     var found = accounts.FirstOrDefault(a => a.Username == loggedin.Username);
                     if (found == null)
                         DbManager.SaveAccount(loggedin);
-                    else
-                    {
-                        DbManager.UpdateAccount(loggedin);
-                    }
                 }
             }
             return GetDbAccounts();

@@ -30,9 +30,10 @@ namespace REST
             Client = new RestClient(server);
             Server = server;
             ApiPath = apipath;
-
-
         }
+
+        
+
         #region Accounts
         public Account SaveAccount(string token, Account item)
         {

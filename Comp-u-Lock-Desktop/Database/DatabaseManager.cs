@@ -134,7 +134,8 @@ namespace Database
             sb.Append(SelectAll);
             sb.Append(UsersTable);
             sb.Append(End);
-            DbConnection.Open();
+            if(DbConnection.State != ConnectionState.Open)
+                DbConnection.Open();
             SQLiteDataReader reader;
             User user = null;
             try
@@ -145,6 +146,7 @@ namespace Database
                 {
                     user = new User
                     {
+                        WebId =  Convert.ToInt32(reader["WebId"]),
                         Username = Convert.ToString(reader["Username"]),
                         Email = Convert.ToString(reader["Email"]),
                         AuthToken = Convert.ToString(reader["AuthToken"]),
@@ -157,7 +159,8 @@ namespace Database
             {
                 Console.WriteLine(e);
             }
-            DbConnection.Close();
+            if(DbConnection.State != ConnectionState.Closed)
+                DbConnection.Close();
             return user;
         }
 
@@ -346,11 +349,12 @@ namespace Database
             sb.Append(Update);
             sb.Append(UsersTable);
             sb.Append(Set);
-            sb.Append("Username=@username, Email=@email, AuthToken=@authtoken, UpdatedAt=@updatedAt");
+            sb.Append("WebId=@webId, Username=@username, Email=@email, AuthToken=@authtoken, UpdatedAt=@updatedAt");
             sb.Append(Where);
             sb.Append("Id = " + user.Id);
             sb.Append(End);
             var command = new SQLiteCommand(sb.ToString(), DbConnection);
+            command.Parameters.Add(new SQLiteParameter("@webId", user.WebId));
             command.Parameters.Add(new SQLiteParameter("@username", user.Username));
             command.Parameters.Add(new SQLiteParameter("@email", user.Email));
             command.Parameters.Add(new SQLiteParameter("@authtoken", user.AuthToken));

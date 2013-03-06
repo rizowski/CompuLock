@@ -13,9 +13,10 @@ namespace Service.Profile
         private Timer UpdateTimer { get; set; }
         private DatabaseManager DbManager { get; set; }
 
-        public RestManager(string server, string apipath) : base(server, apipath)
+        public RestManager(string server, string apipath)
+            : base(server, apipath)
         {
-            DbManager = new DatabaseManager("settings","");
+            DbManager = new DatabaseManager("settings", "");
             SetupUpdateTimer(300);
             Update(null, null);
         }
@@ -23,7 +24,7 @@ namespace Service.Profile
         private void SetupUpdateTimer(double interval)
         {
             Console.WriteLine("Setting up Rest Manager Update Timer");
-            UpdateTimer = new Timer(interval * 1000){AutoReset = true};
+            UpdateTimer = new Timer(interval*1000) {AutoReset = true};
             UpdateTimer.Elapsed += Update;
             UpdateTimer.Start();
         }
@@ -32,11 +33,11 @@ namespace Service.Profile
         private void Update(object sender, ElapsedEventArgs elapsedEventArgs)
         {
             var dbuser = DbManager.GetUser();
-
+            Console.WriteLine("Updating Rest User");
             if (dbuser == null) return;
-            if (dbuser.AuthToken == null) return;
+            if (dbuser.AuthToken.Length == 0) return;
 
-            if (dbuser.Email == null)
+            if (dbuser.Email.Length == 0)
             {
                 var restUser = GetUser(dbuser.AuthToken);
                 DbManager.UpdateUser(restUser);

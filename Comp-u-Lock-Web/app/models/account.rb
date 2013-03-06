@@ -1,6 +1,6 @@
 class Account < ActiveRecord::Base
   attr_accessible :computer_id, :allotted_time, :domain, 
-  :tracking, :used_time, :username, :admin,  :account_program_attributes, :restriction_attributes
+  :tracking, :used_time, :username, :admin,  :account_process_attributes, :restriction_attributes
 
   validates :username, :presence => true
   validates :computer_id, :presence => true

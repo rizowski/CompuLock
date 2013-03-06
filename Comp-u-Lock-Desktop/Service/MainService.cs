@@ -47,7 +47,7 @@ namespace Service
                 Console.WriteLine("User not found");
                 throw new NullReferenceException("User not found");
             }
-            return DbManager.SaveUser(restUser);
+            return restUser;
         }
         public IEnumerable<Account> GetRestAccounts(string token)
         {
@@ -135,7 +135,8 @@ namespace Service
         #region Update
         public void UpdateDbUser(User user)
         {
-            DbManager.UpdateUser(user);
+            var rest = GetRestUser(user.AuthToken);
+            DbManager.UpdateUser(rest);
         }
 
         #endregion

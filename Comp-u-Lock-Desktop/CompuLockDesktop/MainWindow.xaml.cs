@@ -17,9 +17,16 @@ namespace CompuLockDesktop
             InitializeComponent();
             service = new MainService();
             LoadAccounts();
+            LoadOverviewccounts();
             LoadComputer();
             LoadHistory();
             LoadProcesses();
+        }
+
+        private void LoadAccounts()
+        {
+            var accounts = service.GetAccounts();
+            Accounts.ItemsSource = accounts;
         }
 
         private void OnOpen(object sender, EventArgs e)
@@ -43,13 +50,13 @@ namespace CompuLockDesktop
             dialog.ShowDialog();
         }
 
-        private void LoadAccounts()
+        private void LoadOverviewccounts()
         {
             var dbaccounts = service.GetDbAccounts();
             if(dbaccounts!= null)
             foreach (var dbaccount in dbaccounts)
             {
-                Accounts.Items.Add(dbaccount.Username);
+                OverviewAccounts.Items.Add(dbaccount.Username);
             }
         }
 
