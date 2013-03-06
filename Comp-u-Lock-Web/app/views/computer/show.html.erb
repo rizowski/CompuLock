@@ -1,13 +1,52 @@
 <h1><%=@computer.name%></h1>
-
-Total number of accounts: <%=@computer.account.size%><br/>
-<%@computer.account.each do |account|%>
-	Username: <%=account.username%><br/>
-	Tracking: <%=account.tracking%><br/><br/>
-<%end%>
-<br/>
-<h1>Histories</h1>
-<%@computer.history.each do |history|%>
-	Title: <%=history.title%><br/>
-	Url: <%=link_to(history.url, history.url)%><br/><br/>
-<%end%>
+<hr>
+<div class="container">
+	<div class="row">
+		<div class="span7">
+			<fieldset>
+				<legend>Accounts(<%=@computer.account.size%>)</legend>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Domain</th>
+							<th>Username</th>
+							<th>Tracking</th>
+							<th>Allotted Time</th>
+						</tr>
+					</thead>
+					<tbody>
+						<%@computer.account.each do |account|%>
+						<tr>
+							<td><%=account.domain%></td>
+							<td><%=link_to(account.username, action: 'show', controller: 'account', id:account.id)%></td>
+							<td><%=account.tracking%></td>
+							<td><%=account.allotted_time%></td>
+						</tr>
+						<%end%>
+					</tbody>
+				</table>
+			</fieldset>
+		</div>
+		<span class="span4">
+			<fieldset>
+				<legend>Web History</legend>
+			</fieldset>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Title</th>
+						<th>Url</th>
+					</tr>
+				</thead>
+				<tbody>
+					<%@computer.history.each do |history|%>
+					<tr>
+						<td><%=history.title%></td>
+						<td><%=link_to(history.url, history.url)%></td>
+					</tr>
+					<%end%>
+				</tbody>
+			</table>
+		</span>
+	</div>
+</div>

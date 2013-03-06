@@ -1,10 +1,37 @@
 <h1>Computer Accounts</h1>
-<% @computers.each do |computer| %>
-	<%= computer.name %><br/>
-	<%computer.account.all.each do |account|%>
-		<%=account.domain%>, <%=account.username%>, <%=account.tracking%>
-<%=link_to "show",action: 'show', id:account.id%> <%=link_to "edit", controller: 'account', action: 'edit', id: account.id%> <%=link_to "delete", account, method: :delete%>
-		<br/>
-	<% end%>
-	<br/>
-<%end%>
+<hr>
+<div class="container">
+	<div class="row">
+		<div class="span12">
+			<fieldset>
+				<legend>Accounts</legend>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Computer</th>
+							<th>Domain</th>
+							<th>Username</th>
+							<th>Tracking</th>
+							<th>Links</th>
+						</tr>
+					</thead>
+					<tbody>
+						<% @computers.each do |computer| %>
+							<%computer.account.all.each do |account|%>
+						<tr>
+							<td><%= computer.name %></td>
+							<td><%=account.domain%></td>
+							<td><%=account.username%></td>
+							<td><%=account.tracking%></td>
+							<td width="35"><%=link_to "show",action: 'show', id:account.id%></td>
+							<td width="35"><%=link_to "edit", controller: 'account', action: 'edit', id: account.id%></td>
+							<td width="35"><%=link_to "delete", account, method: :delete%></td>
+						</tr>
+						<% end%>
+						<%end%>
+					</tbody>
+				</table>
+			</fieldset>	
+		</div>
+	</div>
+</div>

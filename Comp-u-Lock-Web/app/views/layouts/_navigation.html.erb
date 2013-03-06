@@ -1,15 +1,15 @@
-<%= link_to "Home", root_path %>
-<% unless signed_in? %>
-<%= link_to('Login', new_user_session_path, :style =>"color: green")  %>
-<%= link_to('Register', new_user_registration_path, :style =>"color: green")  %>
-<%else%>
-<%= link_to("Profile", user_profile_path) %>
-<%= link_to('Computers', computer_index_path) %>
-<%= link_to('Computer Accounts', account_index_path) %>
-<%= link_to('Logout', destroy_user_session_path, :method=>'get', :style => "color: #A80000") %>
-<% if current_user.admin? %>
-<br/>
-Admin links: 
-<%= link_to("User List", user_list_path) %>
-<%end%>
-<%end%>
+<%= link_to "Comp-u-Lock", root_path, class: 'brand'%>
+<ul class="nav">
+	<% unless signed_in? %>
+	<li><%= link_to('Login', new_user_session_path, :style =>"color: green")  %></li>
+	<li><%= link_to('Register', new_user_registration_path, :style =>"color: green")  %></li>
+	<%else%>
+	<li><%= link_to("Profile", user_profile_path) %></li>
+	<li><%= link_to('Computers', computer_index_path) %></li>
+	<li><%= link_to('Computer Accounts', account_index_path) %></li>
+	<li><%= link_to('Logout', destroy_user_session_path, :method=>'get', :style => "color: #A80000") %></li>
+	<% if current_user.admin? %>
+	<li><%= link_to("User List", user_list_path) %></li>
+	<%end%>
+	<%end%>
+</ul>

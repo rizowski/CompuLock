@@ -143,7 +143,7 @@ Done:
 Week 9:
 	Todo:
 		Database:
-			- |DOne| Add update commands. There is a problem with using Insert on conflict replace
+			- |Done| Add update commands. There is a problem with using Insert on conflict replace
 				- it is causing the ID to change which wont change it for everything it has a relationship with.
 		RestManager:
 			- Timer for pushing data from the desktop Db to the webservice on a regular basis
@@ -158,7 +158,7 @@ Week 9:
 			Desktop:
 				- Gui needs to function as an independant application not requiring the web until an auth token is provided
 			Web:
-				- A simple layout needs to be established to show the information in a readable manor. Doesn't need to be fantastic
+				- |Done| A simple layout needs to be established to show the information in a readable manor. Doesn't need to be fantastic
 		Todo:
 			SQLite:
 				- Trigger for updating count History

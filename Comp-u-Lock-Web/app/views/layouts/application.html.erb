@@ -7,10 +7,34 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-	<%= render 'layouts/navigation' %>
-	<p class="notice"><%= notice %></p>
-	<p class="alert"><%= alert %></p>
-	<%= yield %>
-
+	<header class="navbar navbar-fixed-top">
+		<nav class="navbar-inner">
+			<div class="container">
+				<%= render 'layouts/navigation' %>
+			</div>
+		</nav>
+	</header>
+	<div id="main" role="main">
+		<%= render 'layouts/messages' %>
+		<div class="container">
+        	<div class="content">
+           		<div class="row">
+            		<div class="span12">
+						<%= yield %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer>
+		<div class="container">
+	        <hr>
+	        <div class="row">
+	          <div class="span3">
+	            <p class="muted credit">Brought to you by</p>Comp-u-Lock
+	          </div>
+	        </div>
+	      </div>
+	</footer>
 </body>
 </html>

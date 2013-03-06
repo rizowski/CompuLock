@@ -1,11 +1,38 @@
 <h1><%=current_user.email%> Profile</h1>
-Email: <%=current_user.email%><br/>
-Sign Up Date: <%=current_user.created_at%><br/>
-User Name: <%=current_user.username%><br/>
-Auth token: <%=current_user.authentication_token%>
-<br/>
-Registered Computers: <%=current_user.computer.count%><br/>
-<%=link_to "edit account", edit_user_registration_path(current_user)%><br/>
-<%@computers.each do |computer|%>
-	<%=computer.name%> <%=link_to "show", controller: 'computer', action: 'show', id: computer.id%><br/>
-<%end%>
+<hr>
+<div class="container content">
+	<div class="row">
+		<div class="span7">
+			<fieldset>
+				<legend>Registered Computers</legend>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<%@computers.each do |computer|%>
+						<tr>
+							<td><%=computer.name%></td>
+							<td><%=link_to "link", controller: 'computer', action: 'show', id: computer.id%></td>
+						</tr>
+						<%end%>
+					</tbody>
+				</table>
+			</fieldset>
+		</div>
+		<div class="span4">
+			<div class="content">
+				<span class="span3">
+					<%=current_user.username%><br/>
+					<%=current_user.email%><br/>
+					<%=current_user.authentication_token%><br/>
+					<%=link_to "edit account", edit_user_registration_path(current_user)%><br/>
+				</span>
+			</div>
+		</div>
+	</div>
+</div>
+

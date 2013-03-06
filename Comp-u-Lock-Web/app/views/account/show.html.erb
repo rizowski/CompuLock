@@ -1,7 +1,38 @@
-<h1>Account <%=@account.username%></h1>
-Computer Account: <%=@account.username%><br/>
-<br/>
-<span>Processes</span><br/>
-<%@account.account_process.each do |process|%>
-	Name: <%=process.name%><br/>
-<%end%>
+<h1><%=@account.username%></h1>
+<hr>
+<div class="container">
+	<div class="row">
+		<div class="span8">
+			<fieldset>
+				<legend>Processes</legend>
+			</fieldset>	
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Updated</th>
+					</tr>
+				</thead>
+				<tbody>
+					<%@account.account_process.each do |process|%>
+					<tr>
+						<td><%=process.name%></td>
+						<td><%=process.updated_at%></td>
+					</tr>
+					<%end%>
+				</tbody>
+			</table>
+		</div>
+		<div class="span3 offset1">
+			<fieldset>
+				<legend>Info</legend>
+				Domain: <%=@account.domain%><br/>
+				Tracking: <%=@account.tracking%><br/>
+				Allotted Time: <%=@account.allotted_time%><br/>
+				<%=link_to('edit', action: 'edit')%>
+				<%=link_to('delete', @account, method: :delete)%>
+			</fieldset>
+		</div>
+	</div>
+</div>
+

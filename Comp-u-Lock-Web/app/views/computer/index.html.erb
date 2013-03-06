@@ -1,4 +1,31 @@
 <h1>Computers</h1>
-<% @computers.each do |computer| %>
-	<%=computer.enviroment%>, <%= computer.name %> <%=link_to "stats",action: 'show', id:computer.id%> <%=link_to "edit", controller: 'computer', action: 'edit', id: computer.id%> <%=link_to "delete", computer, method: :delete%><br/>
-<%end%>
+<hr>
+<div class="container">
+	<div class="row">
+		<div class="span12">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Enviroment</th>
+						<th>Name</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% @computers.each do |computer| %>
+					<tr>
+						<td><%=computer.enviroment%></td> 
+						<td><%= computer.name %></td>
+						<td width="50"><%=link_to "show",action: 'show', id:computer.id%></td>
+						<td width="50"><%=link_to "edit", controller: 'computer', action: 'edit', id: computer.id%></td>
+						<td width="50"><%=link_to "delete", computer, method: :delete%></td>
+					</tr>
+					<%end%>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+	
+
