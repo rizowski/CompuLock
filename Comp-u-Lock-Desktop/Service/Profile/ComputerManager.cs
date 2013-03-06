@@ -72,7 +72,6 @@ namespace Service.Profile
                 computer.Id = dbcomputer.Id;
                 return DbManager.UpdateComputer(computer);
             }
-            else
                 return DbManager.SaveComputer(computer);
         }
 

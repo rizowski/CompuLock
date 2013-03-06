@@ -89,6 +89,7 @@ namespace Service.Profile
             Console.WriteLine("Updating Rest Computer");
             var dbUser = DbManager.GetUser();
             var dbcomp = DbManager.GetComputer();
+            var dbHistory = DbManager.GetHistories();
 
             if (dbUser == null) return;
             if (dbUser.AuthToken.Length == 0) return;
@@ -101,6 +102,7 @@ namespace Service.Profile
                 dbcomp = DbManager.UpdateComputer(dbcomp);
             }
             var restcomps = GetAllComputers(dbUser.AuthToken);
+            dbcomp.Histories = (List<History>) dbHistory;
             if (restcomps.FirstOrDefault(c => c.Enviroment == dbcomp.Enviroment && c.Name == dbcomp.Name) == null)
             {
                 var newcomp = CreateComputer(dbUser.AuthToken, dbcomp);
@@ -117,6 +119,7 @@ namespace Service.Profile
         // You also need to remember about histories
         // Parsing seems to be the problem. Also SQLite connection errors don't seem to be spawning. it amy be due to the fact of time.
         // Stay up again, we need to get this done.
+        // keep it up.
         private void UpdateAccounts(object sender, ElapsedEventArgs e)
         {
             

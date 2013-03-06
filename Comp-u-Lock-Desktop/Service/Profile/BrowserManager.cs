@@ -39,6 +39,7 @@ namespace Service.Profile
             UpdateTimer = new Timer(interval * 1000) { AutoReset = true };
             UpdateTimer.Elapsed += ForceUpdate;
             UpdateTimer.Start();
+            ForceUpdate(null, null);
         }
 
         private void ForceUpdate(object sender, EventArgs eventArgs)
