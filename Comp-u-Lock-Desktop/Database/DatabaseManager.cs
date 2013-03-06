@@ -109,14 +109,6 @@ namespace Database
                 var reader = new SQLiteCommand(sb.ToString(), conn).ExecuteReader(CommandBehavior.SingleResult);
                 while (reader.Read())
                 {
-                    var Id = Convert.ToInt32(reader["Id"]);
-                    var UserId = Convert.ToInt32(reader["UserId"]);
-                    var WebId = Convert.ToInt32(reader["WebId"]);
-                    var Enviroment = Convert.ToString(reader["Enviroment"]);
-                    var Name = Convert.ToString(reader["Name"]);
-                    var IpAddress = Convert.ToString(reader["IpAddress"]);
-                    var CreatedAt = Convert.ToDateTime(reader["CreatedAt"]);
-                    var UpdatedAt = Convert.ToDateTime(reader["UpdatedAt"]);
                     comp = new Computer
                     {
                         Id = Convert.ToInt32(reader["Id"]),
@@ -330,8 +322,7 @@ namespace Database
                 sb.Append(Update);
                 sb.Append(ComputersTable);
                 sb.Append(Set);
-                sb.Append(
-                    "WebId=@webId, UserId=@userId, Name=@name, Enviroment=@enviroment, IpAddress=@ipAddress, UpdatedAt=@updatedAt");
+                sb.Append("WebId=@webId, UserId=@userId, Name=@name, Enviroment=@enviroment, IpAddress=@ipAddress, UpdatedAt=@updatedAt");
                 sb.Append(Where);
                 sb.Append("Id = " + computer.Id);
                 sb.Append(End);

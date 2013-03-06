@@ -60,18 +60,23 @@ namespace Service.Profile
             
             IPAddress[] localIPs = Dns.GetHostAddresses(Dns.GetHostName());
             String MyIp = localIPs[0].ToString();
+            
+            if (dbcomputer != null)
+            {
+                dbcomputer.Enviroment = OS.StringName;
+                dbcomputer.Name = Environment.MachineName;
+                dbcomputer.IpAddress = MyIp;
+                dbcomputer.UpdatedAt = DateTime.Now;
+                return DbManager.UpdateComputer(dbcomputer);
+            }
             var computer = new Computer
             {
+                CreatedAt = DateTime.Now,
                 Name = Environment.MachineName,
                 Enviroment = OS.StringName,
                 IpAddress = MyIp,
                 UpdatedAt = DateTime.Now
             };
-            if (dbcomputer != null)
-            {
-                computer.Id = dbcomputer.Id;
-                return DbManager.UpdateComputer(computer);
-            }
                 return DbManager.SaveComputer(computer);
         }
 

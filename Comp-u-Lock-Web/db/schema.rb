@@ -49,11 +49,11 @@ ActiveRecord::Schema.define(:version => 20130225215841) do
 
   create_table "histories", :force => true do |t|
     t.integer  "computer_id"
-    t.string   "url"
-    t.string   "title"
+    t.string   "url",         :limit => 750
+    t.string   "title",       :limit => 300
     t.integer  "visit_count"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
   end
 
   create_table "hours", :force => true do |t|

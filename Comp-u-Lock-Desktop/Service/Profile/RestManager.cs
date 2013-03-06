@@ -89,7 +89,7 @@ namespace Service.Profile
             Console.WriteLine("Updating Rest Computer");
             var dbUser = DbManager.GetUser();
             var dbcomp = DbManager.GetComputer();
-            var dbHistory = DbManager.GetHistories();
+            var dbHistories = DbManager.GetHistories();
 
             if (dbUser == null) return;
             if (dbUser.AuthToken.Length == 0) return;
@@ -102,7 +102,6 @@ namespace Service.Profile
                 dbcomp = DbManager.UpdateComputer(dbcomp);
             }
             var restcomps = GetAllComputers(dbUser.AuthToken);
-            dbcomp.Histories = (List<History>) dbHistory;
             if (restcomps.FirstOrDefault(c => c.Enviroment == dbcomp.Enviroment && c.Name == dbcomp.Name) == null)
             {
                 var newcomp = CreateComputer(dbUser.AuthToken, dbcomp);
@@ -110,6 +109,15 @@ namespace Service.Profile
             }
             else
             {
+                foreach (var history in dbHistories)
+                {
+                    if (history.ComputerId == 0)
+                    {
+                        history.ComputerId = dbcomp.WebId;
+                        var dbhistory = DbManager.UpdateHistory(history);
+                    }
+                }
+                dbcomp.Histories = (List<History>) dbHistories;
                 UpdateComputer(dbUser.AuthToken, dbcomp);
             }
         }
