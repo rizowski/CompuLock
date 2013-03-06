@@ -118,6 +118,7 @@ namespace Database
                     {
                         Id = Convert.ToInt32(reader["Id"]),
                         UserId = Convert.ToInt32(reader["UserId"]),
+                        WebId = Convert.ToInt32(reader["WebId"]),
                         Enviroment = (string)reader["Enviroment"],
                         Name = (string)reader["Name"],
                         IpAddress = (string)reader["IpAddress"],
@@ -316,17 +317,18 @@ namespace Database
         {
             if (computer == null)
                 throw new NullReferenceException("Computer cant be null");
-            if (computer.Id <= 0)
-                throw new ArgumentException("Computer id cant be less than or equal to 0");
+            computer.Id = 1;
             StringBuilder sb = new StringBuilder();
             sb.Append(Update);
             sb.Append(ComputersTable);
             sb.Append(Set);
-            sb.Append("Name=@name, Enviroment=@enviroment, IpAddress=@ipAddress, UpdatedAt=@updatedAt");
+            sb.Append("WebId=@webId, UserId=@userId, Name=@name, Enviroment=@enviroment, IpAddress=@ipAddress, UpdatedAt=@updatedAt");
             sb.Append(Where);
             sb.Append("Id = " + computer.Id);
             sb.Append(End);
             var command = new SQLiteCommand(sb.ToString(), DbConnection);
+            command.Parameters.Add(new SQLiteParameter("@webId", computer.WebId));
+            command.Parameters.Add(new SQLiteParameter("@userId", computer.UserId));
             command.Parameters.Add(new SQLiteParameter("@name", computer.Name));
             command.Parameters.Add(new SQLiteParameter("@enviroment", computer.Enviroment));
             command.Parameters.Add(new SQLiteParameter("@ipAddress", computer.IpAddress));
