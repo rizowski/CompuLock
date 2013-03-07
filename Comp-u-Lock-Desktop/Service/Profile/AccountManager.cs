@@ -31,7 +31,8 @@ namespace Service.Profile
             SetupLockoutTimer(interval);
             ITerminalServicesManager manager = new TerminalServicesManager();
             Server = manager.GetLocalServer();
-            ForceUpdate();
+            //ForceUpdate();
+            Update(null, null);
         }
 
         // checks to see what user is logged in
@@ -53,6 +54,8 @@ namespace Service.Profile
                 }
                 else
                 {
+                    account.Id = dbaccount.Id;
+                    account.ComputerId = dbaccount.ComputerId;
                     DbManager.UpdateAccount(account);
                 }
             }

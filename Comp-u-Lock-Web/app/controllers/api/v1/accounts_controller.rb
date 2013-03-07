@@ -104,14 +104,6 @@ module Api
 				@user = User.find_by_authentication_token(token)
 				account = JSON.parse params[:account]
 
-				puts 
-				puts 
-				puts
-				puts "Well I am updating"
-				puts id != 0
-				puts 
-				puts
-
 				if account["username"].nil?
 					render :status => 400,
 						:json => { :message => "'username' cannot be null."}

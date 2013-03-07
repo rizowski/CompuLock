@@ -55,7 +55,10 @@ namespace Service.Profile
                 }
                 else
                 {
-                    DbManager.SaveHistory(history);
+                    if (!string.IsNullOrEmpty(history.Title))
+                    {
+                        DbManager.SaveHistory(history);
+                    }
                 }
             }
         }

@@ -21,7 +21,7 @@ namespace Database.Models
         [JsonProperty(PropertyName = "ip_address", NullValueHandling = NullValueHandling.Ignore)]
         public string IpAddress { get; set; }
 
-        [JsonProperty(PropertyName = "account_attributes", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty(PropertyName = "accounts_attributes", NullValueHandling = NullValueHandling.Ignore)]
         public virtual List<Account> Accounts { get; set; }
         [JsonProperty(PropertyName = "history_attributes", NullValueHandling = NullValueHandling.Ignore)]
         public List<History> Histories { get; set; }

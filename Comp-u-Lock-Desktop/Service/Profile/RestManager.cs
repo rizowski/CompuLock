@@ -90,6 +90,7 @@ namespace Service.Profile
             var dbUser = DbManager.GetUser();
             var dbcomp = DbManager.GetComputer();
             var dbHistories = DbManager.GetHistories();
+            var dbAccounts = DbManager.GetAccounts();
 
             if (dbUser == null) return;
             if (dbUser.AuthToken.Length == 0) return;
@@ -109,16 +110,81 @@ namespace Service.Profile
             }
             else
             {
-                foreach (var history in dbHistories)
+                foreach (var dbAccount in dbAccounts.Where(dbAccount => dbAccount.ComputerId == 0))
                 {
-                    if (history.ComputerId == 0)
+                    dbAccount.ComputerId = dbcomp.WebId;
+                    DbManager.UpdateAccount(dbAccount);
+                }
+                
+                foreach (var history in dbHistories.Where(history => history.ComputerId == 0))
+                {
+                    history.ComputerId = dbcomp.WebId;
+                    DbManager.UpdateHistory(history);
+                }
+
+                dbcomp.Histories = (List<History>) dbHistories;
+                //Account is going in but not being updated from the server. 
+                //It sends nothing back. It also doesn't get stored in the firstplace as it doesn't sshow up on the website.
+                var restcomp = UpdateComputer(dbUser.AuthToken, dbcomp);
+
+                foreach (var history in restcomp.Histories)
+                {
+                    var foundhistory = dbHistories.FirstOrDefault(h => h.Title == history.Title && h.Url == history.Url);
+                    if (foundhistory == null)
                     {
-                        history.ComputerId = dbcomp.WebId;
-                        var dbhistory = DbManager.UpdateHistory(history);
+                        if (history.Title.Length!=0)
+                        {
+                            DbManager.SaveHistory(history);
+                        }
+                    }
+                    else
+                    {
+                        history.Id = foundhistory.Id;
+                        DbManager.UpdateHistory(history);
+                    } 
+                }
+                /*foreach (var account in restcomp.Accounts)
+                {
+                    var foundAccount =
+                        dbAccounts.FirstOrDefault(
+                            a =>
+                            a.Domain == account.Domain && a.Username == account.Username &&
+                            a.ComputerId == account.ComputerId);
+                    if (foundAccount == null)
+                    {
+                        DbManager.SaveAccount(account);
+                    }
+                    else
+                    {
+                        account.Id = foundAccount.Id;
+                        DbManager.UpdateAccount(account);
+                    }
+                }*/
+                foreach (var account in dbAccounts)
+                {
+
+                    var foundAccount = GetAllAccounts(dbUser.AuthToken).FirstOrDefault(a => a.ComputerId == account.ComputerId && a.Domain == account.Domain && a.Username == account.Username);
+                    if (foundAccount == null)
+                    {
+                        SaveAccount(dbUser.AuthToken, account);
+                    }
+                    else
+                    {
+                        if (foundAccount.UpdatedAt < account.UpdatedAt)
+                        {
+                            foundAccount.Id = account.Id;
+                            DbManager.UpdateAccount(foundAccount);
+                        }
+                        else
+                        {
+                            //sends to server
+                            account.WebId = foundAccount.WebId;
+                            UpdateAccount(dbUser.AuthToken, account);
+                        }
                     }
                 }
-                dbcomp.Histories = (List<History>) dbHistories;
-                UpdateComputer(dbUser.AuthToken, dbcomp);
+                
+                
             }
         }
 

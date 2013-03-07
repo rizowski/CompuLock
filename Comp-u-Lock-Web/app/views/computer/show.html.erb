@@ -2,7 +2,7 @@
 <hr>
 <div class="container">
 	<div class="row">
-		<div class="span7">
+		<div class="span11">
 			<fieldset>
 				<legend>Accounts(<%=@computer.account.size%>)</legend>
 				<table class="table">
@@ -27,9 +27,11 @@
 				</table>
 			</fieldset>
 		</div>
-		<span class="span4">
+	</div>
+	<div class="row">
+		<span class="span11">
 			<fieldset>
-				<legend>Web History</legend>
+				<legend>Web History(<%=@computer.history.size%>)</legend>
 			</fieldset>
 			<table class="table">
 				<thead>

@@ -406,11 +406,13 @@ namespace Database
                 sb.Append(Update);
                 sb.Append(HistoryTable);
                 sb.Append(Set);
-                sb.Append("Title=@title, Url=@url, VisitCount=@visitcount, UpdatedAt=@updatedAt");
+                sb.Append("WebId=@webId, ComputerId=@computerId, Title=@title, Url=@url, VisitCount=@visitcount, UpdatedAt=@updatedAt");
                 sb.Append(Where);
                 sb.Append("Id= " + history.Id);
                 sb.Append(End);
                 var command = new SQLiteCommand(sb.ToString(), conn);
+                command.Parameters.Add(new SQLiteParameter("@webId", history.WebId));
+                command.Parameters.Add(new SQLiteParameter("@computerId", history.ComputerId));
                 command.Parameters.Add(new SQLiteParameter("@title", history.Title));
                 command.Parameters.Add(new SQLiteParameter("@url", history.Url));
                 command.Parameters.Add(new SQLiteParameter("@visitcount", history.VisitCount));
