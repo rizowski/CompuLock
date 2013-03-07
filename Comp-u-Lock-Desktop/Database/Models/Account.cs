@@ -42,9 +42,9 @@ namespace Database.Models
         [JsonProperty(PropertyName = "restriction_attributes", NullValueHandling = NullValueHandling.Ignore)]
         public List<Restriction> Restrictions { get; set; }
 
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "created_at")]
         public DateTime CreatedAt { get; set; }
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "updated_at")]
         public DateTime UpdatedAt { get; set; }
 
         public string ToJSON()

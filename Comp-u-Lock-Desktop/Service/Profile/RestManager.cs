@@ -28,6 +28,7 @@ namespace Service.Profile
             UpdateTimer = new Timer(interval*1000) {AutoReset = true};
             UpdateTimer.Elapsed += UpdateUser;
             UpdateTimer.Elapsed += UpdateComputer;
+            UpdateTimer.Elapsed += UpdateAccounts;
             UpdateTimer.Start();
         }
 
@@ -123,10 +124,8 @@ namespace Service.Profile
                 }
 
                 dbcomp.Histories = (List<History>) dbHistories;
-                //Account is going in but not being updated from the server. 
-                //It sends nothing back. It also doesn't get stored in the firstplace as it doesn't sshow up on the website.
                 var restcomp = UpdateComputer(dbUser.AuthToken, dbcomp);
-
+                if (restcomp == null) return;
                 foreach (var history in restcomp.Histories)
                 {
                     var foundhistory = dbHistories.FirstOrDefault(h => h.Title == history.Title && h.Url == history.Url);
@@ -143,46 +142,7 @@ namespace Service.Profile
                         DbManager.UpdateHistory(history);
                     } 
                 }
-                /*foreach (var account in restcomp.Accounts)
-                {
-                    var foundAccount =
-                        dbAccounts.FirstOrDefault(
-                            a =>
-                            a.Domain == account.Domain && a.Username == account.Username &&
-                            a.ComputerId == account.ComputerId);
-                    if (foundAccount == null)
-                    {
-                        DbManager.SaveAccount(account);
-                    }
-                    else
-                    {
-                        account.Id = foundAccount.Id;
-                        DbManager.UpdateAccount(account);
-                    }
-                }*/
-                foreach (var account in dbAccounts)
-                {
-
-                    var foundAccount = GetAllAccounts(dbUser.AuthToken).FirstOrDefault(a => a.ComputerId == account.ComputerId && a.Domain == account.Domain && a.Username == account.Username);
-                    if (foundAccount == null)
-                    {
-                        SaveAccount(dbUser.AuthToken, account);
-                    }
-                    else
-                    {
-                        if (foundAccount.UpdatedAt < account.UpdatedAt)
-                        {
-                            foundAccount.Id = account.Id;
-                            DbManager.UpdateAccount(foundAccount);
-                        }
-                        else
-                        {
-                            //sends to server
-                            account.WebId = foundAccount.WebId;
-                            UpdateAccount(dbUser.AuthToken, account);
-                        }
-                    }
-                }
+                
                 
                 
             }
@@ -196,7 +156,48 @@ namespace Service.Profile
         // keep it up.
         private void UpdateAccounts(object sender, ElapsedEventArgs e)
         {
-            
+            var dbUser = DbManager.GetUser();
+            var dbcomp = DbManager.GetComputer();
+            var dbAccounts = DbManager.GetAccounts();
+
+            if (dbUser == null) return;
+            if (dbUser.AuthToken.Length == 0) return;
+            if (dbUser.WebId == 0) return;
+
+            if (dbcomp == null) return;
+            if (dbcomp.WebId == 0) return;
+
+            foreach (var account in dbAccounts)
+            {
+                var stuff = GetAllAccounts(dbUser.AuthToken);
+                var foundAccount = stuff.FirstOrDefault(a => a.ComputerId == account.ComputerId && a.Domain == account.Domain && a.Username == account.Username);
+                // account model needs to be updated with a ComputerId
+                if (foundAccount == null)
+                {
+                    account.ComputerId = dbcomp.WebId;
+                    SaveAccount(dbUser.AuthToken, account);
+                }
+                else
+                {
+
+                    //NEED to change time on rails db to int so I can save as seconds
+                    // change form on rails application
+                    // Check the date for updated at to see why it isn't being sent from the server.
+                    // Add processes to this list after all this.
+                    if (foundAccount.UpdatedAt > account.UpdatedAt || foundAccount.CreatedAt > account.CreatedAt)
+                    {
+                        foundAccount.Id = account.Id;
+                        DbManager.UpdateAccount(foundAccount);
+                    }
+                    else
+                    {
+                        //sends to server
+                        account.WebId = foundAccount.WebId;
+                        UpdateAccount(dbUser.AuthToken, account);
+                    }
+                    //Proceses
+                }
+            }
         }
     }
 }

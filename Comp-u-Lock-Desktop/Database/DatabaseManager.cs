@@ -71,7 +71,7 @@ namespace Database
             ExecuteQuery(user);
             const string computer = CreateTable + IfNotExists + ComputersTable + "(Id integer primary key asc, WebId integer default '0', UserId integer default '0', Enviroment varchar(50), Name varchar(50) unique, IpAddress varchar(16), CreatedAt datetime, UpdatedAt datetime)";
             ExecuteQuery(computer);
-            const string account = CreateTable + IfNotExists + AccountsTable + "(Id integer primary key asc, WebId integer default '0', Domain varchar(50), Username varchar(50), Tracking bool, Locked bool, AllottedTime integer, UsedTime integer, CreatedAt datetime, UpdatedAt datetime, unique(Domain, Username))";
+            const string account = CreateTable + IfNotExists + AccountsTable + "(Id integer primary key asc, WebId integer default '0', ComputerId integer default '0', Domain varchar(50), Username varchar(50), Tracking bool, Locked bool, AllottedTime integer, UsedTime integer, CreatedAt datetime, UpdatedAt datetime, unique(Domain, Username))";
             ExecuteQuery(account);
             const string accountHistory = CreateTable + IfNotExists + HistoryTable + "(Id integer primary key asc, WebId integer default '0', ComputerId integer default '0', Title varchar(150), Url varchar(300), VisitCount integer, CreatedAt datetime, UpdatedAt datetime, unique(ComputerId, Url) on conflict replace)";
             ExecuteQuery(accountHistory);
@@ -229,11 +229,13 @@ namespace Database
 
                 sb.Append(InsertInto);
                 sb.Append(AccountsTable);
-                sb.Append("(Domain, Username, Tracking, AllottedTime, UsedTime, Locked, CreatedAt, UpdatedAt) ");
+                sb.Append("(ComputerId, WebId, Domain, Username, Tracking, AllottedTime, UsedTime, Locked, CreatedAt, UpdatedAt) ");
                 sb.Append(Values);
-                sb.Append("(@domain, @username, @tracking, @allottedTime, @usedTime, @locked, @createdAt, @updatedAt)");
+                sb.Append("(@computerId, @webId, @domain, @username, @tracking, @allottedTime, @usedTime, @locked, @createdAt, @updatedAt)");
                 sb.Append(End);
                 var command = new SQLiteCommand(sb.ToString(), conn);
+                command.Parameters.Add(new SQLiteParameter("@computerId", account.ComputerId));
+                command.Parameters.Add(new SQLiteParameter("@webId", account.WebId));
                 command.Parameters.Add(new SQLiteParameter("@domain", account.Domain));
                 command.Parameters.Add(new SQLiteParameter("@username", account.Username));
                 command.Parameters.Add(new SQLiteParameter("@tracking", account.Tracking));
@@ -379,10 +381,12 @@ namespace Database
                 sb.Append(AccountsTable);
                 sb.Append(Set);
                 sb.Append(
-                    "Domain=@domain, Username=@username, Tracking=@tracking, AllottedTime=@allottedTime, UsedTime=@usedTime, Locked=@locked, UpdatedAt=@updatedAt");
+                    "ComputerId=@computerId, WebId=@webId, Domain=@domain, Username=@username, Tracking=@tracking, AllottedTime=@allottedTime, UsedTime=@usedTime, Locked=@locked, UpdatedAt=@updatedAt");
                 sb.Append(Where);
                 sb.Append("Id = " + account.Id);
                 var command = new SQLiteCommand(sb.ToString(), conn);
+                command.Parameters.Add(new SQLiteParameter("@computerId", account.ComputerId));
+                command.Parameters.Add(new SQLiteParameter("@webId", account.WebId));
                 command.Parameters.Add(new SQLiteParameter("@domain", account.Domain));
                 command.Parameters.Add(new SQLiteParameter("@username", account.Username));
                 command.Parameters.Add(new SQLiteParameter("@tracking", account.Tracking));
@@ -444,14 +448,16 @@ namespace Database
                             list.Add(new Account
                                 {
                                     Id = Convert.ToInt32(reader["Id"]),
+                                    WebId = Convert.ToInt32(reader["WebId"]),
+                                    ComputerId = Convert.ToInt32(reader["ComputerId"]),
                                     Domain = (string) reader["Domain"],
                                     Username = (string) reader["Username"],
                                     Tracking = (Convert.ToInt32(reader["Tracking"]) == 1),
                                     AllottedTime = TimeSpan.FromSeconds(Convert.ToInt32(reader["AllottedTime"])),
                                     Locked = Convert.ToBoolean(reader["Locked"]),
                                     UsedTime = TimeSpan.FromSeconds(Convert.ToInt32(reader["UsedTime"])),
-                                    CreatedAt = Convert.ToDateTime(reader["CreatedAt"]),
-                                    UpdatedAt = Convert.ToDateTime(reader["UpdatedAt"])
+                                    CreatedAt = Convert.ToDateTime(reader["CreatedAt"]).ToUniversalTime(),
+                                    UpdatedAt = Convert.ToDateTime(reader["UpdatedAt"]).ToUniversalTime()
                                 });
                         }
                     }
