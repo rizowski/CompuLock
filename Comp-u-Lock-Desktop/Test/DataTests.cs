@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Database;
 using Database.Models;
@@ -18,19 +19,12 @@ namespace Test
         public void TestMethod1()
         {
         }*/
-
-        [TestCleanup]
-        public void Cleanup()
-        {
-            if(File.Exists("test.sqlite"))
-                File.Delete("test.sqlite");
-        }
         [TestMethod]
         public void SavingAccount()
         {
             var name = "test";
-            
-            var start = DbManager.SaveAccount(new Account
+
+            var account1 = new Account
                 {
                     CreatedAt = DateTime.Now,
                     Username = name,
@@ -38,9 +32,26 @@ namespace Test
                     Admin = false,
                     AllottedTime = 342546546,
                     UpdatedAt = DateTime.Now
-                });
-            var savedAccount = DbManager.GetAccountByName(name);
-            Assert.AreEqual(start, savedAccount);
+                };
+            var account2 = new Account
+                {
+                    CreatedAt = DateTime.Now,
+                    Username = "Test2",
+                    Domain = "MyineDomain",
+                    Admin = false,
+                    AllottedTime = 0,
+                    UpdatedAt = DateTime.Now
+                };
+            List<Account> list = new List<Account>();
+            list.Add(account1);
+            list.Add(account2);
+            DbManager.SaveAccounts(1,list);
+            var dbaccounts = (List<Account>)DbManager.GetAccounts();
+            for (int i = 0; i < list.Count; i++)
+            {
+                Assert.AreEqual(list[i], dbaccounts[i]);
+            }
+                Assert.AreEqual(list,dbaccounts);
         }
     }
 }
