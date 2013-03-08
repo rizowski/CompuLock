@@ -17,17 +17,14 @@ namespace Service.Profile
         private DatabaseManager DbManager;
         private ManagementEventWatcher startWatch;
 
-        private ITerminalServer Server;
 
         public ProcessManager()
         {
+            Console.WriteLine("Process Manager Started");
             startWatch = new ManagementEventWatcher(new WqlEventQuery("SELECT * FROM Win32_ProcessStartTrace"));
             
             startWatch.EventArrived += Update;
             startWatch.Start();
-
-            ITerminalServicesManager manager = new TerminalServicesManager();
-            Server = manager.GetLocalServer();
 
             DbManager = new DatabaseManager("settings", "");
         }
@@ -39,6 +36,7 @@ namespace Service.Profile
 
         private void Update(object sender, EventArrivedEventArgs e)
         {
+            Console.WriteLine("Process Check");
             var userAccount = GetProcessOwner(Convert.ToInt32(e.NewEvent.Properties["ProcessID"].Value));
             if (userAccount != null)
             {

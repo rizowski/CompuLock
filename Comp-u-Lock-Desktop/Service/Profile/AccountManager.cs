@@ -18,7 +18,7 @@ namespace Service.Profile
         private DatabaseManager DbManager { get; set; }
 
         public string UserName;
-        public ITerminalServer Server;
+        public ITerminalServicesManager manager;
 
         private Timer UpdateTimer;
         private Timer LockoutTimer;
@@ -29,8 +29,7 @@ namespace Service.Profile
             DbManager = new DatabaseManager("settings","");
             SetupUpdateTimer(updateInterval);
             SetupLockoutTimer(interval);
-            ITerminalServicesManager manager = new TerminalServicesManager();
-            Server = manager.GetLocalServer();
+            manager = new TerminalServicesManager();
             //ForceUpdate();
             Update(null, null);
         }
@@ -64,18 +63,27 @@ namespace Service.Profile
                 var dbaccount = GetDbAccounts().FirstOrDefault(a => a.Username == account.Username);
 
                 if (dbaccount == null) continue;
-                if (!dbaccount.Tracking) continue;
-
-                if (dbaccount.AllottedTime <= 0)
+                if (!dbaccount.Tracking)
                 {
-                    if(!dbaccount.Locked)
-                        LockAccount(dbaccount);
+                    if (dbaccount.Locked)
+                    {
+                        UnlockAccount(account);
+                    }
                 }
                 else
                 {
-                    if(dbaccount.Locked)
-                        UnlockAccount(dbaccount);
+                    if (dbaccount.AllottedTime <= 0)
+                    {
+                        if (!dbaccount.Locked)
+                            LockAccount(dbaccount);
+                    }
+                    else
+                    {
+                        if (dbaccount.Locked)
+                            UnlockAccount(dbaccount);
+                    }  
                 }
+                
             }
         }
 
@@ -143,20 +151,28 @@ namespace Service.Profile
         #region Sessions
         public int GetSessionId(string username)
         {
-            var session = Server.GetSessions().First(a => a.UserName == username);
-            if (session != null)
-                return session.SessionId;
+            using (ITerminalServer Server = manager.GetLocalServer())
+            {
+                Server.Open();
+                var session = Server.GetSessions().First(a => a.UserName == username);
+                if (session != null)
+                    return session.SessionId;
+            }
             return -1;
         }
         public List<Account> GetLoggedOnSessions()
         {
-            var sessions = Server.GetSessions();
             List<Account> accounts = new List<Account>();
-            foreach (var session in sessions)
+            using (ITerminalServer Server = manager.GetLocalServer())
             {
-                var account = DbManager.GetAccounts().FirstOrDefault(a => a.Username == session.UserName);
-                if (account != null)
-                    accounts.Add(account);
+                Server.Open();
+                var sessions = Server.GetSessions();
+                foreach (var session in sessions)
+                {
+                    var account = DbManager.GetAccounts().FirstOrDefault(a => a.Username == session.UserName);
+                    if (account != null)
+                        accounts.Add(account);
+                }
             }
             return accounts;
         }
@@ -167,16 +183,17 @@ namespace Service.Profile
                 username = UserName;
             }
             ITerminalServicesSession temp = null;
-            Server.Open();
-
-            foreach (var session in Server.GetSessions())
+            using (ITerminalServer Server = manager.GetLocalServer())
             {
-                if (session.UserName.Equals(username))
+                Server.Open();
+                foreach (var session in Server.GetSessions())
                 {
-                    temp = session;
+                    if (session.UserName.Equals(username))
+                    {
+                        temp = session;
+                    }
                 }
             }
-            Server.Close();
             return temp;
         }
         public ITerminalServicesSession GetUserSession(int sessionId)
@@ -186,16 +203,17 @@ namespace Service.Profile
                 throw new ArgumentException("Id must be 0 or above");
             }
             ITerminalServicesSession temp = null;
-            Server.Open();
-
-            foreach (var session in Server.GetSessions())
+            using (ITerminalServer Server = manager.GetLocalServer())
             {
-                if (session.SessionId == sessionId)
+                Server.Open();
+                foreach (var session in Server.GetSessions())
                 {
-                    temp = session;
+                    if (session.SessionId == sessionId)
+                    {
+                        temp = session;
+                    }
                 }
             }
-            Server.Close();
             return temp;
         }
         #endregion
@@ -333,19 +351,22 @@ namespace Service.Profile
         public IEnumerable<Account> GetLoggedInAccounts()
         {
             List<Account> list = new List<Account>();
-            
-            var sessions = Server.GetSessions();
-            foreach (var session in sessions)
+            using (ITerminalServer Server = manager.GetLocalServer())
             {
-                var account = new Account
+                Server.Open();
+                var sessions = Server.GetSessions();
+                foreach (var session in sessions)
                 {
-                    Domain = session.DomainName,
-                    Username = session.UserName,
-                    Locked = IsLocked(session.UserName),
-                    UpdatedAt = DateTime.Now
-                };
+                    var account = new Account
+                    {
+                        Domain = session.DomainName,
+                        Username = session.UserName,
+                        Locked = IsLocked(session.UserName),
+                        UpdatedAt = DateTime.Now
+                    };
 
-                list.Add(account);
+                    list.Add(account);
+                }
             }
             return list;
         }

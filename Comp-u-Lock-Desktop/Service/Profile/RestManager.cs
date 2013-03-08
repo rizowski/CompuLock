@@ -160,6 +160,7 @@ namespace Service.Profile
             var dbUser = DbManager.GetUser();
             var dbcomp = DbManager.GetComputer();
             var dbAccounts = DbManager.GetAccounts();
+            var dbProcesses = DbManager.GetProcesses();
 
             if (dbUser == null) return;
             if (dbUser.AuthToken.Length == 0) return;
@@ -182,8 +183,6 @@ namespace Service.Profile
                 {
                     // finish setting up db defaults
                     //Need to either change rails datatype for time to seconds or fix it
-                    Console.WriteLine(restAccount.UpdatedAt > dbAccount.UpdatedAt);
-                    Console.WriteLine(restAccount.CreatedAt > dbAccount.CreatedAt);
                     if (restAccount.UpdatedAt > dbAccount.UpdatedAt )
                     {
                         restAccount.Id = dbAccount.Id;
@@ -195,7 +194,15 @@ namespace Service.Profile
                         dbAccount.WebId = restAccount.WebId;
                         UpdateAccount(dbUser.AuthToken, dbAccount);
                     }
-                    //Proceses
+
+                    var processes = dbProcesses.Where(p => p.AccountId == dbAccount.WebId);
+                    foreach (var process in processes)
+                    {
+                        dbAccount.Processes.Add(process);
+                    }
+                    dbAccount.WebId = restAccount.WebId;
+                    UpdateAccount(dbUser.AuthToken, dbAccount);
+                    
                 }
             }
         }
