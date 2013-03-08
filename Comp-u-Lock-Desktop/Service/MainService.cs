@@ -140,5 +140,15 @@ namespace Service
         }
 
         #endregion
+
+        public Account GetAccountById(int id)
+        {
+            return GetAccounts().FirstOrDefault(a => a.Id == id);
+        }
+
+        public Account UpdateAccount(Account account)
+        {
+            return DbManager.UpdateAccount(account);
+        }
     }
 }

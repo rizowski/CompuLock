@@ -14,26 +14,52 @@
             <TabControl HorizontalAlignment="Left" Margin="0,24,0,0" VerticalAlignment="Top" Width="729" Height="404">
                 <TabItem Header="Overview">
                     <Grid Height="377" Width="723">
-                        <ListView x:Name="OverviewAccounts" HorizontalAlignment="Left" Height="315" Margin="6,35,0,0" VerticalAlignment="Top" Width="185" >
-
-                        </ListView>
-                        <Label Content="Accounts:" HorizontalAlignment="Left" Margin="6,6,0,0" VerticalAlignment="Top" />
-                        <Label Content="Computer Info:" HorizontalAlignment="Left" Margin="205,6,0,0" VerticalAlignment="Top" />
-                        <Label Content="Name:" HorizontalAlignment="Left" Margin="205,35,0,0" VerticalAlignment="Top" />
-                        <Label Name="ComputerName" Content="" HorizontalAlignment="Left" Margin="253,35,0,0" VerticalAlignment="Top" Width="136" />
-                        <Label Content="Enviroment:" HorizontalAlignment="Left" Margin="205,64,0,0" VerticalAlignment="Top" />
-                        <Label Content="" HorizontalAlignment="Left" Margin="280,64,0,0" Name="Enviroment" VerticalAlignment="Top" Width="136" />
-
-                    </Grid>
-                </TabItem>
-                <TabItem Header="Computer">
-                    <Grid>
-                        <Label Content="Computer Name:" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" VerticalAlignment="Top" />
-                        <Label Content="" Height="28" HorizontalAlignment="Left" Margin="105,6,0,0" Name="CompName" VerticalAlignment="Top" />
-                        <Label Content="IpAddress:" Height="28" HorizontalAlignment="Left" Margin="6,40,0,0" VerticalAlignment="Top" />
-                        <Label Content="" Height="28" HorizontalAlignment="Left" Margin="79,40,0,0" Name="CompIp" VerticalAlignment="Top" />
-                        <Label Content="Domain:" Height="28" HorizontalAlignment="Left" Margin="6,74,0,0" VerticalAlignment="Top" />
-                        <Label Content="" Height="28" HorizontalAlignment="Left" Margin="63,74,0,0" Name="compDomain" VerticalAlignment="Top" />
+                        <GroupBox Header="Computer Info" Height="156" HorizontalAlignment="Left" Margin="424,6,0,0" VerticalAlignment="Top" Width="292">
+                            <Grid Height="129" Width="273">
+                                <Label Content="" HorizontalAlignment="Left" Margin="81,50,0,0" Name="Enviroment" VerticalAlignment="Top" Width="186" />
+                                <Label Content="Environment:" HorizontalAlignment="Left" Margin="6,50,0,0" VerticalAlignment="Top" />
+                                <Label Content="Name:" HorizontalAlignment="Left" Margin="6,21,0,0" VerticalAlignment="Top" />
+                                <Label Name="ComputerName" Content="" HorizontalAlignment="Left" Margin="81,21,0,0" VerticalAlignment="Top" Width="186" />
+                                <Label Content="Ip Address:" Height="28" HorizontalAlignment="Left" Margin="6,79,0,0" VerticalAlignment="Top" />
+                                <Label Content="" Height="28" HorizontalAlignment="Left" Margin="81,79,0,0" Name="IpAddress" VerticalAlignment="Top" Width="186" />
+                            </Grid>
+                        </GroupBox>
+                        <GroupBox Header="Accounts" Height="156" HorizontalAlignment="Left" Margin="7,6,0,0" VerticalAlignment="Top" Width="411">
+                            <Grid>
+                                <ListView x:Name="OverviewAccounts" HorizontalAlignment="Left" Height="131" Margin="4,2,0,0" VerticalAlignment="Top" Width="389" DataContext="{Binding Source=Account}">
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Username}" Width="150"></GridViewColumn>
+                                            <GridViewColumn Header="Tracking" DisplayMemberBinding="{Binding Path=Tracking}" Width="50"></GridViewColumn>
+                                            <GridViewColumn Header="Locked" DisplayMemberBinding="{Binding Path=Locked}" Width="50"></GridViewColumn>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                            </Grid>
+                        </GroupBox>
+                        <GroupBox Header="Processes" Height="204" HorizontalAlignment="Left" Margin="7,168,0,0" VerticalAlignment="Top" Width="208">
+                            <Grid>
+                                <ListView Height="185" HorizontalAlignment="Left" Margin="4,0,0,0" Name="OverviewProcesses" VerticalAlignment="Top" Width="192" DataContext="{Binding Path=Process}">
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name}" Width="180" ></GridViewColumn>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                            </Grid>
+                        </GroupBox>
+                        <GroupBox Header="History" Height="204" HorizontalAlignment="Left" Margin="234,168,0,0" VerticalAlignment="Top" Width="482">
+                            <Grid>
+                                <ListView Height="185" HorizontalAlignment="Left" Name="OverviewHistories" VerticalAlignment="Top" Width="470" DataContext="{Binding Source=History}">
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn Header="Title" DisplayMemberBinding="{Binding Path=Title}" Width="150"></GridViewColumn>
+                                            <GridViewColumn Header="Url" DisplayMemberBinding="{Binding Path=Url}" Width="300"></GridViewColumn>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                            </Grid>
+                        </GroupBox>
                     </Grid>
                 </TabItem>
                 <TabItem Header="Accounts">
@@ -49,6 +75,7 @@
                                                 <GridViewColumn Header="Tracking" DisplayMemberBinding="{Binding Path=Tracking}" Width="50"></GridViewColumn>
                                                 <GridViewColumn Header="Locked" DisplayMemberBinding="{Binding Path=Locked}" Width="50"></GridViewColumn>
                                                 <GridViewColumn Header="Allotted Time" DisplayMemberBinding="{Binding Path=AllottedTime}" Width="75"></GridViewColumn>
+                                                <GridViewColumn Header="Used Time" DisplayMemberBinding="{Binding Path=UsedTime}" Width="75"></GridViewColumn>
                                             </GridView>
                                         </ListView.View>
                                     </ListView>
@@ -56,7 +83,18 @@
                             </TabItem>
                             <TabItem Header="Update">
                                 <Grid>
-
+                                    <GroupBox Header="Update User" Height="120" HorizontalAlignment="Left" Margin="6,6,0,0" VerticalAlignment="Top" Width="266">
+                                        <Grid>
+                                            <Button Content="Apply" Height="23" HorizontalAlignment="Left" Margin="173,69,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click" />
+                                            <ComboBox Height="23" HorizontalAlignment="Right" Margin="0,6,6,0" Name="SelectAccount" VerticalAlignment="Top" Width="183" DataContext="{Binding Source=Account}" ItemsSource="{Binding Source=Account}" DisplayMemberPath="Username" SelectedValuePath="Id" SelectedValue="{Binding Path=Account.Id}" SelectionChanged="OnChange" />
+                                            <Label Content="Account:" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" VerticalAlignment="Top" />
+                                            <CheckBox Content="Track Account" Height="16" HorizontalAlignment="Left" Margin="13,69,0,0" Name="Tracking" VerticalAlignment="Top" />
+                                            <TextBox Height="23" HorizontalAlignment="Left" Margin="64,37,0,0" Name="Hours" VerticalAlignment="Top" Width="48" />
+                                            <Label Content="Hours" Height="28" HorizontalAlignment="Left" Margin="13,35,0,0" VerticalAlignment="Top" />
+                                            <TextBox Height="23" HorizontalAlignment="Right" Margin="0,37,19,0" Name="Minutes" VerticalAlignment="Top" Width="55" />
+                                            <Label Content="Minutes:" Height="28" HorizontalAlignment="Left" Margin="122,35,0,0" VerticalAlignment="Top" />
+                                        </Grid>
+                                    </GroupBox>
                                 </Grid>
                             </TabItem>
                         </TabControl>
@@ -71,7 +109,6 @@
                                     <GridViewColumn Header="Title" DisplayMemberBinding="{Binding Path=Title}" Width="150">
 
                                     </GridViewColumn>
-                                    <GridViewColumn Header="Visit Count" DisplayMemberBinding="{Binding Path=VisitCount}" Width="75"></GridViewColumn>
                                     <GridViewColumn Header="Url" DisplayMemberBinding="{Binding Path=Url}" Width="450">
 
                                     </GridViewColumn>

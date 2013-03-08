@@ -46,14 +46,17 @@ namespace Service.Profile
         {
             var histories = GetHistory();
             var dbhistories = DbManager.GetHistories();
-            foreach (var history in histories)
+            if (histories.Count() > dbhistories.Count())
             {
-                var dbhistory = dbhistories.FirstOrDefault(h => h.Url == history.Url);
-                if (dbhistory == null)
+                foreach (var history in histories)
                 {
-                    if (!string.IsNullOrEmpty(history.Title))
+                    var dbhistory = dbhistories.FirstOrDefault(h => h.Url == history.Url);
+                    if (dbhistory == null)
                     {
-                        DbManager.SaveHistory(history);
+                        if (!string.IsNullOrEmpty(history.Title))
+                        {
+                            DbManager.SaveHistory(history);
+                        }
                     }
                 }
             }

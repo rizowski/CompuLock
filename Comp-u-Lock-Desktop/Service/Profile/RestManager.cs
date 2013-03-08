@@ -104,6 +104,7 @@ namespace Service.Profile
                 dbcomp = DbManager.UpdateComputer(dbcomp);
             }
             var restcomps = GetAllComputers(dbUser.AuthToken);
+            if (restcomps == null) return;
             if (restcomps.FirstOrDefault(c => c.Enviroment == dbcomp.Enviroment && c.Name == dbcomp.Name) == null)
             {
                 var newcomp = CreateComputer(dbUser.AuthToken, dbcomp);
@@ -126,25 +127,27 @@ namespace Service.Profile
                 dbcomp.Histories = (List<History>) dbHistories;
                 var restcomp = UpdateComputer(dbUser.AuthToken, dbcomp);
                 if (restcomp == null) return;
-                foreach (var history in restcomp.Histories)
+                if (dbcomp.Histories.Count > restcomp.Histories.Count)
                 {
-                    var foundhistory = dbHistories.FirstOrDefault(h => h.Title == history.Title && h.Url == history.Url);
-                    if (foundhistory == null)
+                    foreach (var history in restcomp.Histories)
                     {
-                        if (history.Title.Length!=0)
+                        var foundhistory =
+                            dbHistories.FirstOrDefault(h => h.Title == history.Title && h.Url == history.Url);
+                        if (foundhistory == null)
                         {
-                            DbManager.SaveHistory(history);
+                            if (history.Title.Length != 0)
+                            {
+                                DbManager.SaveHistory(history);
+                            }
+                        }
+                        else
+                        {
+                            history.Id = foundhistory.Id;
+                            DbManager.UpdateHistory(history);
                         }
                     }
-                    else
-                    {
-                        history.Id = foundhistory.Id;
-                        DbManager.UpdateHistory(history);
-                    } 
                 }
-                
-                
-                
+
             }
         }
 

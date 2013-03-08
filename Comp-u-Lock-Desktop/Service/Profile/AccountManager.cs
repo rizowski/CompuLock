@@ -73,7 +73,7 @@ namespace Service.Profile
                 if (dbaccount == null) continue;
                 if (!dbaccount.Tracking)
                 {
-                    if (dbaccount.Locked)
+                    if (IsLocked(dbaccount.Username))
                     {
                         UnlockAccount(account);
                     }
@@ -82,12 +82,12 @@ namespace Service.Profile
                 {
                     if (dbaccount.AllottedTime <= 0)
                     {
-                        if (!dbaccount.Locked)
+                        if (!IsLocked(dbaccount.Username))
                             LockAccount(dbaccount);
                     }
                     else
                     {
-                        if (dbaccount.Locked)
+                        if (IsLocked(dbaccount.Username))
                             UnlockAccount(dbaccount);
                     }  
                 }
@@ -320,7 +320,7 @@ namespace Service.Profile
                 using (user = new DirectoryEntry(WinNT + Environment.MachineName + "/" + username))
                 {
                     var flag = (ADS_USER_FLAG)user.Properties[UserFlags].Value;
-                    if (flag.Equals(515))
+                    if (flag == (ADS_USER_FLAG) 515)
                         value = true;
                 }
             }
@@ -398,29 +398,37 @@ namespace Service.Profile
             using (ITerminalServer Server = manager.GetLocalServer())
             {
                 Server.Open();
-                var sessions = Server.GetSessions();
-                foreach (var session in sessions)
+                try
                 {
-                    var processes = session.GetProcesses();
-                    List<Process> processess = new List<Process>();
-                    foreach (var process in processes)
+                    var sessions = Server.GetSessions();
+                    foreach (var session in sessions)
                     {
-                        processess.Add(new Process
+                        var processes = session.GetProcesses();
+                        List<Process> processess = new List<Process>();
+                        foreach (var process in processes)
+                        {
+                            processess.Add(new Process
                             {
                                 Name = process.ProcessName
                             });
-                    }
-                    var account = new Account
-                    {
-                        Domain = session.DomainName,
-                        Username = session.UserName,
-                        Locked = IsLocked(session.UserName),
-                        Processes = processess,
-                        UpdatedAt = DateTime.Now
-                    };
+                        }
+                        var account = new Account
+                        {
+                            Domain = session.DomainName,
+                            Username = session.UserName,
+                            Locked = IsLocked(session.UserName),
+                            Processes = processess,
+                            UpdatedAt = DateTime.Now
+                        };
 
-                    list.Add(account);
+                        list.Add(account);
+                    }
                 }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+                
             }
             return list;
         }

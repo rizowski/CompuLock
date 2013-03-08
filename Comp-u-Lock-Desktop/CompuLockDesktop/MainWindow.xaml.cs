@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Controls;
 using Database.Models;
 using Service;
 
@@ -16,32 +17,15 @@ namespace CompuLockDesktop
         {
             InitializeComponent();
             service = new MainService();
-            LoadAccounts();
-            LoadOverviewccounts();
-            LoadComputer();
-            LoadHistory();
-            LoadProcesses();
-        }
-
-        private void LoadAccounts()
-        {
-            var accounts = service.GetAccounts();
-            Accounts.ItemsSource = accounts;
+            
         }
 
         private void OnOpen(object sender, EventArgs e)
         {
-            //I don't think this is a good idea any more.
-            /*try
-            {
-                service.GetDbUser();
-            }
-            catch (NullReferenceException ex)
-            {
-                var dialog = new Options(service);
-                dialog.Show();
-                MessageBox.Show(ex.Message);
-            }*/
+            LoadAccounts();
+            LoadComputer();
+            LoadHistory();
+            LoadProcesses();
         }
 
         private void SettingsClick(object sender, RoutedEventArgs e)
@@ -50,21 +34,26 @@ namespace CompuLockDesktop
             dialog.ShowDialog();
         }
 
-        private void LoadOverviewccounts()
+        private void LoadAccounts()
         {
             var dbaccounts = service.GetDbAccounts();
-            if(dbaccounts!= null)
-            foreach (var dbaccount in dbaccounts)
+            if (dbaccounts != null)
             {
-                OverviewAccounts.Items.Add(dbaccount.Username);
+                SelectAccount.ItemsSource = dbaccounts;
+                Accounts.ItemsSource = dbaccounts;
+                OverviewAccounts.ItemsSource = dbaccounts;
             }
         }
 
         private void LoadHistory()
         {
+            Histories.ItemsSource = null;
             var histories = service.GetHistory();
             if (histories != null)
+            {
                 Histories.ItemsSource = histories;
+                OverviewHistories.ItemsSource = histories;
+            }
         }
 
         private void LoadComputer()
@@ -74,19 +63,53 @@ namespace CompuLockDesktop
             {
                 ComputerName.Content = computer.Name;
                 Enviroment.Content = computer.Enviroment;
+                IpAddress.Content = computer.IpAddress;
             }
         }
 
         private void LoadProcesses()
         {
+            Processes.ItemsSource = null;
             var processes = service.GetProcesses();
             if (processes != null)
+            {
                 Processes.ItemsSource = processes;
+                OverviewProcesses.ItemsSource = processes;
+            }
         }
 
         private void OnClose(object sender, System.ComponentModel.CancelEventArgs e)
         {
             
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectAccount.SelectedValue != null)
+            {
+                var id = (int)SelectAccount.SelectedValue;
+                var account = service.GetAccountById(id);
+                var hours = Convert.ToInt32(Hours.Text);
+                var minutes = Convert.ToInt32(Minutes.Text);
+                var seconds = (hours*60*60) + minutes*60;
+                account.AllottedTime = seconds;
+                account.Tracking = (bool) Tracking.IsChecked;
+                service.UpdateAccount(account);
+            }
+        }
+
+        private void OnChange(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (SelectAccount.SelectedValue != null)
+            {
+                var id = (int) SelectAccount.SelectedValue;
+                var account = service.GetAccountById(id);
+                var hours = account.AllottedTime/60;
+                var minutes = account.AllottedTime%60;
+                Hours.Text = hours.ToString();
+                Minutes.Text = minutes.ToString();
+                Tracking.IsChecked = account.Tracking;
+            }
         }
 
     }

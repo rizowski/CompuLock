@@ -385,15 +385,15 @@ namespace Database
                 sb.Append(Where);
                 sb.Append("Id = " + account.Id);
                 var command = new SQLiteCommand(sb.ToString(), conn);
-                command.Parameters.Add(new SQLiteParameter("@computerId", account.ComputerId));
-                command.Parameters.Add(new SQLiteParameter("@webId", account.WebId));
-                command.Parameters.Add(new SQLiteParameter("@domain", account.Domain));
-                command.Parameters.Add(new SQLiteParameter("@username", account.Username));
-                command.Parameters.Add(new SQLiteParameter("@tracking", account.Tracking));
-                command.Parameters.Add(new SQLiteParameter("@allottedTime", account.AllottedTime));
-                command.Parameters.Add(new SQLiteParameter("@usedTime", account.UsedTime));
-                command.Parameters.Add(new SQLiteParameter("@locked", account.Locked));
-                command.Parameters.Add(new SQLiteParameter("@updatedAt", DateTime.Now));
+                    command.Parameters.Add(new SQLiteParameter("@computerId", account.ComputerId));
+                    command.Parameters.Add(new SQLiteParameter("@webId", account.WebId));
+                    command.Parameters.Add(new SQLiteParameter("@domain", account.Domain));
+                    command.Parameters.Add(new SQLiteParameter("@username", account.Username));
+                    command.Parameters.Add(new SQLiteParameter("@tracking", account.Tracking));
+                    command.Parameters.Add(new SQLiteParameter("@allottedTime", account.AllottedTime));
+                    command.Parameters.Add(new SQLiteParameter("@usedTime", account.UsedTime));
+                    command.Parameters.Add(new SQLiteParameter("@locked", account.Locked));
+                    command.Parameters.Add(new SQLiteParameter("@updatedAt", DateTime.Now));
                 Console.WriteLine(sb.ToString());
                 command.ExecuteNonQuery();
             }
