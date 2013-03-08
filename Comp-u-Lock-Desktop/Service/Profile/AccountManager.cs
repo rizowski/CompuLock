@@ -105,6 +105,7 @@ namespace Service.Profile
             foreach (var account in accounts)
             {
                 var dbaccount = dbAccounts.FirstOrDefault(a => a.Username == account.Username);
+                if (dbaccount == null) return;
                 if (dbaccount.Tracking)
                 {
                     if (!dbaccount.Locked)
