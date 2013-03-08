@@ -49,14 +49,8 @@ namespace Service.Profile
                 if (dbaccount == null)
                 {
                     var computer = DbManager.GetComputer();
-                    account.ComputerId = computer.Id;
+                    account.ComputerId = computer.WebId;
                     DbManager.SaveAccount(account);
-                }
-                else
-                {
-                    account.Id = dbaccount.Id;
-                    account.ComputerId = dbaccount.ComputerId;
-                    DbManager.UpdateAccount(account);
                 }
             }
         }
@@ -72,7 +66,7 @@ namespace Service.Profile
                 if (dbaccount == null) continue;
                 if (!dbaccount.Tracking) continue;
 
-                if (dbaccount.AllottedTime <= TimeSpan.FromSeconds(0))
+                if (dbaccount.AllottedTime <= 0)
                 {
                     if(!dbaccount.Locked)
                         LockAccount(dbaccount);

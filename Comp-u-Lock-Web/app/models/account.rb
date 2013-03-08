@@ -23,6 +23,8 @@ class Account < ActiveRecord::Base
       username: username,
       tracking: tracking,
       admin: admin,
+      allotted_time: allotted_time,
+      used_time: used_time,
       
       account_process_attributes: account_process,
 

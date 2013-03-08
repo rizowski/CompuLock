@@ -40,18 +40,24 @@ namespace REST
             if (item.ComputerId == 0)
                 throw new ArgumentException("Account must have a computer Id");
             var request = new RestRequest(ApiPath + AccountPath, Method.POST);
+            item.UpdatedAt = DateTime.MinValue;
+            item.CreatedAt = DateTime.MinValue;
             request.AddParameter(Auth, token);
             var json = item.ToJSON();
             request.AddParameter("account", json);
             var response = Client.Execute(request);
             if (response.StatusCode != HttpStatusCode.OK)
                 Console.WriteLine("Status Code Error: {0}", response.StatusCode);
+            JsonSerializerSettings settings = new JsonSerializerSettings
+                {
+                    DateTimeZoneHandling = DateTimeZoneHandling.Local
+                };
             Console.WriteLine(response.Content);
             var accountJson = JObject.Parse(response.Content);
             Account account = null;
             try
             {
-                account = JsonConvert.DeserializeObject<Account>(accountJson["account"].ToString());
+                account = JsonConvert.DeserializeObject<Account>(accountJson["account"].ToString(),settings);
             }
             catch (Exception e)
             {
@@ -64,21 +70,27 @@ namespace REST
         {
             var request = new RestRequest(ApiPath + AccountPath + item.WebId, Method.PUT);
             request.AddParameter(Auth, token);
+            item.UpdatedAt = DateTime.MinValue;
+            item.CreatedAt = DateTime.MinValue;
             var json = item.ToJSON();
             Console.WriteLine(json);
             request.AddParameter("account", json);
             var response = Client.Execute(request);
             if (response.StatusCode != HttpStatusCode.OK)
                 Console.WriteLine("Status Code Error: {0}", response.StatusCode);
-            Console.WriteLine(response.Content);
+            JsonSerializerSettings settings = new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Local
+            };
             var accountJson = JObject.Parse(response.Content);
             Account account = null;
             try
             {
-                account = JsonConvert.DeserializeObject<Account>(accountJson["account"].ToString());
+                account = JsonConvert.DeserializeObject<Account>(accountJson["account"].ToString(), settings);
             }
             catch (Exception e)
             {
+                Console.WriteLine(response.Content);
                 Console.WriteLine(e);
             }
             

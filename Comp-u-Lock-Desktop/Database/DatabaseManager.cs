@@ -239,8 +239,8 @@ namespace Database
                 command.Parameters.Add(new SQLiteParameter("@domain", account.Domain));
                 command.Parameters.Add(new SQLiteParameter("@username", account.Username));
                 command.Parameters.Add(new SQLiteParameter("@tracking", account.Tracking));
-                command.Parameters.Add(new SQLiteParameter("@allottedTime", account.AllottedTime.TotalSeconds));
-                command.Parameters.Add(new SQLiteParameter("@usedTime", account.UsedTime.TotalSeconds));
+                command.Parameters.Add(new SQLiteParameter("@allottedTime", account.AllottedTime));
+                command.Parameters.Add(new SQLiteParameter("@usedTime", account.UsedTime));
                 command.Parameters.Add(new SQLiteParameter("@locked", account.Locked));
                 command.Parameters.Add(new SQLiteParameter("@createdAt", DateTime.Now));
                 command.Parameters.Add(new SQLiteParameter("@updatedAt", DateTime.Now));
@@ -390,8 +390,8 @@ namespace Database
                 command.Parameters.Add(new SQLiteParameter("@domain", account.Domain));
                 command.Parameters.Add(new SQLiteParameter("@username", account.Username));
                 command.Parameters.Add(new SQLiteParameter("@tracking", account.Tracking));
-                command.Parameters.Add(new SQLiteParameter("@allottedTime", account.AllottedTime.TotalSeconds));
-                command.Parameters.Add(new SQLiteParameter("@usedTime", account.UsedTime.TotalSeconds));
+                command.Parameters.Add(new SQLiteParameter("@allottedTime", account.AllottedTime));
+                command.Parameters.Add(new SQLiteParameter("@usedTime", account.UsedTime));
                 command.Parameters.Add(new SQLiteParameter("@locked", account.Locked));
                 command.Parameters.Add(new SQLiteParameter("@updatedAt", DateTime.Now));
                 Console.WriteLine(sb.ToString());
@@ -453,9 +453,9 @@ namespace Database
                                     Domain = (string) reader["Domain"],
                                     Username = (string) reader["Username"],
                                     Tracking = (Convert.ToInt32(reader["Tracking"]) == 1),
-                                    AllottedTime = TimeSpan.FromSeconds(Convert.ToInt32(reader["AllottedTime"])),
+                                    AllottedTime = Convert.ToInt32(reader["AllottedTime"]),
                                     Locked = Convert.ToBoolean(reader["Locked"]),
-                                    UsedTime = TimeSpan.FromSeconds(Convert.ToInt32(reader["UsedTime"])),
+                                    UsedTime = Convert.ToInt32(reader["UsedTime"]),
                                     CreatedAt = Convert.ToDateTime(reader["CreatedAt"]).ToUniversalTime(),
                                     UpdatedAt = Convert.ToDateTime(reader["UpdatedAt"]).ToUniversalTime()
                                 });

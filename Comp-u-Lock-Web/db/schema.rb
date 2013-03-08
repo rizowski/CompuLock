@@ -26,8 +26,8 @@ ActiveRecord::Schema.define(:version => 20130225215841) do
     t.string   "username",                         :null => false
     t.boolean  "tracking",      :default => false, :null => false
     t.boolean  "admin",         :default => false
-    t.time     "allotted_time"
-    t.time     "used_time"
+    t.integer  "allotted_time", :default => 0
+    t.integer  "used_time",     :default => 0
     t.datetime "created_at",                       :null => false
     t.datetime "updated_at",                       :null => false
   end

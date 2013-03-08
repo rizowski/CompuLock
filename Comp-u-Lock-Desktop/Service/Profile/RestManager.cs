@@ -111,7 +111,7 @@ namespace Service.Profile
             }
             else
             {
-                foreach (var dbAccount in dbAccounts.Where(dbAccount => dbAccount.ComputerId == 0))
+                foreach (var dbAccount in dbAccounts.Where(dbAccount => dbAccount.ComputerId != dbcomp.WebId))
                 {
                     dbAccount.ComputerId = dbcomp.WebId;
                     DbManager.UpdateAccount(dbAccount);
@@ -156,6 +156,7 @@ namespace Service.Profile
         // keep it up.
         private void UpdateAccounts(object sender, ElapsedEventArgs e)
         {
+            Console.WriteLine("Updating accounts");
             var dbUser = DbManager.GetUser();
             var dbcomp = DbManager.GetComputer();
             var dbAccounts = DbManager.GetAccounts();
@@ -167,33 +168,32 @@ namespace Service.Profile
             if (dbcomp == null) return;
             if (dbcomp.WebId == 0) return;
 
-            foreach (var account in dbAccounts)
+            foreach (var dbAccount in dbAccounts)
             {
                 var stuff = GetAllAccounts(dbUser.AuthToken);
-                var foundAccount = stuff.FirstOrDefault(a => a.ComputerId == account.ComputerId && a.Domain == account.Domain && a.Username == account.Username);
+                var restAccount = stuff.FirstOrDefault(a => a.ComputerId == dbAccount.ComputerId && a.Domain == dbAccount.Domain && a.Username == dbAccount.Username);
                 // account model needs to be updated with a ComputerId
-                if (foundAccount == null)
+                if (restAccount == null)
                 {
-                    account.ComputerId = dbcomp.WebId;
-                    SaveAccount(dbUser.AuthToken, account);
+                    dbAccount.ComputerId = dbcomp.WebId;
+                    SaveAccount(dbUser.AuthToken, dbAccount);
                 }
                 else
                 {
-
-                    //NEED to change time on rails db to int so I can save as seconds
-                    // change form on rails application
-                    // Check the date for updated at to see why it isn't being sent from the server.
-                    // Add processes to this list after all this.
-                    if (foundAccount.UpdatedAt > account.UpdatedAt || foundAccount.CreatedAt > account.CreatedAt)
+                    // finish setting up db defaults
+                    //Need to either change rails datatype for time to seconds or fix it
+                    Console.WriteLine(restAccount.UpdatedAt > dbAccount.UpdatedAt);
+                    Console.WriteLine(restAccount.CreatedAt > dbAccount.CreatedAt);
+                    if (restAccount.UpdatedAt > dbAccount.UpdatedAt )
                     {
-                        foundAccount.Id = account.Id;
-                        DbManager.UpdateAccount(foundAccount);
+                        restAccount.Id = dbAccount.Id;
+                        DbManager.UpdateAccount(restAccount);
                     }
                     else
                     {
                         //sends to server
-                        account.WebId = foundAccount.WebId;
-                        UpdateAccount(dbUser.AuthToken, account);
+                        dbAccount.WebId = restAccount.WebId;
+                        UpdateAccount(dbUser.AuthToken, dbAccount);
                     }
                     //Proceses
                 }

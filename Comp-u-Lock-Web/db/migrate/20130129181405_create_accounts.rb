@@ -7,8 +7,8 @@ class CreateAccounts < ActiveRecord::Migration
       t.string :username, :null => false
       t.boolean :tracking, :null => false, :default => false
       t.boolean :admin, :default => false
-      t.time :allotted_time
-      t.time :used_time
+      t.integer :allotted_time, :default => 0
+      t.integer :used_time, :default => 0
 
       t.timestamps
     end

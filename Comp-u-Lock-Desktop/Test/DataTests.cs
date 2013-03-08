@@ -36,7 +36,7 @@ namespace Test
                     Username = name,
                     Domain = "Domain",
                     Admin = false,
-                    AllottedTime = TimeSpan.FromSeconds(342546546),
+                    AllottedTime = 342546546,
                     UpdatedAt = DateTime.Now
                 });
             var savedAccount = DbManager.GetAccountByName(name);

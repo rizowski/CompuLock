@@ -32,9 +32,9 @@ namespace Database.Models
         [JsonProperty(PropertyName = "tracking")]
         public bool Tracking { get; set; }
         [JsonProperty(PropertyName = "allotted_time")]
-        public TimeSpan AllottedTime { get; set; }
+        public int AllottedTime { get; set; }
         [JsonProperty(PropertyName = "used_time")]
-        public TimeSpan UsedTime { get; set; }
+        public int UsedTime { get; set; }
 
         [JsonProperty(PropertyName = "account_process_attributes", NullValueHandling = NullValueHandling.Ignore)]
         public List<Process> Processes { get; set; }
@@ -42,9 +42,9 @@ namespace Database.Models
         [JsonProperty(PropertyName = "restriction_attributes", NullValueHandling = NullValueHandling.Ignore)]
         public List<Restriction> Restrictions { get; set; }
 
-        [JsonProperty(PropertyName = "created_at")]
+        [JsonProperty(PropertyName = "created_at", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
         public DateTime CreatedAt { get; set; }
-        [JsonProperty(PropertyName = "updated_at")]
+        [JsonProperty(PropertyName = "update_at", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
         public DateTime UpdatedAt { get; set; }
 
         public string ToJSON()
