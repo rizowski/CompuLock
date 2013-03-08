@@ -22,6 +22,7 @@ namespace Service.Profile
 
         private Timer UpdateTimer;
         private Timer LockoutTimer;
+        private Timer LoggingTimer;
 
         //                                                                  60 min
         public AccountManager( double interval = 5, double updateInterval = 3600)
@@ -29,6 +30,7 @@ namespace Service.Profile
             DbManager = new DatabaseManager("settings","");
             SetupUpdateTimer(updateInterval);
             SetupLockoutTimer(interval);
+            SetupLoggingTimer(interval);
             manager = new TerminalServicesManager();
             //ForceUpdate();
             Update(null, null);
@@ -40,16 +42,21 @@ namespace Service.Profile
         private void Update(object sender, ElapsedEventArgs e)
         {
             var accounts = GetLoggedInAccounts();
+            var dbaccounts = GetDbAccounts();
             Console.WriteLine("{0} accounts logged in", accounts.Count());
-            foreach (var account in accounts)
-            {// find out if the count is different and update the list
-                var dbaccount = GetDbAccounts().FirstOrDefault(a => a.Username == account.Username);
-
-                if (dbaccount == null)
+            if (dbaccounts.Count() < accounts.Count())
+            {
+                foreach (var account in accounts)
                 {
-                    var computer = DbManager.GetComputer();
-                    account.ComputerId = computer.WebId;
-                    DbManager.SaveAccount(account);
+// find out if the count is different and update the list
+                    var dbaccount = dbaccounts.FirstOrDefault(a => a.Username == account.Username);
+
+                    if (dbaccount == null)
+                    {
+                        var computer = DbManager.GetComputer();
+                        account.ComputerId = computer.WebId;
+                        DbManager.SaveAccount(account);
+                    }
                 }
             }
         }
@@ -58,9 +65,10 @@ namespace Service.Profile
         {
             Console.WriteLine("Lock Tick");
             var accounts = GetLoggedInAccounts();
+            var dbAccounts = GetDbAccounts();
             foreach (var account in accounts)
             {
-                var dbaccount = GetDbAccounts().FirstOrDefault(a => a.Username == account.Username);
+                var dbaccount = dbAccounts.FirstOrDefault(a => a.Username == account.Username);
 
                 if (dbaccount == null) continue;
                 if (!dbaccount.Tracking)
@@ -84,6 +92,34 @@ namespace Service.Profile
                     }  
                 }
                 
+            }
+        }
+
+        private void Logg(object sender, ElapsedEventArgs e)
+        {
+            Console.WriteLine("Logg");
+            var accounts = GetLoggedInAccounts();
+            var dbAccounts = GetDbAccounts();
+            var dbprocesses = DbManager.GetProcesses();
+
+            foreach (var account in accounts)
+            {
+                var dbaccount = dbAccounts.FirstOrDefault(a => a.Username == account.Username);
+                if (dbaccount.Tracking)
+                {
+                    if (!dbaccount.Locked)
+                    {
+                        foreach (var process in account.Processes)
+                        {
+                            var dbprocess = dbprocesses.FirstOrDefault(p => p.Name == process.Name);
+                            if (dbprocess == null)
+                            {
+                                process.AccountId = dbaccount.WebId;
+                                DbManager.SaveProcess(process);
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -146,6 +182,12 @@ namespace Service.Profile
             UpdateTimer.Elapsed += Update;
             UpdateTimer.Start();
         }
+        private void SetupLoggingTimer(double interval)
+        {
+            LoggingTimer = new Timer(interval * 1000){AutoReset = true};
+            LoggingTimer.Elapsed += Logg;
+            LoggingTimer.Start();
+        }
         #endregion
 
         #region Sessions
@@ -176,6 +218,7 @@ namespace Service.Profile
             }
             return accounts;
         }
+
         public ITerminalServicesSession GetUserSession(string username = null)
         {
             if (username == null)
@@ -357,11 +400,21 @@ namespace Service.Profile
                 var sessions = Server.GetSessions();
                 foreach (var session in sessions)
                 {
+                    var processes = session.GetProcesses();
+                    List<Process> processess = new List<Process>();
+                    foreach (var process in processes)
+                    {
+                        processess.Add(new Process
+                            {
+                                Name = process.ProcessName
+                            });
+                    }
                     var account = new Account
                     {
                         Domain = session.DomainName,
                         Username = session.UserName,
                         Locked = IsLocked(session.UserName),
+                        Processes = processess,
                         UpdatedAt = DateTime.Now
                     };
 

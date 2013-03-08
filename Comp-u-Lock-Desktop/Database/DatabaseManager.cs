@@ -426,6 +426,32 @@ namespace Database
             }
             return GetHistoryById(history.Id);
         }
+
+        public Process UpdateProcess(Process process)
+        {
+            using (SQLiteConnection conn = new SQLiteConnection(UrlBuilder.ToString()))
+            {
+                conn.Open();
+                if(process == null)
+                    throw new NoNullAllowedException("Process can't be null");
+                StringBuilder sb = new StringBuilder();
+                sb.Append(Update);
+                sb.Append(ProcessTable);
+                sb.Append(Set);
+                sb.Append("WebId=@webId, AccountId=@accountId, Name=@name, UpdatedAt=@updatedAt");
+                sb.Append(Where);
+                sb.Append("Id= " + process.Id);
+                sb.Append(End);
+                var command = new SQLiteCommand(sb.ToString(), conn);
+                    command.Parameters.Add(new SQLiteParameter("@webId", process.WebId));
+                    command.Parameters.Add(new SQLiteParameter("@accountId", process.AccountId));
+                    command.Parameters.Add(new SQLiteParameter("@name", process.Name));
+                    command.Parameters.Add(new SQLiteParameter("@updatedAt", DateTime.Now));
+                Console.WriteLine(sb.ToString());
+                command.ExecuteNonQuery();
+            }
+            return GetProcessById(process.Id);
+        }
         #endregion
 
         #region GetAll
@@ -453,6 +479,7 @@ namespace Database
                                     Domain = (string) reader["Domain"],
                                     Username = (string) reader["Username"],
                                     Tracking = (Convert.ToInt32(reader["Tracking"]) == 1),
+                                    Processes = new List<Process>(),
                                     AllottedTime = Convert.ToInt32(reader["AllottedTime"]),
                                     Locked = Convert.ToBoolean(reader["Locked"]),
                                     UsedTime = Convert.ToInt32(reader["UsedTime"]),

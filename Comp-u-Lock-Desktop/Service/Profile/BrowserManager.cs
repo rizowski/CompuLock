@@ -49,11 +49,7 @@ namespace Service.Profile
             foreach (var history in histories)
             {
                 var dbhistory = dbhistories.FirstOrDefault(h => h.Url == history.Url);
-                if (dbhistory != null)
-                {
-                    DbManager.UpdateHistory(dbhistory);
-                }
-                else
+                if (dbhistory == null)
                 {
                     if (!string.IsNullOrEmpty(history.Title))
                     {

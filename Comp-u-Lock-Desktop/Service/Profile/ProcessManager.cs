@@ -10,50 +10,54 @@ using Process = System.Diagnostics.Process;
 
 namespace Service.Profile
 {
-    public class ProcessManager : IDisposable
+    public class ProcessManager
     {
-        private const int DOMAIN = 1;
-        private const int USERNAME = 0;
+        private const int Domain = 1;
+        private const int Username = 0;
         private DatabaseManager DbManager;
-        private ManagementEventWatcher startWatch;
 
+        private Timer UpdateTimer;
 
+        private ITerminalServicesManager manager;
         public ProcessManager()
         {
             Console.WriteLine("Process Manager Started");
-            startWatch = new ManagementEventWatcher(new WqlEventQuery("SELECT * FROM Win32_ProcessStartTrace"));
-            
-            startWatch.EventArrived += Update;
-            startWatch.Start();
+
+            manager = new TerminalServicesManager();
+
+            UpdateTimer = new Timer(5000){AutoReset = true};
+            UpdateTimer.Elapsed += Update;
+            UpdateTimer.Start();
 
             DbManager = new DatabaseManager("settings", "");
         }
 
-        public void Dispose()
-        {
-            startWatch.Dispose();
-        }
-
-        private void Update(object sender, EventArrivedEventArgs e)
+        private void Update(object sender, ElapsedEventArgs elapsedEventArgs)
         {
             Console.WriteLine("Process Check");
-            var userAccount = GetProcessOwner(Convert.ToInt32(e.NewEvent.Properties["ProcessID"].Value));
-            if (userAccount != null)
+            using ( var server = manager.GetLocalServer())
             {
-                if (userAccount.Tracking)
+                server.Open();
+                var processes = server.GetProcesses();
+                foreach (var compProcess in processes)
                 {
-                    var name = e.NewEvent.Properties["ProcessName"].Value;
-                    Console.WriteLine("Adding Process {0} for {1}", name, userAccount.Username);
-                    DbManager.SaveProcess(new Database.Models.Process
-                        {
-                            AccountId = userAccount.Id,
-                            Name = Convert.ToString(name)
-                        });
+                    var owner = GetProcessOwner(compProcess.SessionId);
+                    if (owner == null) continue;
+                    if (!owner.Tracking) continue;
+
+                    var ownerProcesses = DbManager.GetProcessesByAccountId(owner.WebId);
+                    var found = ownerProcesses.FirstOrDefault(p => p.Name == compProcess.ProcessName);
+                    if (found == null)
+                    {
+                        DbManager.SaveProcess(new Database.Models.Process
+                            {
+                                AccountId = owner.WebId,
+                                Name = compProcess.ProcessName,
+                                CreatedAt = DateTime.Now,
+                                UpdatedAt = DateTime.Now
+                            });
+                    }
                 }
-            }
-            else
-            {
-                Console.WriteLine("Null Process owner");
             }
         }
         
@@ -86,7 +90,7 @@ namespace Service.Profile
                             if (account.Username != null)
                             {
 #if (DEBUG)
-                                Console.WriteLine("{0}\\{1} - {2}", outParameters[DOMAIN], outParameters[USERNAME],
+                                Console.WriteLine("{0}\\{1} - {2}", outParameters[Domain], outParameters[Username],
                                                   process["Name"]);
 #endif
                                 proceses.Add(new Database.Models.Process
@@ -123,7 +127,7 @@ namespace Service.Profile
                         if (result == 0)
                         {
 #if (DEBUG)
-                            Console.WriteLine("{0}\\{1} - {2}", outParameters[DOMAIN], outParameters[USERNAME],
+                            Console.WriteLine("{0}\\{1} - {2}", outParameters[Domain], outParameters[Username],
                                               process["Name"]);
 #endif
                             //TODO Search for Account by name adding ID
@@ -160,7 +164,7 @@ namespace Service.Profile
                         if (result != 0)
                         {
 #if (DEBUG)
-                            Console.WriteLine("{0}\\{1} - {2}", outParameters[DOMAIN], outParameters[USERNAME],
+                            Console.WriteLine("{0}\\{1} - {2}", outParameters[Domain], outParameters[Username],
                                               process["Name"]);
 #endif
                             proceses.Add(new Database.Models.Process

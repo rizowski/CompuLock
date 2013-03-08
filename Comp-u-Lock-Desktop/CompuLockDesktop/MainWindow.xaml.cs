@@ -86,7 +86,7 @@ namespace CompuLockDesktop
 
         private void OnClose(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            service.ProcessManager.Dispose();
+            
         }
 
     }

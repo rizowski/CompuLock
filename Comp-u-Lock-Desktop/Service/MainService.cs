@@ -20,7 +20,7 @@ namespace Service
         public DatabaseManager DbManager { get; private set; }
         public AccountManager AccountManager { get; private set; }
         public ComputerManager ComputerManager { get; set; }
-        public ProcessManager ProcessManager { get; set; }
+        //public ProcessManager ProcessManager { get; set; }
         public InternetExplorerHistoryReader BrowserManager { get; set; }
         public RestService RestService { get; set; }
 
@@ -32,7 +32,7 @@ namespace Service
             DbManager = new DatabaseManager("settings", "myPass");
             ComputerManager = new ComputerManager();
             AccountManager = new AccountManager();
-            ProcessManager = new ProcessManager();
+            //ProcessManager = new ProcessManager();
             BrowserManager = new InternetExplorerHistoryReader();
             RestService = new RestManager(RestServer, Api);
         }
