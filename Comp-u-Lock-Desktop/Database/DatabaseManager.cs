@@ -287,8 +287,8 @@ namespace Database
                 conn.Open();
                 if (process == null)
                     throw new NoNullAllowedException("Process object can't be null");
-                if (process.AccountId <= 0)
-                    throw new ArgumentException("AccountId needs to be specified.");
+                /*if (process.AccountId <= 0)
+                    throw new ArgumentException("AccountId needs to be specified.");*/
                 StringBuilder sb = new StringBuilder();
                 Console.WriteLine("Saving a Process");
                 sb.Append(InsertInto);
@@ -493,6 +493,7 @@ namespace Database
                 {
                     Console.WriteLine(e);
                 }
+
             }
             return list;
         }

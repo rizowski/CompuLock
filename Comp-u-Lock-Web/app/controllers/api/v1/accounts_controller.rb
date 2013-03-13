@@ -122,6 +122,13 @@ module Api
 						return
 					end
 				end
+
+				puts 
+				puts account
+				puts 
+				puts account["account_process_attrubutes"]
+				puts 
+				puts 
 				@account = Account.find(id)
 				if Account.update(id, account)
 					render json: {account: @account}

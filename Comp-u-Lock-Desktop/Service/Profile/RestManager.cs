@@ -195,17 +195,20 @@ namespace Service.Profile
                     {
                         //sends to server
                         dbAccount.WebId = restAccount.WebId;
-                        UpdateAccount(dbUser.AuthToken, dbAccount);
+                        var processes = dbProcesses.Where(p => p.AccountId == dbAccount.WebId);
+                        
+                        foreach (var process in processes)
+                        {
+                            var founddbProcess = restAccount.Processes.FirstOrDefault(p => p.Name == process.Name);
+                            if (founddbProcess == null)
+                            {
+                                dbAccount.Processes.Add(process);
+                            }
+                        }
+                        var returnedAccount = UpdateAccount(dbUser.AuthToken, dbAccount);
+                        returnedAccount.Id = dbAccount.Id;
+                        DbManager.UpdateAccount(returnedAccount);
                     }
-
-                    var processes = dbProcesses.Where(p => p.AccountId == dbAccount.WebId);
-                    foreach (var process in processes)
-                    {
-                        dbAccount.Processes.Add(process);
-                    }
-                    dbAccount.WebId = restAccount.WebId;
-                    UpdateAccount(dbUser.AuthToken, dbAccount);
-                    
                 }
             }
         }

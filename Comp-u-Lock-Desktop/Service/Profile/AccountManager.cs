@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.DirectoryServices;
 using System.Linq;
+using System.Management;
 using System.Timers;
 using ActiveDs;
 using Cassia;
 using Database;
 using Database.Models;
+using Microsoft.Win32;
 
 namespace Service.Profile
 {
@@ -20,6 +22,8 @@ namespace Service.Profile
         public string UserName;
         public ITerminalServicesManager manager;
 
+        public double Interval { get; set; }
+
         private Timer UpdateTimer;
         private Timer LockoutTimer;
         private Timer LoggingTimer;
@@ -27,10 +31,11 @@ namespace Service.Profile
         //                                                                  60 min
         public AccountManager( double interval = 5, double updateInterval = 3600)
         {
+            Interval = interval;
             DbManager = new DatabaseManager("settings","");
-            SetupUpdateTimer(updateInterval);
-            SetupLockoutTimer(interval);
-            SetupLoggingTimer(interval);
+            SetupUpdateTimer(Interval);
+            SetupLockoutTimer(Interval);
+            SetupLoggingTimer(Interval);
             manager = new TerminalServicesManager();
             //ForceUpdate();
             Update(null, null);
@@ -43,6 +48,7 @@ namespace Service.Profile
         {
             var accounts = GetLoggedInAccounts();
             var dbaccounts = GetDbAccounts();
+            var computer = DbManager.GetComputer();
             Console.WriteLine("{0} accounts logged in", accounts.Count());
             if (dbaccounts.Count() < accounts.Count())
             {
@@ -53,9 +59,17 @@ namespace Service.Profile
 
                     if (dbaccount == null)
                     {
-                        var computer = DbManager.GetComputer();
                         account.ComputerId = computer.WebId;
                         DbManager.SaveAccount(account);
+                    }
+                    else
+                    {
+                        if (dbaccount.Tracking)
+                        {
+                            dbaccount.AllottedTime -= (int) Interval;
+                            dbaccount.UsedTime += (int) Interval;
+                            DbManager.UpdateAccount(dbaccount);
+                        }
                     }
                 }
             }
@@ -89,7 +103,7 @@ namespace Service.Profile
                     {
                         if (IsLocked(dbaccount.Username))
                             UnlockAccount(dbaccount);
-                    }  
+                    }
                 }
                 
             }
@@ -115,8 +129,19 @@ namespace Service.Profile
                             var dbprocess = dbprocesses.FirstOrDefault(p => p.Name == process.Name);
                             if (dbprocess == null)
                             {
-                                process.AccountId = dbaccount.WebId;
-                                DbManager.SaveProcess(process);
+                                if (dbaccount.Id != 0)
+                                {
+                                    process.AccountId = dbaccount.Id;
+                                    DbManager.SaveProcess(process);
+                                }
+                            }
+                            else
+                            {
+                                if (dbaccount.WebId != 0 && dbprocess.AccountId != dbaccount.WebId)
+                                {
+                                    dbprocess.AccountId = dbaccount.WebId;
+                                    DbManager.UpdateProcess(dbprocess);
+                                }
                             }
                         }
                     }
@@ -401,6 +426,7 @@ namespace Service.Profile
                 try
                 {
                     var sessions = Server.GetSessions();
+                    
                     foreach (var session in sessions)
                     {
                         var processes = session.GetProcesses();
