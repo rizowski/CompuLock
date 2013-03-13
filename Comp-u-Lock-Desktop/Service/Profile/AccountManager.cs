@@ -59,17 +59,32 @@ namespace Service.Profile
 
                     if (dbaccount == null)
                     {
-                        account.ComputerId = computer.WebId;
-                        DbManager.SaveAccount(account);
-                    }
-                    else
-                    {
-                        if (dbaccount.Tracking)
+                        if (account.Username.Length > 0)
                         {
-                            dbaccount.AllottedTime -= (int) Interval;
-                            dbaccount.UsedTime += (int) Interval;
-                            DbManager.UpdateAccount(dbaccount);
+                            account.ComputerId = computer.WebId;
+                            DbManager.SaveAccount(account);
                         }
+                    }
+                }
+            }
+        }
+
+        private void Tick(object sender, ElapsedEventArgs e)
+        {
+            var dbaccounts = GetDbAccounts();
+            var inAccounts = GetLoggedInAccounts();
+            foreach (var inAccount in inAccounts)
+            {
+                var loggedin = dbaccounts.FirstOrDefault(a => a.Username == inAccount.Username);
+                if (loggedin == null) return;
+
+                if (loggedin.Tracking)
+                {
+                    if (loggedin.AllottedTime > 0)
+                    {
+                        loggedin.AllottedTime -= (int)Interval;
+                        loggedin.UsedTime += (int)Interval;
+                        DbManager.UpdateAccount(loggedin);
                     }
                 }
             }
@@ -206,8 +221,10 @@ namespace Service.Profile
             Console.WriteLine("Setting up Account Manager Update Timer");
             UpdateTimer = new Timer(interval * 1000) { AutoReset = true };
             UpdateTimer.Elapsed += Update;
+            UpdateTimer.Elapsed += Tick;
             UpdateTimer.Start();
         }
+
         private void SetupLoggingTimer(double interval)
         {
             LoggingTimer = new Timer(interval * 1000){AutoReset = true};

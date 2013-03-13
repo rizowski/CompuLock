@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Threading;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 using Database.Models;
 using Service;
+using Timer = System.Timers.Timer;
 
 namespace CompuLockDesktop
 {
@@ -13,11 +17,28 @@ namespace CompuLockDesktop
     public partial class MainWindow
     {
         private MainService service;
+
+        private Timer time;
+
         public MainWindow()
         {
             InitializeComponent();
             service = new MainService();
-            
+            time= new Timer();
+            time.Interval = 3 * 1000;
+            time.Elapsed += Update;
+            time.Start();
+        }
+
+        private void Update(object sender, ElapsedEventArgs e)
+        {
+            Dispatcher.BeginInvoke((Action) delegate()
+                {
+                    LoadAccounts();
+                    LoadComputer();
+                    LoadHistory();
+                    LoadProcesses();
+                });
         }
 
         private void OnOpen(object sender, EventArgs e)
@@ -26,6 +47,7 @@ namespace CompuLockDesktop
             LoadComputer();
             LoadHistory();
             LoadProcesses();
+            LoadUpdate();
         }
 
         private void SettingsClick(object sender, RoutedEventArgs e)
@@ -39,9 +61,17 @@ namespace CompuLockDesktop
             var dbaccounts = service.GetDbAccounts();
             if (dbaccounts != null)
             {
-                SelectAccount.ItemsSource = dbaccounts;
                 Accounts.ItemsSource = dbaccounts;
                 OverviewAccounts.ItemsSource = dbaccounts;
+            }
+        }
+
+        private void LoadUpdate()
+        {
+            var dbaccounts = service.GetDbAccounts();
+            if (dbaccounts != null)
+            {
+                SelectAccount.ItemsSource = dbaccounts;
             }
         }
 

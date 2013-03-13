@@ -30,7 +30,7 @@ namespace Service.Profile
             var key = Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Internet Explorer");
             if (key != null)
                 Version = new Version((string)key.GetValue("Version"));
-            SetupUpdateTimer(1800);
+            SetupUpdateTimer(5);
         }
 
         private void SetupUpdateTimer(double interval)
@@ -46,7 +46,7 @@ namespace Service.Profile
         {
             var histories = GetHistory();
             var dbhistories = DbManager.GetHistories();
-            if (histories.Count() > dbhistories.Count())
+            if (histories.Count() >= dbhistories.Count())
             {
                 foreach (var history in histories)
                 {
